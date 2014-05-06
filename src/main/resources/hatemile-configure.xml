@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<parameters>
+		<!-- Ids parameters -->
+		<parameter name="id-container-shortcuts">container-shortcuts</parameter>
+		<parameter name="id-skip-link-container-shortcuts">link-skip-shortcuts</parameter>
+		<parameter name="id-skip-container-shortcuts">skip-shortcuts</parameter>
+		<parameter name="id-script-event">script-event</parameter>
+		<parameter name="id-list-ids-script-onclick">list-ids-script-onclick</parameter>
+		<parameter name="id-function-script-fix-onclick">fix-onclick</parameter>
+		<!-- Classes parameters -->
+		<parameter name="class-required-field">required</parameter>
+		<parameter name="class-list-image-areas">list-areas</parameter>
+		<parameter name="class-longdescription-link">longdescription-link</parameter>
+		<!-- Data parameters -->
+		<parameter name="data-ignore">data-ignore-hatemile</parameter>
+		<parameter name="data-pressed">data-pressed</parameter>
+		<parameter name="data-focused">data-focused</parameter>
+		<parameter name="data-accesskey">data-accesskey</parameter>
+		<parameter name="data-list-for-image">data-list-for-image</parameter>
+		<parameter name="data-longdescription-for-image">data-longdescription-for-image</parameter>
+		<!-- Text parameters -->
+		<parameter name="text-longdescription-link">[d]</parameter>
+		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
+		<!-- Prefix parameters -->
+		<parameter name="prefix-generated-ids">id-</parameter>
+		<!-- Sufix parameters -->
+		<parameter name="sufix-required-field">*</parameter>
+	</parameters>
+	<selector-changes>
+		<!-- Bootstrap recomendations -->
+		<selector-change selector="li.dropdown" attribute="aria-haspopup" value-attribute="true" />
+		<selector-change selector=".has-error input, .has-error select, .has-error textarea" attribute="aria-invalid" value-attribute="true" />
+		<selector-change selector=".dropdown-menu li a" attribute="tabindex" value-attribute="-1" />
+		<selector-change selector=".navbar" attribute="role" value-attribute="navigation" />
+		<selector-change selector=".dropdown-menu li a" attribute="role" value-attribute="menuitem" />
+		<selector-change selector=".progress-bar" attribute="role" value-attribute="progressbar" />
+		<selector-change selector=".dropdown-menu" attribute="role" value-attribute="menubar" />
+		<selector-change selector=".dropdown-menu li" attribute="role" value-attribute="presentation" />
+		<selector-change selector=".alert" attribute="role" value-attribute="alert" />
+	</selector-changes>
+</configure>
