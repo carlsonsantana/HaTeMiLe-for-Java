@@ -29,6 +29,7 @@
 	</parameters>
 	<selector-changes>
 		<!-- Bootstrap recomendations -->
+		<!--
 		<selector-change selector="li.dropdown" attribute="aria-haspopup" value-attribute="true" />
 		<selector-change selector=".has-error input, .has-error select, .has-error textarea" attribute="aria-invalid" value-attribute="true" />
 		<selector-change selector=".dropdown-menu li a" attribute="tabindex" value-attribute="-1" />
@@ -38,5 +39,6 @@
 		<selector-change selector=".dropdown-menu" attribute="role" value-attribute="menubar" />
 		<selector-change selector=".dropdown-menu li" attribute="role" value-attribute="presentation" />
 		<selector-change selector=".alert" attribute="role" value-attribute="alert" />
+		-->
 	</selector-changes>
 </configure>
