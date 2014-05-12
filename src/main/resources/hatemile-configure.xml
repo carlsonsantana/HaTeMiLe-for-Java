@@ -20,11 +20,11 @@
 		<parameter name="data-list-for-image">data-list-for-image</parameter>
 		<parameter name="data-longdescription-for-image">data-longdescription-for-image</parameter>
 		<!-- Text parameters -->
-		<parameter name="text-longdescription-link">[d]</parameter>
 		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
 		<!-- Prefix parameters -->
 		<parameter name="prefix-generated-ids">id-</parameter>
 		<!-- Sufix parameters -->
+		<parameter name="sufix-longdescription-link">[d]</parameter>
 		<parameter name="sufix-required-field">*</parameter>
 	</parameters>
 	<selector-changes>
