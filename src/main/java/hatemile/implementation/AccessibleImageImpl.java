@@ -28,7 +28,7 @@ public class AccessibleImageImpl implements AccessibleImage {
 	protected final String prefixId;
 	protected final String classListImageAreas;
 	protected final String classLongDescriptionLink;
-	protected final String textLongDescriptionLink;
+	protected final String sufixLongDescriptionLink;
 	protected final String dataListForImage;
 	protected final String dataLongDescriptionForImage;
 	protected final String dataIgnore;
@@ -38,7 +38,7 @@ public class AccessibleImageImpl implements AccessibleImage {
 		prefixId = configure.getParameter("prefix-generated-ids");
 		classListImageAreas = configure.getParameter("class-list-image-areas");
 		classLongDescriptionLink = configure.getParameter("class-longdescription-link");
-		textLongDescriptionLink = configure.getParameter("text-longdescription-link");
+		sufixLongDescriptionLink = configure.getParameter("sufix-longdescription-link");
 		dataListForImage = configure.getParameter("data-list-for-image");
 		dataLongDescriptionForImage = configure.getParameter("data-longdescription-for-image");
 		dataIgnore = configure.getParameter("data-ignore");
@@ -98,9 +98,9 @@ public class AccessibleImageImpl implements AccessibleImage {
 			if (parser.find("[" + dataLongDescriptionForImage + "=" + element.getAttribute("id") + "]").firstResult() == null) {
 				String text;
 				if (element.hasAttribute("alt")) {
-					text = element.getAttribute("alt") + " " + textLongDescriptionLink;
+					text = element.getAttribute("alt") + " " + sufixLongDescriptionLink;
 				} else {
-					text = textLongDescriptionLink;
+					text = sufixLongDescriptionLink;
 				}
 				String longDescription = element.getAttribute("longdesc");
 				HTMLDOMElement anchor = parser.createElement("a");
