@@ -31,22 +31,46 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * The Configure class contains the configuration of HaTeMiLe.
+ * @version 1.0
+ */
 public class Configure {
-
+	
+	/**
+	 * The parameters of configuration of HaTeMiLe.
+	 */
 	protected Map<String, String> parameters;
+	
+	/**
+	 * The changes that will be done in selectors.
+	 */
 	protected Collection<SelectorChange> selectorChanges;
 
+	/**
+	 * Initializes a new object that contains the configuration of HaTeMiLe.
+	 * @throws ParserConfigurationException The exception throw when the XML file contains a syntax error.
+	 * @throws SAXException The exception throw when the XML file contains a syntax error.
+	 * @throws IOException The exception throw when the file has problems of read.
+	 */
 	public Configure() throws ParserConfigurationException, SAXException, IOException {
-		this("/hatemile-configure.xml");
+		this("hatemile-configure.xml");
 	}
 
+	/**
+	 * Initializes a new object that contains the configuration of HaTeMiLe.
+	 * @param fileName The full path of file.
+	 * @throws ParserConfigurationException The exception throw when the XML file contains a syntax error.
+	 * @throws SAXException The exception throw when the XML file contains a syntax error.
+	 * @throws IOException The exception throw when the file has problems of read.
+	 */
 	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		parameters = new HashMap<String, String>();
 		selectorChanges = new ArrayList<SelectorChange>();
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-		Document document = documentBuilder.parse(File.class.getResourceAsStream(fileName));
+		Document document = documentBuilder.parse(File.class.getResourceAsStream("/" + fileName));
 		Element rootElement = document.getDocumentElement();
 		//Read parameters
 		NodeList nodeList = rootElement.getChildNodes();
@@ -89,10 +113,19 @@ public class Configure {
 		}
 	}
 
+	/**
+	 * Returns the value of the parameter of configuration.
+	 * @param parameter The parameter.
+	 * @return The value of the parameter.
+	 */
 	public String getParameter(String parameter) {
 		return parameters.get(parameter);
 	}
 
+	/**
+	 * Returns the changes that will be done in selectors.
+	 * @return The changes that will be done in selectors.
+	 */
 	public Collection<SelectorChange> getSelectorChanges() {
 		return selectorChanges;
 	}

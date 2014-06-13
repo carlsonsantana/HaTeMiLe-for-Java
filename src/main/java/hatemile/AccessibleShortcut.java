@@ -17,11 +17,27 @@ package hatemile;
 
 import hatemile.util.HTMLDOMElement;
 
+/**
+ * The AccessibleImage interface fix the problems of accessibility
+ * associated with the shortcuts.
+ * @version 1.0
+ */
 public interface AccessibleShortcut {
-
+	
+	/**
+	 * Returns the navigator shortcut prefix.
+	 * @return The navigator shortcut prefix.
+	 */
 	public String getPrefix();
-
+	
+	/**
+	 * Fix the element with shortcuts.
+	 * @param element The element with shortcuts. 
+	 */
 	public void fixShortcut(HTMLDOMElement element);
-
+	
+	/**
+	 * Fix the elements with shortcuts.
+	 */
 	public void fixShortcuts();
 }

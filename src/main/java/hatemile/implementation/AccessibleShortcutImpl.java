@@ -22,21 +22,78 @@ import hatemile.util.HTMLDOMParser;
 
 import java.util.Collection;
 
+/**
+ * The AccessibleShortcutImpl class is official implementation of AccessibleShortcut
+ * interface.
+ * @see AccessibleShortcut
+ * @version 1.0
+ */
 public class AccessibleShortcutImpl implements AccessibleShortcut {
+	
+	/**
+	 * The HTML parser.
+	 */
 	protected final HTMLDOMParser parser;
+	
+	/**
+	 * The id of list of shortcuts.
+	 */
 	protected final String idContainerShortcuts;
+	
+	/**
+	 * The id of link that skip the list of shortcuts.
+	 */
 	protected final String idSkipLinkContainerShortcuts;
+	
+	/**
+	 * The id of anchor after the list of shortcuts.
+	 */
 	protected final String idSkipContainerShortcuts;
+	
+	/**
+	 * The text of link that skip the list of shortcuts.
+	 */
 	protected final String textSkipLinkContainerShortcuts;
+	
+	/**
+	 * The name of attribute that link the list item element
+	 * with the shortcut.
+	 */
 	protected final String dataAccessKey;
+	
+	/**
+	 * The name of attribute for the element that not can be modified
+	 * by HaTeMiLe.
+	 */
 	protected final String dataIgnore;
+	
+	/**
+	 * The navigator shortcut prefix.
+	 */
 	protected final String prefix;
+	
+	/**
+	 * The list element of shortcuts of page.
+	 */
 	protected HTMLDOMElement list;
 	
+	/**
+	 * Initializes a new object that manipulate the accessibility of the
+	 * shortcuts of parser.
+	 * @param parser The HTML parser.
+	 * @param configure The configuration of HaTeMiLe.
+	 */
 	public AccessibleShortcutImpl(HTMLDOMParser parser, Configure configure) {
 		this(parser, configure, null);
 	}
 	
+	/**
+	 * Initializes a new object that manipulate the accessibility of the
+	 * images of parser.
+	 * @param parser The HTML parser.
+	 * @param configure The configuration of HaTeMiLe.
+	 * @param userAgent The user agent of the user.
+	 */
 	public AccessibleShortcutImpl(HTMLDOMParser parser, Configure configure, String userAgent) {
 		this.parser = parser;
 		idContainerShortcuts = configure.getParameter("id-container-shortcuts");
@@ -71,14 +128,24 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		}
 	}
 	
+	/**
+	 * Returns the description of element.
+	 * @param element The element with description.
+	 * @return The description of element.
+	 */
 	protected String getDescription(HTMLDOMElement element) {
 		String description = "";
 		if (element.hasAttribute("title")) {
 			description = element.getAttribute("title");
-		} else if (element.hasAttribute("aria-labelledby")) {
-			String[] labelsIds = element.getAttribute("aria-labelledby").split("[ \n\t\r]+");
-			for (int i = 0, length = labelsIds.length; i < length; i++) {
-				HTMLDOMElement label = parser.find("#" + labelsIds[i]).firstResult();
+		} else if ((element.hasAttribute("aria-labelledby")) || (element.hasAttribute("aria-describedby"))) {
+			String[] descriptionIds;
+			if (element.hasAttribute("aria-labelledby")) {
+				descriptionIds = element.getAttribute("aria-labelledby").split("[ \n\t\r]+");
+			} else {
+				descriptionIds = element.getAttribute("aria-describedby").split("[ \n\t\r]+");
+			}
+			for (int i = 0, length = descriptionIds.length; i < length; i++) {
+				HTMLDOMElement label = parser.find("#" + descriptionIds[i]).firstResult();
 				if (label != null) {
 					description = label.getTextContent();
 					break;
@@ -89,7 +156,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		} else if (element.hasAttribute("alt")) {
 			description = element.getAttribute("alt");
 		} else if (element.getTagName().equals("INPUT")) {
-			String type = element.getAttribute("type").toLowerCase().trim();
+			String type = element.getAttribute("type").trim().toLowerCase();
 			if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset"))) && (element.hasAttribute("value"))) {
 				description = element.getAttribute("value");
 			}
@@ -100,6 +167,10 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		return description;
 	}
 	
+	/**
+	 * Generate the list of shortcuts of page.
+	 * @return The list of shortcuts of page.
+	 */
 	protected HTMLDOMElement generateList() {
 		HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
 		if (container == null) {

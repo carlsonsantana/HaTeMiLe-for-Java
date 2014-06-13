@@ -23,11 +23,36 @@ import hatemile.util.SelectorChange;
 
 import java.util.Collection;
 
+/**
+ * The AccessibleSelectorImpl class is official implementation of AccessibleSelector
+ * interface.
+ * @see AccessibleSelector
+ * @version 1.0
+ */
 public class AccessibleSelectorImpl implements AccessibleSelector {
+	
+	/**
+	 * The HTML parser.
+	 */
 	protected final HTMLDOMParser parser;
+	
+	/**
+	 * The changes that will be done in selectors.
+	 */
 	protected final Collection<SelectorChange> changes;
+	
+	/**
+	 * The name of attribute for the element that not can be modified
+	 * by HaTeMiLe.
+	 */
 	protected final String dataIgnore;
-
+	
+	/**
+	 * Initializes a new object that manipulate the accessibility through of the
+	 * selectors of the configuration file.
+	 * @param parser The HTML parser.
+	 * @param configure The configuration of HaTeMiLe.
+	 */
 	public AccessibleSelectorImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		changes = configure.getSelectorChanges();

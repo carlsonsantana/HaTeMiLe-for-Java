@@ -9,23 +9,25 @@
 		<parameter name="id-list-ids-script-onclick">list-ids-script-onclick</parameter>
 		<parameter name="id-function-script-fix-onclick">fix-onclick</parameter>
 		<!-- Classes parameters -->
-		<parameter name="class-required-field">required</parameter>
 		<parameter name="class-list-image-areas">list-areas</parameter>
 		<parameter name="class-longdescription-link">longdescription-link</parameter>
 		<!-- Data parameters -->
-		<parameter name="data-ignore">data-ignore-hatemile</parameter>
+		<parameter name="data-ignore">data-ignorehatemile</parameter>
+		<parameter name="data-label-required-field">data-labelrequiredfield</parameter>
 		<parameter name="data-pressed">data-pressed</parameter>
 		<parameter name="data-focused">data-focused</parameter>
 		<parameter name="data-accesskey">data-accesskey</parameter>
-		<parameter name="data-list-for-image">data-list-for-image</parameter>
-		<parameter name="data-longdescription-for-image">data-longdescription-for-image</parameter>
+		<parameter name="data-list-for-image">data-listforimage</parameter>
+		<parameter name="data-longdescription-for-image">data-longdescriptionforimage</parameter>
 		<!-- Text parameters -->
 		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
 		<!-- Prefix parameters -->
+		<parameter name="prefix-required-field">*</parameter>
 		<parameter name="prefix-generated-ids">id-</parameter>
-		<!-- Sufix parameters -->
-		<parameter name="sufix-longdescription-link">[d]</parameter>
-		<parameter name="sufix-required-field">*</parameter>
+		<parameter name="prefix-longdescription-link"></parameter>
+		<!-- Suffix parameters -->
+		<parameter name="suffix-longdescription-link">[d]</parameter>
+		<parameter name="suffix-required-field"></parameter>
 	</parameters>
 	<selector-changes>
 		<!-- Bootstrap recomendations -->

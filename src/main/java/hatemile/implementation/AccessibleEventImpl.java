@@ -23,71 +23,122 @@ import hatemile.util.HTMLDOMParser;
 
 import java.util.Collection;
 
+/**
+ * The AccessibleEventImpl class is official implementation of AccessibleEvent
+ * interface.
+ * @see AccessibleEvent
+ * @version 1.0
+ */
 public class AccessibleEventImpl implements AccessibleEvent {
-
+	
+	/**
+	 * The HTML parser.
+	 */
 	protected final HTMLDOMParser parser;
+	
+	/**
+	 * The id of script element that contains the functions that put events
+	 * in the elements.
+	 */
 	protected final String idScriptEvent;
-	protected final String prefixId;
+	
+	/**
+	 * The id of script element that contains the list of elements that will
+	 * yours events events modified.
+	 */
 	protected final String idListIdsScriptOnClick;
+	
+	/**
+	 * The id of script that modified the events of elements.
+	 */
 	protected final String idFunctionScriptFixOnClick;
-	protected final String dataFocused;
-	protected final String dataPressed;
+	
+	/**
+	 * The prefix of generated id.
+	 */
+	protected final String prefixId;
+	
+	/**
+	 * The name of attribute for the element that not can be modified
+	 * by HaTeMiLe.
+	 */
 	protected final String dataIgnore;
+	
+	/**
+	 * The state that indicates if the main script was added in parser.
+	 */
 	protected boolean mainScriptAdded;
+	
+	/**
+	 * The state that indicates if the other scripts was added in parser.
+	 */
 	protected boolean otherScriptsAdded;
+	
+	/**
+	 * The script element that contains the list of elements that your 
+	 * events modified.
+	 */
 	protected HTMLDOMElement scriptList;
 
+	/**
+	 * Initializes a new object that manipulate the accessibility of the
+	 * Javascript events of elements of parser.
+	 * @param parser The HTML parser.
+	 * @param configure The configuration of HaTeMiLe.
+	 */
 	public AccessibleEventImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 		idScriptEvent = configure.getParameter("id-script-event");
+		dataIgnore = configure.getParameter("data-ignore");
 		idListIdsScriptOnClick = configure.getParameter("id-list-ids-script-onclick");
 		idFunctionScriptFixOnClick = configure.getParameter("id-function-script-fix-onclick");
-		dataFocused = configure.getParameter("data-focused");
-		dataPressed = configure.getParameter("data-pressed");
-		dataIgnore = configure.getParameter("data-ignore");
 		mainScriptAdded = false;
 		otherScriptsAdded = false;
 	}
 
+	/**
+	 * Generate the main script in parser.
+	 */
 	protected void generateMainScript() {
 		if (parser.find("#" + idScriptEvent).firstResult() == null) {
 			HTMLDOMElement script = parser.createElement("script");
 			script.setAttribute("id", idScriptEvent);
 			script.setAttribute("type", "text/javascript");
-
-			String javascript = "\nfunction onFocusEvent(element) {\n"
-					+ "	element.setAttribute('" + dataFocused + "', 'true');\n"
-					+ "	if (element.onmouseover != undefined) {\n"
-					+ "		element.onmouseover();\n"
-					+ "	}\n"
-					+ "}\n"
-					+ "function onBlurEvent(element) {\n"
-					+ "	if (element.hasAttribute('" + dataFocused + "')) {\n"
-					+ "		if ((element.getAttribute('" + dataFocused + "').toLowerCase() == 'true') && (element.onmouseout != undefined)) {\n"
-					+ "			element.onmouseout();\n"
-					+ "		}\n"
-					+ "		element.setAttribute('" + dataFocused + "', 'false');\n"
-					+ "	}\n"
-					+ "}\n"
-					+ "function onKeyPressEvent(element, event) {\n"
-					+ "	element.setAttribute('" + dataPressed + "', event.keyCode);\n"
-					+ "}\n"
-					+ "function onKeyPressUp(element, event) {\n"
-					+ "	var key = event.keyCode;\n"
-					+ "	var enter1 = \"\\n\".charCodeAt(0);\n"
-					+ "	var enter2 = \"\\r\".charCodeAt(0);\n"
-					+ "	if ((key == enter1) || (key == enter2)) {\n"
-					+ "		if (element.hasAttribute('" + dataPressed + "')) {\n"
-					+ "			if (key == parseInt(element.getAttribute('" + dataPressed + "'))) {\n"
-					+ "				if (element.onclick != undefined) {\n"
-					+ "					element.click();\n"
-					+ "				}\n"
-					+ "				element.removeAttribute('" + dataPressed + "');\n"
-					+ "			}\n"
-					+ "		}\n"
-					+ "	}\n"
-					+ "}\n";
+			String javascript = "function onFocusEvent(element) {"
+					+ "if (element.onmouseover != undefined) {"
+					+ "element.onmouseover();"
+					+ "}"
+					+ "}"
+					+ "function onBlurEvent(element) {"
+					+ "if (element.onmouseout != undefined) {"
+					+ "element.onmouseout();"
+					+ "}"
+					+ "}"
+					+ "function isEnter(keyCode) {"
+					+ "var enter1 = \"\\n\".charCodeAt(0);"
+					+ "var enter2 = \"\\r\".charCodeAt(0);"
+					+ "return ((keyCode == enter1) || (keyCode == enter2));"
+					+ "}"
+					+ "function onKeyDownEvent(element, event) {"
+					+ "if (isEnter(event.keyCode) && (element.onmousedown != undefined)) {"
+					+ "element.onmousedown();"
+					+ "}"
+					+ "}"
+					+ "function onKeyPressEvent(element, event) {"
+					+ "if (isEnter(event.keyCode)) {"
+					+ "if (element.onclick != undefined) {"
+					+ "element.click();"
+					+ "} else if (element.ondblclick != undefined) {"
+					+ "element.ondblclick();"
+					+ "}"
+					+ "}"
+					+ "}"
+					+ "function onKeyUpEvent(element, event) {"
+					+ "if (isEnter(event.keyCode)) && (element.onmouseup != undefined)) {"
+					+ "element.onmouseup();"
+					+ "}"
+					+ "}";
 			script.appendText(javascript);
 
 			HTMLDOMElement local = parser.find("head").firstResult();
@@ -99,13 +150,16 @@ public class AccessibleEventImpl implements AccessibleEvent {
 		mainScriptAdded = true;
 	}
 
+	/**
+	 * Generate the other scripts in parser.
+	 */
 	protected void generateOtherScripts() {
 		scriptList = parser.find("#" + idListIdsScriptOnClick).firstResult();
 		if (scriptList == null) {
 			scriptList = parser.createElement("script");
 			scriptList.setAttribute("id", idListIdsScriptOnClick);
 			scriptList.setAttribute("type", "text/javascript");
-			scriptList.appendText("\nidsElementsWithOnClick = [];\n");
+			scriptList.appendText("idsElementsWithOnClick = [];");
 			parser.find("body").firstResult().appendElement(scriptList);
 		}
 		if (parser.find("#" + idFunctionScriptFixOnClick).firstResult() == null) {
@@ -113,23 +167,37 @@ public class AccessibleEventImpl implements AccessibleEvent {
 			scriptFunction.setAttribute("id", idFunctionScriptFixOnClick);
 			scriptFunction.setAttribute("type", "text/javascript");
 
-			String javascript = "\nfor (var i = 0, length = idsElementsWithOnClick.length; i < length; i++) {\n"
-					+ "	var element = document.getElementById(idsElementsWithOnClick[i]);\n"
-					+ "	element.onkeypress = function(event) {\n"
-					+ "		onKeyPressEvent(element, event);\n"
-					+ "	};\n"
-					+ "	element.onkeyup = function(event) {\n"
-					+ "		onKeyPressUp(element, event);\n"
-					+ "	};\n"
-					+ "}\n";
+			String javascript = "for (var i = 0, length = idsElementsWithOnClick.length; i < length; i++) {"
+					+ "var element = document.getElementById(idsElementsWithOnClick[i]);"
+					+ "if (element.onkeypress == undefined) {"
+					+ "element.onkeypress = function(event) {"
+					+ "onKeyPressEvent(element, event);"
+					+ "};"
+					+ "}"
+					+ "if (element.onkeyup == undefined) {"
+					+ "element.onkeyup = function(event) {"
+					+ "onKeyUpEvent(element, event);"
+					+ "};"
+					+ "}"
+					+ "if (element.onkeypress == undefined) {"
+					+ "element.onkeypress = function(event) {"
+					+ "onKeyDownEvent(element, event);"
+					+ "};"
+					+ "}"
+					+ "}";
 			scriptFunction.appendText(javascript);
 			parser.find("body").firstResult().appendElement(scriptFunction);
 		}
 		otherScriptsAdded = true;
 	}
 
-	protected void addElementIdWithOnClick(String id) {
-		scriptList.appendText("idsElementsWithOnClick.push('" + id + "');\n");
+	/**
+	 * Add the id of element in list of elements that its
+	 * events modified.
+	 * @param element The element with id.
+	 */
+	protected void addElementIdWithOnClick(HTMLDOMElement element) {
+		scriptList.appendText("idsElementsWithOnClick.push('" + element.getAttribute("id") + "');");
 	}
 
 	public void fixOnHover(HTMLDOMElement element) {
@@ -170,14 +238,12 @@ public class AccessibleEventImpl implements AccessibleEvent {
 				element.setAttribute("tabindex", "0");
 			}
 			CommonFunctions.generateId(element, prefixId);
-			if ((!element.hasAttribute("onkeypress")) && (!element.hasAttribute("onkeyup")) && (!element.hasAttribute("onkeydown"))) {
-				addElementIdWithOnClick(element.getAttribute("id"));
-			}
+			addElementIdWithOnClick(element);
 		}
 	}
 
 	public void fixOnClicks() {
-		Collection<HTMLDOMElement> elements = parser.find("[onclick]").listResults();
+		Collection<HTMLDOMElement> elements = parser.find("[onclick],[onmousedown],[onmouseup],[ondblclick]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixOnClick(element);

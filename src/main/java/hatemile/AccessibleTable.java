@@ -17,15 +17,39 @@ package hatemile;
 
 import hatemile.util.HTMLDOMElement;
 
+/**
+ * The AccessibleImage interface fix the problems of accessibility
+ * associated with the tables.
+ * @version 1.0
+ */
 public interface AccessibleTable {
-
-	public void fixHeader(HTMLDOMElement element);
-
-	public void fixFooter(HTMLDOMElement element);
-
-	public void fixBody(HTMLDOMElement element);
-
-	public void fixTable(HTMLDOMElement element);
-
+	
+	/**
+	 * Fix the table header.
+	 * @param tableHeader The table header.
+	 */
+	public void fixHeader(HTMLDOMElement tableHeader);
+	
+	/**
+	 * Fix the table footer.
+	 * @param tableFooter The table footer.
+	 */
+	public void fixFooter(HTMLDOMElement tableFooter);
+	
+	/**
+	 * Fix the table body.
+	 * @param tableBody The table body.
+	 */
+	public void fixBody(HTMLDOMElement tableBody);
+	
+	/**
+	 * Fix the table.
+	 * @param table The table.
+	 */
+	public void fixTable(HTMLDOMElement table);
+	
+	/**
+	 * Fix the tables.
+	 */
 	public void fixTables();
 }

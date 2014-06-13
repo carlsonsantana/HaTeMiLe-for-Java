@@ -18,8 +18,6 @@ package hatemile.util.jsoup;
 import hatemile.util.HTMLDOMElement;
 import hatemile.util.HTMLDOMParser;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -28,19 +26,29 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * The class JsoupHTMLDOMParser is official implementation of HTMLDOMParser
+ * interface for the Jsoup libary.
+ * @see HTMLDOMElement
+ * @version 1.0
+ */
 public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	
+	/**
+	 * The root of the parser.
+	 */
 	protected Document document;
+	
+	/**
+	 * The founded elements.
+	 */
 	protected Elements results;
 	
-	public JsoupHTMLDOMParser(File file) throws IOException {
-		this(file, "UTF-8");
-	}
-	
-	public JsoupHTMLDOMParser(File file, String charset) throws IOException {
-		document = Jsoup.parse(file, charset);
-	}
-	
+	/**
+	 * Initizate a new object that encapsulate the parser
+	 * of Jsoup.
+	 * @param code The HTML code.
+	 */
 	public JsoupHTMLDOMParser(String code) {
 		document = Jsoup.parse(code);
 	}
@@ -158,6 +166,12 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return new JsoupHTMLDOMElement(document.createElement(tag));
 	}
 
+	/**
+	 * Auxiliar method to search if the element if descendant of other element.
+	 * @param reference The reference element.
+	 * @param searched The element searched.
+	 * @return The element searched if it is descendant of reference element or null if not is.
+	 */
 	protected Element getDescendantOf(Element reference, Element searched) {
 		if (reference.children().contains(searched)) {
 			return searched;

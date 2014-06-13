@@ -25,18 +25,47 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The AccessibleTableImpl class is official implementation of AccessibleTable
+ * interface.
+ * @see AccessibleTable
+ * @version 1.0
+ */
 public class AccessibleTableImpl implements AccessibleTable {
-
+	
+	/**
+	 * The HTML parser.
+	 */
 	protected final HTMLDOMParser parser;
+	
+	/**
+	 * The prefix of generated id.
+	 */
 	protected final String prefixId;
+	
+	/**
+	 * The name of attribute for the element that not can be modified
+	 * by HaTeMiLe.
+	 */
 	protected final String dataIgnore;
-
+	
+	/**
+	 * Initializes a new object that manipulate the accessibility of the
+	 * tables of parser.
+	 * @param parser The HTML parser.
+	 * @param configure The configuration of HaTeMiLe.
+	 */
 	public AccessibleTableImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 		dataIgnore = configure.getParameter("data-ignore");
 	}
-
+	
+	/**
+	 * Returns the list that represents the table.
+	 * @param part The table header, footer or body.
+	 * @return The list that represents the table.
+	 */
 	protected Collection<Collection<HTMLDOMElement>> generatePart(HTMLDOMElement part) {
 		Collection<HTMLDOMElement> rows = parser.find(part).findChildren("tr").listResults();
 		Collection<Collection<HTMLDOMElement>> table = new ArrayList<Collection<HTMLDOMElement>>();
@@ -45,7 +74,12 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 		return generateRowspan(table);
 	}
-
+	
+	/**
+	 * Returns the list that represents with the rowspans.
+	 * @param rows The list that represents without the rowspans.
+	 * @return The list that represents with the rowspans.
+	 */
 	protected Collection<Collection<HTMLDOMElement>> generateRowspan(Collection<Collection<HTMLDOMElement>> rows) {
 		List<Collection<HTMLDOMElement>> copy = new ArrayList<Collection<HTMLDOMElement>>(rows);
 		List<Collection<HTMLDOMElement>> table = new ArrayList<Collection<HTMLDOMElement>>();
@@ -90,7 +124,12 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 		return table;
 	}
-
+	
+	/**
+	 * Returns the list that represents with the colspans.
+	 * @param row The list that represents without the colspans.
+	 * @return The list that represents with the colspans.
+	 */
 	protected Collection<HTMLDOMElement> generateColspan(Collection<HTMLDOMElement> row) {
 		List<HTMLDOMElement> copy = new ArrayList<HTMLDOMElement>(row);
 		List<HTMLDOMElement> cells = new ArrayList<HTMLDOMElement>(row);
@@ -105,7 +144,13 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 		return copy;
 	}
-
+	
+	/**
+	 * Validate the table header.
+	 * @param header The table header.
+	 * @return Returns true if the table header is valid or false
+	 * if the table header is not valid.
+	 */
 	protected boolean validateHeader(Collection<Collection<HTMLDOMElement>> header) {
 		if (header.isEmpty()) {
 			return false;
@@ -122,7 +167,13 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Returns the list with ids of rows with same column.
+	 * @param header The table header.
+	 * @param index The index of columns.
+	 * @return The list with ids of rows with same column.
+	 */
 	protected Collection<String> returnListIdsColumns(Collection<Collection<HTMLDOMElement>> header, int index) {
 		Collection<String> ids = new ArrayList<String>();
 		for (Collection<HTMLDOMElement> row : header) {
@@ -134,6 +185,10 @@ public class AccessibleTableImpl implements AccessibleTable {
 		return ids;
 	}
 	
+	/**
+	 * Fix the table body or footer.
+	 * @param element The table body or footer.
+	 */
 	protected void fixBodyOrFooter(HTMLDOMElement element) {
 		Collection<Collection<HTMLDOMElement>> table = generatePart(element);
 		Collection<String> headersIds = new ArrayList<String>();
@@ -163,9 +218,9 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 	}
 
-	public void fixHeader(HTMLDOMElement element) {
-		if (element.getTagName().equals("THEAD")) {
-			Collection<HTMLDOMElement> cells = parser.find(element).findChildren("tr").findChildren("th").listResults();
+	public void fixHeader(HTMLDOMElement tableHeader) {
+		if (tableHeader.getTagName().equals("THEAD")) {
+			Collection<HTMLDOMElement> cells = parser.find(tableHeader).findChildren("tr").findChildren("th").listResults();
 			for (HTMLDOMElement cell : cells) {
 				CommonFunctions.generateId(cell, prefixId);
 				cell.setAttribute("scope", "col");
@@ -173,34 +228,34 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 	}
 
-	public void fixFooter(HTMLDOMElement element) {
-		if (element.getTagName().equals("TFOOT")) {
-			fixBodyOrFooter(element);
+	public void fixFooter(HTMLDOMElement tableFooter) {
+		if (tableFooter.getTagName().equals("TFOOT")) {
+			fixBodyOrFooter(tableFooter);
 		}
 	}
 
-	public void fixBody(HTMLDOMElement element) {
-		if (element.getTagName().equals("TBODY")) {
-			fixBodyOrFooter(element);
+	public void fixBody(HTMLDOMElement tableBody) {
+		if (tableBody.getTagName().equals("TBODY")) {
+			fixBodyOrFooter(tableBody);
 		}
 	}
 
-	public void fixTable(HTMLDOMElement element) {
-		HTMLDOMElement header = parser.find(element).findChildren("thead").firstResult();
-		HTMLDOMElement body = parser.find(element).findChildren("tbody").firstResult();
-		HTMLDOMElement footer = parser.find(element).findChildren("tfoot").firstResult();
+	public void fixTable(HTMLDOMElement table) {
+		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
+		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
+		HTMLDOMElement footer = parser.find(table).findChildren("tfoot").firstResult();
 		if (header != null) {
 			fixHeader(header);
 
 			Collection<Collection<HTMLDOMElement>> headerCells = generatePart(header);
 			if ((validateHeader(headerCells)) && (body != null)) {
 				int lengthHeader = headerCells.iterator().next().size();
-				Collection<Collection<HTMLDOMElement>> table = generatePart(body);
+				Collection<Collection<HTMLDOMElement>> fakeTable = generatePart(body);
 				if (footer != null) {
-					table.addAll(generatePart(footer));
+					fakeTable.addAll(generatePart(footer));
 				}
 				int i;
-				for (Collection<HTMLDOMElement> cells : table) {
+				for (Collection<HTMLDOMElement> cells : fakeTable) {
 					i = 0;
 					if (cells.size() == lengthHeader) {
 						for (HTMLDOMElement cell : cells) {

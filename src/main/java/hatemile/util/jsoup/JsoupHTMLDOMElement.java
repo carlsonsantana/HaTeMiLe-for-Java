@@ -26,10 +26,24 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
+/**
+ * The JsoupHTMLDOMElement class is official implementation of HTMLDOMElement
+ * interface for the Jsoup libary.
+ * @see HTMLDOMElement
+ * @version 1.0
+ */
 public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	
+	/**
+	 * The Jsoup native element encapsulated.
+	 */
 	protected Element element;
 	
+	/**
+	 * Inicializate a new object that encapsulate the
+	 * Jsoup Element.
+	 * @param element The Jsoup Element.
+	 */
 	public JsoupHTMLDOMElement(Element element) {
 		this.element = element;
 	}
@@ -168,6 +182,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return new JsoupHTMLDOMElement(element.children().last());
 	}
 	
+	@Override
 	public boolean equals(Object object) {
 		if (this != object) {
 			if (!(object instanceof HTMLDOMElement)) {
@@ -177,5 +192,10 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 			return this.getData().equals(htmlDOMElement.getData());
 		}
 		return true;
+	}
+	
+	@Override
+	public HTMLDOMElement clone() {
+		return cloneElement();
 	}
 }
