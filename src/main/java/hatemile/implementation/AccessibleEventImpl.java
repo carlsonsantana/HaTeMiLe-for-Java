@@ -135,7 +135,7 @@ public class AccessibleEventImpl implements AccessibleEvent {
 					+ "}"
 					+ "}"
 					+ "function onKeyUpEvent(element, event) {"
-					+ "if (isEnter(event.keyCode)) && (element.onmouseup != undefined)) {"
+					+ "if (isEnter(event.keyCode) && (element.onmouseup != undefined)) {"
 					+ "element.onmouseup();"
 					+ "}"
 					+ "}";
