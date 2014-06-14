@@ -29,7 +29,7 @@ import org.jsoup.nodes.TextNode;
 
 /**
  * The JsoupAuxiliarToString class is auxiliary class to convert
- * a Jsoup Node to HTML code.
+ * a Jsoup Node to a HTML code.
  */
 public class JsoupAuxiliarToString {
 	

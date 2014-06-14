@@ -19,7 +19,7 @@ import java.util.Collection;
 
 /**
  * The HTMLDOMParser interface contains the methods for
- * access the native parser.
+ * access a native parser.
  * @version 1.0
  */
 public interface HTMLDOMParser {
@@ -27,12 +27,12 @@ public interface HTMLDOMParser {
 	/**
 	 * Find all elements in the parser by selector.
 	 * @param selector The selector.
-	 * @return The parser with the elements founded.
+	 * @return The parser with the elements found.
 	 */
 	public HTMLDOMParser find(String selector);
 	
 	/**
-	 * Find if the element is contained in parser.
+	 * Find if a element is contained in parser.
 	 * @param element The element.
 	 * @return The parser with the element, if the element is contained in parser.
 	 */
@@ -40,67 +40,67 @@ public interface HTMLDOMParser {
 	
 	/**
 	 * Find all elements in the parser by selector, children of
-	 * founded elements.
+	 * found elements.
 	 * @param selector The selector.
-	 * @return The parser with the elements founded.
+	 * @return The parser with the elements found.
 	 */
 	public HTMLDOMParser findChildren(String selector);
 	
 	/**
-	 * Find if the element is children of founded elements.
+	 * Find if a element is a child of found elements.
 	 * @param child The element.
-	 * @return The parser with the element, if the element is children
-	 * of founded elements.
+	 * @return The parser with the element, if the element is child
+	 * of found elements.
 	 */
 	public HTMLDOMParser findChildren(HTMLDOMElement child);
 	
 	/**
 	 * Find all elements in the parser by selector, descendants of
-	 * founded elements.
+	 * found elements.
 	 * @param selector The selector.
-	 * @return The parser with the elements founded.
+	 * @return The parser with the elements found.
 	 */
 	public HTMLDOMParser findDescendants(String selector);
 	
 	/**
-	 * Find if the element is descendant of founded elements.
+	 * Find if a element is descendant of found elements.
 	 * @param element The element.
 	 * @return The parser with the element, if the element is descendant
-	 * of founded elements.
+	 * of found elements.
 	 */
 	public HTMLDOMParser findDescendants(HTMLDOMElement element);
 	
 	/**
 	 * Find all elements in the parser by selector, ancestors of
-	 * founded elements.
+	 * found elements.
 	 * @param selector The selector.
-	 * @return The parser with the elements founded.
+	 * @return The parser with the elements found.
 	 */
 	public HTMLDOMParser findAncestors(String selector);
 	
 	/**
-	 * Find if the element is ancestor of founded elements.
+	 * Find if a element is ancestor of found elements.
 	 * @param element The element.
 	 * @return The parser with the element, if the element is ancestor
-	 * of founded elements.
+	 * of found elements.
 	 */
 	public HTMLDOMParser findAncestors(HTMLDOMElement element);
 	
 	/**
-	 * Returns the first element founded.
-	 * @return The first element founded or null if not have elements founded.
+	 * Returns the first element found.
+	 * @return The first element found or null if not have elements found.
 	 */
 	public HTMLDOMElement firstResult();
 	
 	/**
-	 * Returns the last element founded.
-	 * @return The last element founded or null if not have elements founded.
+	 * Returns the last element found.
+	 * @return The last element found or null if not have elements found.
 	 */
 	public HTMLDOMElement lastResult();
 	
 	/**
-	 * Returns a list with all elements founded.
-	 * @return A list with all elements founded..
+	 * Returns a list with all elements found.
+	 * @return A list with all elements found.
 	 */
 	public Collection<HTMLDOMElement> listResults();
 	

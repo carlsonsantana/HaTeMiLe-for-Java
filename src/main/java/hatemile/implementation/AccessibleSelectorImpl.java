@@ -42,7 +42,7 @@ public class AccessibleSelectorImpl implements AccessibleSelector {
 	protected final Collection<SelectorChange> changes;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;

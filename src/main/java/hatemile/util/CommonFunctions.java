@@ -16,8 +16,8 @@ limitations under the License.
 package hatemile.util;
 
 /**
- * The CommonFuncionts class that contains the methods uses
- * by HaTeMiLe classes.
+ * The CommonFuncionts class contains the used methods by HaTeMiLe
+ * classes.
  * @version 1.0
  */
 public class CommonFunctions {
@@ -28,7 +28,7 @@ public class CommonFunctions {
 	protected static int count = 0;
 	
 	/**
-	 * The private constructor prevents that the class not be
+	 * The private constructor prevents that the class not can be
 	 * initialized.
 	 */
 	private CommonFunctions() {
@@ -62,7 +62,7 @@ public class CommonFunctions {
 	}
 
 	/**
-	 * Increase the item for a HTML list.
+	 * Increase a item in a HTML list.
 	 * @param list The HTML list.
 	 * @param stringToIncrease The value of item.
 	 * @return The HTML list with the item added, if the item

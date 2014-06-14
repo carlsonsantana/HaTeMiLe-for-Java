@@ -6,21 +6,22 @@
 		<parameter name="id-skip-link-container-shortcuts">link-skip-shortcuts</parameter>
 		<parameter name="id-skip-container-shortcuts">skip-shortcuts</parameter>
 		<parameter name="id-script-event">script-event</parameter>
-		<parameter name="id-list-ids-script-onclick">list-ids-script-onclick</parameter>
-		<parameter name="id-function-script-fix-onclick">fix-onclick</parameter>
+		<parameter name="id-list-ids-script-active">list-ids-script-active</parameter>
+		<parameter name="id-function-script-fix-active">fix-active</parameter>
+		<parameter name="id-text-shortcuts-prefix">text-shortcuts-prefix</parameter>
 		<!-- Classes parameters -->
 		<parameter name="class-list-image-areas">list-areas</parameter>
 		<parameter name="class-longdescription-link">longdescription-link</parameter>
 		<!-- Data parameters -->
 		<parameter name="data-ignore">data-ignorehatemile</parameter>
 		<parameter name="data-label-required-field">data-labelrequiredfield</parameter>
-		<parameter name="data-pressed">data-pressed</parameter>
-		<parameter name="data-focused">data-focused</parameter>
 		<parameter name="data-accesskey">data-accesskey</parameter>
 		<parameter name="data-list-for-image">data-listforimage</parameter>
 		<parameter name="data-longdescription-for-image">data-longdescriptionforimage</parameter>
 		<!-- Text parameters -->
 		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
+		<parameter name="text-shortcuts-prefix">Shortcuts:</parameter>
+		<parameter name="text-standart-shortcut-prefix">ALT</parameter>
 		<!-- Prefix parameters -->
 		<parameter name="prefix-required-field">*</parameter>
 		<parameter name="prefix-generated-ids">id-</parameter>

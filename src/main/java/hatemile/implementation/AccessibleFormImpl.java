@@ -57,7 +57,7 @@ public class AccessibleFormImpl implements AccessibleForm {
 	protected final String suffixRequiredField;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;
@@ -204,7 +204,7 @@ public class AccessibleFormImpl implements AccessibleForm {
 			}
 			if (input != null) {
 				if (!input.hasAttribute("aria-label")) {
-					String contentLabel = label.getTextContent().trim();
+					String contentLabel = label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim();
 					if (input.hasAttribute("aria-required")) {
 						if ((input.getAttribute("aria-required").trim().toLowerCase().equals("true")) && (!contentLabel.contains(prefixRequiredField))) {
 							contentLabel = prefixRequiredField + " " + contentLabel;

@@ -44,12 +44,12 @@ public class AccessibleEventImpl implements AccessibleEvent {
 	
 	/**
 	 * The id of script element that contains the list of elements that will
-	 * yours events events modified.
+	 * have its events modified.
 	 */
 	protected final String idListIdsScriptOnClick;
 	
 	/**
-	 * The id of script that modified the events of elements.
+	 * The id of script element that modify the events of elements.
 	 */
 	protected final String idFunctionScriptFixOnClick;
 	
@@ -59,7 +59,7 @@ public class AccessibleEventImpl implements AccessibleEvent {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;
@@ -75,8 +75,8 @@ public class AccessibleEventImpl implements AccessibleEvent {
 	protected boolean otherScriptsAdded;
 	
 	/**
-	 * The script element that contains the list of elements that your 
-	 * events modified.
+	 * The script element that contains the list of elements that will 
+	 * have its events modified.
 	 */
 	protected HTMLDOMElement scriptList;
 
@@ -91,8 +91,8 @@ public class AccessibleEventImpl implements AccessibleEvent {
 		prefixId = configure.getParameter("prefix-generated-ids");
 		idScriptEvent = configure.getParameter("id-script-event");
 		dataIgnore = configure.getParameter("data-ignore");
-		idListIdsScriptOnClick = configure.getParameter("id-list-ids-script-onclick");
-		idFunctionScriptFixOnClick = configure.getParameter("id-function-script-fix-onclick");
+		idListIdsScriptOnClick = configure.getParameter("id-list-ids-script-active");
+		idFunctionScriptFixOnClick = configure.getParameter("id-function-script-fix-active");
 		mainScriptAdded = false;
 		otherScriptsAdded = false;
 	}
@@ -167,8 +167,9 @@ public class AccessibleEventImpl implements AccessibleEvent {
 			scriptFunction.setAttribute("id", idFunctionScriptFixOnClick);
 			scriptFunction.setAttribute("type", "text/javascript");
 
-			String javascript = "for (var i = 0, length = idsElementsWithOnClick.length; i < length; i++) {"
-					+ "var element = document.getElementById(idsElementsWithOnClick[i]);"
+			String javascript = "var element;"
+					+ "for (var i = 0, length = idsElementsWithOnClick.length; i < length; i++) {"
+					+ "element = document.getElementById(idsElementsWithOnClick[i]);"
 					+ "if (element.onkeypress == undefined) {"
 					+ "element.onkeypress = function(event) {"
 					+ "onKeyPressEvent(element, event);"
@@ -179,8 +180,8 @@ public class AccessibleEventImpl implements AccessibleEvent {
 					+ "onKeyUpEvent(element, event);"
 					+ "};"
 					+ "}"
-					+ "if (element.onkeypress == undefined) {"
-					+ "element.onkeypress = function(event) {"
+					+ "if (element.onkeydown == undefined) {"
+					+ "element.onkeydown = function(event) {"
 					+ "onKeyDownEvent(element, event);"
 					+ "};"
 					+ "}"
@@ -192,8 +193,8 @@ public class AccessibleEventImpl implements AccessibleEvent {
 	}
 
 	/**
-	 * Add the id of element in list of elements that its
-	 * events modified.
+	 * Add the id of element in list of elements that will
+	 * have its events modified.
 	 * @param element The element with id.
 	 */
 	protected void addElementIdWithOnClick(HTMLDOMElement element) {

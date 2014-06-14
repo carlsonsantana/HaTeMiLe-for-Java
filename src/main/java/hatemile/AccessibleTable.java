@@ -18,7 +18,7 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleImage interface fix the problems of accessibility
+ * The AccessibleTable interface fix the problems of accessibility
  * associated with the tables.
  * @version 1.0
  */

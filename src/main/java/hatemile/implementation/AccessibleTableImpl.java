@@ -44,7 +44,7 @@ public class AccessibleTableImpl implements AccessibleTable {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;
@@ -62,8 +62,8 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Returns the list that represents the table.
-	 * @param part The table header, footer or body.
+	 * Returns a list that represents the table.
+	 * @param part The table header, table footer or table body.
 	 * @return The list that represents the table.
 	 */
 	protected Collection<Collection<HTMLDOMElement>> generatePart(HTMLDOMElement part) {
@@ -76,9 +76,9 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Returns the list that represents with the rowspans.
-	 * @param rows The list that represents without the rowspans.
-	 * @return The list that represents with the rowspans.
+	 * Returns a list that represents the table with the rowspans.
+	 * @param rows The list that represents the table without the rowspans.
+	 * @return The list that represents the table with the rowspans.
 	 */
 	protected Collection<Collection<HTMLDOMElement>> generateRowspan(Collection<Collection<HTMLDOMElement>> rows) {
 		List<Collection<HTMLDOMElement>> copy = new ArrayList<Collection<HTMLDOMElement>>(rows);
@@ -126,9 +126,9 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Returns the list that represents with the colspans.
-	 * @param row The list that represents without the colspans.
-	 * @return The list that represents with the colspans.
+	 * Returns a list that represents the table with the colspans.
+	 * @param row The list that represents the table without the colspans.
+	 * @return The list that represents the table with the colspans.
 	 */
 	protected Collection<HTMLDOMElement> generateColspan(Collection<HTMLDOMElement> row) {
 		List<HTMLDOMElement> copy = new ArrayList<HTMLDOMElement>(row);
@@ -146,9 +146,9 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Validate the table header.
-	 * @param header The table header.
-	 * @return Returns true if the table header is valid or false
+	 * Validate the list that represents the table header.
+	 * @param header The list that represents the table header.
+	 * @return True if the table header is valid or false
 	 * if the table header is not valid.
 	 */
 	protected boolean validateHeader(Collection<Collection<HTMLDOMElement>> header) {
@@ -169,10 +169,10 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Returns the list with ids of rows with same column.
-	 * @param header The table header.
+	 * Returns a list with ids of rows of same column.
+	 * @param header The list that represents the table header.
 	 * @param index The index of columns.
-	 * @return The list with ids of rows with same column.
+	 * @return The list with ids of rows of same column.
 	 */
 	protected Collection<String> returnListIdsColumns(Collection<Collection<HTMLDOMElement>> header, int index) {
 		Collection<String> ids = new ArrayList<String>();
@@ -186,8 +186,8 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Fix the table body or footer.
-	 * @param element The table body or footer.
+	 * Fix the table body or table footer.
+	 * @param element The table body or table footer.
 	 */
 	protected void fixBodyOrFooter(HTMLDOMElement element) {
 		Collection<Collection<HTMLDOMElement>> table = generatePart(element);

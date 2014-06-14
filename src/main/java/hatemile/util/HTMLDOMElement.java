@@ -19,26 +19,26 @@ import java.util.Collection;
 
 /**
  * The HTMLDOMElement interface contains the methods for
- * access HTML element.
+ * access of the HTML element.
  */
 public interface HTMLDOMElement extends Cloneable {
 	
 	/**
 	 * Returns the tag name of element.
-	 * @return The tag name of element in upper case letters.
+	 * @return The tag name of element in uppercase letters.
 	 */
 	public String getTagName();
 	
 	/**
-	 * Returns the value of the attribute.
+	 * Returns the value of a attribute.
 	 * @param name The name of attribute.
 	 * @return The value of the attribute, if the element not
-	 * contains the attribute return null.
+	 * contains the attribute returns null.
 	 */
 	public String getAttribute(String name);
 	
 	/**
-	 * Create or modify the value of attribute.
+	 * Create or modify a attribute.
 	 * @param name The name of attribute.
 	 * @param value The value of attribute.
 	 */
@@ -51,17 +51,17 @@ public interface HTMLDOMElement extends Cloneable {
 	public void removeAttribute(String name);
 	
 	/**
-	 * Returns if the element contains the attribute.
+	 * Returns if the element contains an attribute.
 	 * @param name The name of attribute.
-	 * @return Return true if the element contains the attribute or
+	 * @return True if the element contains the attribute or
 	 * false if the element not contains the attribute.
 	 */
 	public boolean hasAttribute(String name);
 	
 	/**
-	 * Returns if the element contains any attribute.
-	 * @return Return true if the element contains any attribute or
-	 * false if the element not contains any attribute.
+	 * Returns if the element has attributes.
+	 * @return True if the element has attributes or
+	 * false if the element not has attributes.
 	 */
 	public boolean hasAttributes();
 	
@@ -86,7 +86,7 @@ public interface HTMLDOMElement extends Cloneable {
 	public HTMLDOMElement insertAfter(HTMLDOMElement newElement);
 	
 	/**
-	 * Remove the element of the parser.
+	 * Remove this element of the parser.
 	 * @return The removed element.
 	 */
 	public HTMLDOMElement removeElement();
@@ -118,9 +118,9 @@ public interface HTMLDOMElement extends Cloneable {
 	public void appendText(String text);
 	
 	/**
-	 * Returns if the element contains children.
-	 * @return Return true if the element contains children or
-	 * false if the element not contains children.
+	 * Returns if the element has children.
+	 * @return True if the element has children or
+	 * false if the element not has children.
 	 */
 	public boolean hasChildren();
 	
@@ -137,7 +137,7 @@ public interface HTMLDOMElement extends Cloneable {
 	public String getInnerHTML();
 	
 	/**
-	 * Modify the HTML code of this element.
+	 * Modify the inner HTML code of this element.
 	 * @param html The HTML code.
 	 */
 	public void setInnerHTML(String html);

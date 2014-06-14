@@ -49,9 +49,9 @@ public class Configure {
 
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
-	 * @throws ParserConfigurationException The exception throw when the XML file contains a syntax error.
-	 * @throws SAXException The exception throw when the XML file contains a syntax error.
-	 * @throws IOException The exception throw when the file has problems of read.
+	 * @throws ParserConfigurationException The exception thrown when the XML file contains a syntax error.
+	 * @throws SAXException The exception thrown when the XML file contains a syntax error.
+	 * @throws IOException The exception thrown when the file has problems of read.
 	 */
 	public Configure() throws ParserConfigurationException, SAXException, IOException {
 		this("hatemile-configure.xml");
@@ -60,9 +60,9 @@ public class Configure {
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 * @param fileName The full path of file.
-	 * @throws ParserConfigurationException The exception throw when the XML file contains a syntax error.
-	 * @throws SAXException The exception throw when the XML file contains a syntax error.
-	 * @throws IOException The exception throw when the file has problems of read.
+	 * @throws ParserConfigurationException The exception thrown when the XML file contains a syntax error.
+	 * @throws SAXException The exception thrown when the XML file contains a syntax error.
+	 * @throws IOException The exception thrown when the file has problems of read.
 	 */
 	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		parameters = new HashMap<String, String>();

@@ -28,24 +28,24 @@ import org.jsoup.select.Elements;
 
 /**
  * The class JsoupHTMLDOMParser is official implementation of HTMLDOMParser
- * interface for the Jsoup libary.
+ * interface for the Jsoup library.
  * @see HTMLDOMElement
  * @version 1.0
  */
 public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	
 	/**
-	 * The root of the parser.
+	 * The root element of the parser.
 	 */
 	protected Document document;
 	
 	/**
-	 * The founded elements.
+	 * The found elements.
 	 */
 	protected Elements results;
 	
 	/**
-	 * Initizate a new object that encapsulate the parser
+	 * Initializes a new object that encapsulate the parser
 	 * of Jsoup.
 	 * @param code The HTML code.
 	 */
@@ -167,7 +167,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	}
 
 	/**
-	 * Auxiliar method to search if the element if descendant of other element.
+	 * Search if the element is descendant of another element.
 	 * @param reference The reference element.
 	 * @param searched The element searched.
 	 * @return The element searched if it is descendant of reference element or null if not is.

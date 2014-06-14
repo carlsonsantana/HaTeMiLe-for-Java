@@ -16,7 +16,7 @@ limitations under the License.
 package hatemile;
 
 /**
- * The AccessibleSelector interface make changes in selectors.
+ * The AccessibleSelector interface do changes in selectors.
  * @version 1.0
  */
 public interface AccessibleSelector {

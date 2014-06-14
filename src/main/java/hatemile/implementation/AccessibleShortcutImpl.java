@@ -36,24 +36,35 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	protected final HTMLDOMParser parser;
 	
 	/**
-	 * The id of list of shortcuts.
+	 * The id of list element that contains the description
+	 * of shortcuts.
 	 */
 	protected final String idContainerShortcuts;
 	
 	/**
-	 * The id of link that skip the list of shortcuts.
+	 * The id of link element that skip the list of shortcuts.
 	 */
 	protected final String idSkipLinkContainerShortcuts;
 	
 	/**
-	 * The id of anchor after the list of shortcuts.
+	 * The id of anchor element after the list of shortcuts.
 	 */
 	protected final String idSkipContainerShortcuts;
 	
 	/**
-	 * The text of link that skip the list of shortcuts.
+	 * The id of text that precede the shortcuts descriptions.
+	 */
+	protected final String idTextShortcutsPrefix;
+	
+	/**
+	 * The text of link element that skip the list of shortcuts.
 	 */
 	protected final String textSkipLinkContainerShortcuts;
+	
+	/**
+	 * The text that precede the shortcuts descriptions.
+	 */
+	protected final String textShortcutsPrefix;
 	
 	/**
 	 * The name of attribute that link the list item element
@@ -62,15 +73,20 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	protected final String dataAccessKey;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;
 	
 	/**
-	 * The navigator shortcut prefix.
+	 * The browser shortcut prefix.
 	 */
 	protected final String prefix;
+	
+	/**
+	 * Standart browser prefix.
+	 */
+	protected final String standartPrefix;
 	
 	/**
 	 * The list element of shortcuts of page.
@@ -99,8 +115,11 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		idContainerShortcuts = configure.getParameter("id-container-shortcuts");
 		idSkipLinkContainerShortcuts = configure.getParameter("id-skip-link-container-shortcuts");
 		idSkipContainerShortcuts = configure.getParameter("id-skip-container-shortcuts");
+		idTextShortcutsPrefix = configure.getParameter("id-text-shortcuts-prefix");
 		dataAccessKey = configure.getParameter("data-accesskey");
 		textSkipLinkContainerShortcuts = configure.getParameter("text-skip-container-shortcuts");
+		textShortcutsPrefix = configure.getParameter("text-shortcuts-prefix");
+		standartPrefix = configure.getParameter("text-standart-shortcut-prefix");
 		dataIgnore = configure.getParameter("data-ignore");
 		
 		if (userAgent != null) {
@@ -124,7 +143,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 				prefix = "ALT";
 			}
 		} else {
-			prefix = "ALT";
+			prefix = standartPrefix;
 		}
 	}
 	
@@ -189,6 +208,11 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 			anchor.setAttribute("name", idSkipContainerShortcuts);
 			anchor.setAttribute("id", idSkipContainerShortcuts);
 			firstChild.insertBefore(anchor);
+			
+			HTMLDOMElement textContainer = parser.createElement("span");
+			textContainer.setAttribute("id", idTextShortcutsPrefix);
+			textContainer.appendText(textShortcutsPrefix);
+			container.appendElement(textContainer);
 		}
 		HTMLDOMElement htmlList = parser.find(container).findChildren("ul").firstResult();
 		if (htmlList == null) {

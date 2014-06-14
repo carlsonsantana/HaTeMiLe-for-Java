@@ -28,7 +28,7 @@ import org.jsoup.select.Elements;
 
 /**
  * The JsoupHTMLDOMElement class is official implementation of HTMLDOMElement
- * interface for the Jsoup libary.
+ * interface for the Jsoup library.
  * @see HTMLDOMElement
  * @version 1.0
  */
@@ -40,7 +40,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	protected Element element;
 	
 	/**
-	 * Inicializate a new object that encapsulate the
+	 * Initializes a new object that encapsulate the
 	 * Jsoup Element.
 	 * @param element The Jsoup Element.
 	 */

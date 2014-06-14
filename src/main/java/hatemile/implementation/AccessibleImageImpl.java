@@ -74,7 +74,7 @@ public class AccessibleImageImpl implements AccessibleImage {
 	protected final String dataLongDescriptionForImage;
 	
 	/**
-	 * The name of attribute for the element that not can be modified
+	 * The name of attribute for that the element not can be modified
 	 * by HaTeMiLe.
 	 */
 	protected final String dataIgnore;

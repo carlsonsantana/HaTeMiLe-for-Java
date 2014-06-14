@@ -18,15 +18,15 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleImage interface fix the problems of accessibility
+ * The AccessibleShortcut interface fix the problems of accessibility
  * associated with the shortcuts.
  * @version 1.0
  */
 public interface AccessibleShortcut {
 	
 	/**
-	 * Returns the navigator shortcut prefix.
-	 * @return The navigator shortcut prefix.
+	 * Returns the browser shortcut prefix.
+	 * @return The browser shortcut prefix.
 	 */
 	public String getPrefix();
 	

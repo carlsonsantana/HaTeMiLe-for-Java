@@ -16,7 +16,7 @@ limitations under the License.
 package hatemile;
 
 /**
- * The AccessibleImage interface fix the problems of accessibility
+ * The ClienteSideAccessibleShortcut interface fix the problems of accessibility
  * associated with the shortcuts, with more options in by the
  * client-side.
  * @version 1.0
