@@ -27,16 +27,22 @@ public interface AccessibleEvent {
 	 * Fix some problem of accessibility in the events that are
 	 * called when its mouse is over or out the element.
 	 * @param element The element that will be fixed.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
 	public void fixOnHover(HTMLDOMElement element);
 	
 	/**
 	 * Fix some problem of accessibility in the events that are
 	 * called when its mouse is over or out of any element of page.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
 	public void fixOnHovers();
 	
@@ -44,16 +50,22 @@ public interface AccessibleEvent {
 	 * Fix some problem of accessibility in the events that are
 	 * called when its mouse click in the element.
 	 * @param element The element that will be fixed.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
 	public void fixOnClick(HTMLDOMElement element);
 	
 	/**
 	 * Fix some problem of accessibility in the events that are
 	 * called when its mouse click in any elements of page.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
 	public void fixOnClicks();
 }

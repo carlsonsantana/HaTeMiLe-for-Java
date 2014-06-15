@@ -27,29 +27,39 @@ public interface AccessibleTable {
 	/**
 	 * Fix the table header.
 	 * @param tableHeader The table header.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
 	public void fixHeader(HTMLDOMElement tableHeader);
 	
 	/**
 	 * Fix the table footer.
 	 * @param tableFooter The table footer.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
 	public void fixFooter(HTMLDOMElement tableFooter);
 	
 	/**
 	 * Fix the table body.
 	 * @param tableBody The table body.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
 	public void fixBody(HTMLDOMElement tableBody);
 	
 	/**
 	 * Fix the table.
 	 * @param table The table.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
 	public void fixTable(HTMLDOMElement table);
 	
 	/**
 	 * Fix the tables.
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
+	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
 	public void fixTables();
 }
