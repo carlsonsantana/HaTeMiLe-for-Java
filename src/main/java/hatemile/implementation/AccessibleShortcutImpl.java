@@ -54,7 +54,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	/**
 	 * The id of text that precede the shortcuts descriptions.
 	 */
-	protected final String idTextShortcutsPrefix;
+	protected final String idTextShortcuts;
 	
 	/**
 	 * The text of link element that skip the list of shortcuts.
@@ -64,7 +64,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	/**
 	 * The text that precede the shortcuts descriptions.
 	 */
-	protected final String textShortcutsPrefix;
+	protected final String textShortcuts;
 	
 	/**
 	 * The name of attribute that link the list item element
@@ -105,7 +105,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
-	 * images of parser.
+	 * shortcuts of parser.
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 * @param userAgent The user agent of the user.
@@ -115,10 +115,10 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		idContainerShortcuts = configure.getParameter("id-container-shortcuts");
 		idSkipLinkContainerShortcuts = configure.getParameter("id-skip-link-container-shortcuts");
 		idSkipContainerShortcuts = configure.getParameter("id-skip-container-shortcuts");
-		idTextShortcutsPrefix = configure.getParameter("id-text-shortcuts-prefix");
+		idTextShortcuts = configure.getParameter("id-text-shortcuts");
 		dataAccessKey = configure.getParameter("data-accesskey");
 		textSkipLinkContainerShortcuts = configure.getParameter("text-skip-container-shortcuts");
-		textShortcutsPrefix = configure.getParameter("text-shortcuts-prefix");
+		textShortcuts = configure.getParameter("text-shortcuts");
 		standartPrefix = configure.getParameter("text-standart-shortcut-prefix");
 		dataIgnore = configure.getParameter("data-ignore");
 		
@@ -210,8 +210,8 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 			firstChild.insertBefore(anchor);
 			
 			HTMLDOMElement textContainer = parser.createElement("span");
-			textContainer.setAttribute("id", idTextShortcutsPrefix);
-			textContainer.appendText(textShortcutsPrefix);
+			textContainer.setAttribute("id", idTextShortcuts);
+			textContainer.appendText(textShortcuts);
 			container.appendElement(textContainer);
 		}
 		HTMLDOMElement htmlList = parser.find(container).findChildren("ul").firstResult();

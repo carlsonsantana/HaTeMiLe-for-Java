@@ -20,6 +20,7 @@ import hatemile.util.HTMLDOMElement;
 /**
  * The AccessibleEvent interface fix the problems of accessibility
  * associated with Javascript events in the elements.
+ * @version 1.0
  */
 public interface AccessibleEvent {
 	

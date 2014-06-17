@@ -8,7 +8,7 @@
 		<parameter name="id-script-event">script-event</parameter>
 		<parameter name="id-list-ids-script-active">list-ids-script-active</parameter>
 		<parameter name="id-function-script-fix-active">fix-active</parameter>
-		<parameter name="id-text-shortcuts-prefix">text-shortcuts-prefix</parameter>
+		<parameter name="id-text-shortcuts">text-shortcuts</parameter>
 		<!-- Classes parameters -->
 		<parameter name="class-list-image-areas">list-areas</parameter>
 		<parameter name="class-longdescription-link">longdescription-link</parameter>
@@ -20,7 +20,7 @@
 		<parameter name="data-longdescription-for-image">data-longdescriptionforimage</parameter>
 		<!-- Text parameters -->
 		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
-		<parameter name="text-shortcuts-prefix">Shortcuts:</parameter>
+		<parameter name="text-shortcuts">Shortcuts:</parameter>
 		<parameter name="text-standart-shortcut-prefix">ALT</parameter>
 		<!-- Prefix parameters -->
 		<parameter name="prefix-required-field">*</parameter>

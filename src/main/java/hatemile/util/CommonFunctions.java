@@ -36,7 +36,7 @@ public class CommonFunctions {
 	}
 
 	/**
-	 * Generate the id for the element.
+	 * Generate a id for a element.
 	 * @param element The element.
 	 * @param prefix The prefix of id.
 	 */

@@ -114,7 +114,7 @@ public class Configure {
 	}
 
 	/**
-	 * Returns the value of the parameter of configuration.
+	 * Returns the value of a parameter of configuration.
 	 * @param parameter The parameter.
 	 * @return The value of the parameter.
 	 */

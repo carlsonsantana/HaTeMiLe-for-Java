@@ -82,7 +82,7 @@ public class SelectorChange {
 
 	/**
 	 * Change the attribute.
-	 * @param attribute The new attribute. 
+	 * @param attribute The new attribute.
 	 */
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;

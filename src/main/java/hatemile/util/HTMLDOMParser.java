@@ -100,7 +100,7 @@ public interface HTMLDOMParser {
 	
 	/**
 	 * Returns a list with all elements found.
-	 * @return A list with all elements found.
+	 * @return The list with all elements found.
 	 */
 	public Collection<HTMLDOMElement> listResults();
 	
