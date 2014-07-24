@@ -18,9 +18,9 @@ package hatemile.util;
 import java.util.Collection;
 
 /**
- * The HTMLDOMElement interface contains the methods for
- * access of the HTML element.
- * @version 1.0
+ * The HTMLDOMElement interface contains the methods for access of the HTML
+ * element.
+ * @version 2014-07-23
  */
 public interface HTMLDOMElement extends Cloneable {
 	
@@ -33,8 +33,8 @@ public interface HTMLDOMElement extends Cloneable {
 	/**
 	 * Returns the value of a attribute.
 	 * @param name The name of attribute.
-	 * @return The value of the attribute, if the element not
-	 * contains the attribute returns null.
+	 * @return The value of the attribute, if the element not contains the
+	 * attribute returns null.
 	 */
 	public String getAttribute(String name);
 	
@@ -52,17 +52,17 @@ public interface HTMLDOMElement extends Cloneable {
 	public void removeAttribute(String name);
 	
 	/**
-	 * Returns if the element contains an attribute.
+	 * Returns if the element has an attribute.
 	 * @param name The name of attribute.
-	 * @return True if the element contains the attribute or
-	 * false if the element not contains the attribute.
+	 * @return True if the element has the attribute or false if the element not
+	 * has the attribute.
 	 */
 	public boolean hasAttribute(String name);
 	
 	/**
 	 * Returns if the element has attributes.
-	 * @return True if the element has attributes or
-	 * false if the element not has attributes.
+	 * @return True if the element has attributes or false if the element not
+	 * has attributes.
 	 */
 	public boolean hasAttributes();
 	
@@ -101,7 +101,7 @@ public interface HTMLDOMElement extends Cloneable {
 	
 	/**
 	 * Append a element child.
-	 * @param element The element will be inserted.
+	 * @param element The element that be inserted.
 	 * @return The element inserted.
 	 */
 	public HTMLDOMElement appendElement(HTMLDOMElement element);
@@ -120,14 +120,14 @@ public interface HTMLDOMElement extends Cloneable {
 	
 	/**
 	 * Returns if the element has children.
-	 * @return True if the element has children or
-	 * false if the element not has children.
+	 * @return True if the element has children or false if the element not has
+	 * children.
 	 */
 	public boolean hasChildren();
 	
 	/**
 	 * Returns the parent element of this element.
-	 * @return The parente element of this element.
+	 * @return The parent element of this element.
 	 */
 	public HTMLDOMElement getParentElement();
 	
@@ -162,12 +162,6 @@ public interface HTMLDOMElement extends Cloneable {
 	public void setData(Object data);
 	
 	/**
-	 * Clone this element.
-	 * @return The clone.
-	 */
-	public HTMLDOMElement cloneElement();
-	
-	/**
 	 * Returns the first element child of this element.
 	 * @return The first element child of this element.
 	 */
@@ -178,4 +172,10 @@ public interface HTMLDOMElement extends Cloneable {
 	 * @return The last element child of this element.
 	 */
 	public HTMLDOMElement getLastElementChild();
+	
+	/**
+	 * Clone this element.
+	 * @return The clone.
+	 */
+	public HTMLDOMElement cloneElement();
 }

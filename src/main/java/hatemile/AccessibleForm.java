@@ -18,9 +18,9 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleForm interface fix the problems of accessibility
- * associated with the forms.
- * @version 1.0
+ * The AccessibleForm interface fix the problems of accessibility associated
+ * with the forms.
+ * @version 2014-07-23
  */
 public interface AccessibleForm {
 	
@@ -44,32 +44,6 @@ public interface AccessibleForm {
 	public void fixRequiredFields();
 	
 	/**
-	 * Fix disabled field.
-	 * @param disabledField The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-disabled" target="_blank">aria-disabled (property) | Supported States and Properties</a>
-	 */
-	public void fixDisabledField(HTMLDOMElement disabledField);
-	
-	/**
-	 * Fix disabled fields.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-disabled" target="_blank">aria-disabled (property) | Supported States and Properties</a>
-	 */
-	public void fixDisabledFields();
-	
-	/**
-	 * Fix read-only field.
-	 * @param readOnlyField The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-readonly" target="_blank">aria-readonly (property) | Supported States and Properties</a>
-	 */
-	public void fixReadOnlyField(HTMLDOMElement readOnlyField);
-	
-	/**
-	 * Fix read-only fields.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-readonly" target="_blank">aria-readonly (property) | Supported States and Properties</a>
-	 */
-	public void fixReadOnlyFields();
-	
-	/**
 	 * Fix range field.
 	 * @param rangeField The element that will be fixed.
 	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-valuemin" target="_blank">aria-valuemin (property) | Supported States and Properties</a>
@@ -89,33 +63,7 @@ public interface AccessibleForm {
 	public void fixRangeFields();
 	
 	/**
-	 * Fix text field.
-	 * @param textField The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-multiline" target="_blank">aria-multiline (property) | Supported States and Properties</a>
-	 */
-	public void fixTextField(HTMLDOMElement textField);
-	
-	/**
-	 * Fix text fields.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-multiline" target="_blank">aria-multiline (property) | Supported States and Properties</a>
-	 */
-	public void fixTextFields();
-	
-	/**
-	 * Fix select field.
-	 * @param selectField The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-multiselectable" target="_blank">aria-multiselectable (property) | Supported States and Properties</a>
-	 */
-	public void fixSelectField(HTMLDOMElement selectField);
-	
-	/**
-	 * Fix select fields.
-	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-multiselectable" target="_blank">aria-multiselectable (property) | Supported States and Properties</a>
-	 */
-	public void fixSelectFields();
-	
-	/**
-	 * Fix field with label.
+	 * Fix field associated with the label.
 	 * @param label The element that will be fixed.
 	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-label" target="_blank">aria-label (property) | Supported States and Properties</a>
 	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-labelledby" target="_blank">aria-labelledby (property) | Supported States and Properties</a>
@@ -123,9 +71,22 @@ public interface AccessibleForm {
 	public void fixLabel(HTMLDOMElement label);
 	
 	/**
-	 * Fix fields with labels.
+	 * Fix fields associated with the labels.
 	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-label" target="_blank">aria-label (property) | Supported States and Properties</a>
 	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-labelledby" target="_blank">aria-labelledby (property) | Supported States and Properties</a>
 	 */
 	public void fixLabels();
+	
+	/**
+	 * Fix element to inform if has autocomplete and the type.
+	 * @param element The element that will be fixed.
+	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-autocomplete" target="_blank">aria-autocomplete (property) | Supported States and Properties</a>
+	 */
+	public void fixAutoComplete(HTMLDOMElement element);
+	
+	/**
+	 * Fix elements to inform if has autocomplete and the type.
+	 * @see <a href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-autocomplete" target="_blank">aria-autocomplete (property) | Supported States and Properties</a>
+	 */
+	public void fixAutoCompletes();
 }

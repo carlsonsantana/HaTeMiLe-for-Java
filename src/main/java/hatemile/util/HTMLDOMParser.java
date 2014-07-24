@@ -18,9 +18,8 @@ package hatemile.util;
 import java.util.Collection;
 
 /**
- * The HTMLDOMParser interface contains the methods for
- * access a native parser.
- * @version 1.0
+ * The HTMLDOMParser interface contains the methods for access a native parser.
+ * @version 2014-07-23
  */
 public interface HTMLDOMParser {
 	
@@ -34,13 +33,13 @@ public interface HTMLDOMParser {
 	/**
 	 * Find if a element is contained in parser.
 	 * @param element The element.
-	 * @return The parser with the element, if the element is contained in parser.
+	 * @return The parser with the element, if the element is contained in
+	 * parser.
 	 */
 	public HTMLDOMParser find(HTMLDOMElement element);
 	
 	/**
-	 * Find all elements in the parser by selector, children of
-	 * found elements.
+	 * Find all elements in the parser by selector, children of found elements.
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
@@ -49,14 +48,14 @@ public interface HTMLDOMParser {
 	/**
 	 * Find if a element is a child of found elements.
 	 * @param child The element.
-	 * @return The parser with the element, if the element is child
-	 * of found elements.
+	 * @return The parser with the element, if the element is child of found
+	 * elements.
 	 */
 	public HTMLDOMParser findChildren(HTMLDOMElement child);
 	
 	/**
-	 * Find all elements in the parser by selector, descendants of
-	 * found elements.
+	 * Find all elements in the parser by selector, descendants of found
+	 * elements.
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
@@ -65,14 +64,13 @@ public interface HTMLDOMParser {
 	/**
 	 * Find if a element is descendant of found elements.
 	 * @param element The element.
-	 * @return The parser with the element, if the element is descendant
-	 * of found elements.
+	 * @return The parser with the element, if the element is descendant of
+	 * found elements.
 	 */
 	public HTMLDOMParser findDescendants(HTMLDOMElement element);
 	
 	/**
-	 * Find all elements in the parser by selector, ancestors of
-	 * found elements.
+	 * Find all elements in the parser by selector, ancestors of found elements.
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
@@ -81,8 +79,8 @@ public interface HTMLDOMParser {
 	/**
 	 * Find if a element is ancestor of found elements.
 	 * @param element The element.
-	 * @return The parser with the element, if the element is ancestor
-	 * of found elements.
+	 * @return The parser with the element, if the element is ancestor of found
+	 * elements.
 	 */
 	public HTMLDOMParser findAncestors(HTMLDOMElement element);
 	
@@ -107,7 +105,7 @@ public interface HTMLDOMParser {
 	/**
 	 * Create a element.
 	 * @param tag The tag of element.
-	 * @return The elemente created.
+	 * @return The element created.
 	 */
 	public HTMLDOMElement createElement(String tag);
 	
@@ -116,6 +114,12 @@ public interface HTMLDOMParser {
 	 * @return The HTML code of parser.
 	 */
 	public String getHTML();
+	
+	/**
+	 * Returns the parser.
+	 * @return The parser or root element of the parser.
+	 */
+	public Object getParser();
 	
 	/**
 	 * Clear the memory of this object.

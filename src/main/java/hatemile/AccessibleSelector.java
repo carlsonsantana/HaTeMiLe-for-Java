@@ -17,7 +17,7 @@ package hatemile;
 
 /**
  * The AccessibleSelector interface do changes in selectors.
- * @version 1.0
+ * @version 2014-07-23
  */
 public interface AccessibleSelector {
 	

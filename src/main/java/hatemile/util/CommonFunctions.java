@@ -16,9 +16,8 @@ limitations under the License.
 package hatemile.util;
 
 /**
- * The CommonFuncionts class contains the used methods by HaTeMiLe
- * classes.
- * @version 1.0
+ * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
+ * @version 2014-07-23
  */
 public class CommonFunctions {
 	
@@ -28,13 +27,12 @@ public class CommonFunctions {
 	protected static int count = 0;
 	
 	/**
-	 * The private constructor prevents that the class not can be
-	 * initialized.
+	 * The private constructor prevents that the class not can be initialized.
 	 */
 	private CommonFunctions() {
 		
 	}
-
+	
 	/**
 	 * Generate a id for a element.
 	 * @param element The element.
@@ -46,34 +44,36 @@ public class CommonFunctions {
 			count++;
 		}
 	}
-
+	
 	/**
 	 * Copy a list of attributes of a element for other element.
 	 * @param element1 The element that have attributes copied.
 	 * @param element2 The element that copy the attributes.
 	 * @param attributes The list of attributes that will be copied.
 	 */
-	public static void setListAttributes(HTMLDOMElement element1, HTMLDOMElement element2, String[] attributes) {
+	public static void setListAttributes(HTMLDOMElement element1
+			, HTMLDOMElement element2, String[] attributes) {
 		for (int i = 0, length = attributes.length; i < length; i++) {
 			if (element1.hasAttribute(attributes[i])) {
 				element2.setAttribute(attributes[i], element1.getAttribute(attributes[i]));
 			}
 		}
 	}
-
+	
 	/**
 	 * Increase a item in a HTML list.
 	 * @param list The HTML list.
 	 * @param stringToIncrease The value of item.
-	 * @return The HTML list with the item added, if the item
-	 * not was contained in list.
+	 * @return The HTML list with the item added, if the item not was contained
+	 * in list.
 	 */
 	public static String increaseInList(String list, String stringToIncrease) {
-		if (((list != null) && (!list.isEmpty())) && ((stringToIncrease != null) && (!stringToIncrease.isEmpty()))) {
+		if ((list != null) && (!list.isEmpty()) && (stringToIncrease != null)
+				&& (!stringToIncrease.isEmpty())) {
 			String[] elements = list.split("[ \n\t\r]+");
 			for (int i = 0, length = elements.length; i < length; i++) {
-				String string = elements[i];
-				if (string.equals(stringToIncrease)) {
+				String element = elements[i];
+				if (element.equals(stringToIncrease)) {
 					return list;
 				}
 			}

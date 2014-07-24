@@ -18,9 +18,9 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleImage interface fix the problems of accessibility
- * associated with the images.
- * @version 1.0
+ * The AccessibleImage interface fix the problems of accessibility associated
+ * with the images.
+ * @version 2014-07-23
  */
 public interface AccessibleImage {
 	
@@ -38,15 +38,15 @@ public interface AccessibleImage {
 	public void fixMaps();
 	
 	/**
-	 * Fix the long description of the image.
-	 * @param image The image with long description.
+	 * Fix the element with long description.
+	 * @param element The element with long description.
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G73.html" target="_blank">G73: Providing a long description in another location with a link to it that is immediately adjacent to the non-text content</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G74.html" target="_blank">G74: Providing a long description in text near the non-text content, with a reference to the location of the long description in the short description</a>
 	 */
-	public void fixLongDescription(HTMLDOMElement image);
+	public void fixLongDescription(HTMLDOMElement element);
 	
 	/**
-	 * Fix the longs descriptions of the images.
+	 * Fix the elements with longs descriptions.
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G73.html" target="_blank">G73: Providing a long description in another location with a link to it that is immediately adjacent to the non-text content</a>
 	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G74.html" target="_blank">G74: Providing a long description in text near the non-text content, with a reference to the location of the long description in the short description</a>
 	 */

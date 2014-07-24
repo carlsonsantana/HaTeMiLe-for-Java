@@ -33,41 +33,47 @@ import org.xml.sax.SAXException;
 
 /**
  * The Configure class contains the configuration of HaTeMiLe.
- * @version 1.0
+ * @version 2014-07-23
  */
 public class Configure {
 	
 	/**
 	 * The parameters of configuration of HaTeMiLe.
 	 */
-	protected Map<String, String> parameters;
+	protected final Map<String, String> parameters;
 	
 	/**
 	 * The changes that will be done in selectors.
 	 */
-	protected Collection<SelectorChange> selectorChanges;
-
+	protected final Collection<SelectorChange> selectorChanges;
+	
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
-	 * @throws ParserConfigurationException The exception thrown when the XML file contains a syntax error.
-	 * @throws SAXException The exception thrown when the XML file contains a syntax error.
-	 * @throws IOException The exception thrown when the file has problems of read.
+	 * @throws ParserConfigurationException The exception thrown when the XML
+	 * file contains a syntax error.
+	 * @throws SAXException The exception thrown when the XML file contains a
+	 * syntax error.
+	 * @throws IOException The exception thrown when the file has problems of
+	 * read.
 	 */
 	public Configure() throws ParserConfigurationException, SAXException, IOException {
 		this("hatemile-configure.xml");
 	}
-
+	
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 * @param fileName The full path of file.
-	 * @throws ParserConfigurationException The exception thrown when the XML file contains a syntax error.
-	 * @throws SAXException The exception thrown when the XML file contains a syntax error.
-	 * @throws IOException The exception thrown when the file has problems of read.
+	 * @throws ParserConfigurationException The exception thrown when the XML
+	 * file contains a syntax error.
+	 * @throws SAXException The exception thrown when the XML file contains a
+	 * syntax error.
+	 * @throws IOException The exception thrown when the file has problems of
+	 * read.
 	 */
 	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		parameters = new HashMap<String, String>();
 		selectorChanges = new ArrayList<SelectorChange>();
-
+		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 		Document document = documentBuilder.parse(File.class.getResourceAsStream("/" + fileName));
@@ -86,18 +92,19 @@ public class Configure {
 				}
 			}
 		}
-
+		
 		if (nodeParameters != null) {
 			for (int i = 0; i < nodeParameters.getLength(); i++) {
 				if (nodeParameters.item(i) instanceof Element) {
 					Element parameter = (Element) nodeParameters.item(i);
-					if ((parameter.getTagName().toUpperCase().equals("PARAMETER")) && (parameter.hasAttribute("name"))) {
+					if ((parameter.getTagName().toUpperCase().equals("PARAMETER"))
+							&& (parameter.hasAttribute("name"))) {
 						parameters.put(parameter.getAttribute("name"), parameter.getTextContent());
 					}
 				}
 			}
 		}
-
+		
 		if (nodeSelectorChanges != null) {
 			for (int i = 0; i < nodeSelectorChanges.getLength(); i++) {
 				if (nodeSelectorChanges.item(i) instanceof Element) {
@@ -106,13 +113,23 @@ public class Configure {
 							&& (selector.hasAttribute("selector"))
 							&& (selector.hasAttribute("attribute"))
 							&& (selector.hasAttribute("value-attribute"))) {
-						selectorChanges.add(new SelectorChange(selector.getAttribute("selector"), selector.getAttribute("attribute"), selector.getAttribute("value-attribute")));
+						selectorChanges.add(new SelectorChange(selector.getAttribute("selector")
+								, selector.getAttribute("attribute")
+								, selector.getAttribute("value-attribute")));
 					}
 				}
 			}
 		}
 	}
-
+	
+	/**
+	 * Returns the parameters of configuration.
+	 * @return The parameters of configuration.
+	 */
+	public Map<String, String> getParameters() {
+		return new HashMap<String, String>(parameters);
+	}
+	
 	/**
 	 * Returns the value of a parameter of configuration.
 	 * @param parameter The parameter.
@@ -121,12 +138,30 @@ public class Configure {
 	public String getParameter(String parameter) {
 		return parameters.get(parameter);
 	}
-
+	
 	/**
 	 * Returns the changes that will be done in selectors.
 	 * @return The changes that will be done in selectors.
 	 */
 	public Collection<SelectorChange> getSelectorChanges() {
-		return selectorChanges;
+		return new ArrayList<SelectorChange>(selectorChanges);
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (this != object) {
+			if (object == null) {
+				return false;
+			}
+			if (!(object instanceof Configure)) {
+				return false;
+			}
+			Configure configure = (Configure) object;
+			if ((!parameters.equals(configure.getParameters()))
+					|| (!selectorChanges.equals(configure.getSelectorChanges()))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

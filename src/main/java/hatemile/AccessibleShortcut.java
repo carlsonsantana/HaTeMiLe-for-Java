@@ -18,9 +18,9 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleShortcut interface fix the problems of accessibility
- * associated with the shortcuts.
- * @version 1.0
+ * The AccessibleShortcut interface fix the problems of accessibility associated
+ * with the shortcuts.
+ * @version 2014-07-23
  */
 public interface AccessibleShortcut {
 	
@@ -32,7 +32,7 @@ public interface AccessibleShortcut {
 	
 	/**
 	 * Fix the element with shortcuts.
-	 * @param element The element with shortcuts. 
+	 * @param element The element with shortcuts.
 	 */
 	public void fixShortcut(HTMLDOMElement element);
 	

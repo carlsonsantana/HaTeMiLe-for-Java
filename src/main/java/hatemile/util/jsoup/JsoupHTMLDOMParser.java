@@ -29,8 +29,7 @@ import org.jsoup.select.Elements;
 /**
  * The class JsoupHTMLDOMParser is official implementation of HTMLDOMParser
  * interface for the Jsoup library.
- * @see HTMLDOMElement
- * @version 1.0
+ * @version 2014-07-23
  */
 public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	
@@ -45,12 +44,41 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	protected Elements results;
 	
 	/**
-	 * Initializes a new object that encapsulate the parser
-	 * of Jsoup.
+	 * Initializes a new object that encapsulate the parser of Jsoup.
+	 * @param document The root element of the parser.
+	 */
+	public JsoupHTMLDOMParser(Document document) {
+		this.document = document;
+	}
+	
+	/**
+	 * Initializes a new object that encapsulate the parser of Jsoup.
 	 * @param code The HTML code.
 	 */
 	public JsoupHTMLDOMParser(String code) {
 		document = Jsoup.parse(code);
+	}
+	
+	/**
+	 * Search if the element is descendant of another element.
+	 * @param reference The reference element.
+	 * @param searched The element searched.
+	 * @return The element searched if it is descendant of reference element or
+	 * null if not is.
+	 */
+	protected Element getDescendantOf(Element reference, Element searched) {
+		if (reference.children().contains(searched)) {
+			return searched;
+		} else if (!reference.children().isEmpty()) {
+			Elements children = reference.children();
+			for (Element child : children) {
+				Element element = getDescendantOf(child, searched);
+				if (element != null) {
+					return element;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public HTMLDOMParser find(String selector) {
@@ -64,7 +92,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		results = new Elements(elements);
 		return this;
 	}
-
+	
 	public HTMLDOMParser findChildren(String selector) {
 		Collection<Element> elements = new ArrayList<Element>();
 		Elements descendants = results.select(selector);
@@ -106,7 +134,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		results = new Elements(elements);
 		return this;
 	}
-
+	
 	public HTMLDOMParser findAncestors(String selector) {
 		Elements findedElements = document.select(selector);
 		Collection<Element> elements = new ArrayList<Element>();
@@ -135,7 +163,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		results = null;
 		document = null;
 	}
-
+	
 	public HTMLDOMElement firstResult() {
 		if (results.isEmpty()) {
 			return null;
@@ -149,7 +177,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		}
 		return new JsoupHTMLDOMElement(results.last());
 	}
-
+	
 	public Collection<HTMLDOMElement> listResults() {
 		Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
 		for (Element element : results) {
@@ -157,33 +185,33 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		}
 		return elements;
 	}
-
+	
 	public String getHTML() {
 		return JsoupAuxiliarToString.toString(document);
 	}
-
+	
+	public Object getParser() {
+		return document;
+	}
+	
 	public HTMLDOMElement createElement(String tag) {
 		return new JsoupHTMLDOMElement(document.createElement(tag));
 	}
-
-	/**
-	 * Search if the element is descendant of another element.
-	 * @param reference The reference element.
-	 * @param searched The element searched.
-	 * @return The element searched if it is descendant of reference element or null if not is.
-	 */
-	protected Element getDescendantOf(Element reference, Element searched) {
-		if (reference.children().contains(searched)) {
-			return searched;
-		} else if (!reference.children().isEmpty()) {
-			Elements children = reference.children();
-			for (Element child : children) {
-				Element element = getDescendantOf(child, searched);
-				if (element != null) {
-					return element;
-				}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (this != object) {
+			if (object == null) {
+				return false;
+			}
+			if (!(object instanceof JsoupHTMLDOMParser)) {
+				return false;
+			}
+			HTMLDOMParser parser = (HTMLDOMParser) object;
+			if (!document.equals(parser.getParser())) {
+				return false;
 			}
 		}
-		return null;
+		return true;
 	}
 }

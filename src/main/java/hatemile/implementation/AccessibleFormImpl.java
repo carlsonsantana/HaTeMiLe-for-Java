@@ -26,8 +26,7 @@ import java.util.Collection;
 /**
  * The AccessibleFormImpl class is official implementation of AccessibleForm
  * interface.
- * @see AccessibleForm
- * @version 1.0
+ * @version 2014-07-23
  */
 public class AccessibleFormImpl implements AccessibleForm {
 	
@@ -42,7 +41,7 @@ public class AccessibleFormImpl implements AccessibleForm {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for the label of required field.
+	 * The name of attribute for the label of a required field.
 	 */
 	protected final String dataLabelRequiredField;
 	
@@ -57,175 +56,218 @@ public class AccessibleFormImpl implements AccessibleForm {
 	protected final String suffixRequiredField;
 	
 	/**
-	 * The name of attribute for that the element not can be modified
-	 * by HaTeMiLe.
+	 * The name of attribute for that the element not can be modified by
+	 * HaTeMiLe.
 	 */
 	protected final String dataIgnore;
 	
 	/**
-	 * Initializes a new object that manipulate the accessibility of the
-	 * forms of parser.
+	 * Initializes a new object that manipulate the accessibility of the forms
+	 * of parser.
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
 	public AccessibleFormImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
-		dataLabelRequiredField = configure.getParameter("data-label-required-field");
+		dataLabelRequiredField = "data-" + configure.getParameter("data-label-required-field");
+		dataIgnore = "data-" + configure.getParameter("data-ignore");
 		prefixRequiredField = configure.getParameter("prefix-required-field");
 		suffixRequiredField = configure.getParameter("suffix-required-field");
-		dataIgnore = configure.getParameter("data-ignore");
 	}
-
+	
+	/**
+	 * Do the label or the aria-label to inform in label that the field is
+	 * required.
+	 * @param label The label.
+	 * @param requiredField The required field.
+	 */
+	protected void fixLabelRequiredField(HTMLDOMElement label, HTMLDOMElement requiredField) {
+		if ((requiredField.hasAttribute("required"))
+				|| ((requiredField.hasAttribute("aria-required"))
+				&& (requiredField.getAttribute("aria-required").toLowerCase().equals("true")))) {
+			if (!label.hasAttribute(dataLabelRequiredField)) {
+				label.setAttribute(dataLabelRequiredField, "true");
+			}
+			
+			if (requiredField.hasAttribute("aria-label")) {
+				String contentLabel = requiredField.getAttribute("aria-label");
+				if ((!prefixRequiredField.isEmpty()) && (!contentLabel.contains(prefixRequiredField))) {
+					contentLabel = prefixRequiredField + " " + contentLabel;
+				}
+				if ((!suffixRequiredField.isEmpty()) && (!contentLabel.contains(suffixRequiredField))) {
+					contentLabel += " " + suffixRequiredField;
+				}
+				requiredField.setAttribute("aria-label", contentLabel);
+			}
+		}
+	}
+	
+	/**
+	 * Fix the control to inform if it has autocomplete and the type.
+	 * @param control The form control.
+	 * @param active If the element has autocomplete.
+	 */
+	protected void fixControlAutoComplete(HTMLDOMElement control, Boolean active) {
+		if (Boolean.TRUE.equals(active)) {
+			control.setAttribute("aria-autocomplete", "both");
+		} else if (!((active == null) && (control.hasAttribute("aria-autocomplete")))) {
+			if (control.hasAttribute("list")) {
+				HTMLDOMElement list = parser.find("datalist[id=" + control.getAttribute("list") + "]")
+						.firstResult();
+				if (list != null) {
+					control.setAttribute("aria-autocomplete", "list");
+				}
+			}
+			if ((Boolean.FALSE.equals(active)) && ((!control.hasAttribute("aria-autocomplete"))
+					|| (!control.getAttribute("aria-autocomplete").toLowerCase().equals("list")))) {
+				control.setAttribute("aria-autocomplete", "none");
+			}
+		}
+	}
+	
 	public void fixRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
+			
 			Collection<HTMLDOMElement> labels = null;
 			if (requiredField.hasAttribute("id")) {
-				labels = parser.find("label[for=" + requiredField.getAttribute("id").trim() + "]").listResults();
+				labels = parser.find("label[for=" + requiredField.getAttribute("id") + "]")
+						.listResults();
 			}
 			if ((labels == null) || (labels.isEmpty())) {
 				labels = parser.find(requiredField).findAncestors("label").listResults();
 			}
 			for (HTMLDOMElement label : labels) {
-				label.setAttribute(dataLabelRequiredField, "true");
+				fixLabelRequiredField(label, requiredField);
 			}
 		}
 	}
-
+	
 	public void fixRequiredFields() {
-		Collection<HTMLDOMElement> elements = parser.find("[required]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixRequiredField(element);
+		Collection<HTMLDOMElement> requiredFields = parser.find("[required]").listResults();
+		for (HTMLDOMElement requiredField : requiredFields) {
+			if (!requiredField.hasAttribute(dataIgnore)) {
+				fixRequiredField(requiredField);
 			}
 		}
 	}
-
-	public void fixDisabledField(HTMLDOMElement disabledField) {
-		if (disabledField.hasAttribute("disabled")) {
-			disabledField.setAttribute("aria-disabled", "true");
-		}
-	}
-
-	public void fixDisabledFields() {
-		Collection<HTMLDOMElement> elements = parser.find("[disabled]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixDisabledField(element);
-			}
-		}
-	}
-
-	public void fixReadOnlyField(HTMLDOMElement readOnlyField) {
-		if (readOnlyField.hasAttribute("readonly")) {
-			readOnlyField.setAttribute("aria-readonly", "true");
-		}
-	}
-
-	public void fixReadOnlyFields() {
-		Collection<HTMLDOMElement> elements = parser.find("[readonly]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixReadOnlyField(element);
-			}
-		}
-	}
-
+	
 	public void fixRangeField(HTMLDOMElement rangeField) {
 		if (rangeField.hasAttribute("min")) {
-			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min").trim());
+			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min"));
 		}
 		if (rangeField.hasAttribute("max")) {
-			rangeField.setAttribute("aria-valuemax", rangeField.getAttribute("max").trim());
+			rangeField.setAttribute("aria-valuemax", rangeField.getAttribute("max"));
 		}
 	}
-
+	
 	public void fixRangeFields() {
-		Collection<HTMLDOMElement> elements = parser.find("[min],[max]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixRangeField(element);
+		Collection<HTMLDOMElement> rangeFields = parser.find("[min],[max]").listResults();
+		for (HTMLDOMElement rangeField : rangeFields) {
+			if (!rangeField.hasAttribute(dataIgnore)) {
+				fixRangeField(rangeField);
 			}
 		}
 	}
-
-	public void fixTextField(HTMLDOMElement textField) {
-		if ((textField.getTagName().equals("INPUT")) && (textField.hasAttribute("type"))) {
-			String type = textField.getAttribute("type").trim().toLowerCase();
-			if ((type.equals("text")) || (type.equals("password")) || (type.equals("search")) || (type.equals("email"))
-					|| (type.equals("url")) || (type.equals("tel")) || (type.equals("number"))) {
-				textField.setAttribute("aria-multiline", "false");
-			}
-		} else if (textField.getTagName().equals("TEXTAREA")) {
-			textField.setAttribute("aria-multiline", "true");
-		}
-	}
-
-	public void fixTextFields() {
-		Collection<HTMLDOMElement> elements = parser.find("input[type=text],input[type=password],input[type=search],input[type=email],input[type=url],input[type=tel],input[type=number],textarea").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixTextField(element);
-			}
-		}
-	}
-
-	public void fixSelectField(HTMLDOMElement selectField) {
-		if (selectField.getTagName().equals("SELECT")) {
-			if (selectField.hasAttribute("multiple")) {
-				selectField.setAttribute("aria-multiselectable", "true");
-			} else {
-				selectField.setAttribute("aria-multiselectable", "false");
-			}
-		}
-	}
-
-	public void fixSelectFields() {
-		Collection<HTMLDOMElement> elements = parser.find("select").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixSelectField(element);
-			}
-		}
-	}
-
+	
 	public void fixLabel(HTMLDOMElement label) {
 		if (label.getTagName().equals("LABEL")) {
-			HTMLDOMElement input;
+			HTMLDOMElement field;
 			if (label.hasAttribute("for")) {
-				input = parser.find("#" + label.getAttribute("for").trim()).firstResult();
+				field = parser.find("#" + label.getAttribute("for")).firstResult();
 			} else {
-				input = parser.find(label).findDescendants("input,select,textarea").firstResult();
-				if (input != null) {
-					CommonFunctions.generateId(input, prefixId);
-					label.setAttribute("for", input.getAttribute("id").trim());
+				field = parser.find(label).findDescendants("input,select,textarea").firstResult();
+				
+				if (field != null) {
+					CommonFunctions.generateId(field, prefixId);
+					label.setAttribute("for", field.getAttribute("id"));
 				}
 			}
-			if (input != null) {
-				if (!input.hasAttribute("aria-label")) {
-					String contentLabel = label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim();
-					if (input.hasAttribute("aria-required")) {
-						if ((input.getAttribute("aria-required").trim().toLowerCase().equals("true")) && (!contentLabel.contains(prefixRequiredField))) {
-							contentLabel = prefixRequiredField + " " + contentLabel;
-						}
-						if ((input.getAttribute("aria-required").trim().toLowerCase().equals("true")) && (!contentLabel.contains(suffixRequiredField))) {
-							contentLabel += " " + suffixRequiredField;
-						}
-					}
-					input.setAttribute("aria-label", contentLabel);
+			if (field != null) {
+				if (!field.hasAttribute("aria-label")) {
+					field.setAttribute("aria-label"
+							, label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim());
 				}
+				
+				fixLabelRequiredField(label, field);
+				
 				CommonFunctions.generateId(label, prefixId);
-				input.setAttribute("aria-labelledby", CommonFunctions.increaseInList(input.getAttribute("aria-labelledby"), label.getAttribute("id")));
+				field.setAttribute("aria-labelledby", CommonFunctions.increaseInList
+						(field.getAttribute("aria-labelledby"), label.getAttribute("id")));
+			}
+		}
+	}
+	
+	public void fixLabels() {
+		Collection<HTMLDOMElement> labels = parser.find("label").listResults();
+		for (HTMLDOMElement label : labels) {
+			if (!label.hasAttribute(dataIgnore)) {
+				fixLabel(label);
 			}
 		}
 	}
 
-	public void fixLabels() {
-		Collection<HTMLDOMElement> elements = parser.find("label").listResults();
+	public void fixAutoComplete(HTMLDOMElement element) {
+		if (element.hasAttribute("autocomplete")) {
+			Boolean active;
+			String value = element.getAttribute("autocomplete");
+			if (value.equals("on")) {
+				active = Boolean.TRUE;
+			} else if (value.equals("off")) {
+				active = Boolean.FALSE;
+			} else {
+				active = null;
+			}
+			if (active != null) {
+				if (element.getTagName().equals("FORM")) {
+					Collection<HTMLDOMElement> controls;
+					controls = parser.find(element).findDescendants("input,textarea").listResults();
+					if (element.hasAttribute("id")) {
+						String id = element.getAttribute("id");
+						controls.addAll(parser
+								.find("input[form=" + id + "],textarea[form=" + id + "]").listResults());
+					}
+					boolean fix;
+					String type;
+					for (HTMLDOMElement control : controls) {
+						fix = true;
+						if ((control.getTagName().equals("INPUT")) && (control.hasAttribute("type"))) {
+							type = control.getAttribute("type").toLowerCase();
+							if ((type.equals("button")) || (type.equals("submit"))
+									|| (type.equals("reset")) || (type.equals("image"))
+									|| (type.equals("file")) || (type.equals("checkbox"))
+									|| (type.equals("radio")) || (type.equals("password"))
+									|| (type.equals("hidden"))) {
+								fix = false;
+							}
+						}
+						if (fix) {
+							String autoCompleteControlFormValue = control.getAttribute("autocomplete");
+							if ("on".equals(autoCompleteControlFormValue)) {
+								fixControlAutoComplete(control, true);
+							} else if ("off".equals(autoCompleteControlFormValue)) {
+								fixControlAutoComplete(control, false);
+							} else {
+								fixControlAutoComplete(control, active);
+							}
+						}
+					}
+				} else {
+					fixControlAutoComplete(element, active);
+				}
+			}
+		}
+		if ((!element.hasAttribute("aria-autocomplete")) && (element.hasAttribute("list"))) {
+			fixControlAutoComplete(element, null);
+		}
+	}
+
+	public void fixAutoCompletes() {
+		Collection<HTMLDOMElement> elements = parser.find("[autocomplete],[list]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
-				fixLabel(element);
+				fixAutoComplete(element);
 			}
 		}
 	}

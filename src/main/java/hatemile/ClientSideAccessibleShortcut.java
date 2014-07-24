@@ -17,9 +17,8 @@ package hatemile;
 
 /**
  * The ClientSideAccessibleShortcut interface fix the problems of accessibility
- * associated with the shortcuts, with more options in by the
- * client-side.
- * @version 1.0
+ * associated with the shortcuts, with more options in by the client-side.
+ * @version 2014-07-23
  */
 public interface ClientSideAccessibleShortcut extends AccessibleShortcut {
 	

@@ -6,18 +6,18 @@
 		<parameter name="id-skip-link-container-shortcuts">link-skip-shortcuts</parameter>
 		<parameter name="id-skip-container-shortcuts">skip-shortcuts</parameter>
 		<parameter name="id-script-event">script-event</parameter>
-		<parameter name="id-list-ids-script-active">list-ids-script-active</parameter>
-		<parameter name="id-function-script-fix-active">fix-active</parameter>
+		<parameter name="id-list-ids-script-onactive">list-ids-script-active</parameter>
+		<parameter name="id-function-script-fix-onactive">fix-active</parameter>
 		<parameter name="id-text-shortcuts">text-shortcuts</parameter>
 		<!-- Classes parameters -->
 		<parameter name="class-list-image-areas">list-areas</parameter>
 		<parameter name="class-longdescription-link">longdescription-link</parameter>
 		<!-- Data parameters -->
-		<parameter name="data-ignore">data-ignorehatemile</parameter>
-		<parameter name="data-label-required-field">data-labelrequiredfield</parameter>
-		<parameter name="data-accesskey">data-accesskey</parameter>
-		<parameter name="data-list-for-image">data-listforimage</parameter>
-		<parameter name="data-longdescription-for-image">data-longdescriptionforimage</parameter>
+		<parameter name="data-ignore">ignorehatemile</parameter>
+		<parameter name="data-label-required-field">labelrequiredfield</parameter>
+		<parameter name="data-accesskey">accesskey</parameter>
+		<parameter name="data-list-for-image">listforimage</parameter>
+		<parameter name="data-longdescription-for-image">longdescriptionforimage</parameter>
 		<!-- Text parameters -->
 		<parameter name="text-skip-container-shortcuts">Skip shortcuts</parameter>
 		<parameter name="text-shortcuts">Shortcuts:</parameter>
@@ -31,7 +31,29 @@
 		<parameter name="suffix-required-field"></parameter>
 	</parameters>
 	<selector-changes>
-		<!-- Bootstrap recomendations -->
+		<!-- HTML5 Recommendations -->
+		<selector-change selector="article:not([role])" attribute="role" value-attribute="article" />
+		<selector-change selector="aside:not([role])" attribute="role" value-attribute="complementary" />
+		<selector-change selector="datalist" attribute="role" value-attribute="listbox" />
+		<selector-change selector="datalist" attribute="aria-multiselectable" value-attribute="false" />
+		<selector-change selector="details" attribute="role" value-attribute="group" />
+		<selector-change selector="dialog:not([role])" attribute="role" value-attribute="dialog" />
+		<selector-change selector="input[type=range]" attribute="role" value-attribute="slider" />
+		<selector-change selector="input[type=number]" attribute="role" value-attribute="spinbutton" />
+		<selector-change selector="main" attribute="role" value-attribute="main" />
+		<selector-change selector="math" attribute="role" value-attribute="math" />
+		<selector-change selector="menu" attribute="role" value-attribute="menu" />
+		<selector-change selector="menu[type=toolbar]" attribute="role" value-attribute="toolbar" />
+		<selector-change selector="menu menu" attribute="aria-haspopup" value-attribute="true" />
+		<selector-change selector="menuitem" attribute="role" value-attribute="menuitem" />
+		<selector-change selector="menu [type=checkbox]" attribute="role" value-attribute="menuitemcheckbox" />
+		<selector-change selector="menu [type=radio]" attribute="role" value-attribute="menuitemradio" />
+		<selector-change selector="nav" attribute="role" value-attribute="navigation" />
+		<selector-change selector="output:not([role])" attribute="role" value-attribute="status" />
+		<selector-change selector="output" attribute="aria-live" value-attribute="polite" />
+		<selector-change selector="progress" attribute="role" value-attribute="progressbar" />
+		<selector-change selector="summary" attribute="role" value-attribute="button" />
+		<!-- Bootstrap Recomendations -->
 		<!--
 		<selector-change selector="li.dropdown" attribute="aria-haspopup" value-attribute="true" />
 		<selector-change selector=".has-error input, .has-error select, .has-error textarea" attribute="aria-invalid" value-attribute="true" />

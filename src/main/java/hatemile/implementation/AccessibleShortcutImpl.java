@@ -23,10 +23,9 @@ import hatemile.util.HTMLDOMParser;
 import java.util.Collection;
 
 /**
- * The AccessibleShortcutImpl class is official implementation of AccessibleShortcut
- * interface.
- * @see AccessibleShortcut
- * @version 1.0
+ * The AccessibleShortcutImpl class is official implementation of
+ * AccessibleShortcut interface.
+ * @version 2014-07-23
  */
 public class AccessibleShortcutImpl implements AccessibleShortcut {
 	
@@ -36,8 +35,7 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	protected final HTMLDOMParser parser;
 	
 	/**
-	 * The id of list element that contains the description
-	 * of shortcuts.
+	 * The id of list element that contains the description of shortcuts.
 	 */
 	protected final String idContainerShortcuts;
 	
@@ -67,14 +65,13 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	protected final String textShortcuts;
 	
 	/**
-	 * The name of attribute that link the list item element
-	 * with the shortcut.
+	 * The name of attribute that link the list item element with the shortcut.
 	 */
 	protected final String dataAccessKey;
 	
 	/**
-	 * The name of attribute for that the element not can be modified
-	 * by HaTeMiLe.
+	 * The name of attribute for that the element not can be modified by
+	 * HaTeMiLe.
 	 */
 	protected final String dataIgnore;
 	
@@ -92,6 +89,11 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	 * The list element of shortcuts of page.
 	 */
 	protected HTMLDOMElement list;
+	
+	/**
+	 * The state that indicates if the list of shortcuts of page was added.
+	 */
+	protected boolean listAdded;
 	
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
@@ -116,31 +118,39 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 		idSkipLinkContainerShortcuts = configure.getParameter("id-skip-link-container-shortcuts");
 		idSkipContainerShortcuts = configure.getParameter("id-skip-container-shortcuts");
 		idTextShortcuts = configure.getParameter("id-text-shortcuts");
-		dataAccessKey = configure.getParameter("data-accesskey");
 		textSkipLinkContainerShortcuts = configure.getParameter("text-skip-container-shortcuts");
 		textShortcuts = configure.getParameter("text-shortcuts");
 		standartPrefix = configure.getParameter("text-standart-shortcut-prefix");
-		dataIgnore = configure.getParameter("data-ignore");
+		dataAccessKey = "data-" + configure.getParameter("data-accesskey");
+		dataIgnore = "data-" + configure.getParameter("data-ignore");
+		listAdded = false;
 		
 		if (userAgent != null) {
 			userAgent = userAgent.toLowerCase();
+			boolean opera = userAgent.contains("opera");
 			boolean mac = userAgent.contains("mac");
 			boolean konqueror = userAgent.contains("konqueror");
 			boolean spoofer = userAgent.contains("spoofer");
 			boolean safari = userAgent.contains("applewebkit");
 			boolean windows = userAgent.contains("windows");
-			if (userAgent.contains("opera")) {
+			boolean chrome = userAgent.contains("chrome");
+			boolean firefox = userAgent.matches("firefox/[2-9]|minefield/3");
+			boolean ie = userAgent.contains("msie") || userAgent.contains("trident");
+			
+			if (opera) {
 				prefix = "SHIFT + ESC";
-			} else if ((userAgent.contains("chrome")) && (!spoofer) && (mac)) {
+			} else if (chrome && mac && !spoofer) {
 				prefix = "CTRL + OPTION";
-			} else if ((safari) && (!windows) && (!spoofer)) {
+			} else if (safari && !windows && !spoofer) {
 				prefix = "CTRL + ALT";
-			} else if ((!windows) && ((safari) || (mac) || (konqueror))) {
+			} else if (!windows && (safari || mac || konqueror)) {
 				prefix = "CTRL";
-			} else if ((userAgent.matches("firefox/[2-9]|minefield/3"))) {
+			} else if (firefox) {
 				prefix = "ALT + SHIFT";
-			} else {
+			} else if (chrome || ie) {
 				prefix = "ALT";
+			} else {
+				prefix = standartPrefix;
 			}
 		} else {
 			prefix = standartPrefix;
@@ -153,10 +163,17 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	 * @return The description of element.
 	 */
 	protected String getDescription(HTMLDOMElement element) {
-		String description = "";
+		String description = null;
 		if (element.hasAttribute("title")) {
 			description = element.getAttribute("title");
-		} else if ((element.hasAttribute("aria-labelledby")) || (element.hasAttribute("aria-describedby"))) {
+		} else if (element.hasAttribute("aria-label")) {
+			description = element.getAttribute("aria-label");
+		} else if (element.hasAttribute("alt")) {
+			description = element.getAttribute("alt");
+		} else if (element.hasAttribute("label")) {
+			description = element.getAttribute("label");
+		} else if ((element.hasAttribute("aria-labelledby"))
+				|| (element.hasAttribute("aria-describedby"))) {
 			String[] descriptionIds;
 			if (element.hasAttribute("aria-labelledby")) {
 				descriptionIds = element.getAttribute("aria-labelledby").split("[ \n\t\r]+");
@@ -164,26 +181,23 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 				descriptionIds = element.getAttribute("aria-describedby").split("[ \n\t\r]+");
 			}
 			for (int i = 0, length = descriptionIds.length; i < length; i++) {
-				HTMLDOMElement label = parser.find("#" + descriptionIds[i]).firstResult();
-				if (label != null) {
-					description = label.getTextContent();
+				HTMLDOMElement elementDescription = parser.find("#" + descriptionIds[i]).firstResult();
+				if (elementDescription != null) {
+					description = elementDescription.getTextContent();
 					break;
 				}
 			}
-		} else if (element.hasAttribute("aria-label")) {
-			description = element.getAttribute("aria-label");
-		} else if (element.hasAttribute("alt")) {
-			description = element.getAttribute("alt");
 		} else if (element.getTagName().equals("INPUT")) {
-			String type = element.getAttribute("type").trim().toLowerCase();
-			if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset"))) && (element.hasAttribute("value"))) {
+			String type = element.getAttribute("type").toLowerCase();
+			if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset")))
+					&& (element.hasAttribute("value"))) {
 				description = element.getAttribute("value");
 			}
-		} else {
+		}
+		if (description == null) {
 			description = element.getTextContent();
 		}
-		description = description.replaceAll("[ \n\t\r]+", " ").trim();
-		return description;
+		return description.replaceAll("[ \n\t\r]+", " ").trim();
 	}
 	
 	/**
@@ -191,63 +205,74 @@ public class AccessibleShortcutImpl implements AccessibleShortcut {
 	 * @return The list of shortcuts of page.
 	 */
 	protected HTMLDOMElement generateList() {
-		HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
-		if (container == null) {
-			container = parser.createElement("div");
-			container.setAttribute("id", idContainerShortcuts);
-			HTMLDOMElement firstChild = parser.find("body").firstResult().getFirstElementChild();
-			firstChild.insertBefore(container);
-			
-			HTMLDOMElement anchorJump = parser.createElement("a");
-			anchorJump.setAttribute("id", idSkipLinkContainerShortcuts);
-			anchorJump.setAttribute("href", "#" + idSkipContainerShortcuts);
-			anchorJump.appendText(textSkipLinkContainerShortcuts);
-			container.insertBefore(anchorJump);
-			
-			HTMLDOMElement anchor = parser.createElement("a");
-			anchor.setAttribute("name", idSkipContainerShortcuts);
-			anchor.setAttribute("id", idSkipContainerShortcuts);
-			firstChild.insertBefore(anchor);
-			
-			HTMLDOMElement textContainer = parser.createElement("span");
-			textContainer.setAttribute("id", idTextShortcuts);
-			textContainer.appendText(textShortcuts);
-			container.appendElement(textContainer);
+		HTMLDOMElement local = parser.find("body").firstResult();
+		HTMLDOMElement htmlList = null;
+		if (local != null) {
+			HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
+			if (container == null) {
+				container = parser.createElement("div");
+				container.setAttribute("id", idContainerShortcuts);
+				HTMLDOMElement firstChild = local.getFirstElementChild();
+				firstChild.insertBefore(container);
+				
+				HTMLDOMElement anchorJump = parser.createElement("a");
+				anchorJump.setAttribute("id", idSkipLinkContainerShortcuts);
+				anchorJump.setAttribute("href", "#" + idSkipContainerShortcuts);
+				anchorJump.appendText(textSkipLinkContainerShortcuts);
+				container.insertBefore(anchorJump);
+				
+				HTMLDOMElement anchor = parser.createElement("a");
+				anchor.setAttribute("name", idSkipContainerShortcuts);
+				anchor.setAttribute("id", idSkipContainerShortcuts);
+				firstChild.insertBefore(anchor);
+				
+				HTMLDOMElement textContainer = parser.createElement("span");
+				textContainer.setAttribute("id", idTextShortcuts);
+				textContainer.appendText(textShortcuts);
+				container.appendElement(textContainer);
+			}
+			htmlList = parser.find(container).findChildren("ul").firstResult();
+			if (htmlList == null) {
+				htmlList = parser.createElement("ul");
+				container.appendElement(htmlList);
+			}
 		}
-		HTMLDOMElement htmlList = parser.find(container).findChildren("ul").firstResult();
-		if (htmlList == null) {
-			htmlList = parser.createElement("ul");
-			container.appendElement(htmlList);
-		}
+		listAdded = true;
+		
 		return htmlList;
 	}
-
+	
 	public String getPrefix() {
 		return prefix;
 	}
-
+	
 	public void fixShortcut(HTMLDOMElement element) {
 		if (element.hasAttribute("accesskey")) {
 			String description = getDescription(element);
 			if (!element.hasAttribute("title")) {
 				element.setAttribute("title", description);
 			}
-			String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
-			if (list == null) {
+			
+			if (!listAdded) {
 				list = generateList();
 			}
-			for (int i = 0, length = keys.length; i < length; i++) {
-				String key = keys[i].toUpperCase();
-				if (parser.find(list).findChildren("[" + dataAccessKey + "=" + key + "]").firstResult() == null) {
-					HTMLDOMElement item = parser.createElement("li");
-					item.setAttribute(dataAccessKey, key);
-					item.appendText(prefix + " + " + key + ": " + description);
-					list.appendElement(item);
+			
+			if (list != null) {
+				String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
+				for (int i = 0, length = keys.length; i < length; i++) {
+					String key = keys[i].toUpperCase();
+					if (parser.find(list).findChildren("[" + dataAccessKey + "=" + key + "]")
+							.firstResult() == null) {
+						HTMLDOMElement item = parser.createElement("li");
+						item.setAttribute(dataAccessKey, key);
+						item.appendText(prefix + " + " + key + ": " + description);
+						list.appendElement(item);
+					}
 				}
 			}
 		}
 	}
-
+	
 	public void fixShortcuts() {
 		Collection<HTMLDOMElement> elements = parser.find("[accesskey]").listResults();
 		for (HTMLDOMElement element : elements) {

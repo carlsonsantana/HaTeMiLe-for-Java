@@ -16,33 +16,25 @@ limitations under the License.
 package hatemile.util;
 
 /**
- * The SelectorChange class store the selector that
- * be attribute change.
- * @version 1.0
+ * The SelectorChange class store the selector that be attribute change.
+ * @version 2014-07-23
  */
 public class SelectorChange {
 	
 	/**
 	 * The selector.
 	 */
-	protected String selector;
+	protected final String selector;
 	
 	/**
 	 * The attribute that will change.
 	 */
-	protected String attribute;
+	protected final String attribute;
 	
 	/**
 	 * The value of the attribute.
 	 */
-	protected String valueForAttribute;
-	
-	/**
-	 * Inicializes a new object.
-	 */
-	public SelectorChange() {
-
-	}
+	protected final String valueForAttribute;
 	
 	/**
 	 * Inicializes a new object with the values pre-defineds.
@@ -55,7 +47,7 @@ public class SelectorChange {
 		this.attribute = attribute;
 		this.valueForAttribute = valueForAttribute;
 	}
-
+	
 	/**
 	 * Returns the selector.
 	 * @return The selector.
@@ -63,15 +55,7 @@ public class SelectorChange {
 	public String getSelector() {
 		return selector;
 	}
-
-	/**
-	 * Change the selector.
-	 * @param selector The new selector.
-	 */
-	public void setSelector(String selector) {
-		this.selector = selector;
-	}
-
+	
 	/**
 	 * Returns the attribute.
 	 * @return The attribute.
@@ -79,15 +63,7 @@ public class SelectorChange {
 	public String getAttribute() {
 		return attribute;
 	}
-
-	/**
-	 * Change the attribute.
-	 * @param attribute The new attribute.
-	 */
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
-	}
-
+	
 	/**
 	 * Returns the value of the attribute.
 	 * @return The value of the attribute.
@@ -95,12 +71,23 @@ public class SelectorChange {
 	public String getValueForAttribute() {
 		return valueForAttribute;
 	}
-
-	/**
-	 * Change the value of the attribute.
-	 * @param valueForAttribute The new value of the attribute.
-	 */
-	public void setValueForAttribute(String valueForAttribute) {
-		this.valueForAttribute = valueForAttribute;
+	
+	@Override
+	public boolean equals(Object object) {
+		if (this != object) {
+			if (object == null) {
+				return false;
+			}
+			if (!(object instanceof SelectorChange)) {
+				return false;
+			}
+			SelectorChange selectorChange = (SelectorChange) object;
+			if ((!selector.equals(selectorChange.getSelector()))
+					|| (!attribute.equals(selectorChange.getAttribute()))
+					|| (!valueForAttribute.equals(selectorChange.getValueForAttribute()))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

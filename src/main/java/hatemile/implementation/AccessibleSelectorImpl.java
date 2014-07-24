@@ -24,10 +24,9 @@ import hatemile.util.SelectorChange;
 import java.util.Collection;
 
 /**
- * The AccessibleSelectorImpl class is official implementation of AccessibleSelector
- * interface.
- * @see AccessibleSelector
- * @version 1.0
+ * The AccessibleSelectorImpl class is official implementation of
+ * AccessibleSelector interface.
+ * @version 2014-07-23
  */
 public class AccessibleSelectorImpl implements AccessibleSelector {
 	
@@ -42,8 +41,8 @@ public class AccessibleSelectorImpl implements AccessibleSelector {
 	protected final Collection<SelectorChange> changes;
 	
 	/**
-	 * The name of attribute for that the element not can be modified
-	 * by HaTeMiLe.
+	 * The name of attribute for that the element not can be modified by
+	 * HaTeMiLe.
 	 */
 	protected final String dataIgnore;
 	
@@ -56,7 +55,7 @@ public class AccessibleSelectorImpl implements AccessibleSelector {
 	public AccessibleSelectorImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		changes = configure.getSelectorChanges();
-		dataIgnore = configure.getParameter("data-ignore");
+		dataIgnore = "data-" + configure.getParameter("data-ignore");
 	}
 
 	public void fixSelectors() {

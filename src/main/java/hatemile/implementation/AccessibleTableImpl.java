@@ -28,8 +28,7 @@ import java.util.List;
 /**
  * The AccessibleTableImpl class is official implementation of AccessibleTable
  * interface.
- * @see AccessibleTable
- * @version 1.0
+ * @version 2014-07-23
  */
 public class AccessibleTableImpl implements AccessibleTable {
 	
@@ -44,21 +43,21 @@ public class AccessibleTableImpl implements AccessibleTable {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for that the element not can be modified
-	 * by HaTeMiLe.
+	 * The name of attribute for that the element not can be modified by
+	 * HaTeMiLe.
 	 */
 	protected final String dataIgnore;
 	
 	/**
-	 * Initializes a new object that manipulate the accessibility of the
-	 * tables of parser.
+	 * Initializes a new object that manipulate the accessibility of the tables
+	 * of parser.
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
 	public AccessibleTableImpl(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
-		dataIgnore = configure.getParameter("data-ignore");
+		dataIgnore = "data-" + configure.getParameter("data-ignore");
 	}
 	
 	/**
@@ -80,7 +79,8 @@ public class AccessibleTableImpl implements AccessibleTable {
 	 * @param rows The list that represents the table without the rowspans.
 	 * @return The list that represents the table with the rowspans.
 	 */
-	protected Collection<Collection<HTMLDOMElement>> generateRowspan(Collection<Collection<HTMLDOMElement>> rows) {
+	protected Collection<Collection<HTMLDOMElement>> generateRowspan
+			(Collection<Collection<HTMLDOMElement>> rows) {
 		List<Collection<HTMLDOMElement>> copy = new ArrayList<Collection<HTMLDOMElement>>(rows);
 		List<Collection<HTMLDOMElement>> table = new ArrayList<Collection<HTMLDOMElement>>();
 		if (!rows.isEmpty()) {
@@ -126,9 +126,10 @@ public class AccessibleTableImpl implements AccessibleTable {
 	}
 	
 	/**
-	 * Returns a list that represents the table with the colspans.
-	 * @param row The list that represents the table without the colspans.
-	 * @return The list that represents the table with the colspans.
+	 * Returns a list that represents the line of table with the colspans.
+	 * @param row The list that represents the line of table without the
+	 * colspans.
+	 * @return The list that represents the line of table with the colspans.
 	 */
 	protected Collection<HTMLDOMElement> generateColspan(Collection<HTMLDOMElement> row) {
 		List<HTMLDOMElement> copy = new ArrayList<HTMLDOMElement>(row);
@@ -148,20 +149,20 @@ public class AccessibleTableImpl implements AccessibleTable {
 	/**
 	 * Validate the list that represents the table header.
 	 * @param header The list that represents the table header.
-	 * @return True if the table header is valid or false
-	 * if the table header is not valid.
+	 * @return True if the table header is valid or false if the table header is
+	 * not valid.
 	 */
 	protected boolean validateHeader(Collection<Collection<HTMLDOMElement>> header) {
 		if (header.isEmpty()) {
 			return false;
 		}
 		int length = -1;
-		for (Collection<HTMLDOMElement> elements : header) {
-			if (elements.isEmpty()) {
+		for (Collection<HTMLDOMElement> row : header) {
+			if (row.isEmpty()) {
 				return false;
 			} else if (length == -1) {
-				length = elements.size();
-			} else if (elements.size() != length) {
+				length = row.size();
+			} else if (row.size() != length) {
 				return false;
 			}
 		}
@@ -174,7 +175,8 @@ public class AccessibleTableImpl implements AccessibleTable {
 	 * @param index The index of columns.
 	 * @return The list with ids of rows of same column.
 	 */
-	protected Collection<String> returnListIdsColumns(Collection<Collection<HTMLDOMElement>> header, int index) {
+	protected Collection<String> returnListIdsColumns(Collection<Collection<HTMLDOMElement>> header
+			, int index) {
 		Collection<String> ids = new ArrayList<String>();
 		for (Collection<HTMLDOMElement> row : header) {
 			List<HTMLDOMElement> cells = new ArrayList<HTMLDOMElement>(row);
@@ -197,17 +199,15 @@ public class AccessibleTableImpl implements AccessibleTable {
 			for (HTMLDOMElement cell : cells) {
 				if (cell.getTagName().equals("TH")) {
 					CommonFunctions.generateId(cell, prefixId);
-					cell.setAttribute("scope", "row");
 					headersIds.add(cell.getAttribute("id"));
+					
+					cell.setAttribute("scope", "row");
 				}
 			}
 			if (!headersIds.isEmpty()) {
 				for (HTMLDOMElement cell : cells) {
 					if (cell.getTagName().equals("TD")) {
-						String headers = null;
-						if (cell.hasAttribute("headers")) {
-							headers = cell.getAttribute("headers");
-						}
+						String headers = cell.getAttribute("headers");
 						for (String headerId : headersIds) {
 							headers = CommonFunctions.increaseInList(headers, headerId);
 						}
@@ -217,38 +217,30 @@ public class AccessibleTableImpl implements AccessibleTable {
 			}
 		}
 	}
-
-	public void fixHeader(HTMLDOMElement tableHeader) {
-		if (tableHeader.getTagName().equals("THEAD")) {
-			Collection<HTMLDOMElement> cells = parser.find(tableHeader).findChildren("tr").findChildren("th").listResults();
-			for (HTMLDOMElement cell : cells) {
-				CommonFunctions.generateId(cell, prefixId);
-				cell.setAttribute("scope", "col");
-			}
+	
+	/**
+	 * Fix the table header.
+	 * @param tableHeader The table header.
+	 */
+	protected void fixHeader(HTMLDOMElement tableHeader) {
+		Collection<HTMLDOMElement> cells;
+		cells = parser.find(tableHeader).findChildren("tr").findChildren("th").listResults();
+		for (HTMLDOMElement cell : cells) {
+			CommonFunctions.generateId(cell, prefixId);
+			
+			cell.setAttribute("scope", "col");
 		}
 	}
-
-	public void fixFooter(HTMLDOMElement tableFooter) {
-		if (tableFooter.getTagName().equals("TFOOT")) {
-			fixBodyOrFooter(tableFooter);
-		}
-	}
-
-	public void fixBody(HTMLDOMElement tableBody) {
-		if (tableBody.getTagName().equals("TBODY")) {
-			fixBodyOrFooter(tableBody);
-		}
-	}
-
+	
 	public void fixTable(HTMLDOMElement table) {
 		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
 		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
 		HTMLDOMElement footer = parser.find(table).findChildren("tfoot").firstResult();
 		if (header != null) {
 			fixHeader(header);
-
+			
 			Collection<Collection<HTMLDOMElement>> headerCells = generatePart(header);
-			if ((validateHeader(headerCells)) && (body != null)) {
+			if ((body != null) && (validateHeader(headerCells))) {
 				int lengthHeader = headerCells.iterator().next().size();
 				Collection<Collection<HTMLDOMElement>> fakeTable = generatePart(body);
 				if (footer != null) {
@@ -256,16 +248,13 @@ public class AccessibleTableImpl implements AccessibleTable {
 				}
 				int i;
 				for (Collection<HTMLDOMElement> cells : fakeTable) {
-					i = 0;
 					if (cells.size() == lengthHeader) {
+						i = 0;
 						for (HTMLDOMElement cell : cells) {
-							Collection<String> ids = returnListIdsColumns(headerCells, i);
-							String headers = null;
-							if (cell.hasAttribute("headers")) {
-								headers = cell.getAttribute("headers");
-							}
-							for (String id : ids) {
-								headers = CommonFunctions.increaseInList(headers, id);
+							Collection<String> headersIds = returnListIdsColumns(headerCells, i);
+							String headers = cell.getAttribute("headers");
+							for (String headersId : headersIds) {
+								headers = CommonFunctions.increaseInList(headers, headersId);
 							}
 							cell.setAttribute("headers", headers);
 							i++;
@@ -275,18 +264,18 @@ public class AccessibleTableImpl implements AccessibleTable {
 			}
 		}
 		if (body != null) {
-			fixBody(body);
+			fixBodyOrFooter(body);
 		}
 		if (footer != null) {
-			fixFooter(footer);
+			fixBodyOrFooter(footer);
 		}
 	}
-
+	
 	public void fixTables() {
-		Collection<HTMLDOMElement> elements = parser.find("table").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixTable(element);
+		Collection<HTMLDOMElement> tables = parser.find("table").listResults();
+		for (HTMLDOMElement table : tables) {
+			if (!table.hasAttribute(dataIgnore)) {
+				fixTable(table);
 			}
 		}
 	}
