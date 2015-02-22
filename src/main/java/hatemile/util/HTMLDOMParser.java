@@ -19,7 +19,6 @@ import java.util.Collection;
 
 /**
  * The HTMLDOMParser interface contains the methods for access a native parser.
- * @version 2014-07-23
  */
 public interface HTMLDOMParser {
 	

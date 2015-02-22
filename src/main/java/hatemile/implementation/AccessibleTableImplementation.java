@@ -26,11 +26,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The AccessibleTableImpl class is official implementation of AccessibleTable
- * interface.
- * @version 2014-07-23
+ * The AccessibleTableImplementation class is official implementation of
+ * AccessibleTable interface.
  */
-public class AccessibleTableImpl implements AccessibleTable {
+public class AccessibleTableImplementation implements AccessibleTable {
 	
 	/**
 	 * The HTML parser.
@@ -38,13 +37,12 @@ public class AccessibleTableImpl implements AccessibleTable {
 	protected final HTMLDOMParser parser;
 	
 	/**
-	 * The prefix of generated id.
+	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for that the element not can be modified by
-	 * HaTeMiLe.
+	 * The name of attribute for not modify the elements.
 	 */
 	protected final String dataIgnore;
 	
@@ -54,10 +52,10 @@ public class AccessibleTableImpl implements AccessibleTable {
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleTableImpl(HTMLDOMParser parser, Configure configure) {
+	public AccessibleTableImplementation(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
-		dataIgnore = "data-" + configure.getParameter("data-ignore");
+		dataIgnore = "data-ignoreaccessibilityfix";
 	}
 	
 	/**
@@ -232,7 +230,7 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 	}
 	
-	public void fixTable(HTMLDOMElement table) {
+	public void fixAssociationCellsTable(HTMLDOMElement table) {
 		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
 		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
 		HTMLDOMElement footer = parser.find(table).findChildren("tfoot").firstResult();
@@ -271,11 +269,11 @@ public class AccessibleTableImpl implements AccessibleTable {
 		}
 	}
 	
-	public void fixTables() {
+	public void fixAssociationCellsTables() {
 		Collection<HTMLDOMElement> tables = parser.find("table").listResults();
 		for (HTMLDOMElement table : tables) {
 			if (!table.hasAttribute(dataIgnore)) {
-				fixTable(table);
+				fixAssociationCellsTable(table);
 			}
 		}
 	}

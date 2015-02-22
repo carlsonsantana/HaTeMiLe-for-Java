@@ -17,7 +17,6 @@ package hatemile.util;
 
 /**
  * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
- * @version 2014-07-23
  */
 public class CommonFunctions {
 	
@@ -61,8 +60,8 @@ public class CommonFunctions {
 	}
 	
 	/**
-	 * Increase a item in a HTML list.
-	 * @param list The HTML list.
+	 * Increase a item in a list.
+	 * @param list The list.
 	 * @param stringToIncrease The value of item.
 	 * @return The HTML list with the item added, if the item not was contained
 	 * in list.
@@ -70,18 +69,35 @@ public class CommonFunctions {
 	public static String increaseInList(String list, String stringToIncrease) {
 		if ((list != null) && (!list.isEmpty()) && (stringToIncrease != null)
 				&& (!stringToIncrease.isEmpty())) {
-			String[] elements = list.split("[ \n\t\r]+");
-			for (int i = 0, length = elements.length; i < length; i++) {
-				String element = elements[i];
-				if (element.equals(stringToIncrease)) {
-					return list;
-				}
+			if (inList(list, stringToIncrease)) {
+				return list;
+			} else {
+				return list + " " + stringToIncrease;
 			}
-			return list + " " + stringToIncrease;
 		} else if ((list != null) && (!list.isEmpty())) {
 			return list;
 		} else {
 			return stringToIncrease;
 		}
+	}
+	
+	/**
+	 * Verify if the list contains the item.
+	 * @param list The list.
+	 * @param stringToSearch The value of item.
+	 * @return True if the list contains the item or false is not contains.
+	 */
+	public static boolean inList(String list, String stringToSearch) {
+		if ((list != null) && (!list.isEmpty()) && (stringToSearch != null)
+				&& (!stringToSearch.isEmpty())) {
+			String[] elements = list.split("[ \n\t\r]+");
+			for (int i = 0, length = elements.length; i < length; i++) {
+				String element = elements[i];
+				if (element.equals(stringToSearch)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

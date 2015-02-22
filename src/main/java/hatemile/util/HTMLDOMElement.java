@@ -20,7 +20,6 @@ import java.util.Collection;
 /**
  * The HTMLDOMElement interface contains the methods for access of the HTML
  * element.
- * @version 2014-07-23
  */
 public interface HTMLDOMElement extends Cloneable {
 	

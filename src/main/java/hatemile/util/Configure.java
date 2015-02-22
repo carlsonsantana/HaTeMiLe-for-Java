@@ -33,7 +33,6 @@ import org.xml.sax.SAXException;
 
 /**
  * The Configure class contains the configuration of HaTeMiLe.
- * @version 2014-07-23
  */
 public class Configure {
 	
@@ -46,6 +45,11 @@ public class Configure {
 	 * The changes that will be done in selectors.
 	 */
 	protected final Collection<SelectorChange> selectorChanges;
+	
+	/**
+	 * The skippers.
+	 */
+	protected final Collection<Skipper> skippers;
 	
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
@@ -73,6 +77,7 @@ public class Configure {
 	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		parameters = new HashMap<String, String>();
 		selectorChanges = new ArrayList<SelectorChange>();
+		skippers = new ArrayList<Skipper>();
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
@@ -82,6 +87,7 @@ public class Configure {
 		NodeList nodeList = rootElement.getChildNodes();
 		NodeList nodeParameters = null;
 		NodeList nodeSelectorChanges = null;
+		NodeList nodeSkipLinks = null;
 		for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 			if (nodeList.item(i) instanceof Element) {
 				Element element = (Element) nodeList.item(i);
@@ -89,6 +95,8 @@ public class Configure {
 					nodeParameters = element.getChildNodes();
 				} else if (element.getTagName().toUpperCase().equals("SELECTOR-CHANGES")) {
 					nodeSelectorChanges = element.getChildNodes();
+				} else if (element.getTagName().toUpperCase().equals("SKIP-LINKS")) {
+					nodeSkipLinks = element.getChildNodes();
 				}
 			}
 		}
@@ -120,6 +128,22 @@ public class Configure {
 				}
 			}
 		}
+		
+		if (nodeSkipLinks != null) {
+			for (int i = 0; i < nodeSkipLinks.getLength(); i++) {
+				if (nodeSkipLinks.item(i) instanceof Element) {
+					Element skipLink = (Element) nodeSkipLinks.item(i);
+					if ((skipLink.getTagName().toUpperCase().equals("SKIP-LINK"))
+							&& (skipLink.hasAttribute("selector"))
+							&& (skipLink.hasAttribute("default-text"))
+							&& (skipLink.hasAttribute("shortcut"))) {
+						skippers.add(new Skipper(skipLink.getAttribute("selector")
+								, skipLink.getAttribute("default-text")
+								, skipLink.getAttribute("shortcut")));
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -145,6 +169,14 @@ public class Configure {
 	 */
 	public Collection<SelectorChange> getSelectorChanges() {
 		return new ArrayList<SelectorChange>(selectorChanges);
+	}
+	
+	/**
+	 * Returns the skippers.
+	 * @return The skippers.
+	 */
+	public Collection<Skipper> getSkippers() {
+		return new ArrayList<Skipper>(skippers);
 	}
 	
 	@Override

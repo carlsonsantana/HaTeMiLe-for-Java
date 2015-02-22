@@ -18,55 +18,47 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleEvent interface fix the problems of accessibility associated
- * with Javascript events in the elements.
- * @version 2014-07-23
+ * The AccessibleEvent interface fix problems of accessibility associated
+ * with Javascript events in elements.
  */
 public interface AccessibleEvent {
 	
 	/**
-	 * Fix some problem of accessibility in the events that are called when an
-	 * element is hovered.
+	 * Provide a solution for the element that has drop events.
 	 * @param element The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
-	public void fixOnHover(HTMLDOMElement element);
+	public void fixDrop(HTMLDOMElement element);
 	
 	/**
-	 * Fix some problem of accessibility in the events that are called when any
-	 * element of page is hovered.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
-	 */
-	public void fixOnHovers();
-	
-	/**
-	 * Fix some problem of accessibility in the events that are called when an
-	 * element is actived.
+	 * Provide a solution for the element that has drag events.
 	 * @param element The element that will be fixed.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
 	 */
-	public void fixOnActive(HTMLDOMElement element);
+	public void fixDrag(HTMLDOMElement element);
 	
 	/**
-	 * Fix some problem of accessibility in the events that are called when any
-	 * element of page is actived.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G90.html" target="_blank">G90: Providing keyboard-triggered event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/G202.html" target="_blank">G202: Ensuring keyboard control for all functionality</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR2.html" target="_blank">SCR2: Using redundant keyboard and mouse event handlers</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR20.html" target="_blank">SCR20: Using both keyboard and other device-specific functions</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/SCR29.html" target="_blank">SCR29: Adding keyboard-accessible actions to static HTML elements</a>
+	 * Provide a solution for elements that has Drag-and-Drop events.
 	 */
-	public void fixOnActives();
+	public void fixDragsandDrops();
+	
+	/**
+	 * Provide a solution for the element that has inaccessible hover events.
+	 * @param element The element that will be fixed.
+	 */
+	public void fixHover(HTMLDOMElement element);
+	
+	/**
+	 * Provide a solution for elements that has inaccessible hover events.
+	 */
+	public void fixHovers();
+	
+	/**
+	 * Provide a solution for the element that has inaccessible active events.
+	 * @param element The element that will be fixed.
+	 */
+	public void fixActive(HTMLDOMElement element);
+	
+	/**
+	 * Provide a solution for elements that has inaccessible active events.
+	 */
+	public void fixActives();
 }

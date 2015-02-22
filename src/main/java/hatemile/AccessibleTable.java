@@ -18,24 +18,19 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleTable interface fix the problems of accessibility associated
- * with the tables.
- * @version 2014-07-23
+ * The AccessibleTable interface fix problems of accessibility associated
+ * with tables.
  */
 public interface AccessibleTable {
 	
 	/**
-	 * Fix the table.
+	 * Associate data cells with header cells of table.
 	 * @param table The table.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
 	 */
-	public void fixTable(HTMLDOMElement table);
+	public void fixAssociationCellsTable(HTMLDOMElement table);
 	
 	/**
-	 * Fix the tables.
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H43.html" target="_blank">H43: Using id and headers attributes to associate data cells with header cells in data tables</a>
-	 * @see <a href="http://www.w3.org/TR/WCAG20-TECHS/H63.html" target="_blank">H63: Using the scope attribute to associate header cells and data cells in data tables</a>
+	 * Associate data cells with header cells of tables.
 	 */
-	public void fixTables();
+	public void fixAssociationCellsTables();
 }

@@ -20,10 +20,16 @@ import hatemile.util.HTMLDOMElement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
+import org.jsoup.nodes.Comment;
+import org.jsoup.nodes.DataNode;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.DocumentType;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 /**
@@ -101,7 +107,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		List<Node> childNodes = element.childNodes();
 		String string = "";
 		for (Node node : childNodes) {
-			string += JsoupAuxiliarToString.toString(node);
+			string += toString(node);
 		}
 		return string;
 	}
@@ -111,7 +117,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	}
 	
 	public String getOuterHTML() {
-		return JsoupAuxiliarToString.toString(element);
+		return toString(element);
 	}
 	
 	public HTMLDOMElement insertBefore(HTMLDOMElement newElement) {
@@ -199,5 +205,48 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	@Override
 	public HTMLDOMElement clone() {
 		return cloneElement();
+	}
+	
+	/**
+	 * Convert a Jsoup Node to a HTML code.
+	 * @param node The Jsoup Node.
+	 * @return The HTML code of the Jsoup Node.
+	 */
+	protected String toString(Node node) {
+		String string = "";
+		List<Node> childNodes = node.childNodes();
+		if (node instanceof Comment) {
+			string += ((Comment) node).toString();
+		} else if (node instanceof DataNode) {
+			string += ((DataNode) node).toString();
+		} else if (node instanceof DocumentType) {
+			string += ((DocumentType) node).toString();
+		} else if (node instanceof TextNode) {
+			string += ((TextNode) node).getWholeText();
+		} else if ((node instanceof Element) && (!(node instanceof Document))) {
+			Element element = (Element) node;
+			string += "<" + element.tagName();
+			Attributes attributes = element.attributes();
+			for (Attribute attribute : attributes) {
+				string += " " + attribute.getKey() + "=\"" + attribute.getValue() + "\"";
+			}
+			if (childNodes.isEmpty() && element.tag().isSelfClosing()) {
+				string += " />";
+			} else {
+				string += ">";
+			}
+		}
+		if (!childNodes.isEmpty()) {
+			for (Node childNode : childNodes) {
+				string += toString(childNode);
+			}
+		}
+		if ((node instanceof Element) && (!(node instanceof Document))) {
+			Element element = (Element) node;
+			if (!childNodes.isEmpty() || !element.tag().isSelfClosing()) {
+				string += "</" + element.tagName() + ">";
+			}
+		}
+		return string;
 	}
 }

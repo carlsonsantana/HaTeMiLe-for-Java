@@ -17,7 +17,6 @@ package hatemile.util;
 
 /**
  * The SelectorChange class store the selector that be attribute change.
- * @version 2014-07-23
  */
 public class SelectorChange {
 	

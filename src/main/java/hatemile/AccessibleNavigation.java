@@ -16,28 +16,45 @@ limitations under the License.
 package hatemile;
 
 import hatemile.util.HTMLDOMElement;
+import hatemile.util.Skipper;
 
 /**
- * The AccessibleShortcut interface fix the problems of accessibility associated
- * with the shortcuts.
- * @version 2014-07-23
+ * The AccessibleNavigation interface fix problems of accessibility associated
+ * with navigation.
  */
-public interface AccessibleShortcut {
+public interface AccessibleNavigation {
 	
 	/**
-	 * Returns the browser shortcut prefix.
-	 * @return The browser shortcut prefix.
-	 */
-	public String getPrefix();
-	
-	/**
-	 * Fix the element with shortcuts.
+	 * Display the shortcuts of element.
 	 * @param element The element with shortcuts.
 	 */
 	public void fixShortcut(HTMLDOMElement element);
 	
 	/**
-	 * Fix the elements with shortcuts.
+	 * Display the shortcuts of elements.
 	 */
 	public void fixShortcuts();
+	
+	/**
+	 * Provide content skipper for the element.
+	 * @param element The element.
+	 * @param skipper The skipper.
+	 */
+	public void fixSkipper(HTMLDOMElement element, Skipper skipper);
+	
+	/**
+	 * Provide content skippers.
+	 */
+	public void fixSkippers();
+	
+	/**
+	 * Provide a navigation by heading.
+	 * @param element The heading element.
+	 */
+	public void fixHeading(HTMLDOMElement element);
+	
+	/**
+	 * Provide a navigation by headings.
+	 */
+	public void fixHeadings();
 }

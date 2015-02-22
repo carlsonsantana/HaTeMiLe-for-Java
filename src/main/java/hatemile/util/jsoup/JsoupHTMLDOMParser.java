@@ -187,7 +187,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	}
 	
 	public String getHTML() {
-		return JsoupAuxiliarToString.toString(document);
+		return (new JsoupHTMLDOMElement(document)).getOuterHTML();
 	}
 	
 	public Object getParser() {
