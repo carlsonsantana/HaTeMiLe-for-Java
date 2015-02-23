@@ -264,15 +264,17 @@ createDragEvent = function(type, element, event) {
 };
 
 fixActiveInElement = function(element) {
-	addEventHandler(element, 'keypress', 'data-keypressadded', 'active', function(event) {
-		if (enterPressed(event.keyCode)) {
-			if (hasEvent(element, 'click')) {
-				executeMouseEvent('click', element, event);
-			} else if (hasEvent(element, 'dblclick')) {
-				executeMouseEvent('dblclick', element, event);
+	if (element.tagName.toUpperCase() === 'A') {
+		addEventHandler(element, 'keypress', 'data-keypressadded', 'active', function(event) {
+			if (enterPressed(event.keyCode)) {
+				if (hasEvent(element, 'click')) {
+					executeMouseEvent('click', element, event);
+				} else if (hasEvent(element, 'dblclick')) {
+					executeMouseEvent('dblclick', element, event);
+				}
 			}
-		}
-	});
+		});
+	}
 	addEventHandler(element, 'keyup', 'data-keyupadded', 'active', function(event) {
 		if (enterPressed(event.keyCode)) {
 			executeMouseEvent('mouseup', element, event);

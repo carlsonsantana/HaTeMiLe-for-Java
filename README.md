@@ -13,22 +13,23 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	import hatemile.AccessibleForm;
 	import hatemile.AccessibleImage;
 	import hatemile.AccessibleSelector;
-	import hatemile.AccessibleShortcut;
+	import hatemile.AccessibleNavigation;
 	import hatemile.AccessibleTable;
-	import hatemile.implementation.AccessibleEventImpl;
-	import hatemile.implementation.AccessibleFormImpl;
-	import hatemile.implementation.AccessibleImageImpl;
-	import hatemile.implementation.AccessibleSelectorImpl;
-	import hatemile.implementation.AccessibleShortcutImpl;
-	import hatemile.implementation.AccessibleTableImpl;
+	import hatemile.implementation.AccessibleEventImplementation;
+	import hatemile.implementation.AccessibleFormImplementation;
+	import hatemile.implementation.AccessibleImageImplementation;
+	import hatemile.implementation.AccessibleSelectorImplementation;
+	import hatemile.implementation.AccessibleNavigationImplementation;
+	import hatemile.implementation.AccessibleTableImplementation;
 	import hatemile.util.Configure;
 	import hatemile.util.HTMLDOMParser;
 	import hatemile.util.jsoup.JsoupHTMLDOMParser;
 	import java.io.IOException;
 	import javax.xml.parsers.ParserConfigurationException;
 	import org.xml.sax.SAXException;
-	
+
 	public class Main {
+
 		public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 			Configure configure = new Configure();
 			HTMLDOMParser parser = new JsoupHTMLDOMParser("<!DOCTYPE html>\n" +
@@ -57,10 +58,10 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	"			<input type=\"button\" onmouseover=\"console.log('Over Input')\" value=\"Console\" onmouseout=\"console.log('Out Input')\" />\n" +
 	"			<span onmouseover=\"console.log('Over Span')\" style=\"background: red;\" onmouseout=\"console.log('Out Span')\">Console</span>\n" +
 	"			<i onmouseover=\"console.log('Over I')\" onmouseout=\"console.log('Out I')\">Console</i>\n" +
-	"			<div style=\"height: 300px; width: 300px; border: 1px solid black\"  onmouseout=\"console.log('Out Div')\" onmouseover=\"console.log('Console Div')\">\n" +
+	"			<div style=\"height: 300px; width: 300px; border: 1px solid black\" ondrop=\"event.preventDefault();event.target.appendChild(document.getElementById(event.dataTransfer.getData('text')));\" ondragover=\"event.preventDefault();\">\n" +
 	"				Console\n" +
 	"			</div>\n" +
-	"			<span onmouseover=\"console.log('Over span')\" onmouseout=\"console.log('Out Span')\" onfocus=\"alert('Alert SPAN')\" style=\"background: blueviolet;\">Alert</span>\n" +
+	"			<span id=\"draggable-item\" ondragstart=\"event.dataTransfer.setData('text', event.target.id);\" draggable=\"true\">Drag-and-Drop</span>\n" +
 	"		</div>\n" +
 	"		<!-- Forms -->\n" +
 	"		<form autocomplete=\"off\" id=\"form1\">\n" +
@@ -101,37 +102,9 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	"		<!-- Images -->\n" +
 	"		<div>\n" +
 	"			<h2>Test Images</h2>\n" +
-	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" usemap=\"#laram\" />\n" +
-	"			<img src=\"https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851562_329175193877061_87544187_n.jpg\" alt=\"Facebook Logo\" usemap=\"#laram\" />\n" +
-	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" usemap=\"#laram2\" />\n" +
-	"			<img src=\"https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851562_329175193877061_87544187_n.jpg\" alt=\"Facebook Logo\" usemap=\"#laram2\" />\n" +
-	"			<img src=\"https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xap1/t39.2178-6/851562_329175193877061_87544187_n.jpg\" alt=\"Facebook Logo\" usemap=\"#laram3\" />\n" +
-	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" usemap=\"#laram6\" />\n" +
-	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" usemap=\"#laram7\" />\n" +
-	"			<map id=\"laram\" name=\"laram\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" alt=\"Google\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" alt=\"Facebook\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
-	"			<map id=\"laram2\" name=\"laram2\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
-	"			<map id=\"laram4\" name=\"laram4\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" alt=\"Google\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" alt=\"Facebook\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
-	"			<map id=\"laram5\" name=\"laram5\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
-	"			<map id=\"laram6\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" alt=\"Google\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" alt=\"Facebook\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
-	"			<map name=\"laram7\">\n" +
-	"				<area shape=\"rect\" href=\"http://www.google.com/\" alt=\"Google\" target=\"_blank\" coords=\"260,280,395,360\" />\n" +
-	"				<area shape=\"rect\" href=\"http://www.facebook.com/\" alt=\"Facebook\" coords=\"222,113,395,148\" />\n" +
-	"			</map>\n" +
+	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" />\n" +
+	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" />\n" +
+	"			<img src=\"http://4.bp.blogspot.com/-JOqxgp-ZWe0/U3BtyEQlEiI/AAAAAAAAOfg/Doq6Q2MwIKA/s1600/google-logo-874x288.png\" alt=\"Google Logo\" longdesc=\"http://www.google.com/\" />\n" +
 	"		</div>\n" +
 	"		<!-- Shortcuts -->\n" +
 	"		<form action=\"http://www.webplatform.org/\">\n" +
@@ -187,6 +160,7 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	"						<td></td>\n" +
 	"						<td></td>\n" +
 	"						<td></td>\n" +
+	"						<td></td>\n" +
 	"					</tr>\n" +
 	"				</tbody>\n" +
 	"			</table>\n" +
@@ -211,31 +185,33 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	"		</div>\n" +
 	"	</body>\n" +
 	"</html>");
-		
-			AccessibleEvent accessibleEvent = new AccessibleEventImpl(parser, configure);
-			AccessibleForm accessibleForm = new AccessibleFormImpl(parser, configure);
-			AccessibleImage accessibleImage = new AccessibleImageImpl(parser, configure);
-			AccessibleSelector accessibleSelector = new AccessibleSelectorImpl(parser, configure);
-			AccessibleShortcut accessibleShortcut = new AccessibleShortcutImpl(parser, configure);
-			AccessibleTable accessibleTable = new AccessibleTableImpl(parser, configure);
-			
-			accessibleEvent.fixOnActives();
-			accessibleEvent.fixOnHovers();
-			
-			accessibleForm.fixAutoCompletes();
+
+			AccessibleEvent accessibleEvent = new AccessibleEventImplementation(parser, configure);
+			AccessibleForm accessibleForm = new AccessibleFormImplementation(parser, configure);
+			AccessibleImage accessibleImage = new AccessibleImageImplementation(parser, configure);
+			AccessibleSelector accessibleSelector = new AccessibleSelectorImplementation(parser, configure);
+			AccessibleNavigation accessibleNavigation = new AccessibleNavigationImplementation(parser, configure);
+			AccessibleTable accessibleTable = new AccessibleTableImplementation(parser, configure);
+
+			accessibleEvent.fixDragsandDrops();
+			accessibleEvent.fixActives();
+			accessibleEvent.fixHovers();
+
+			accessibleForm.fixAutoCompleteFields();
 			accessibleForm.fixRequiredFields();
 			accessibleForm.fixLabels();
 			accessibleForm.fixRangeFields();
-			
+
 			accessibleImage.fixLongDescriptions();
-			accessibleImage.fixMaps();
-			
+
 			accessibleSelector.fixSelectors();
-			
-			accessibleShortcut.fixShortcuts();
-			
-			accessibleTable.fixTables();
-			
+
+			accessibleNavigation.fixShortcuts();
+			accessibleNavigation.fixSkippers();
+			accessibleNavigation.fixHeadings();
+
+			accessibleTable.fixAssociationCellsTables();
+
 			System.out.println(parser.getHTML());
 		}
 	}
