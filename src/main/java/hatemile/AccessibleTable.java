@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -18,7 +16,7 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleTable interface fix problems of accessibility associated
+ * The AccessibleTable interface fixes accessibility problems associated
  * with tables.
  */
 public interface AccessibleTable {

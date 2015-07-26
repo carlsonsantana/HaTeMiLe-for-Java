@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -73,7 +71,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected final String standartPrefix;
 	
 	/**
-	 * The id of list element that contains the skip links.
+	 * The id of list element that contains the skippers.
 	 */
 	protected final String idContainerSkippers;
 	
@@ -110,17 +108,17 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * The list element of skippers.
 	 */
-	protected HTMLDOMElement listSkipLinks;
+	protected HTMLDOMElement listSkippers;
 	
 	/**
-	 * The name of attribute that links the anchor of skip link with the element.
+	 * The name of attribute that links the anchor of skipper with the element.
 	 */
 	protected final String dataAnchorFor;
 	
 	/**
-	 * The HTML class of anchor of skip link.
+	 * The HTML class of anchor of skipper.
 	 */
-	protected final String classSkipLinkAnchor;
+	protected final String classSkipperAnchor;
 	
 	/**
 	 * The HTML class of anchor of heading link.
@@ -177,11 +175,11 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	public AccessibleNavigationImplementation(HTMLDOMParser parser, Configure configure, String userAgent) {
 		this.parser = parser;
 		idContainerShortcuts = "container-shortcuts";
-		idContainerSkippers = "container-skiplinks";
+		idContainerSkippers = "container-skippers";
 		idContainerHeading = "container-heading";
 		idTextShortcuts = "text-shortcuts";
 		idTextHeading = "text-heading";
-		classSkipLinkAnchor = "skiplink-anchor";
+		classSkipperAnchor = "skipper-anchor";
 		classHeadingAnchor = "heading-anchor";
 		dataAccessKey = "data-shortcutdescriptionfor";
 		dataIgnore = "data-ignoreaccessibilityfix";
@@ -197,7 +195,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		listSkippersAdded = false;
 		validateHeading = false;
 		validHeading = false;
-		listSkipLinks = null;
+		listSkippers = null;
 		listShortcuts = null;
 		
 		if (userAgent != null) {
@@ -262,7 +260,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 					break;
 				}
 			}
-		} else if (element.getTagName().equals("INPUT")) {
+		} else if ((element.getTagName().equals("INPUT")) && (element.hasAttribute("type"))) {
 			String type = element.getAttribute("type").toLowerCase();
 			if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset")))
 					&& (element.hasAttribute("value"))) {
@@ -295,6 +293,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				
 				container.appendElement(textContainer);
 				local.appendElement(container);
+				
+				executeFixSkipper(container);
+				executeFixSkipper(textContainer);
 			}
 		}
 		if (container != null) {
@@ -303,6 +304,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				htmlList = parser.createElement("ul");
 				container.appendElement(htmlList);
 			}
+			executeFixSkipper(htmlList);
 		}
 		listShortcutsAdded = true;
 		
@@ -310,10 +312,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	}
 	
 	/**
-	 * Generate the list of skip links of page.
-	 * @return The list of skip links of page.
+	 * Generate the list of skippers of page.
+	 * @return The list of skippers of page.
 	 */
-	protected HTMLDOMElement generateListSkipLinks() {
+	protected HTMLDOMElement generateListSkippers() {
 		HTMLDOMElement container = parser.find("#" + idContainerSkippers).firstResult();
 		HTMLDOMElement htmlList = null;
 		if (container == null) {
@@ -355,6 +357,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				
 				container.appendElement(textContainer);
 				local.appendElement(container);
+				
+				executeFixSkipper(container);
+				executeFixSkipper(textContainer);
 			}
 		}
 		if (container != null) {
@@ -363,6 +368,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				htmlList = parser.createElement("ol");
 				container.appendElement(htmlList);
 			}
+			executeFixSkipper(htmlList);
 		}
 		return htmlList;
 	}
@@ -430,7 +436,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			, String dataAttribute, String anchorClass) {
 		CommonFunctions.generateId(element, prefixId);
 		HTMLDOMElement anchor = null;
-		if (parser.find("[" + dataAttribute + "=" + element.getAttribute("id") + "]").firstResult() == null) {
+		if (parser.find("[" + dataAttribute + "=\"" + element.getAttribute("id") + "\"]").firstResult() == null) {
 			if (element.getTagName().equals("A")) {
 				anchor = element;
 			} else {
@@ -482,6 +488,32 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 	
+	/**
+	 * Call fixSkipper method for element, if the page has the container of
+	 * skippers.
+	 * @param element The element.
+	 */
+	protected void executeFixSkipper(HTMLDOMElement element) {
+		if (listSkippers != null) {
+			for (Skipper skipper : this.skippers) {
+				if (parser.find(skipper.getSelector()).listResults().contains(element)) {
+					fixSkipper(element, skipper);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Call fixShortcut method for element, if the page has the container of
+	 * shortcuts.
+	 * @param element The element.
+	 */
+	protected void executeFixShortcut(HTMLDOMElement element) {
+		if (listShortcuts != null) {
+			fixShortcut(element);
+		}
+	}
+	
 	public void fixShortcut(HTMLDOMElement element) {
 		if (element.hasAttribute("accesskey")) {
 			String description = getDescription(element);
@@ -497,7 +529,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
 				for (int i = 0, length = keys.length; i < length; i++) {
 					String key = keys[i].toUpperCase();
-					if (parser.find(listShortcuts).findChildren("[" + dataAccessKey + "=" + key + "]")
+					if (parser.find(listShortcuts).findChildren("[" + dataAccessKey + "=\"" + key + "\"]")
 							.firstResult() == null) {
 						HTMLDOMElement item = parser.createElement("li");
 						item.setAttribute(dataAccessKey, key);
@@ -518,19 +550,19 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
-	public void fixSkipper(HTMLDOMElement element, Skipper skipLink) {
+	public void fixSkipper(HTMLDOMElement element, Skipper skipper) {
 		if (!listSkippersAdded) {
-			listSkipLinks = generateListSkipLinks();
+			listSkippers = generateListSkippers();
 		}
-		if (listSkipLinks != null) {
-			HTMLDOMElement anchor = generateAnchorFor(element, dataAnchorFor, classSkipLinkAnchor);
+		if (listSkippers != null) {
+			HTMLDOMElement anchor = generateAnchorFor(element, dataAnchorFor, classSkipperAnchor);
 			if (anchor != null) {
 				HTMLDOMElement itemLink = parser.createElement("li");
 				HTMLDOMElement link = parser.createElement("a");
 				link.setAttribute("href", "#" + anchor.getAttribute("name"));
-				link.appendText(skipLink.getDefaultText());
+				link.appendText(skipper.getDefaultText());
 				
-				List<String> shortcuts = new ArrayList<String>(skipLink.getShortcuts());
+				List<String> shortcuts = new ArrayList<String>(skipper.getShortcuts());
 				if (!shortcuts.isEmpty()) {
 					String shortcut = shortcuts.get(0);
 					if (!shortcut.isEmpty()) {
@@ -541,7 +573,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				CommonFunctions.generateId(link, prefixId);
 				
 				itemLink.appendElement(link);
-				listSkipLinks.appendElement(itemLink);
+				listSkippers.appendElement(itemLink);
+				
+				executeFixShortcut(link);
 			}
 		}
 	}
@@ -552,25 +586,25 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		int index = 0;
 		List<String> shortcuts;
 		String defaultText;
-		for (Skipper skipLink : skippers) {
-			elements = parser.find(skipLink.getSelector()).listResults();
+		for (Skipper skipper : skippers) {
+			elements = parser.find(skipper.getSelector()).listResults();
 			count = elements.size() > 1;
 			if (count) {
 				index = 1;
 			}
-			shortcuts = new ArrayList<String>(skipLink.getShortcuts());
+			shortcuts = new ArrayList<String>(skipper.getShortcuts());
 			for (HTMLDOMElement element : elements) {
 				if (!element.hasAttribute(dataIgnore)) {
 					if (count) {
-						defaultText = skipLink.getDefaultText() + " " + Integer.toString(index++);
+						defaultText = skipper.getDefaultText() + " " + Integer.toString(index++);
 					} else {
-						defaultText = skipLink.getDefaultText();
+						defaultText = skipper.getDefaultText();
 					}
 					if (shortcuts.size() > 0) {
-						fixSkipper(element, new Skipper(skipLink.getSelector(), defaultText, shortcuts.get(shortcuts.size() - 1)));
+						fixSkipper(element, new Skipper(skipper.getSelector(), defaultText, shortcuts.get(shortcuts.size() - 1)));
 						shortcuts.remove(shortcuts.size() - 1);
 					} else {
-						fixSkipper(element, new Skipper(skipLink.getSelector(), defaultText, ""));
+						fixSkipper(element, new Skipper(skipper.getSelector(), defaultText, ""));
 					}
 				}
 			}
@@ -590,7 +624,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 					list = generateListHeading();
 				} else {
 					HTMLDOMElement superItem = parser.find("#" + idContainerHeading)
-							.findDescendants("[" + dataHeadingLevel + "=" + Integer.toString(level - 1) + "]").lastResult();
+							.findDescendants("[" + dataHeadingLevel + "=\"" + Integer.toString(level - 1) + "\"]").lastResult();
 					if (superItem != null) {
 						list = parser.find(superItem).findChildren("ol").firstResult();
 						if (list == null) {

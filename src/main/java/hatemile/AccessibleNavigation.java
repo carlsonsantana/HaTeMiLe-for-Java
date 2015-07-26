@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -19,7 +17,7 @@ import hatemile.util.HTMLDOMElement;
 import hatemile.util.Skipper;
 
 /**
- * The AccessibleNavigation interface fix problems of accessibility associated
+ * The AccessibleNavigation interface fixes accessibility problems associated
  * with navigation.
  */
 public interface AccessibleNavigation {
@@ -36,7 +34,7 @@ public interface AccessibleNavigation {
 	public void fixShortcuts();
 	
 	/**
-	 * Provide content skipper for the element.
+	 * Provide content skipper for element.
 	 * @param element The element.
 	 * @param skipper The skipper.
 	 */

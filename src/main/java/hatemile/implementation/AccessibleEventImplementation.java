@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -79,13 +77,33 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	protected HTMLDOMElement scriptList;
 	
 	/**
+	 * The state that indicates if the scripts used are stored or deleted, 
+	 * after use.
+	 */
+	protected final boolean storeScriptsContent;
+	
+	/**
+	 * The content of eventlistener.js.
+	 */
+	protected static String eventListenerScriptContent = null;
+	
+	/**
+	 * The content of include.js.
+	 */
+	protected static String includeScriptContent = null;
+	
+	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * Javascript events of elements of parser.
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
+	 * @param storeScriptsContent The state that indicates if the scripts used
+	 * are stored or deleted, after use.
 	 */
-	public AccessibleEventImplementation(HTMLDOMParser parser, Configure configure) {
+	public AccessibleEventImplementation(HTMLDOMParser parser
+			, Configure configure, boolean storeScriptsContent) {
 		this.parser = parser;
+		this.storeScriptsContent = storeScriptsContent;
 		prefixId = configure.getParameter("prefix-generated-ids");
 		idScriptEventListener = "script-eventlistener";
 		idListIdsScript = "list-ids-script";
@@ -101,8 +119,9 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * @return The content of file.
 	 */
 	protected String getContentFromFile(String file) {
-		BufferedReader bufferedReader
-				= new BufferedReader(new InputStreamReader(File.class.getResourceAsStream(file)));
+		InputStreamReader inputStreamReader = new InputStreamReader(File.class
+						.getResourceAsStream(file));
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 		String line;
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
@@ -110,8 +129,17 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				stringBuilder.append(line).append("\n");
 			}
 		} catch (IOException ex) {
-			Logger.getLogger(AccessibleEventImplementation.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(AccessibleEventImplementation.class.getName())
+					.log(Level.SEVERE, null, ex);
 		}
+		try {
+			bufferedReader.close();
+			inputStreamReader.close();
+		} catch (IOException ex) {
+			Logger.getLogger(AccessibleEventImplementation.class.getName())
+					.log(Level.SEVERE, null, ex);
+		}
+		
 		return stringBuilder.toString();
 	}
 	
@@ -124,8 +152,9 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			String tag = element.getTagName();
 			if ((tag.equals("A")) && (!element.hasAttribute("href"))) {
 				element.setAttribute("tabindex", "0");
-			} else if ((!tag.equals("A")) && (!tag.equals("INPUT")) && (!tag.equals("BUTTON"))
-					&& (!tag.equals("SELECT")) && (!tag.equals("TEXTAREA"))) {
+			} else if ((!tag.equals("A")) && (!tag.equals("INPUT"))
+					&& (!tag.equals("BUTTON")) && (!tag.equals("SELECT"))
+					&& (!tag.equals("TEXTAREA"))) {
 				element.setAttribute("tabindex", "0");
 			}
 		}
@@ -136,11 +165,25 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 */
 	protected void generateMainScripts() {
 		HTMLDOMElement head = parser.find("head").firstResult();
-		if ((head != null) && (parser.find("#" + idScriptEventListener).firstResult() == null)) {
+		if ((head != null)
+				&& (parser.find("#" + idScriptEventListener)
+						.firstResult() == null)) {
 			HTMLDOMElement script = parser.createElement("script");
+			String localEventListenerScriptContent;
+			
+			if (storeScriptsContent) {
+				if (eventListenerScriptContent == null) {
+					eventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
+				}
+				localEventListenerScriptContent = eventListenerScriptContent;
+			} else {
+				localEventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
+			}
+			
 			script.setAttribute("id", idScriptEventListener);
 			script.setAttribute("type", "text/javascript");
-			script.appendText(getContentFromFile("/js/eventlistener.js"));
+			script.appendText(localEventListenerScriptContent);
+			
 			if (head.hasChildren()) {
 				head.getFirstElementChild().insertBefore(script);
 			} else {
@@ -162,9 +205,21 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			}
 			if (parser.find("#" + idFunctionScriptFix).firstResult() == null) {
 				HTMLDOMElement scriptFunction = parser.createElement("script");
+				String localIncludeScriptContent;
+				
+				if (storeScriptsContent) {
+					if (includeScriptContent == null) {
+						includeScriptContent = getContentFromFile("/js/include.js");
+					}
+					localIncludeScriptContent = includeScriptContent;
+				} else {
+					localIncludeScriptContent = getContentFromFile("/js/include.js");
+				}
+				
 				scriptFunction.setAttribute("id", idFunctionScriptFix);
 				scriptFunction.setAttribute("type", "text/javascript");
-				scriptFunction.appendText(getContentFromFile("/js/include.js"));
+				scriptFunction.appendText(localIncludeScriptContent);
+				
 				local.appendElement(scriptFunction);
 			}
 		}
@@ -183,7 +238,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		
 		if (scriptList != null) {
 			CommonFunctions.generateId(element, prefixId);
-			scriptList.appendText(event + "Elements.push('" + element.getAttribute("id") + "');");
+			scriptList.appendText(event + "Elements.push('"
+					+ element.getAttribute("id") + "');");
 		}
 	}
 	
@@ -196,20 +252,25 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	public void fixDrag(HTMLDOMElement element) {
 		keyboardAccess(element);
 		
+		element.setAttribute("aria-grabbed", "false");
+		
 		addEventInElement(element, "drag");
 	}
 
 	public void fixDragsandDrops() {
-		Collection<HTMLDOMElement> draggableElements = parser.find("[ondrag],[ondragstart],[ondragend]").listResults();
-		for (HTMLDOMElement element : draggableElements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixDrag(element);
+		Collection<HTMLDOMElement> draggableElements = parser
+				.find("[ondrag],[ondragstart],[ondragend]").listResults();
+		for (HTMLDOMElement draggableElement : draggableElements) {
+			if (!draggableElement.hasAttribute(dataIgnore)) {
+				fixDrag(draggableElement);
 			}
 		}
-		Collection<HTMLDOMElement> droppableElements = parser.find("[ondrop],[ondragenter],[ondragleave],[ondragover]").listResults();
-		for (HTMLDOMElement element : droppableElements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixDrop(element);
+		Collection<HTMLDOMElement> droppableElements = parser
+				.find("[ondrop],[ondragenter],[ondragleave],[ondragover]")
+				.listResults();
+		for (HTMLDOMElement droppableElement : droppableElements) {
+			if (!droppableElement.hasAttribute(dataIgnore)) {
+				fixDrop(droppableElement);
 			}
 		}
 	}
@@ -221,7 +282,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	}
 	
 	public void fixHovers() {
-		Collection<HTMLDOMElement> elements = parser.find("[onmouseover],[onmouseout]").listResults();
+		Collection<HTMLDOMElement> elements = parser
+				.find("[onmouseover],[onmouseout]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixHover(element);
@@ -237,7 +299,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	
 	public void fixActives() {
 		Collection<HTMLDOMElement> elements = parser
-				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]").listResults();
+				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]")
+				.listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixActive(element);

@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -18,20 +16,20 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleEvent interface fix problems of accessibility associated
- * with Javascript events in elements.
+ * The AccessibleEvent interface fixes accessibility problems associated
+ * with JavaScript events in elements.
  */
 public interface AccessibleEvent {
 	
 	/**
 	 * Provide a solution for the element that has drop events.
-	 * @param element The element that will be fixed.
+	 * @param element The element with drop event.
 	 */
 	public void fixDrop(HTMLDOMElement element);
 	
 	/**
 	 * Provide a solution for the element that has drag events.
-	 * @param element The element that will be fixed.
+	 * @param element The element with drag event.
 	 */
 	public void fixDrag(HTMLDOMElement element);
 	
@@ -42,7 +40,7 @@ public interface AccessibleEvent {
 	
 	/**
 	 * Provide a solution for the element that has inaccessible hover events.
-	 * @param element The element that will be fixed.
+	 * @param element The element with hover event.
 	 */
 	public void fixHover(HTMLDOMElement element);
 	
@@ -53,7 +51,7 @@ public interface AccessibleEvent {
 	
 	/**
 	 * Provide a solution for the element that has inaccessible active events.
-	 * @param element The element that will be fixed.
+	 * @param element The element with active event.
 	 */
 	public void fixActive(HTMLDOMElement element);
 	

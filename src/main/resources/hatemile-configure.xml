@@ -8,30 +8,28 @@
 		<parameter name="text-autocomplete-value-list">List</parameter>
 		<parameter name="text-autocomplete-value-inline">Inline</parameter>
 		<parameter name="text-autocomplete-value-none">None</parameter>
-		<parameter name="text-heading">Summary</parameter>
+		<parameter name="text-heading">Summary:</parameter>
 		<!-- Prefix parameters -->
 		<parameter name="prefix-required-field">*</parameter>
 		<parameter name="prefix-range-min-field"></parameter>
 		<parameter name="prefix-range-max-field"></parameter>
 		<parameter name="prefix-autocomplete-field"></parameter>
 		<parameter name="prefix-generated-ids">id-</parameter>
-		<parameter name="prefix-longdescription-link"></parameter>
-		<parameter name="prefix-skip-link">Go to</parameter>
+		<parameter name="prefix-longdescription"></parameter>
 		<!-- Suffix parameters -->
-		<parameter name="suffix-longdescription-link">[d]</parameter>
+		<parameter name="suffix-longdescription">[d]</parameter>
 		<parameter name="suffix-required-field"></parameter>
 		<parameter name="suffix-range-min-field">(Min: {{value}})</parameter>
 		<parameter name="suffix-range-max-field">(Max: {{value}})</parameter>
 		<parameter name="suffix-autocomplete-field">(Autocomplete: {{value}})</parameter>
-		<parameter name="suffix-skip-link"></parameter>
 	</parameters>
-	<skip-links>
-		<skip-link selector="main,[role=main]" default-text="Main Content" shortcut="1" />
-		<skip-link selector="nav,[role=navigation]" default-text="Menu" shortcut="2" />
-		<skip-link selector="form" default-text="Form" shortcut="3" />
-		<skip-link selector="#container-shortcuts" default-text="Shortcuts" shortcut="9" />
-		<skip-link selector="#container-heading" default-text="Summary" shortcut="0" />
-	</skip-links>
+	<skippers>
+		<skipper selector="main,[role=main]" default-text="Main Content" shortcut="1" />
+		<skipper selector="nav,[role=navigation]" default-text="Menu" shortcut="2" />
+		<skipper selector="form" default-text="Form" shortcut="3" />
+		<skipper selector="#container-shortcuts" default-text="Shortcuts" shortcut="9" />
+		<skipper selector="#container-heading" default-text="Summary" shortcut="0" />
+	</skippers>
 	<selector-changes>
 		<!-- HTML5 Recommendations -->
 		<selector-change selector="article:not([role])" attribute="role" value-attribute="article" />

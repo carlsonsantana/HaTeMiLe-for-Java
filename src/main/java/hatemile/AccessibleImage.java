@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -18,19 +16,19 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleImage interface fix the problems of accessibility associated
+ * The AccessibleImage interface fixes accessibility problems associated
  * with images.
  */
 public interface AccessibleImage {
 	
 	/**
-	 * Provide a alternative way for access the longs descriptions of element.
+	 * Provide an alternative way to access the long description of element.
 	 * @param element The element with long description.
 	 */
 	public void fixLongDescription(HTMLDOMElement element);
 	
 	/**
-	 * Provide a alternative way for access the longs descriptions of elements.
+	 * Provide an alternative way to access the longs descriptions of elements.
 	 */
 	public void fixLongDescriptions();
 }

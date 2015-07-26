@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -195,7 +193,8 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	 * @param dataSuffix The name of suffix attribute.
 	 */
 	protected void addPrefixSuffix(HTMLDOMElement label, HTMLDOMElement field
-			, String prefix, String suffix, String dataPrefix, String dataSuffix) {
+			, String prefix, String suffix, String dataPrefix
+			, String dataSuffix) {
 		String content = field.getAttribute("aria-label");
 		if (!prefix.isEmpty()) {
 			label.setAttribute(dataPrefix, prefix);
@@ -220,7 +219,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	protected void fixLabelRequiredField(HTMLDOMElement label, HTMLDOMElement requiredField) {
 		if (((requiredField.hasAttribute("required"))
 				|| ((requiredField.hasAttribute("aria-required"))
-				&& (requiredField.getAttribute("aria-required").equalsIgnoreCase("true"))))
+				&& (requiredField.getAttribute("aria-required").toLowerCase().equals("true"))))
 				&& (requiredField.hasAttribute("aria-label"))
 				&& (!label.hasAttribute(dataLabelPrefixRequiredField))
 				&& (!label.hasAttribute(dataLabelSuffixRequiredField))) {
@@ -276,32 +275,23 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		if ((autoCompleteField.hasAttribute("aria-label"))
 				&& (!label.hasAttribute(dataLabelPrefixAutoCompleteField))
 				&& (!label.hasAttribute(dataLabelSuffixAutoCompleteField))) {
-			String autocomplete = "";
-			if (autoCompleteField.hasAttribute("autocomplete")) {
-				autocomplete = autoCompleteField.getAttribute("autocomplete").toLowerCase();
-			} else {
-				HTMLDOMElement form = parser.find(autoCompleteField).findAncestors("form").firstResult();
-				if ((form != null) && (form.hasAttribute("autocomplete"))) {
-					autocomplete = form.getAttribute("autocomplete").toLowerCase();
-				}
-			}
-			if (!autocomplete.isEmpty()) {
-				if (autocomplete.equals("on")) {
+			String ariaAutocomplete = getARIAAutoComplete(autoCompleteField);
+			if (ariaAutocomplete != null) {
+				if (ariaAutocomplete.equals("both")) {
 					if (!prefixAutoCompleteField.isEmpty()) {
 						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueBoth);
 					}
 					if (!suffixAutoCompleteField.isEmpty()) {
 						suffixAutoCompleteFieldModified = suffixAutoCompleteField.replace("{{value}}", textAutoCompleteValueBoth);
 					}
-				} else if (autocomplete.equals("off")) {
+				} else if (ariaAutocomplete.equals("none")) {
 					if (!prefixAutoCompleteField.isEmpty()) {
 						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueNone);
 					}
 					if (!suffixAutoCompleteField.isEmpty()) {
 						suffixAutoCompleteFieldModified = suffixAutoCompleteField.replace("{{value}}", textAutoCompleteValueNone);
 					}
-				} else if (autoCompleteField.hasAttribute("list")
-						&& (parser.find("datalist[id=" + autoCompleteField.getAttribute("list") + "]").firstResult() != null)) {
+				} else if (ariaAutocomplete.equals("list")) {
 					if (!prefixAutoCompleteField.isEmpty()) {
 						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueList);
 					}
@@ -317,6 +307,46 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	}
 	
 	/**
+	 * Returns the appropriate value for attribute aria-autocomplete of field.
+	 * @param field The field.
+	 * @return The ARIA value of field.
+	 */
+	protected String getARIAAutoComplete(HTMLDOMElement field) {
+		String tagName = field.getTagName();
+		String type = null;
+		if (field.hasAttribute("type")) {
+			type = field.getAttribute("type").toLowerCase();
+		}
+		if ((tagName.equals("TEXTAREA")) || ((tagName.equals("INPUT"))
+				&& (!(("button".equals(type)) || ("submit".equals(type))
+					|| ("reset".equals(type)) || ("image".equals(type))
+					|| ("file".equals(type)) || ("checkbox".equals(type))
+					|| ("radio".equals(type)) || ("hidden".equals(type)))))) {
+			String value = null;
+			if (field.hasAttribute("autocomplete")) {
+				value = field.getAttribute("autocomplete").toLowerCase();
+			} else {
+				HTMLDOMElement form = parser.find(field).findAncestors("form").firstResult();
+				if ((form == null) && (field.hasAttribute("form"))) {
+					form = parser.find("#" + field.getAttribute("form")).firstResult();
+				}
+				if ((form != null) && (form.hasAttribute("autocomplete"))) {
+					value = form.getAttribute("autocomplete").toLowerCase();
+				}
+			}
+			if ("on".equals(value)) {
+				return "both";
+			} else if ((field.hasAttribute("list")) && (parser
+					.find("datalist[id=\"" + field.getAttribute("list") + "\"]").firstResult() != null)) {
+				return "list";
+			} else if ("off".equals(value)) {
+				return "none";
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns the labels of field.
 	 * @param field The field.
 	 * @return The labels of field.
@@ -324,39 +354,12 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	protected Collection<HTMLDOMElement> getLabels(HTMLDOMElement field) {
 		Collection<HTMLDOMElement> labels = null;
 		if (field.hasAttribute("id")) {
-			labels = parser.find("label[for=" + field.getAttribute("id") + "]").listResults();
+			labels = parser.find("label[for=\"" + field.getAttribute("id") + "\"]").listResults();
 		}
 		if ((labels == null) || (labels.isEmpty())) {
 			labels = parser.find(field).findAncestors("label").listResults();
 		}
 		return labels;
-	}
-	
-	/**
-	 * Fix the control to inform if it has autocomplete and the type.
-	 * @param field The field.
-	 * @param active If the element has autocomplete.
-	 */
-	protected void fixControlAutoComplete(HTMLDOMElement field, Boolean active) {
-		if (Boolean.TRUE.equals(active)) {
-			field.setAttribute("aria-autocomplete", "both");
-		} else if (!((active == null) && (field.hasAttribute("aria-autocomplete")))) {
-			if (field.hasAttribute("list")) {
-				HTMLDOMElement list = parser.find("datalist[id=" + field.getAttribute("list") + "]")
-						.firstResult();
-				if (list != null) {
-					field.setAttribute("aria-autocomplete", "list");
-				}
-			}
-			if ((Boolean.FALSE.equals(active)) && ((!field.hasAttribute("aria-autocomplete"))
-					|| (!field.getAttribute("aria-autocomplete").toLowerCase().equals("list")))) {
-				field.setAttribute("aria-autocomplete", "none");
-			}
-		}
-		Collection<HTMLDOMElement> labels = getLabels(field);
-		for (HTMLDOMElement label : labels) {
-			fixLabelAutoCompleteField(label, field);
-		}
 	}
 	
 	public void fixRequiredField(HTMLDOMElement requiredField) {
@@ -401,63 +404,21 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 
-	public void fixAutoCompleteField(HTMLDOMElement element) {
-		if (element.hasAttribute("autocomplete")) {
-			Boolean active;
-			String value = element.getAttribute("autocomplete");
-			if (value.equals("on")) {
-				active = Boolean.TRUE;
-			} else if (value.equals("off")) {
-				active = Boolean.FALSE;
-			} else {
-				active = null;
+	public void fixAutoCompleteField(HTMLDOMElement autoCompleteField) {
+		String ariaAutoComplete = getARIAAutoComplete(autoCompleteField);
+		if (ariaAutoComplete != null) {
+			autoCompleteField.setAttribute("aria-autocomplete", ariaAutoComplete);
+			
+			Collection<HTMLDOMElement> labels = getLabels(autoCompleteField);
+			for (HTMLDOMElement label : labels) {
+				fixLabelAutoCompleteField(label, autoCompleteField);
 			}
-			if (active != null) {
-				if (element.getTagName().equals("FORM")) {
-					Collection<HTMLDOMElement> fields;
-					fields = parser.find(element).findDescendants("input,textarea").listResults();
-					if (element.hasAttribute("id")) {
-						String id = element.getAttribute("id");
-						fields.addAll(parser
-								.find("input[form=" + id + "],textarea[form=" + id + "]").listResults());
-					}
-					boolean fix;
-					String type;
-					for (HTMLDOMElement field : fields) {
-						fix = true;
-						if ((field.getTagName().equals("INPUT")) && (field.hasAttribute("type"))) {
-							type = field.getAttribute("type").toLowerCase();
-							if ((type.equals("button")) || (type.equals("submit"))
-									|| (type.equals("reset")) || (type.equals("image"))
-									|| (type.equals("file")) || (type.equals("checkbox"))
-									|| (type.equals("radio")) || (type.equals("password"))
-									|| (type.equals("hidden"))) {
-								fix = false;
-							}
-						}
-						if (fix) {
-							String autoCompleteControlFormValue = field.getAttribute("autocomplete");
-							if ("on".equals(autoCompleteControlFormValue)) {
-								fixControlAutoComplete(field, true);
-							} else if ("off".equals(autoCompleteControlFormValue)) {
-								fixControlAutoComplete(field, false);
-							} else {
-								fixControlAutoComplete(field, active);
-							}
-						}
-					}
-				} else {
-					fixControlAutoComplete(element, active);
-				}
-			}
-		}
-		if ((!element.hasAttribute("aria-autocomplete")) && (element.hasAttribute("list"))) {
-			fixControlAutoComplete(element, null);
 		}
 	}
 
 	public void fixAutoCompleteFields() {
-		Collection<HTMLDOMElement> elements = parser.find("[autocomplete],[list]").listResults();
+		Collection<HTMLDOMElement> elements = parser
+				.find("input[autocomplete],textarea[autocomplete],form[autocomplete] input,form[autocomplete] textarea,[list],[form]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixAutoCompleteField(element);

@@ -264,7 +264,7 @@ createDragEvent = function(type, element, event) {
 };
 
 fixActiveInElement = function(element) {
-	if (element.tagName.toUpperCase() === 'A') {
+	if (element.tagName.toUpperCase() !== 'A') {
 		addEventHandler(element, 'keypress', 'data-keypressadded', 'active', function(event) {
 			if (enterPressed(event.keyCode)) {
 				if (hasEvent(element, 'click')) {
@@ -297,26 +297,28 @@ fixHoverInElement = function(element) {
 };
 
 fixDragInElement = function(element) {
-	addEventHandler(element, 'keydown', 'data-keydownadded', 'drag', function(event) {
-		var grabbedElement, grabbedElements, _i, _len;
-		if ((event.keyCode === ' '.charCodeAt(0)) && (!element.hasAttribute('data-keypressed'))) {
-			grabbedElements = exports.__aria_grabbed__elements__;
-			for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
-				grabbedElement = grabbedElements[_i];
-				grabbedElement.setAttribute('aria-grabbed', 'false');
-				executeDragEvent('dragend', grabbedElement, event);
+	if ((!hasEvent(element, 'keydown', 'data-keydownadded', 'drag')) && (!hasEvent(element, 'keyup', 'data-keyupadded', 'drag'))) {
+		addEventHandler(element, 'keydown', 'data-keydownadded', 'drag', function(event) {
+			var grabbedElement, grabbedElements, _i, _len;
+			if ((event.keyCode === ' '.charCodeAt(0)) && (!element.hasAttribute('data-keypressed'))) {
+				grabbedElements = exports.__aria_grabbed__elements__;
+				for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
+					grabbedElement = grabbedElements[_i];
+					grabbedElement.setAttribute('aria-grabbed', 'false');
+					executeDragEvent('dragend', grabbedElement, event);
+				}
+				element.setAttribute('aria-grabbed', 'true');
+				element.setAttribute('data-keypressed', 'true');
+				exports.__aria_grabbed__elements__ = [element];
+				executeDragEvent('dragstart', element, event);
+				executeDragEvent('drag', element, event);
+				generateDropEffect();
 			}
-			element.setAttribute('aria-grabbed', 'true');
-			element.setAttribute('data-keypressed', 'true');
-			exports.__aria_grabbed__elements__ = [element];
-			executeDragEvent('dragstart', element, event);
-			executeDragEvent('drag', element, event);
-			generateDropEffect();
-		}
-	});
-	addEventHandler(element, 'keyup', 'data-keyupadded', 'drag', function(event) {
-		element.removeAttribute('data-keypressed');
-	});
+		});
+		addEventHandler(element, 'keyup', 'data-keyupadded', 'drag', function(event) {
+			element.removeAttribute('data-keypressed');
+		});
+	}
 };
 
 fixDropInElement = function(element) {
@@ -344,9 +346,9 @@ fixDropInElement = function(element) {
 					for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
 						grabbedElement = grabbedElements[_i];
 						grabbedElement.setAttribute('aria-grabbed', 'false');
-						exports.__aria_grabbed__elements__ = [];
 						executeDragEvent('dragend', grabbedElement, event);
 					}
+					exports.__aria_grabbed__elements__ = [];
 					clearDropEffect();
 				}
 				executeDragEvent('drop', element, event);
@@ -358,16 +360,16 @@ fixDropInElement = function(element) {
 	}
 };
 
-document.addEventListener('keypress', function(event) {
+addEventHandler(document.documentElement, 'keypress', 'data-keypressadded', 'active', function(event) {
 	var grabbedElement, grabbedElements, _i, _len;
 	if (event.keyCode === 27) {
 		grabbedElements = exports.__aria_grabbed__elements__;
 		for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
 			grabbedElement = grabbedElements[_i];
 			grabbedElement.setAttribute('aria-grabbed', 'false');
-			exports.__aria_grabbed__elements__ = [];
 			executeDragEvent('dragend', grabbedElement, event);
 		}
+		exports.__aria_grabbed__elements__ = [];
 		clearDropEffect();
 	}
 });

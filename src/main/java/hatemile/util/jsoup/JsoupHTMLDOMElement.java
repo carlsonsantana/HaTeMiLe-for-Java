@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -35,7 +33,6 @@ import org.jsoup.select.Elements;
 /**
  * The JsoupHTMLDOMElement class is official implementation of HTMLDOMElement
  * interface for the Jsoup library.
- * @version 2014-07-23
  */
 public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	

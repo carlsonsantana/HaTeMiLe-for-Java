@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -17,6 +15,7 @@ package hatemile.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,16 +77,17 @@ public class Configure {
 		parameters = new HashMap<String, String>();
 		selectorChanges = new ArrayList<SelectorChange>();
 		skippers = new ArrayList<Skipper>();
+		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-		Document document = documentBuilder.parse(File.class.getResourceAsStream("/" + fileName));
+		Document document = documentBuilder.parse(inputStream);
 		Element rootElement = document.getDocumentElement();
 		//Read parameters
 		NodeList nodeList = rootElement.getChildNodes();
 		NodeList nodeParameters = null;
 		NodeList nodeSelectorChanges = null;
-		NodeList nodeSkipLinks = null;
+		NodeList nodeSkippers = null;
 		for (int i = 0, length = nodeList.getLength(); i < length; i++) {
 			if (nodeList.item(i) instanceof Element) {
 				Element element = (Element) nodeList.item(i);
@@ -95,8 +95,8 @@ public class Configure {
 					nodeParameters = element.getChildNodes();
 				} else if (element.getTagName().toUpperCase().equals("SELECTOR-CHANGES")) {
 					nodeSelectorChanges = element.getChildNodes();
-				} else if (element.getTagName().toUpperCase().equals("SKIP-LINKS")) {
-					nodeSkipLinks = element.getChildNodes();
+				} else if (element.getTagName().toUpperCase().equals("SKIPPERS")) {
+					nodeSkippers = element.getChildNodes();
 				}
 			}
 		}
@@ -129,21 +129,23 @@ public class Configure {
 			}
 		}
 		
-		if (nodeSkipLinks != null) {
-			for (int i = 0; i < nodeSkipLinks.getLength(); i++) {
-				if (nodeSkipLinks.item(i) instanceof Element) {
-					Element skipLink = (Element) nodeSkipLinks.item(i);
-					if ((skipLink.getTagName().toUpperCase().equals("SKIP-LINK"))
-							&& (skipLink.hasAttribute("selector"))
-							&& (skipLink.hasAttribute("default-text"))
-							&& (skipLink.hasAttribute("shortcut"))) {
-						skippers.add(new Skipper(skipLink.getAttribute("selector")
-								, skipLink.getAttribute("default-text")
-								, skipLink.getAttribute("shortcut")));
+		if (nodeSkippers != null) {
+			for (int i = 0; i < nodeSkippers.getLength(); i++) {
+				if (nodeSkippers.item(i) instanceof Element) {
+					Element skipper = (Element) nodeSkippers.item(i);
+					if ((skipper.getTagName().toUpperCase().equals("SKIPPER"))
+							&& (skipper.hasAttribute("selector"))
+							&& (skipper.hasAttribute("default-text"))
+							&& (skipper.hasAttribute("shortcut"))) {
+						skippers.add(new Skipper(skipper.getAttribute("selector")
+								, skipper.getAttribute("default-text")
+								, skipper.getAttribute("shortcut")));
 					}
 				}
 			}
 		}
+		
+		inputStream.close();
 	}
 	
 	/**

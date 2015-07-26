@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -18,47 +16,47 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleForm interface fix problems of accessibility associated
+ * The AccessibleForm interface fixes accessibility problems associated
  * with forms.
  */
 public interface AccessibleForm {
 	
 	/**
-	 * If field is required, display this information.
-	 * @param requiredField The element that will be fixed.
+	 * Display that the field is required.
+	 * @param requiredField The required field.
 	 */
 	public void fixRequiredField(HTMLDOMElement requiredField);
 	
 	/**
-	 * In fields is required, display this information.
+	 * Display that the fields is required.
 	 */
 	public void fixRequiredFields();
 	
 	/**
-	 * If field has range, display the range.
-	 * @param rangeField The element that will be fixed.
+	 * Display that the field have range.
+	 * @param rangeField The range field.
 	 */
 	public void fixRangeField(HTMLDOMElement rangeField);
 	
 	/**
-	 * In range fields, display the range.
+	 * Display that the fields have range.
 	 */
 	public void fixRangeFields();
 	
 	/**
-	 * If field has autocomplete, display this information.
-	 * @param autoCompleteField The element that will be fixed.
+	 * Display that the field have autocomplete.
+	 * @param autoCompleteField The field with autocomplete.
 	 */
 	public void fixAutoCompleteField(HTMLDOMElement autoCompleteField);
 	
 	/**
-	 * In fields has autocomplete, display this information.
+	 * Display that the fields have autocomplete.
 	 */
 	public void fixAutoCompleteFields();
 	
 	/**
 	 * Associate label with field.
-	 * @param label The element that will be fixed.
+	 * @param label The label.
 	 */
 	public void fixLabel(HTMLDOMElement label);
 	

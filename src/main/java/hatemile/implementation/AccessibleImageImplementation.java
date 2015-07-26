@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -75,17 +73,17 @@ public class AccessibleImageImplementation implements AccessibleImage {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 		classLongDescriptionLink = "longdescription-link";
-		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription-link");
-		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription-link");
 		dataLongDescriptionForImage = "data-longdescriptionfor";
 		dataIgnore = "data-ignoreaccessibilityfix";
+		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
+		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
 	}
 	
 	public void fixLongDescription(HTMLDOMElement element) {
 		if (element.hasAttribute("longdesc")) {
 			CommonFunctions.generateId(element, prefixId);
 			String id = element.getAttribute("id");
-			if (parser.find("[" + dataLongDescriptionForImage + "=" + id + "]").firstResult() == null) {
+			if (parser.find("[" + dataLongDescriptionForImage + "=\"" + id + "\"]").firstResult() == null) {
 				String text;
 				if (element.hasAttribute("alt")) {
 					text = prefixLongDescriptionLink + " " + element.getAttribute("alt")

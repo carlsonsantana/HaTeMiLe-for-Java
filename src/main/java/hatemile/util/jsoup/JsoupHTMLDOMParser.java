@@ -1,6 +1,4 @@
 /*
-Copyright 2014 Carlson Santana Cruz
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -29,7 +27,6 @@ import org.jsoup.select.Elements;
 /**
  * The class JsoupHTMLDOMParser is official implementation of HTMLDOMParser
  * interface for the Jsoup library.
- * @version 2014-07-23
  */
 public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	
@@ -82,7 +79,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	}
 	
 	public HTMLDOMParser find(String selector) {
-		results = document.select(selector);
+		results = document.select(selector.replaceAll("\"", "")
+				.replaceAll("'", ""));
 		return this;
 	}
 	
@@ -95,9 +93,11 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	
 	public HTMLDOMParser findChildren(String selector) {
 		Collection<Element> elements = new ArrayList<Element>();
-		Elements descendants = results.select(selector);
+		Elements descendants = results.select(selector.replaceAll("\"", "")
+				.replaceAll("'", ""));
 		for (Element element : descendants) {
-			if ((results.contains(element.parent())) && (!elements.contains(element))) {
+			if ((results.contains(element.parent()))
+					&& (!elements.contains(element))) {
 				elements.add(element);
 			}
 		}
@@ -119,14 +119,16 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	}
 	
 	public HTMLDOMParser findDescendants(String selector) {
-		results = results.select(selector);
+		results = results.select(selector.replaceAll("\"", "")
+				.replaceAll("'", ""));
 		return this;
 	}
 	
 	public HTMLDOMParser findDescendants(HTMLDOMElement descendant) {
 		Collection<Element> elements = new ArrayList<Element>();
 		for (Element resultElement : results) {
-			Element element = getDescendantOf(resultElement, (Element) descendant.getData());
+			Element element = getDescendantOf(resultElement
+					, (Element) descendant.getData());
 			if ((element != null) && (!elements.contains(element))) {
 				elements.add(element);
 			}
@@ -136,10 +138,12 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	}
 	
 	public HTMLDOMParser findAncestors(String selector) {
-		Elements findedElements = document.select(selector);
+		Elements findedElements = document.select(selector.replaceAll("\"", "")
+				.replaceAll("'", ""));
 		Collection<Element> elements = new ArrayList<Element>();
 		for (Element element : findedElements) {
-			if ((results.parents().contains(element)) && (!elements.contains(element))) {
+			if ((results.parents().contains(element))
+					&& (!elements.contains(element))) {
 				elements.add(element);
 			}
 		}
