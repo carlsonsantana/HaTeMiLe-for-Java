@@ -1,14 +1,45 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>hatemile</groupId>
 	<artifactId>hatemile</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>HaTeMiLe for Java</name>
-	<url>http://maven.apache.org</url>
+	<description>
+		HaTeMiLe (HTML Accessible) is a library that can convert a HTML code in
+		a HTML code more accessible.
+	</description>
+	<url>https://github.com/carlsonsantana/HaTeMiLe-for-Java</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/carlsonsantana/HaTeMiLe-for-Java</url>
+		<connection>scm:git:git://github.com/carlsonsantana/HaTeMiLe-for-Java.git</connection>
+		<developerConnection>scm:git:git@github.com:carlsonsantana/HaTeMiLe-for-Java.git</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/carlsonsantana/HaTeMiLe-for-Java/issues</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<name>Carlson Santana Cruz</name>
+			<url>https://github.com/carlsonsantana/</url>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
