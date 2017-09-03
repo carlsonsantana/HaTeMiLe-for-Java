@@ -16,19 +16,30 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleTable interface fixes accessibility problems associated
- * with tables.
+ * The AccessibleAssociation interface improve accessibility, associating
+ * elements.
  */
-public interface AccessibleTable {
+public interface AccessibleAssociation {
 	
 	/**
-	 * Associate data cells with header cells of table.
+	 * Associate all data cells with header cells of table.
 	 * @param table The table.
 	 */
 	public void fixAssociationCellsTable(HTMLDOMElement table);
 	
 	/**
-	 * Associate data cells with header cells of tables.
+	 * Associate all data cells with header cells of all tables of page.
 	 */
 	public void fixAssociationCellsTables();
+	
+	/**
+	 * Associate label with field.
+	 * @param label The label.
+	 */
+	public void fixLabel(HTMLDOMElement label);
+	
+	/**
+	 * Associate all labels of page with fields.
+	 */
+	public void fixLabels();
 }

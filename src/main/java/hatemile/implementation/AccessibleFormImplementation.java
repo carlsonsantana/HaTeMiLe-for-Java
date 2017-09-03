@@ -14,7 +14,6 @@ limitations under the License.
 package hatemile.implementation;
 
 import hatemile.AccessibleForm;
-import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
 import hatemile.util.HTMLDOMElement;
 import hatemile.util.HTMLDOMParser;
@@ -38,118 +37,9 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	protected final String prefixId;
 	
 	/**
-	 * The description prefix of required fields.
-	 */
-	protected final String prefixRequiredField;
-	
-	/**
-	 * The description suffix of required fields.
-	 */
-	protected final String suffixRequiredField;
-	
-	/**
-	 * The description prefix of range fields for minimum value.
-	 */
-	protected final String prefixRangeMinField;
-	
-	/**
-	 * The description suffix of range fields for minimum value.
-	 */
-	protected final String suffixRangeMinField;
-	
-	/**
-	 * The description prefix of range fields for maximum value.
-	 */
-	protected final String prefixRangeMaxField;
-	
-	/**
-	 * The description suffix of range fields for maximum value.
-	 */
-	protected final String suffixRangeMaxField;
-	
-	/**
-	 * The description prefix of autocomplete fields.
-	 */
-	protected final String prefixAutoCompleteField;
-	
-	/**
-	 * The description suffix of autocomplete fields.
-	 */
-	protected final String suffixAutoCompleteField;
-	
-	/**
-	 * The value for description of field, when it has inline and list
-	 * autocomplete.
-	 */
-	protected final String textAutoCompleteValueBoth;
-	
-	/**
-	 * The value for description of field, when it has list autocomplete.
-	 */
-	protected final String textAutoCompleteValueList;
-	
-	/**
-	 * The value for description of field, when it has inline autocomplete.
-	 */
-	protected final String textAutoCompleteValueInline;
-	
-	/**
-	 * The value for description of field, when it not has autocomplete.
-	 */
-	protected final String textAutoCompleteValueNone;
-	
-	/**
 	 * The name of attribute for not modify the elements.
 	 */
 	protected final String dataIgnore;
-	
-	/**
-	 * The name of attribute that store the description prefix of required
-	 * fields.
-	 */
-	protected final String dataLabelPrefixRequiredField;
-	
-	/**
-	 * The name of attribute that store the description suffix of required
-	 * fields.
-	 */
-	protected final String dataLabelSuffixRequiredField;
-	
-	/**
-	 * The name of attribute that store the description prefix of range fields
-	 * for minimum value.
-	 */
-	protected final String dataLabelPrefixRangeMinField;
-	
-	/**
-	 * The name of attribute that store the description suffix of range fields
-	 * for minimum value.
-	 */
-	protected final String dataLabelSuffixRangeMinField;
-	
-	/**
-	 * The name of attribute that store the description prefix of range fields
-	 * for maximum value.
-	 */
-	protected final String dataLabelPrefixRangeMaxField;
-	
-	/**
-	 * The name of attribute that store the description suffix of range fields
-	 * for maximum value.
-	 */
-	protected final String dataLabelSuffixRangeMaxField;
-	
-	/**
-	 * The name of attribute that store the description prefix of autocomplete
-	 * fields.
-	 */
-	protected final String dataLabelPrefixAutoCompleteField;
-	
-	/**
-	 * The name of attribute that store the description suffix of autocomplete
-	 * fields.
-	 */
-	protected final String dataLabelSuffixAutoCompleteField;
 	
 	/**
 	 * Initializes a new object that manipulate the accessibility of the forms
@@ -159,151 +49,8 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	 */
 	public AccessibleFormImplementation(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
-		dataLabelPrefixRequiredField = "data-prefixrequiredfield";
-		dataLabelSuffixRequiredField = "data-suffixrequiredfield";
-		dataLabelPrefixRangeMinField = "data-prefixvalueminfield";
-		dataLabelSuffixRangeMinField = "data-suffixvalueminfield";
-		dataLabelPrefixRangeMaxField = "data-prefixvaluemaxfield";
-		dataLabelSuffixRangeMaxField = "data-suffixvaluemaxfield";
-		dataLabelPrefixAutoCompleteField = "data-prefixautocompletefield";
-		dataLabelSuffixAutoCompleteField = "data-suffixautocompletefield";
 		dataIgnore = "data-ignoreaccessibilityfix";
 		prefixId = configure.getParameter("prefix-generated-ids");
-		prefixRequiredField = configure.getParameter("prefix-required-field");
-		suffixRequiredField = configure.getParameter("suffix-required-field");
-		prefixRangeMinField = configure.getParameter("prefix-range-min-field");
-		suffixRangeMinField = configure.getParameter("suffix-range-min-field");
-		prefixRangeMaxField = configure.getParameter("prefix-range-max-field");
-		suffixRangeMaxField = configure.getParameter("suffix-range-max-field");
-		prefixAutoCompleteField = configure.getParameter("prefix-autocomplete-field");
-		suffixAutoCompleteField = configure.getParameter("suffix-autocomplete-field");
-		textAutoCompleteValueBoth = configure.getParameter("text-autocomplete-value-both");
-		textAutoCompleteValueList = configure.getParameter("text-autocomplete-value-list");
-		textAutoCompleteValueInline = configure.getParameter("text-autocomplete-value-inline");
-		textAutoCompleteValueNone = configure.getParameter("text-autocomplete-value-none");
-	}
-	
-	/**
-	 * Display in label the information of field.
-	 * @param label The label.
-	 * @param field The field.
-	 * @param prefix The prefix.
-	 * @param suffix The suffix.
-	 * @param dataPrefix The name of prefix attribute.
-	 * @param dataSuffix The name of suffix attribute.
-	 */
-	protected void addPrefixSuffix(HTMLDOMElement label, HTMLDOMElement field
-			, String prefix, String suffix, String dataPrefix
-			, String dataSuffix) {
-		String content = field.getAttribute("aria-label");
-		if (!prefix.isEmpty()) {
-			label.setAttribute(dataPrefix, prefix);
-			if (!content.contains(prefix)) {
-				content = prefix + " " + content;
-			}
-		}
-		if (!suffix.isEmpty()) {
-			label.setAttribute(dataSuffix, suffix);
-			if (!content.contains(suffix)) {
-				content += " " + suffix;
-			}
-		}
-		field.setAttribute("aria-label", content);
-	}
-	
-	/**
-	 * Display in label the information if the field is required.
-	 * @param label The label.
-	 * @param requiredField The required field.
-	 */
-	protected void fixLabelRequiredField(HTMLDOMElement label, HTMLDOMElement requiredField) {
-		if (((requiredField.hasAttribute("required"))
-				|| ((requiredField.hasAttribute("aria-required"))
-				&& (requiredField.getAttribute("aria-required").toLowerCase().equals("true"))))
-				&& (requiredField.hasAttribute("aria-label"))
-				&& (!label.hasAttribute(dataLabelPrefixRequiredField))
-				&& (!label.hasAttribute(dataLabelSuffixRequiredField))) {
-			addPrefixSuffix(label, requiredField, prefixRequiredField, suffixRequiredField
-					, dataLabelPrefixRequiredField, dataLabelSuffixRequiredField);
-		}
-	}
-	
-	/**
-	 * Display in label the information of range of field.
-	 * @param label The label.
-	 * @param rangeField The range field.
-	 */
-	protected void fixLabelRangeField(HTMLDOMElement label, HTMLDOMElement rangeField) {
-		if (rangeField.hasAttribute("aria-label")) {
-			if ((rangeField.hasAttribute("min") || rangeField.hasAttribute("aria-valuemin"))
-					&& (!label.hasAttribute(dataLabelPrefixRangeMinField))
-					&& (!label.hasAttribute(dataLabelSuffixRangeMinField))) {
-				String value;
-				if (rangeField.hasAttribute("min")) {
-					value = rangeField.getAttribute("min");
-				} else {
-					value = rangeField.getAttribute("aria-valuemin");
-				}
-				addPrefixSuffix(label, rangeField, prefixRangeMinField.replace("{{value}}", value)
-						, suffixRangeMinField.replace("{{value}}", value)
-						, dataLabelPrefixRangeMinField, dataLabelSuffixRangeMinField);
-			}
-			if ((rangeField.hasAttribute("max") || rangeField.hasAttribute("aria-valuemax"))
-					&& (!label.hasAttribute(dataLabelPrefixRangeMaxField))
-					&& (!label.hasAttribute(dataLabelSuffixRangeMaxField))) {
-				String value;
-				if (rangeField.hasAttribute("max")) {
-					value = rangeField.getAttribute("max");
-				} else {
-					value = rangeField.getAttribute("aria-valuemax");
-				}
-				addPrefixSuffix(label, rangeField, prefixRangeMaxField.replace("{{value}}", value)
-						, suffixRangeMaxField.replace("{{value}}", value)
-						, dataLabelPrefixRangeMaxField, dataLabelSuffixRangeMaxField);
-			}
-		}
-	}
-	
-	/**
-	 * Display in label the information if the field has autocomplete.
-	 * @param label The label.
-	 * @param autoCompleteField The autocomplete field.
-	 */
-	protected void fixLabelAutoCompleteField(HTMLDOMElement label, HTMLDOMElement autoCompleteField) {
-		String prefixAutoCompleteFieldModified = "";
-		String suffixAutoCompleteFieldModified = "";
-		if ((autoCompleteField.hasAttribute("aria-label"))
-				&& (!label.hasAttribute(dataLabelPrefixAutoCompleteField))
-				&& (!label.hasAttribute(dataLabelSuffixAutoCompleteField))) {
-			String ariaAutocomplete = getARIAAutoComplete(autoCompleteField);
-			if (ariaAutocomplete != null) {
-				if (ariaAutocomplete.equals("both")) {
-					if (!prefixAutoCompleteField.isEmpty()) {
-						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueBoth);
-					}
-					if (!suffixAutoCompleteField.isEmpty()) {
-						suffixAutoCompleteFieldModified = suffixAutoCompleteField.replace("{{value}}", textAutoCompleteValueBoth);
-					}
-				} else if (ariaAutocomplete.equals("none")) {
-					if (!prefixAutoCompleteField.isEmpty()) {
-						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueNone);
-					}
-					if (!suffixAutoCompleteField.isEmpty()) {
-						suffixAutoCompleteFieldModified = suffixAutoCompleteField.replace("{{value}}", textAutoCompleteValueNone);
-					}
-				} else if (ariaAutocomplete.equals("list")) {
-					if (!prefixAutoCompleteField.isEmpty()) {
-						prefixAutoCompleteFieldModified = prefixAutoCompleteField.replace("{{value}}", textAutoCompleteValueList);
-					}
-					if (!suffixAutoCompleteField.isEmpty()) {
-						suffixAutoCompleteFieldModified = suffixAutoCompleteField.replace("{{value}}", textAutoCompleteValueList);
-					}
-				}
-				addPrefixSuffix(label, autoCompleteField, prefixAutoCompleteFieldModified
-						, suffixAutoCompleteFieldModified, dataLabelPrefixAutoCompleteField
-						, dataLabelSuffixAutoCompleteField);
-			}
-		}
 	}
 	
 	/**
@@ -365,11 +112,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	public void fixRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
-			
-			Collection<HTMLDOMElement> labels = getLabels(requiredField);
-			for (HTMLDOMElement label : labels) {
-				fixLabelRequiredField(label, requiredField);
-			}
 		}
 	}
 	
@@ -389,10 +131,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		if (rangeField.hasAttribute("max")) {
 			rangeField.setAttribute("aria-valuemax", rangeField.getAttribute("max"));
 		}
-		Collection<HTMLDOMElement> labels = getLabels(rangeField);
-		for (HTMLDOMElement label : labels) {
-			fixLabelRangeField(label, rangeField);
-		}
 	}
 	
 	public void fixRangeFields() {
@@ -408,11 +146,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		String ariaAutoComplete = getARIAAutoComplete(autoCompleteField);
 		if (ariaAutoComplete != null) {
 			autoCompleteField.setAttribute("aria-autocomplete", ariaAutoComplete);
-			
-			Collection<HTMLDOMElement> labels = getLabels(autoCompleteField);
-			for (HTMLDOMElement label : labels) {
-				fixLabelAutoCompleteField(label, autoCompleteField);
-			}
 		}
 	}
 
@@ -422,45 +155,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixAutoCompleteField(element);
-			}
-		}
-	}
-	
-	public void fixLabel(HTMLDOMElement label) {
-		if (label.getTagName().equals("LABEL")) {
-			HTMLDOMElement field;
-			if (label.hasAttribute("for")) {
-				field = parser.find("#" + label.getAttribute("for")).firstResult();
-			} else {
-				field = parser.find(label).findDescendants("input,select,textarea").firstResult();
-				
-				if (field != null) {
-					CommonFunctions.generateId(field, prefixId);
-					label.setAttribute("for", field.getAttribute("id"));
-				}
-			}
-			if (field != null) {
-				if (!field.hasAttribute("aria-label")) {
-					field.setAttribute("aria-label"
-							, label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim());
-				}
-				
-				fixLabelRequiredField(label, field);
-				fixLabelRangeField(label, field);
-				fixLabelAutoCompleteField(label, field);
-				
-				CommonFunctions.generateId(label, prefixId);
-				field.setAttribute("aria-labelledby", CommonFunctions.increaseInList
-						(field.getAttribute("aria-labelledby"), label.getAttribute("id")));
-			}
-		}
-	}
-	
-	public void fixLabels() {
-		Collection<HTMLDOMElement> labels = parser.find("label").listResults();
-		for (HTMLDOMElement label : labels) {
-			if (!label.hasAttribute(dataIgnore)) {
-				fixLabel(label);
 			}
 		}
 	}

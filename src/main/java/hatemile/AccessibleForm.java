@@ -53,15 +53,4 @@ public interface AccessibleForm {
 	 * Display that the fields have autocomplete.
 	 */
 	public void fixAutoCompleteFields();
-	
-	/**
-	 * Associate label with field.
-	 * @param label The label.
-	 */
-	public void fixLabel(HTMLDOMElement label);
-	
-	/**
-	 * Associate labels with fields.
-	 */
-	public void fixLabels();
 }
