@@ -55,4 +55,16 @@ public interface AccessibleNavigation {
 	 * Provide a navigation by headings.
 	 */
 	public void fixHeadings();
+	
+	/**
+	 * Provide an alternative way to access the long description of element.
+	 * @param image The image with long description.
+	 */
+	public void fixLongDescription(HTMLDOMElement image);
+	
+	/**
+	 * Provide an alternative way to access the longs descriptions of all
+	 * elements of page.
+	 */
+	public void fixLongDescriptions();
 }

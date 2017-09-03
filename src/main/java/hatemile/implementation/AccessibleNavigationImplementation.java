@@ -91,6 +91,16 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected final String textHeading;
 	
 	/**
+	 * The prefix of content of long description.
+	 */
+	protected final String prefixLongDescriptionLink;
+	
+	/**
+	 * The suffix of content of long description.
+	 */
+	protected final String suffixLongDescriptionLink;
+	
+	/**
 	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
@@ -126,9 +136,25 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected final String classHeadingAnchor;
 	
 	/**
+	 * The HTML class of element for show the long description of image.
+	 */
+	protected final String classLongDescriptionLink;
+	
+	/**
+	 * The name of attribute that indicates the level of heading of link.
+	 */
+	protected final String dataHeadingLevel;
+	
+	/**
 	 * The name of attribute that links the anchor of heading link with heading.
 	 */
 	protected final String dataHeadingAnchorFor;
+	
+	/**
+	 * The name of attribute that link the anchor of long description with the
+	 * image.
+	 */
+	protected final String dataLongDescriptionForImage;
 	
 	/**
 	 * The state that indicates if the sintatic heading of parser be validated.
@@ -139,11 +165,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * The state that indicates if the sintatic heading of parser is correct.
 	 */
 	protected boolean validHeading;
-	
-	/**
-	 * The name of attribute that indicates the level of heading of link.
-	 */
-	protected final String dataHeadingLevel;
 	
 	/**
 	 * The list element of shortcuts.
@@ -181,15 +202,19 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		idTextHeading = "text-heading";
 		classSkipperAnchor = "skipper-anchor";
 		classHeadingAnchor = "heading-anchor";
+		classLongDescriptionLink = "longdescription-link";
 		dataAccessKey = "data-shortcutdescriptionfor";
 		dataIgnore = "data-ignoreaccessibilityfix";
 		dataAnchorFor = "data-anchorfor";
 		dataHeadingAnchorFor = "data-headinganchorfor";
 		dataHeadingLevel = "data-headinglevel";
+		dataLongDescriptionForImage = "data-longdescriptionfor";
 		prefixId = configure.getParameter("prefix-generated-ids");
 		textShortcuts = configure.getParameter("text-shortcuts");
 		textHeading = configure.getParameter("text-heading");
 		standartPrefix = configure.getParameter("text-standart-shortcut-prefix");
+		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
+		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
 		skippers = configure.getSkippers();
 		listShortcutsAdded = false;
 		listSkippersAdded = false;
@@ -653,6 +678,38 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
 				fixHeading(element);
+			}
+		}
+	}
+	
+	public void fixLongDescription(HTMLDOMElement image) {
+		if (image.hasAttribute("longdesc")) {
+			CommonFunctions.generateId(image, prefixId);
+			String id = image.getAttribute("id");
+			if (parser.find("[" + dataLongDescriptionForImage + "=\"" + id + "\"]").firstResult() == null) {
+				String text;
+				if (image.hasAttribute("alt")) {
+					text = prefixLongDescriptionLink + " " + image.getAttribute("alt")
+							+ " " + suffixLongDescriptionLink;
+				} else {
+					text = prefixLongDescriptionLink + " " + suffixLongDescriptionLink;
+				}
+				HTMLDOMElement anchor = parser.createElement("a");
+				anchor.setAttribute("href", image.getAttribute("longdesc"));
+				anchor.setAttribute("target", "_blank");
+				anchor.setAttribute(dataLongDescriptionForImage, id);
+				anchor.setAttribute("class", classLongDescriptionLink);
+				anchor.appendText(text.trim());
+				image.insertAfter(anchor);
+			}
+		}
+	}
+	
+	public void fixLongDescriptions() {
+		Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
+		for (HTMLDOMElement image : images) {
+			if (!image.hasAttribute(dataIgnore)) {
+				fixLongDescription(image);
 			}
 		}
 	}
