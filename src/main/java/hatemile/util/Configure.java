@@ -41,11 +41,6 @@ public class Configure {
 	protected final Map<String, String> parameters;
 	
 	/**
-	 * The changes that will be done in selectors.
-	 */
-	protected final Collection<SelectorChange> selectorChanges;
-	
-	/**
 	 * The skippers.
 	 */
 	protected final Collection<Skipper> skippers;
@@ -75,7 +70,6 @@ public class Configure {
 	 */
 	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		parameters = new HashMap<String, String>();
-		selectorChanges = new ArrayList<SelectorChange>();
 		skippers = new ArrayList<Skipper>();
 		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
 		
@@ -108,22 +102,6 @@ public class Configure {
 					if ((parameter.getTagName().toUpperCase().equals("PARAMETER"))
 							&& (parameter.hasAttribute("name"))) {
 						parameters.put(parameter.getAttribute("name"), parameter.getTextContent());
-					}
-				}
-			}
-		}
-		
-		if (nodeSelectorChanges != null) {
-			for (int i = 0; i < nodeSelectorChanges.getLength(); i++) {
-				if (nodeSelectorChanges.item(i) instanceof Element) {
-					Element selector = (Element) nodeSelectorChanges.item(i);
-					if ((selector.getTagName().toUpperCase().equals("SELECTOR-CHANGE"))
-							&& (selector.hasAttribute("selector"))
-							&& (selector.hasAttribute("attribute"))
-							&& (selector.hasAttribute("value-attribute"))) {
-						selectorChanges.add(new SelectorChange(selector.getAttribute("selector")
-								, selector.getAttribute("attribute")
-								, selector.getAttribute("value-attribute")));
 					}
 				}
 			}
@@ -166,14 +144,6 @@ public class Configure {
 	}
 	
 	/**
-	 * Returns the changes that will be done in selectors.
-	 * @return The changes that will be done in selectors.
-	 */
-	public Collection<SelectorChange> getSelectorChanges() {
-		return new ArrayList<SelectorChange>(selectorChanges);
-	}
-	
-	/**
 	 * Returns the skippers.
 	 * @return The skippers.
 	 */
@@ -191,8 +161,7 @@ public class Configure {
 				return false;
 			}
 			Configure configure = (Configure) object;
-			if ((!parameters.equals(configure.getParameters()))
-					|| (!selectorChanges.equals(configure.getSelectorChanges()))) {
+			if (!parameters.equals(configure.getParameters())) {
 				return false;
 			}
 		}
