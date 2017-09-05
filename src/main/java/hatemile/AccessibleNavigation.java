@@ -23,17 +23,6 @@ import hatemile.util.Skipper;
 public interface AccessibleNavigation {
 	
 	/**
-	 * Display the shortcuts of element.
-	 * @param element The element with shortcuts.
-	 */
-	public void fixShortcut(HTMLDOMElement element);
-	
-	/**
-	 * Display the shortcuts of elements.
-	 */
-	public void fixShortcuts();
-	
-	/**
 	 * Provide content skipper for element.
 	 * @param element The element.
 	 * @param skipper The skipper.

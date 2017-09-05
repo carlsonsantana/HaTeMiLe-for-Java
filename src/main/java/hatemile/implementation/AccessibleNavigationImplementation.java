@@ -36,39 +36,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected final HTMLDOMParser parser;
 	
 	/**
-	 * The id of list element that contains the description of shortcuts.
-	 */
-	protected final String idContainerShortcuts;
-	
-	/**
-	 * The id of text of description of container of shortcuts descriptions.
-	 */
-	protected final String idTextShortcuts;
-	
-	/**
-	 * The text of description of container of shortcuts descriptions.
-	 */
-	protected final String textShortcuts;
-	
-	/**
-	 * The name of attribute that link the list item element with the shortcut.
-	 */
-	protected final String dataAccessKey;
-	
-	/**
 	 * The name of attribute for not modify the elements.
 	 */
 	protected final String dataIgnore;
-	
-	/**
-	 * The browser shortcut prefix.
-	 */
-	protected final String prefix;
-	
-	/**
-	 * Standart browser prefix.
-	 */
-	protected final String standartPrefix;
 	
 	/**
 	 * The id of list element that contains the skippers.
@@ -167,16 +137,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected boolean validHeading;
 	
 	/**
-	 * The list element of shortcuts.
-	 */
-	protected HTMLDOMElement listShortcuts;
-	
-	/**
-	 * The state that indicates if the list of shortcuts of page was added.
-	 */
-	protected boolean listShortcutsAdded;
-	
-	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
 	 * @param parser The HTML parser.
@@ -195,145 +155,26 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 */
 	public AccessibleNavigationImplementation(HTMLDOMParser parser, Configure configure, String userAgent) {
 		this.parser = parser;
-		idContainerShortcuts = "container-shortcuts";
 		idContainerSkippers = "container-skippers";
 		idContainerHeading = "container-heading";
-		idTextShortcuts = "text-shortcuts";
 		idTextHeading = "text-heading";
 		classSkipperAnchor = "skipper-anchor";
 		classHeadingAnchor = "heading-anchor";
 		classLongDescriptionLink = "longdescription-link";
-		dataAccessKey = "data-shortcutdescriptionfor";
 		dataIgnore = "data-ignoreaccessibilityfix";
 		dataAnchorFor = "data-anchorfor";
 		dataHeadingAnchorFor = "data-headinganchorfor";
 		dataHeadingLevel = "data-headinglevel";
 		dataLongDescriptionForImage = "data-longdescriptionfor";
 		prefixId = configure.getParameter("prefix-generated-ids");
-		textShortcuts = configure.getParameter("text-shortcuts");
 		textHeading = configure.getParameter("text-heading");
-		standartPrefix = configure.getParameter("text-standart-shortcut-prefix");
 		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
 		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
 		skippers = configure.getSkippers();
-		listShortcutsAdded = false;
 		listSkippersAdded = false;
 		validateHeading = false;
 		validHeading = false;
 		listSkippers = null;
-		listShortcuts = null;
-		
-		if (userAgent != null) {
-			userAgent = userAgent.toLowerCase();
-			boolean opera = userAgent.contains("opera");
-			boolean mac = userAgent.contains("mac");
-			boolean konqueror = userAgent.contains("konqueror");
-			boolean spoofer = userAgent.contains("spoofer");
-			boolean safari = userAgent.contains("applewebkit");
-			boolean windows = userAgent.contains("windows");
-			boolean chrome = userAgent.contains("chrome");
-			boolean firefox = userAgent.matches("firefox/[2-9]|minefield/3");
-			boolean ie = userAgent.contains("msie") || userAgent.contains("trident");
-			
-			if (opera) {
-				prefix = "SHIFT + ESC";
-			} else if (chrome && mac && !spoofer) {
-				prefix = "CTRL + OPTION";
-			} else if (safari && !windows && !spoofer) {
-				prefix = "CTRL + ALT";
-			} else if (!windows && (safari || mac || konqueror)) {
-				prefix = "CTRL";
-			} else if (firefox) {
-				prefix = "ALT + SHIFT";
-			} else if (chrome || ie) {
-				prefix = "ALT";
-			} else {
-				prefix = standartPrefix;
-			}
-		} else {
-			prefix = standartPrefix;
-		}
-	}
-	
-	/**
-	 * Returns the description of element.
-	 * @param element The element with description.
-	 * @return The description of element.
-	 */
-	protected String getDescription(HTMLDOMElement element) {
-		String description = null;
-		if (element.hasAttribute("title")) {
-			description = element.getAttribute("title");
-		} else if (element.hasAttribute("aria-label")) {
-			description = element.getAttribute("aria-label");
-		} else if (element.hasAttribute("alt")) {
-			description = element.getAttribute("alt");
-		} else if (element.hasAttribute("label")) {
-			description = element.getAttribute("label");
-		} else if ((element.hasAttribute("aria-labelledby"))
-				|| (element.hasAttribute("aria-describedby"))) {
-			String[] descriptionIds;
-			if (element.hasAttribute("aria-labelledby")) {
-				descriptionIds = element.getAttribute("aria-labelledby").split("[ \n\t\r]+");
-			} else {
-				descriptionIds = element.getAttribute("aria-describedby").split("[ \n\t\r]+");
-			}
-			for (int i = 0, length = descriptionIds.length; i < length; i++) {
-				HTMLDOMElement elementDescription = parser.find("#" + descriptionIds[i]).firstResult();
-				if (elementDescription != null) {
-					description = elementDescription.getTextContent();
-					break;
-				}
-			}
-		} else if ((element.getTagName().equals("INPUT")) && (element.hasAttribute("type"))) {
-			String type = element.getAttribute("type").toLowerCase();
-			if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset")))
-					&& (element.hasAttribute("value"))) {
-				description = element.getAttribute("value");
-			}
-		}
-		if (description == null) {
-			description = element.getTextContent();
-		}
-		return description.replaceAll("[ \n\t\r]+", " ").trim();
-	}
-	
-	/**
-	 * Generate the list of shortcuts of page.
-	 * @return The list of shortcuts of page.
-	 */
-	protected HTMLDOMElement generateListShortcuts() {
-		HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
-		
-		HTMLDOMElement htmlList = null;
-		if (container == null) {
-			HTMLDOMElement local = parser.find("body").firstResult();
-			if (local != null) {
-				container = parser.createElement("div");
-				container.setAttribute("id", idContainerShortcuts);
-				
-				HTMLDOMElement textContainer = parser.createElement("span");
-				textContainer.setAttribute("id", idTextShortcuts);
-				textContainer.appendText(textShortcuts);
-				
-				container.appendElement(textContainer);
-				local.appendElement(container);
-				
-				executeFixSkipper(container);
-				executeFixSkipper(textContainer);
-			}
-		}
-		if (container != null) {
-			htmlList = parser.find(container).findChildren("ul").firstResult();
-			if (htmlList == null) {
-				htmlList = parser.createElement("ul");
-				container.appendElement(htmlList);
-			}
-			executeFixSkipper(htmlList);
-		}
-		listShortcutsAdded = true;
-		
-		return htmlList;
 	}
 	
 	/**
@@ -527,53 +368,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			}
 		}
 	}
-	
-	/**
-	 * Call fixShortcut method for element, if the page has the container of
-	 * shortcuts.
-	 * @param element The element.
-	 */
-	protected void executeFixShortcut(HTMLDOMElement element) {
-		if (listShortcuts != null) {
-			fixShortcut(element);
-		}
-	}
-	
-	public void fixShortcut(HTMLDOMElement element) {
-		if (element.hasAttribute("accesskey")) {
-			String description = getDescription(element);
-			if (!element.hasAttribute("title")) {
-				element.setAttribute("title", description);
-			}
-			
-			if (!listShortcutsAdded) {
-				listShortcuts = generateListShortcuts();
-			}
-			
-			if (listShortcuts != null) {
-				String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
-				for (int i = 0, length = keys.length; i < length; i++) {
-					String key = keys[i].toUpperCase();
-					if (parser.find(listShortcuts).findChildren("[" + dataAccessKey + "=\"" + key + "\"]")
-							.firstResult() == null) {
-						HTMLDOMElement item = parser.createElement("li");
-						item.setAttribute(dataAccessKey, key);
-						item.appendText(prefix + " + " + key + ": " + description);
-						listShortcuts.appendElement(item);
-					}
-				}
-			}
-		}
-	}
-	
-	public void fixShortcuts() {
-		Collection<HTMLDOMElement> elements = parser.find("[accesskey]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				fixShortcut(element);
-			}
-		}
-	}
 
 	public void fixSkipper(HTMLDOMElement element, Skipper skipper) {
 		if (!listSkippersAdded) {
@@ -599,8 +393,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				
 				itemLink.appendElement(link);
 				listSkippers.appendElement(itemLink);
-				
-				executeFixShortcut(link);
 			}
 		}
 	}
