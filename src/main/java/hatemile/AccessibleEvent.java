@@ -16,47 +16,47 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleEvent interface fixes accessibility problems associated
- * with JavaScript events in elements.
+ * The AccessibleEvent interface improve the accessibility, making elements
+ * events available from a keyboard.
  */
 public interface AccessibleEvent {
 	
 	/**
-	 * Provide a solution for the element that has drop events.
+	 * Make the drop events of element available from a keyboard.
 	 * @param element The element with drop event.
 	 */
-	public void fixDrop(HTMLDOMElement element);
+	public void makeAccessibleDropEvents(HTMLDOMElement element);
 	
 	/**
-	 * Provide a solution for the element that has drag events.
+	 * Make the drag events of element available from a keyboard.
 	 * @param element The element with drag event.
 	 */
-	public void fixDrag(HTMLDOMElement element);
+	public void makeAccessibleDragEvents(HTMLDOMElement element);
 	
 	/**
-	 * Provide a solution for elements that has Drag-and-Drop events.
+	 * Make all Drag-and-Drop events of page available from a keyboard.
 	 */
-	public void fixDragsandDrops();
+	public void makeAccessibleAllDragandDropEvents();
 	
 	/**
-	 * Provide a solution for the element that has inaccessible hover events.
+	 * Make the hover events of element available from a keyboard.
 	 * @param element The element with hover event.
 	 */
-	public void fixHover(HTMLDOMElement element);
+	public void makeAccessibleHoverEvents(HTMLDOMElement element);
 	
 	/**
-	 * Provide a solution for elements that has inaccessible hover events.
+	 * Make all hover events of page available from a keyboard.
 	 */
-	public void fixHovers();
+	public void makeAccessibleAllHoverEvents();
 	
 	/**
-	 * Provide a solution for the element that has inaccessible active events.
-	 * @param element The element with active event.
+	 * Make the click events of element available from a keyboard.
+	 * @param element The element with click events.
 	 */
-	public void fixActive(HTMLDOMElement element);
+	public void makeAccessibleClickEvents(HTMLDOMElement element);
 	
 	/**
-	 * Provide a solution for elements that has inaccessible active events.
+	 * Make all click events of page available from a keyboard.
 	 */
-	public void fixActives();
+	public void makeAccessibleAllClickEvents();
 }

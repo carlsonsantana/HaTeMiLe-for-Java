@@ -363,72 +363,70 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		if (listSkippers != null) {
 			for (Skipper skipper : this.skippers) {
 				if (parser.find(skipper.getSelector()).listResults().contains(element)) {
-					fixSkipper(element, skipper);
+					provideNavigationBySkipper(element);
 				}
 			}
 		}
 	}
 
-	public void fixSkipper(HTMLDOMElement element, Skipper skipper) {
-		if (!listSkippersAdded) {
-			listSkippers = generateListSkippers();
+	public void provideNavigationBySkipper(HTMLDOMElement element) {
+		Skipper skipper = null;
+		Collection<HTMLDOMElement> auxiliarElements;
+		for (Skipper auxiliarSkipper : skippers) {
+			auxiliarElements = parser.find(auxiliarSkipper.getSelector()).listResults();
+			for (HTMLDOMElement auxiliarElement : auxiliarElements) {
+				if (auxiliarElement.equals(element)) {
+					skipper = auxiliarSkipper;
+					break;
+				}
+			}
+			if (skipper != null) {
+				break;
+			}
 		}
-		if (listSkippers != null) {
-			HTMLDOMElement anchor = generateAnchorFor(element, dataAnchorFor, classSkipperAnchor);
-			if (anchor != null) {
-				HTMLDOMElement itemLink = parser.createElement("li");
-				HTMLDOMElement link = parser.createElement("a");
-				link.setAttribute("href", "#" + anchor.getAttribute("name"));
-				link.appendText(skipper.getDefaultText());
-				
-				List<String> shortcuts = new ArrayList<String>(skipper.getShortcuts());
-				if (!shortcuts.isEmpty()) {
-					String shortcut = shortcuts.get(0);
-					if (!shortcut.isEmpty()) {
-						freeShortcut(shortcut);
-						link.setAttribute("accesskey", shortcut);
+		
+		if (skipper != null) {
+			if (!listSkippersAdded) {
+				listSkippers = generateListSkippers();
+			}
+			if (listSkippers != null) {
+				HTMLDOMElement anchor = generateAnchorFor(element, dataAnchorFor, classSkipperAnchor);
+				if (anchor != null) {
+					HTMLDOMElement itemLink = parser.createElement("li");
+					HTMLDOMElement link = parser.createElement("a");
+					link.setAttribute("href", "#" + anchor.getAttribute("name"));
+					link.appendText(skipper.getDefaultText());
+
+					List<String> shortcuts = new ArrayList<String>(skipper.getShortcuts());
+					if (!shortcuts.isEmpty()) {
+						String shortcut = shortcuts.get(0);
+						if (!shortcut.isEmpty()) {
+							freeShortcut(shortcut);
+							link.setAttribute("accesskey", shortcut);
+						}
 					}
+					CommonFunctions.generateId(link, prefixId);
+
+					itemLink.appendElement(link);
+					listSkippers.appendElement(itemLink);
 				}
-				CommonFunctions.generateId(link, prefixId);
-				
-				itemLink.appendElement(link);
-				listSkippers.appendElement(itemLink);
 			}
 		}
 	}
 
-	public void fixSkippers() {
+	public void provideNavigationByAllSkippers() {
 		Collection<HTMLDOMElement> elements;
-		boolean count;
-		int index = 0;
-		List<String> shortcuts;
-		String defaultText;
 		for (Skipper skipper : skippers) {
 			elements = parser.find(skipper.getSelector()).listResults();
-			count = elements.size() > 1;
-			if (count) {
-				index = 1;
-			}
-			shortcuts = new ArrayList<String>(skipper.getShortcuts());
 			for (HTMLDOMElement element : elements) {
 				if (!element.hasAttribute(dataIgnore)) {
-					if (count) {
-						defaultText = skipper.getDefaultText() + " " + Integer.toString(index++);
-					} else {
-						defaultText = skipper.getDefaultText();
-					}
-					if (shortcuts.size() > 0) {
-						fixSkipper(element, new Skipper(skipper.getSelector(), defaultText, shortcuts.get(shortcuts.size() - 1)));
-						shortcuts.remove(shortcuts.size() - 1);
-					} else {
-						fixSkipper(element, new Skipper(skipper.getSelector(), defaultText, ""));
-					}
+					provideNavigationBySkipper(element);
 				}
 			}
 		}
 	}
 
-	public void fixHeading(HTMLDOMElement element) {
+	public void provideNavigationByHeading(HTMLDOMElement element) {
 		if (!validateHeading) {
 			validHeading = isValidHeading();
 		}
@@ -465,16 +463,16 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
-	public void fixHeadings() {
+	public void provideNavigationByAllHeadings() {
 		Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
-				fixHeading(element);
+				provideNavigationByHeading(element);
 			}
 		}
 	}
 	
-	public void fixLongDescription(HTMLDOMElement image) {
+	public void provideNavigationToLongDescription(HTMLDOMElement image) {
 		if (image.hasAttribute("longdesc")) {
 			CommonFunctions.generateId(image, prefixId);
 			String id = image.getAttribute("id");
@@ -497,11 +495,11 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 	
-	public void fixLongDescriptions() {
+	public void provideNavigationToAllLongDescriptions() {
 		Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
 		for (HTMLDOMElement image : images) {
 			if (!image.hasAttribute(dataIgnore)) {
-				fixLongDescription(image);
+				provideNavigationToLongDescription(image);
 			}
 		}
 	}

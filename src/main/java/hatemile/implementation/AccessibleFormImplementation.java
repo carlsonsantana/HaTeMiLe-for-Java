@@ -109,22 +109,22 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		return labels;
 	}
 	
-	public void fixRequiredField(HTMLDOMElement requiredField) {
+	public void markRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
 		}
 	}
 	
-	public void fixRequiredFields() {
+	public void markAllRequiredFields() {
 		Collection<HTMLDOMElement> requiredFields = parser.find("[required]").listResults();
 		for (HTMLDOMElement requiredField : requiredFields) {
 			if (!requiredField.hasAttribute(dataIgnore)) {
-				fixRequiredField(requiredField);
+				markRequiredField(requiredField);
 			}
 		}
 	}
 	
-	public void fixRangeField(HTMLDOMElement rangeField) {
+	public void markRangeField(HTMLDOMElement rangeField) {
 		if (rangeField.hasAttribute("min")) {
 			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min"));
 		}
@@ -133,28 +133,28 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 	
-	public void fixRangeFields() {
+	public void markAllRangeFields() {
 		Collection<HTMLDOMElement> rangeFields = parser.find("[min],[max]").listResults();
 		for (HTMLDOMElement rangeField : rangeFields) {
 			if (!rangeField.hasAttribute(dataIgnore)) {
-				fixRangeField(rangeField);
+				markRangeField(rangeField);
 			}
 		}
 	}
 
-	public void fixAutoCompleteField(HTMLDOMElement autoCompleteField) {
+	public void markAutoCompleteField(HTMLDOMElement autoCompleteField) {
 		String ariaAutoComplete = getARIAAutoComplete(autoCompleteField);
 		if (ariaAutoComplete != null) {
 			autoCompleteField.setAttribute("aria-autocomplete", ariaAutoComplete);
 		}
 	}
 
-	public void fixAutoCompleteFields() {
+	public void markAllAutoCompleteFields() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("input[autocomplete],textarea[autocomplete],form[autocomplete] input,form[autocomplete] textarea,[list],[form]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
-				fixAutoCompleteField(element);
+				markAutoCompleteField(element);
 			}
 		}
 	}

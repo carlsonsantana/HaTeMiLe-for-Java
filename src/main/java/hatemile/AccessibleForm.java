@@ -16,41 +16,40 @@ package hatemile;
 import hatemile.util.HTMLDOMElement;
 
 /**
- * The AccessibleForm interface fixes accessibility problems associated
- * with forms.
+ * The AccessibleForm interface improve the accessibility of forms.
  */
 public interface AccessibleForm {
 	
 	/**
-	 * Display that the field is required.
+	 * Mark that the field is required.
 	 * @param requiredField The required field.
 	 */
-	public void fixRequiredField(HTMLDOMElement requiredField);
+	public void markRequiredField(HTMLDOMElement requiredField);
 	
 	/**
-	 * Display that the fields is required.
+	 * Mark that the fields is required.
 	 */
-	public void fixRequiredFields();
+	public void markAllRequiredFields();
 	
 	/**
-	 * Display that the field have range.
+	 * Mark that the field have range.
 	 * @param rangeField The range field.
 	 */
-	public void fixRangeField(HTMLDOMElement rangeField);
+	public void markRangeField(HTMLDOMElement rangeField);
 	
 	/**
-	 * Display that the fields have range.
+	 * Mark that the fields have range.
 	 */
-	public void fixRangeFields();
+	public void markAllRangeFields();
 	
 	/**
-	 * Display that the field have autocomplete.
+	 * Mark that the field have autocomplete.
 	 * @param autoCompleteField The field with autocomplete.
 	 */
-	public void fixAutoCompleteField(HTMLDOMElement autoCompleteField);
+	public void markAutoCompleteField(HTMLDOMElement autoCompleteField);
 	
 	/**
-	 * Display that the fields have autocomplete.
+	 * Mark that the fields have autocomplete.
 	 */
-	public void fixAutoCompleteFields();
+	public void markAllAutoCompleteFields();
 }

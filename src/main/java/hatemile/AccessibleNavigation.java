@@ -14,46 +14,43 @@ limitations under the License.
 package hatemile;
 
 import hatemile.util.HTMLDOMElement;
-import hatemile.util.Skipper;
 
 /**
- * The AccessibleNavigation interface fixes accessibility problems associated
- * with navigation.
+ * The AccessibleNavigation interface improve the accessibility of navigation.
  */
 public interface AccessibleNavigation {
 	
 	/**
-	 * Provide content skipper for element.
+	 * Provide a content skipper for element.
 	 * @param element The element.
-	 * @param skipper The skipper.
 	 */
-	public void fixSkipper(HTMLDOMElement element, Skipper skipper);
+	public void provideNavigationBySkipper(HTMLDOMElement element);
 	
 	/**
-	 * Provide content skippers.
+	 * Provide navigation by content skippers.
 	 */
-	public void fixSkippers();
+	public void provideNavigationByAllSkippers();
 	
 	/**
-	 * Provide a navigation by heading.
-	 * @param element The heading element.
+	 * Provide navigation by heading.
+	 * @param heading The heading element.
 	 */
-	public void fixHeading(HTMLDOMElement element);
+	public void provideNavigationByHeading(HTMLDOMElement heading);
 	
 	/**
-	 * Provide a navigation by headings.
+	 * Provide navigation by headings of page.
 	 */
-	public void fixHeadings();
+	public void provideNavigationByAllHeadings();
 	
 	/**
 	 * Provide an alternative way to access the long description of element.
 	 * @param image The image with long description.
 	 */
-	public void fixLongDescription(HTMLDOMElement image);
+	public void provideNavigationToLongDescription(HTMLDOMElement image);
 	
 	/**
 	 * Provide an alternative way to access the longs descriptions of all
 	 * elements of page.
 	 */
-	public void fixLongDescriptions();
+	public void provideNavigationToAllLongDescriptions();
 }

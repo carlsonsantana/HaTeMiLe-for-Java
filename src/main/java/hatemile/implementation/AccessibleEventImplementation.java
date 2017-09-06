@@ -243,13 +243,13 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		}
 	}
 	
-	public void fixDrop(HTMLDOMElement element) {
+	public void makeAccessibleDropEvents(HTMLDOMElement element) {
 		element.setAttribute("aria-dropeffect", "none");
 		
 		addEventInElement(element, "drop");
 	}
 
-	public void fixDrag(HTMLDOMElement element) {
+	public void makeAccessibleDragEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 		
 		element.setAttribute("aria-grabbed", "false");
@@ -257,12 +257,12 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		addEventInElement(element, "drag");
 	}
 
-	public void fixDragsandDrops() {
+	public void makeAccessibleAllDragandDropEvents() {
 		Collection<HTMLDOMElement> draggableElements = parser
 				.find("[ondrag],[ondragstart],[ondragend]").listResults();
 		for (HTMLDOMElement draggableElement : draggableElements) {
 			if (!draggableElement.hasAttribute(dataIgnore)) {
-				fixDrag(draggableElement);
+				makeAccessibleDragEvents(draggableElement);
 			}
 		}
 		Collection<HTMLDOMElement> droppableElements = parser
@@ -270,40 +270,40 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				.listResults();
 		for (HTMLDOMElement droppableElement : droppableElements) {
 			if (!droppableElement.hasAttribute(dataIgnore)) {
-				fixDrop(droppableElement);
+				makeAccessibleDropEvents(droppableElement);
 			}
 		}
 	}
 	
-	public void fixHover(HTMLDOMElement element) {
+	public void makeAccessibleHoverEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 		
 		addEventInElement(element, "hover");
 	}
 	
-	public void fixHovers() {
+	public void makeAccessibleAllHoverEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onmouseover],[onmouseout]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
-				fixHover(element);
+				makeAccessibleHoverEvents(element);
 			}
 		}
 	}
 	
-	public void fixActive(HTMLDOMElement element) {
+	public void makeAccessibleClickEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 		
 		addEventInElement(element, "active");
 	}
 	
-	public void fixActives() {
+	public void makeAccessibleAllClickEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]")
 				.listResults();
 		for (HTMLDOMElement element : elements) {
 			if (!element.hasAttribute(dataIgnore)) {
-				fixActive(element);
+				makeAccessibleClickEvents(element);
 			}
 		}
 	}

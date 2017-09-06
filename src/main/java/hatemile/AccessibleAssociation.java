@@ -25,21 +25,21 @@ public interface AccessibleAssociation {
 	 * Associate all data cells with header cells of table.
 	 * @param table The table.
 	 */
-	public void fixAssociationCellsTable(HTMLDOMElement table);
+	public void associateDataCellsWithHeaderCells(HTMLDOMElement table);
 	
 	/**
 	 * Associate all data cells with header cells of all tables of page.
 	 */
-	public void fixAssociationCellsTables();
+	public void associateAllDataCellsWithHeaderCells();
 	
 	/**
 	 * Associate label with field.
 	 * @param label The label.
 	 */
-	public void fixLabel(HTMLDOMElement label);
+	public void associateLabelWithField(HTMLDOMElement label);
 	
 	/**
 	 * Associate all labels of page with fields.
 	 */
-	public void fixLabels();
+	public void associateAllLabelsWithFields();
 }
