@@ -88,22 +88,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		return null;
 	}
 	
-	/**
-	 * Returns the labels of field.
-	 * @param field The field.
-	 * @return The labels of field.
-	 */
-	protected Collection<HTMLDOMElement> getLabels(HTMLDOMElement field) {
-		Collection<HTMLDOMElement> labels = null;
-		if (field.hasAttribute("id")) {
-			labels = parser.find("label[for=\"" + field.getAttribute("id") + "\"]").listResults();
-		}
-		if ((labels == null) || (labels.isEmpty())) {
-			labels = parser.find(field).findAncestors("label").listResults();
-		}
-		return labels;
-	}
-	
 	public void markRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
