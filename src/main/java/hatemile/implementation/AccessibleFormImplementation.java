@@ -16,8 +16,8 @@ package hatemile.implementation;
 import hatemile.AccessibleForm;
 import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
-import hatemile.util.HTMLDOMElement;
-import hatemile.util.HTMLDOMParser;
+import hatemile.util.html.HTMLDOMElement;
+import hatemile.util.html.HTMLDOMParser;
 
 import java.util.Collection;
 

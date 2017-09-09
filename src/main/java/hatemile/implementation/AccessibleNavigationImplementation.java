@@ -16,8 +16,8 @@ package hatemile.implementation;
 import hatemile.AccessibleNavigation;
 import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
-import hatemile.util.HTMLDOMElement;
-import hatemile.util.HTMLDOMParser;
+import hatemile.util.html.HTMLDOMElement;
+import hatemile.util.html.HTMLDOMParser;
 import hatemile.util.Skipper;
 import java.util.ArrayList;
 

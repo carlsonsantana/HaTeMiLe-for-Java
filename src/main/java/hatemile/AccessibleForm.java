@@ -13,7 +13,7 @@ limitations under the License.
  */
 package hatemile;
 
-import hatemile.util.HTMLDOMElement;
+import hatemile.util.html.HTMLDOMElement;
 
 /**
  * The AccessibleForm interface improve the accessibility of forms.

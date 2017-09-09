@@ -13,6 +13,8 @@ limitations under the License.
  */
 package hatemile.util;
 
+import hatemile.util.html.HTMLDOMElement;
+
 /**
  * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
  */
