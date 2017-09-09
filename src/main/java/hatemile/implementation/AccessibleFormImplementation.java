@@ -14,6 +14,7 @@ limitations under the License.
 package hatemile.implementation;
 
 import hatemile.AccessibleForm;
+import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
 import hatemile.util.HTMLDOMElement;
 import hatemile.util.HTMLDOMParser;
@@ -37,11 +38,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for not modify the elements.
-	 */
-	protected final String dataIgnore;
-	
-	/**
 	 * Initializes a new object that manipulate the accessibility of the forms
 	 * of parser.
 	 * @param parser The HTML parser.
@@ -49,7 +45,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	 */
 	public AccessibleFormImplementation(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
-		dataIgnore = "data-ignoreaccessibilityfix";
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
 	
@@ -118,7 +113,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	public void markAllRequiredFields() {
 		Collection<HTMLDOMElement> requiredFields = parser.find("[required]").listResults();
 		for (HTMLDOMElement requiredField : requiredFields) {
-			if (!requiredField.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(requiredField)) {
 				markRequiredField(requiredField);
 			}
 		}
@@ -136,7 +131,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	public void markAllRangeFields() {
 		Collection<HTMLDOMElement> rangeFields = parser.find("[min],[max]").listResults();
 		for (HTMLDOMElement rangeField : rangeFields) {
-			if (!rangeField.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(rangeField)) {
 				markRangeField(rangeField);
 			}
 		}
@@ -150,11 +145,11 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	}
 
 	public void markAllAutoCompleteFields() {
-		Collection<HTMLDOMElement> elements = parser
+		Collection<HTMLDOMElement> autoCompleteFields = parser
 				.find("input[autocomplete],textarea[autocomplete],form[autocomplete] input,form[autocomplete] textarea,[list],[form]").listResults();
-		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
-				markAutoCompleteField(element);
+		for (HTMLDOMElement autoCompleteField : autoCompleteFields) {
+			if (CommonFunctions.isValidElement(autoCompleteField)) {
+				markAutoCompleteField(autoCompleteField);
 			}
 		}
 	}

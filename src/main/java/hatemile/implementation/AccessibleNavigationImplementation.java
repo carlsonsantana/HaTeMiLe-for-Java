@@ -36,11 +36,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected final HTMLDOMParser parser;
 	
 	/**
-	 * The name of attribute for not modify the elements.
-	 */
-	protected final String dataIgnore;
-	
-	/**
 	 * The id of list element that contains the skippers.
 	 */
 	protected final String idContainerSkippers;
@@ -161,7 +156,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		classSkipperAnchor = "skipper-anchor";
 		classHeadingAnchor = "heading-anchor";
 		classLongDescriptionLink = "longdescription-link";
-		dataIgnore = "data-ignoreaccessibilityfix";
 		dataAnchorFor = "data-anchorfor";
 		dataHeadingAnchorFor = "data-headinganchorfor";
 		dataHeadingLevel = "data-headinglevel";
@@ -419,7 +413,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		for (Skipper skipper : skippers) {
 			elements = parser.find(skipper.getSelector()).listResults();
 			for (HTMLDOMElement element : elements) {
-				if (!element.hasAttribute(dataIgnore)) {
+				if (CommonFunctions.isValidElement(element)) {
 					provideNavigationBySkipper(element);
 				}
 			}
@@ -466,7 +460,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	public void provideNavigationByAllHeadings() {
 		Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6").listResults();
 		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(element)) {
 				provideNavigationByHeading(element);
 			}
 		}
@@ -498,7 +492,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	public void provideNavigationToAllLongDescriptions() {
 		Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
 		for (HTMLDOMElement image : images) {
-			if (!image.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(image)) {
 				provideNavigationToLongDescription(image);
 			}
 		}

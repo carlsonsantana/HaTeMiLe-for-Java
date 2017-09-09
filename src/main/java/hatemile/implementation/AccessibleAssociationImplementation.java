@@ -40,11 +40,6 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for not modify the elements.
-	 */
-	protected final String dataIgnore;
-	
-	/**
 	 * Initializes a new object that improve the accessibility of associations
 	 * of parser.
 	 * @param parser The HTML parser.
@@ -53,7 +48,6 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	public AccessibleAssociationImplementation(HTMLDOMParser parser, Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
-		dataIgnore = "data-ignoreaccessibilityfix";
 	}
 	
 	/**
@@ -277,7 +271,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	public void associateAllDataCellsWithHeaderCells() {
 		Collection<HTMLDOMElement> tables = parser.find("table").listResults();
 		for (HTMLDOMElement table : tables) {
-			if (!table.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(table)) {
 				associateDataCellsWithHeaderCells(table);
 			}
 		}
@@ -312,7 +306,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	public void associateAllLabelsWithFields() {
 		Collection<HTMLDOMElement> labels = parser.find("label").listResults();
 		for (HTMLDOMElement label : labels) {
-			if (!label.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(label)) {
 				associateLabelWithField(label);
 			}
 		}

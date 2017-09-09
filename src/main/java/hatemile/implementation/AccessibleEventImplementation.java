@@ -60,11 +60,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	protected final String prefixId;
 	
 	/**
-	 * The name of attribute for not modify the elements.
-	 */
-	protected final String dataIgnore;
-	
-	/**
 	 * The state that indicates if the scripts used by solutions was added in
 	 * parser.
 	 */
@@ -108,7 +103,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		idScriptEventListener = "script-eventlistener";
 		idListIdsScript = "list-ids-script";
 		idFunctionScriptFix = "id-function-script-fix";
-		dataIgnore = "data-ignoreaccessibilityfix";
 		mainScriptAdded = false;
 		scriptList = null;
 	}
@@ -261,7 +255,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		Collection<HTMLDOMElement> draggableElements = parser
 				.find("[ondrag],[ondragstart],[ondragend]").listResults();
 		for (HTMLDOMElement draggableElement : draggableElements) {
-			if (!draggableElement.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(draggableElement)) {
 				makeAccessibleDragEvents(draggableElement);
 			}
 		}
@@ -269,7 +263,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				.find("[ondrop],[ondragenter],[ondragleave],[ondragover]")
 				.listResults();
 		for (HTMLDOMElement droppableElement : droppableElements) {
-			if (!droppableElement.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(droppableElement)) {
 				makeAccessibleDropEvents(droppableElement);
 			}
 		}
@@ -285,7 +279,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onmouseover],[onmouseout]").listResults();
 		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(element)) {
 				makeAccessibleHoverEvents(element);
 			}
 		}
@@ -302,7 +296,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]")
 				.listResults();
 		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(element)) {
 				makeAccessibleClickEvents(element);
 			}
 		}

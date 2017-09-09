@@ -19,6 +19,11 @@ package hatemile.util;
 public class CommonFunctions {
 	
 	/**
+	 * The name of attribute for not modify the elements.
+	 */
+	protected static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
+	
+	/**
 	 * Count the number of ids created.
 	 */
 	protected static int count = 0;
@@ -104,5 +109,29 @@ public class CommonFunctions {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Check that the element can be manipulated by HaTeMiLe.
+	 * @param element The element
+	 * @return True if element can be manipulated or false if element
+	 * and element can be manipulated.
+	 */
+	public static boolean isValidElement(HTMLDOMElement element) {
+		if (element.hasAttribute(DATA_IGNORE)) {
+			return false;
+		} else {
+			HTMLDOMElement parentElement = element.getParentElement();
+			if (parentElement != null) {
+				String tagName = parentElement.getTagName();
+				if ((!tagName.equals("BODY")) && (!tagName.equals("HTML"))) {
+					return CommonFunctions.isValidElement(parentElement);
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
 	}
 }

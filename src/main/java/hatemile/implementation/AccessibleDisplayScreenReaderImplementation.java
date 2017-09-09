@@ -14,6 +14,7 @@ limitations under the License.
 package hatemile.implementation;
 
 import hatemile.AccessibleDisplay;
+import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
 import hatemile.util.HTMLDOMElement;
 import hatemile.util.HTMLDOMParser;
@@ -44,11 +45,6 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * The name of attribute that link the list item element with the shortcut.
 	 */
 	protected final String dataAccessKey;
-	
-	/**
-	 * The name of attribute for not modify the elements.
-	 */
-	protected final String dataIgnore;
 	
 	/**
 	 * The browser shortcut prefix.
@@ -83,7 +79,6 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 		idContainerShortcuts = "container-shortcuts";
 		idTextShortcuts = "text-shortcuts";
 		dataAccessKey = "data-shortcutdescriptionfor";
-		dataIgnore = "data-ignoreaccessibilityfix";
 		prefix = getShortcutPrefix(userAgent, configure.getParameter("text-standart-shortcut-prefix"));
 		textShortcuts = configure.getParameter("text-shortcuts");
 		listShortcutsAdded = false;
@@ -236,7 +231,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	public void displayAllShortcuts() {
 		Collection<HTMLDOMElement> elements = htmlParser.find("[accesskey]").listResults();
 		for (HTMLDOMElement element : elements) {
-			if (!element.hasAttribute(dataIgnore)) {
+			if (CommonFunctions.isValidElement(element)) {
 				displayShortcut(element);
 			}
 		}
