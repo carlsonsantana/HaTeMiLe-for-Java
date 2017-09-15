@@ -18,11 +18,23 @@ import hatemile.util.CommonFunctions;
 import hatemile.util.Configure;
 import hatemile.util.html.HTMLDOMElement;
 import hatemile.util.html.HTMLDOMParser;
-import hatemile.util.Skipper;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * The AccessibleNavigationImplementation class is official implementation of
@@ -73,7 +85,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * The skippers configured.
 	 */
-	protected final Collection<Skipper> skippers;
+	protected final Collection<Map<String, String>> skippers;
 	
 	/**
 	 * The state that indicates if the container of skippers has added.
@@ -131,6 +143,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 */
 	protected boolean validHeading;
 	
+	protected static final String SKIPPER_FILE_NAME = "skippers.xml";
+	
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
@@ -164,11 +178,54 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		textHeading = configure.getParameter("text-heading");
 		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
 		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
-		skippers = configure.getSkippers();
+		skippers = getSkippers();
 		listSkippersAdded = false;
 		validateHeading = false;
 		validHeading = false;
 		listSkippers = null;
+	}
+	
+	protected static Collection<Map<String, String>> getSkippers() {
+		Collection<Map<String, String>> skippers = new ArrayList<Map<String, String>>();
+		
+		InputStream inputStream = File.class.getResourceAsStream("/" + SKIPPER_FILE_NAME);
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
+		try {
+			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+			Document document = documentBuilder.parse(inputStream);
+			Element rootElement = document.getDocumentElement();
+			
+			if (rootElement.getTagName().equalsIgnoreCase("SKIPPERS")) {
+				NodeList nodeListSkippers = rootElement.getElementsByTagName("skipper");
+				
+				for (int i = 0, length = nodeListSkippers.getLength(); i < length; i++) {
+					Element skipperElement = (Element) nodeListSkippers.item(i);
+					
+					if ((skipperElement.hasAttribute("selector"))
+							&& (skipperElement.hasAttribute("description"))
+							&& (skipperElement.hasAttribute("shortcut"))) {
+						Map<String, String> skipper = new HashMap<String, String>();
+						skipper.put("selector", skipperElement.getAttribute("selector"));
+						skipper.put("description", skipperElement.getAttribute("description"));
+						skipper.put("shortcut", skipperElement.getAttribute("shortcut"));
+						skippers.add(skipper);
+					}
+				}
+			}
+		} catch (Exception exception) {
+			throw new RuntimeException(exception);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException ex) {
+					Logger.getLogger(AccessibleNavigationImplementation.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		
+		return skippers;
 	}
 	
 	/**
@@ -217,9 +274,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				
 				container.appendElement(textContainer);
 				local.appendElement(container);
-				
-				executeFixSkipper(container);
-				executeFixSkipper(textContainer);
 			}
 		}
 		if (container != null) {
@@ -228,7 +282,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				htmlList = parser.createElement("ol");
 				container.appendElement(htmlList);
 			}
-			executeFixSkipper(htmlList);
 		}
 		return htmlList;
 	}
@@ -347,27 +400,12 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			}
 		}
 	}
-	
-	/**
-	 * Call fixSkipper method for element, if the page has the container of
-	 * skippers.
-	 * @param element The element.
-	 */
-	protected void executeFixSkipper(HTMLDOMElement element) {
-		if (listSkippers != null) {
-			for (Skipper skipper : this.skippers) {
-				if (parser.find(skipper.getSelector()).listResults().contains(element)) {
-					provideNavigationBySkipper(element);
-				}
-			}
-		}
-	}
 
 	public void provideNavigationBySkipper(HTMLDOMElement element) {
-		Skipper skipper = null;
+		Map<String, String> skipper = null;
 		Collection<HTMLDOMElement> auxiliarElements;
-		for (Skipper auxiliarSkipper : skippers) {
-			auxiliarElements = parser.find(auxiliarSkipper.getSelector()).listResults();
+		for (Map<String, String> auxiliarSkipper : skippers) {
+			auxiliarElements = parser.find(auxiliarSkipper.get("selector")).listResults();
 			for (HTMLDOMElement auxiliarElement : auxiliarElements) {
 				if (auxiliarElement.equals(element)) {
 					skipper = auxiliarSkipper;
@@ -389,9 +427,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 					HTMLDOMElement itemLink = parser.createElement("li");
 					HTMLDOMElement link = parser.createElement("a");
 					link.setAttribute("href", "#" + anchor.getAttribute("name"));
-					link.appendText(skipper.getDefaultText());
+					link.appendText(skipper.get("description"));
 
-					List<String> shortcuts = new ArrayList<String>(skipper.getShortcuts());
+					List<String> shortcuts = new ArrayList<String>(Arrays.asList(skipper.get("shortcut").split(" ")));
 					if (!shortcuts.isEmpty()) {
 						String shortcut = shortcuts.get(0);
 						if (!shortcut.isEmpty()) {
@@ -410,8 +448,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 
 	public void provideNavigationByAllSkippers() {
 		Collection<HTMLDOMElement> elements;
-		for (Skipper skipper : skippers) {
-			elements = parser.find(skipper.getSelector()).listResults();
+		for (Map<String, String> skipper : skippers) {
+			elements = parser.find(skipper.get("selector")).listResults();
 			for (HTMLDOMElement element : elements) {
 				if (CommonFunctions.isValidElement(element)) {
 					provideNavigationBySkipper(element);

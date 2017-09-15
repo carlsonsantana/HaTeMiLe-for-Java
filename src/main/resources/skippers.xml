@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skippers>
+	<skipper selector="main,[role=main]" description="Go to main content" shortcut="1" />
+	<skipper selector="#container-shortcuts" description="Go to shortcuts" shortcut="9" />
+	<skipper selector="#container-heading" description="Go to table of contents" shortcut="0" />
+</skippers>

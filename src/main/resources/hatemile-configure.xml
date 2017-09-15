@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configure>
-	<parameters>
-		<!-- Text parameters -->
-		<parameter name="text-shortcuts">Shortcuts:</parameter>
-		<parameter name="text-standart-shortcut-prefix">ALT</parameter>
-		<parameter name="text-autocomplete-value-both">List or Inline</parameter>
-		<parameter name="text-autocomplete-value-list">List</parameter>
-		<parameter name="text-autocomplete-value-inline">Inline</parameter>
-		<parameter name="text-autocomplete-value-none">None</parameter>
-		<parameter name="text-heading">Summary:</parameter>
-		<!-- Prefix parameters -->
-		<parameter name="prefix-required-field">*</parameter>
-		<parameter name="prefix-range-min-field"></parameter>
-		<parameter name="prefix-range-max-field"></parameter>
-		<parameter name="prefix-autocomplete-field"></parameter>
-		<parameter name="prefix-generated-ids">id-</parameter>
-		<parameter name="prefix-longdescription"></parameter>
-		<!-- Suffix parameters -->
-		<parameter name="suffix-longdescription">[d]</parameter>
-		<parameter name="suffix-required-field"></parameter>
-		<parameter name="suffix-range-min-field">(Min: {{value}})</parameter>
-		<parameter name="suffix-range-max-field">(Max: {{value}})</parameter>
-		<parameter name="suffix-autocomplete-field">(Autocomplete: {{value}})</parameter>
-	</parameters>
-	<skippers>
-		<skipper selector="main,[role=main]" default-text="Main Content" shortcut="1" />
-		<skipper selector="nav,[role=navigation]" default-text="Menu" shortcut="2" />
-		<skipper selector="form" default-text="Form" shortcut="3" />
-		<skipper selector="#container-shortcuts" default-text="Shortcuts" shortcut="9" />
-		<skipper selector="#container-heading" default-text="Summary" shortcut="0" />
-	</skippers>
-</configure>
+<parameters>
+	<!-- Text parameters -->
+	<parameter name="text-shortcuts">Shortcuts:</parameter>
+	<parameter name="text-standart-shortcut-prefix">ALT</parameter>
+	<parameter name="text-autocomplete-value-both">List or Inline</parameter>
+	<parameter name="text-autocomplete-value-list">List</parameter>
+	<parameter name="text-autocomplete-value-inline">Inline</parameter>
+	<parameter name="text-autocomplete-value-none">None</parameter>
+	<parameter name="text-heading">Summary:</parameter>
+	<!-- Prefix parameters -->
+	<parameter name="prefix-required-field">*</parameter>
+	<parameter name="prefix-range-min-field"></parameter>
+	<parameter name="prefix-range-max-field"></parameter>
+	<parameter name="prefix-autocomplete-field"></parameter>
+	<parameter name="prefix-generated-ids">id-</parameter>
+	<parameter name="prefix-longdescription"></parameter>
+	<!-- Suffix parameters -->
+	<parameter name="suffix-longdescription">[d]</parameter>
+	<parameter name="suffix-required-field"></parameter>
+	<parameter name="suffix-range-min-field">(Min: {{value}})</parameter>
+	<parameter name="suffix-range-max-field">(Max: {{value}})</parameter>
+	<parameter name="suffix-autocomplete-field">(Autocomplete: {{value}})</parameter>
+</parameters>

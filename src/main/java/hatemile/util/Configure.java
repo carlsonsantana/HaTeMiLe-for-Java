@@ -16,19 +16,17 @@ package hatemile.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * The Configure class contains the configuration of HaTeMiLe.
@@ -41,89 +39,48 @@ public class Configure {
 	protected final Map<String, String> parameters;
 	
 	/**
-	 * The skippers.
-	 */
-	protected final Collection<Skipper> skippers;
-	
-	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
-	 * @throws ParserConfigurationException The exception thrown when the XML
-	 * file contains a syntax error.
-	 * @throws SAXException The exception thrown when the XML file contains a
-	 * syntax error.
-	 * @throws IOException The exception thrown when the file has problems of
-	 * read.
 	 */
-	public Configure() throws ParserConfigurationException, SAXException, IOException {
+	public Configure() {
 		this("hatemile-configure.xml");
 	}
 	
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 * @param fileName The full path of file.
-	 * @throws ParserConfigurationException The exception thrown when the XML
-	 * file contains a syntax error.
-	 * @throws SAXException The exception thrown when the XML file contains a
-	 * syntax error.
-	 * @throws IOException The exception thrown when the file has problems of
-	 * read.
 	 */
-	public Configure(String fileName) throws ParserConfigurationException, SAXException, IOException {
+	public Configure(String fileName) {
 		parameters = new HashMap<String, String>();
-		skippers = new ArrayList<Skipper>();
 		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-		Document document = documentBuilder.parse(inputStream);
-		Element rootElement = document.getDocumentElement();
-		//Read parameters
-		NodeList nodeList = rootElement.getChildNodes();
-		NodeList nodeParameters = null;
-		NodeList nodeSelectorChanges = null;
-		NodeList nodeSkippers = null;
-		for (int i = 0, length = nodeList.getLength(); i < length; i++) {
-			if (nodeList.item(i) instanceof Element) {
-				Element element = (Element) nodeList.item(i);
-				if (element.getTagName().toUpperCase().equals("PARAMETERS")) {
-					nodeParameters = element.getChildNodes();
-				} else if (element.getTagName().toUpperCase().equals("SELECTOR-CHANGES")) {
-					nodeSelectorChanges = element.getChildNodes();
-				} else if (element.getTagName().toUpperCase().equals("SKIPPERS")) {
-					nodeSkippers = element.getChildNodes();
-				}
-			}
-		}
 		
-		if (nodeParameters != null) {
-			for (int i = 0; i < nodeParameters.getLength(); i++) {
-				if (nodeParameters.item(i) instanceof Element) {
-					Element parameter = (Element) nodeParameters.item(i);
-					if ((parameter.getTagName().toUpperCase().equals("PARAMETER"))
-							&& (parameter.hasAttribute("name"))) {
-						parameters.put(parameter.getAttribute("name"), parameter.getTextContent());
+		try {
+			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+			Document document = documentBuilder.parse(inputStream);
+			Element rootElement = document.getDocumentElement();
+
+			if (rootElement.getTagName().equalsIgnoreCase("PARAMETERS")) {
+				NodeList nodeListParameters = rootElement.getElementsByTagName("parameter");
+
+				for (int i = 0, length = nodeListParameters.getLength(); i < length; i++) {
+					Element parameterElement = (Element) nodeListParameters.item(i);
+					if (parameterElement.hasAttribute("name")) {
+						parameters.put(parameterElement.getAttribute("name"), parameterElement.getTextContent());
 					}
 				}
 			}
-		}
-		
-		if (nodeSkippers != null) {
-			for (int i = 0; i < nodeSkippers.getLength(); i++) {
-				if (nodeSkippers.item(i) instanceof Element) {
-					Element skipper = (Element) nodeSkippers.item(i);
-					if ((skipper.getTagName().toUpperCase().equals("SKIPPER"))
-							&& (skipper.hasAttribute("selector"))
-							&& (skipper.hasAttribute("default-text"))
-							&& (skipper.hasAttribute("shortcut"))) {
-						skippers.add(new Skipper(skipper.getAttribute("selector")
-								, skipper.getAttribute("default-text")
-								, skipper.getAttribute("shortcut")));
-					}
+		} catch (Exception exception) {
+			throw new RuntimeException(exception);
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException ex) {
+					Logger.getLogger(Configure.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 		}
-		
-		inputStream.close();
 	}
 	
 	/**
@@ -141,14 +98,6 @@ public class Configure {
 	 */
 	public String getParameter(String parameter) {
 		return parameters.get(parameter);
-	}
-	
-	/**
-	 * Returns the skippers.
-	 * @return The skippers.
-	 */
-	public Collection<Skipper> getSkippers() {
-		return new ArrayList<Skipper>(skippers);
 	}
 	
 	@Override
