@@ -143,8 +143,6 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 */
 	protected boolean validHeading;
 
-	protected static final String SKIPPER_FILE_NAME = "skippers.xml";
-
 	/**
 	 * Level value of h1.
 	 */
@@ -195,9 +193,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * navigation of parser.
 	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
-	 * @param userAgent The user agent of the user.
+	 * @param skipperFileName The file path of skippers configuration.
 	 */
-	public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String userAgent) {
+	public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String skipperFileName) {
 		this.parser = htmlParser;
 		idContainerSkippers = "container-skippers";
 		idContainerHeading = "container-heading";
@@ -213,7 +211,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		textHeading = configure.getParameter("text-heading");
 		prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
 		suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
-		skippers = getSkippers();
+		skippers = getSkippers(skipperFileName);
 		listSkippersAdded = false;
 		validateHeading = false;
 		validHeading = false;
@@ -222,12 +220,13 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 
 	/**
 	 * Returns the skippers of configuration.
+	 * @param fileName The file path of skippers configuration.
 	 * @return The skippers of configuration.
 	 */
-	protected static Collection<Map<String, String>> getSkippers() {
+	protected static Collection<Map<String, String>> getSkippers(final String fileName) {
 		Collection<Map<String, String>> skippers = new ArrayList<Map<String, String>>();
 
-		InputStream inputStream = File.class.getResourceAsStream("/" + SKIPPER_FILE_NAME);
+		InputStream inputStream = File.class.getResourceAsStream(fileName);
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		try {
