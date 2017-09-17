@@ -95,7 +95,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * @param storeScriptsContent The state that indicates if the scripts used
 	 * are stored or deleted, after use.
 	 */
-	public AccessibleEventImplementation(HTMLDOMParser parser, Configure configure, boolean storeScriptsContent) {
+	public AccessibleEventImplementation(final HTMLDOMParser parser, final Configure configure, final boolean storeScriptsContent) {
 		this.parser = parser;
 		this.storeScriptsContent = storeScriptsContent;
 		prefixId = configure.getParameter("prefix-generated-ids");
@@ -111,7 +111,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * @param file The name of file.
 	 * @return The content of file.
 	 */
-	protected String getContentFromFile(String file) {
+	protected String getContentFromFile(final String file) {
 		InputStreamReader inputStreamReader = new InputStreamReader(File.class
 						.getResourceAsStream(file));
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -140,7 +140,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * Provide keyboard access for element, if it not has.
 	 * @param element The element.
 	 */
-	protected void keyboardAccess(HTMLDOMElement element) {
+	protected void keyboardAccess(final HTMLDOMElement element) {
 		if (!element.hasAttribute("tabindex")) {
 			String tag = element.getTagName();
 			if ((tag.equals("A")) && (!element.hasAttribute("href"))) {
@@ -224,7 +224,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * @param element The element.
 	 * @param event The type of event.
 	 */
-	protected void addEventInElement(HTMLDOMElement element, String event) {
+	protected void addEventInElement(final HTMLDOMElement element, final String event) {
 		if (!mainScriptAdded) {
 			generateMainScripts();
 		}
@@ -239,7 +239,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void makeAccessibleDropEvents(HTMLDOMElement element) {
+	public void makeAccessibleDropEvents(final HTMLDOMElement element) {
 		element.setAttribute("aria-dropeffect", "none");
 
 		addEventInElement(element, "drop");
@@ -248,7 +248,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void makeAccessibleDragEvents(HTMLDOMElement element) {
+	public void makeAccessibleDragEvents(final HTMLDOMElement element) {
 		keyboardAccess(element);
 
 		element.setAttribute("aria-grabbed", "false");
@@ -280,7 +280,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void makeAccessibleHoverEvents(HTMLDOMElement element) {
+	public void makeAccessibleHoverEvents(final HTMLDOMElement element) {
 		keyboardAccess(element);
 
 		addEventInElement(element, "hover");
@@ -302,7 +302,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void makeAccessibleClickEvents(HTMLDOMElement element) {
+	public void makeAccessibleClickEvents(final HTMLDOMElement element) {
 		keyboardAccess(element);
 
 		addEventInElement(element, "active");

@@ -151,7 +151,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleNavigationImplementation(HTMLDOMParser parser, Configure configure) {
+	public AccessibleNavigationImplementation(final HTMLDOMParser parser, final Configure configure) {
 		this(parser, configure, null);
 	}
 
@@ -162,7 +162,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * @param configure The configuration of HaTeMiLe.
 	 * @param userAgent The user agent of the user.
 	 */
-	public AccessibleNavigationImplementation(HTMLDOMParser parser, Configure configure, String userAgent) {
+	public AccessibleNavigationImplementation(final HTMLDOMParser parser, final Configure configure, final String userAgent) {
 		this.parser = parser;
 		idContainerSkippers = "container-skippers";
 		idContainerHeading = "container-heading";
@@ -295,7 +295,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * @param element The heading.
 	 * @return The level of heading.
 	 */
-	protected int getHeadingLevel(HTMLDOMElement element) {
+	protected int getHeadingLevel(final HTMLDOMElement element) {
 		String tag = element.getTagName();
 		if (tag.equals("H1")) {
 			return 1;
@@ -349,7 +349,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * @param anchorClass The HTML class of anchor.
 	 * @return The anchor.
 	 */
-	protected HTMLDOMElement generateAnchorFor(HTMLDOMElement element, String dataAttribute, String anchorClass) {
+	protected HTMLDOMElement generateAnchorFor(final HTMLDOMElement element, final String dataAttribute, final String anchorClass) {
 		CommonFunctions.generateId(element, prefixId);
 		HTMLDOMElement anchor = null;
 		if (parser.find("[" + dataAttribute + "=\"" + element.getAttribute("id") + "\"]").firstResult() == null) {
@@ -373,7 +373,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * Replace the shortcut of elements, that has the shortcut passed.
 	 * @param shortcut The shortcut.
 	 */
-	protected void freeShortcut(String shortcut) {
+	protected void freeShortcut(final String shortcut) {
 		String shortcuts;
 		String key;
 		boolean found = false;
@@ -407,7 +407,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void provideNavigationBySkipper(HTMLDOMElement element) {
+	public void provideNavigationBySkipper(final HTMLDOMElement element) {
 		Map<String, String> skipper = null;
 		Collection<HTMLDOMElement> auxiliarElements;
 		for (Map<String, String> auxiliarSkipper : skippers) {
@@ -470,7 +470,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void provideNavigationByHeading(HTMLDOMElement element) {
+	public void provideNavigationByHeading(final HTMLDOMElement element) {
 		if (!validateHeading) {
 			validHeading = isValidHeading();
 		}
@@ -522,7 +522,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void provideNavigationToLongDescription(HTMLDOMElement image) {
+	public void provideNavigationToLongDescription(final HTMLDOMElement image) {
 		if (image.hasAttribute("longdesc")) {
 			CommonFunctions.generateId(image, prefixId);
 			String id = image.getAttribute("id");

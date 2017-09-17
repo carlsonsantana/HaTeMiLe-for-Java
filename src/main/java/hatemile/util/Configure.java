@@ -49,7 +49,7 @@ public class Configure {
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 * @param fileName The full path of file.
 	 */
-	public Configure(String fileName) {
+	public Configure(final String fileName) {
 		parameters = new HashMap<String, String>();
 		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
 
@@ -96,12 +96,12 @@ public class Configure {
 	 * @param parameter The parameter.
 	 * @return The value of the parameter.
 	 */
-	public String getParameter(String parameter) {
+	public String getParameter(final String parameter) {
 		return parameters.get(parameter);
 	}
 
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(final Object object) {
 		if (this != object) {
 			if (object == null) {
 				return false;

@@ -44,7 +44,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	 * Initializes a new object that encapsulate the parser of Jsoup.
 	 * @param document The root element of the parser.
 	 */
-	public JsoupHTMLDOMParser(Document document) {
+	public JsoupHTMLDOMParser(final Document document) {
 		this.document = document;
 	}
 
@@ -52,7 +52,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	 * Initializes a new object that encapsulate the parser of Jsoup.
 	 * @param code The HTML code.
 	 */
-	public JsoupHTMLDOMParser(String code) {
+	public JsoupHTMLDOMParser(final String code) {
 		document = Jsoup.parse(code);
 	}
 
@@ -63,7 +63,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	 * @return The element searched if it is descendant of reference element or
 	 * null if not is.
 	 */
-	protected Element getDescendantOf(Element reference, Element searched) {
+	protected Element getDescendantOf(final Element reference, final Element searched) {
 		if (reference.children().contains(searched)) {
 			return searched;
 		} else if (!reference.children().isEmpty()) {
@@ -81,7 +81,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser find(String selector) {
+	public HTMLDOMParser find(final String selector) {
 		results = document.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
 		return this;
@@ -90,7 +90,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser find(HTMLDOMElement element) {
+	public HTMLDOMParser find(final HTMLDOMElement element) {
 		Collection<Element> elements = new ArrayList<Element>();
 		elements.add((Element) element.getData());
 		results = new Elements(elements);
@@ -100,7 +100,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findChildren(String selector) {
+	public HTMLDOMParser findChildren(final String selector) {
 		Collection<Element> elements = new ArrayList<Element>();
 		Elements descendants = results.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
@@ -117,7 +117,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findChildren(HTMLDOMElement child) {
+	public HTMLDOMParser findChildren(final HTMLDOMElement child) {
 		Collection<Element> elements = new ArrayList<Element>();
 		Element element = (Element) child.getData();
 		for (Element result : results) {
@@ -133,7 +133,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findDescendants(String selector) {
+	public HTMLDOMParser findDescendants(final String selector) {
 		results = results.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
 		return this;
@@ -142,7 +142,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findDescendants(HTMLDOMElement descendant) {
+	public HTMLDOMParser findDescendants(final HTMLDOMElement descendant) {
 		Collection<Element> elements = new ArrayList<Element>();
 		for (Element resultElement : results) {
 			Element element = getDescendantOf(resultElement, (Element) descendant.getData());
@@ -157,7 +157,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findAncestors(String selector) {
+	public HTMLDOMParser findAncestors(final String selector) {
 		Elements findedElements = document.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
 		Collection<Element> elements = new ArrayList<Element>();
@@ -174,7 +174,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMParser findAncestors(HTMLDOMElement element) {
+	public HTMLDOMParser findAncestors(final HTMLDOMElement element) {
 		if (results.parents().contains((Element) element.getData())) {
 			Collection<Element> elements = new ArrayList<Element>();
 			elements.add((Element) element.getData());
@@ -242,7 +242,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement createElement(String tag) {
+	public HTMLDOMElement createElement(final String tag) {
 		return new JsoupHTMLDOMElement(document.createElement(tag));
 	}
 
@@ -250,7 +250,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(final Object object) {
 		if (this != object) {
 			if (object == null) {
 				return false;

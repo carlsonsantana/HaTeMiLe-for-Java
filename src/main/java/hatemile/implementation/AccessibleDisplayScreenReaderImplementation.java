@@ -73,7 +73,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @param configure The configuration of HaTeMiLe.
 	 * @param userAgent The user agent of browser.
 	 */
-	public AccessibleDisplayScreenReaderImplementation(HTMLDOMParser htmlParser, Configure configure, String userAgent) {
+	public AccessibleDisplayScreenReaderImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String userAgent) {
 		this.htmlParser = htmlParser;
 		idContainerShortcuts = "container-shortcuts";
 		idTextShortcuts = "text-shortcuts";
@@ -90,18 +90,18 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @param standartPrefix The default prefix.
 	 * @return The shortcut prefix of browser.
 	 */
-	protected final String getShortcutPrefix(String userAgent, String standartPrefix) {
+	protected final String getShortcutPrefix(final String userAgent, final String standartPrefix) {
 		if (userAgent != null) {
-			userAgent = userAgent.toLowerCase();
-			boolean opera = userAgent.contains("opera");
-			boolean mac = userAgent.contains("mac");
-			boolean konqueror = userAgent.contains("konqueror");
-			boolean spoofer = userAgent.contains("spoofer");
-			boolean safari = userAgent.contains("applewebkit");
-			boolean windows = userAgent.contains("windows");
-			boolean chrome = userAgent.contains("chrome");
-			boolean firefox = userAgent.matches("firefox/[2-9]|minefield/3");
-			boolean ie = userAgent.contains("msie") || userAgent.contains("trident");
+			String lowerUserAgent = userAgent.toLowerCase();
+			boolean opera = lowerUserAgent.contains("opera");
+			boolean mac = lowerUserAgent.contains("mac");
+			boolean konqueror = lowerUserAgent.contains("konqueror");
+			boolean spoofer = lowerUserAgent.contains("spoofer");
+			boolean safari = lowerUserAgent.contains("applewebkit");
+			boolean windows = lowerUserAgent.contains("windows");
+			boolean chrome = lowerUserAgent.contains("chrome");
+			boolean firefox = lowerUserAgent.matches("firefox/[2-9]|minefield/3");
+			boolean ie = lowerUserAgent.contains("msie") || lowerUserAgent.contains("trident");
 
 			if (opera) {
 				return "SHIFT + ESC";
@@ -128,7 +128,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @param element The element.
 	 * @return The description of element.
 	 */
-	protected String getDescription(HTMLDOMElement element) {
+	protected String getDescription(final HTMLDOMElement element) {
 		String description = null;
 		if (element.hasAttribute("title")) {
 			description = element.getAttribute("title");
@@ -203,7 +203,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	/**
 	 * {@inheritDoc}
 	 */
-	public void displayShortcut(HTMLDOMElement element) {
+	public void displayShortcut(final HTMLDOMElement element) {
 		if (element.hasAttribute("accesskey")) {
 			String description = getDescription(element);
 			if (!element.hasAttribute("title")) {

@@ -45,7 +45,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	 * Initializes a new object that encapsulate the Jsoup Element.
 	 * @param element The Jsoup Element.
 	 */
-	public JsoupHTMLDOMElement(Element element) {
+	public JsoupHTMLDOMElement(final Element element) {
 		this.element = element;
 	}
 
@@ -59,21 +59,21 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public String getAttribute(String name) {
+	public String getAttribute(final String name) {
 		return element.attr(name);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setAttribute(String name, String value) {
+	public void setAttribute(final String name, final String value) {
 		element.attr(name, value);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removeAttribute(String name) {
+	public void removeAttribute(final String name) {
 		if (hasAttribute(name)) {
 			element.removeAttr(name);
 		}
@@ -82,7 +82,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasAttribute(String name) {
+	public boolean hasAttribute(final String name) {
 		return element.hasAttr(name);
 	}
 
@@ -117,14 +117,14 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setData(Object data) {
+	public void setData(final Object data) {
 		element = (Element) data;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement appendElement(HTMLDOMElement element) {
+	public HTMLDOMElement appendElement(final HTMLDOMElement element) {
 		this.element.appendChild((Element) element.getData());
 		return element;
 	}
@@ -132,7 +132,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void appendText(String text) {
+	public void appendText(final String text) {
 		element.appendText(text);
 	}
 
@@ -151,7 +151,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setInnerHTML(String html) {
+	public void setInnerHTML(final String html) {
 		element.html(html);
 	}
 
@@ -165,7 +165,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement insertBefore(HTMLDOMElement newElement) {
+	public HTMLDOMElement insertBefore(final HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
 		Collection<Element> children = new ArrayList<Element>();
@@ -177,7 +177,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement insertAfter(HTMLDOMElement newElement) {
+	public HTMLDOMElement insertAfter(final HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
 		if (index < parent.childNodes().size()) {
@@ -201,7 +201,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement replaceElement(HTMLDOMElement newElement) {
+	public HTMLDOMElement replaceElement(final HTMLDOMElement newElement) {
 		element.replaceWith((Element) newElement.getData());
 		return newElement;
 	}
@@ -260,7 +260,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object object) {
+	public boolean equals(final Object object) {
 		if (this != object) {
 			if (object == null) {
 				return false;
@@ -287,7 +287,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	 * @param node The Jsoup Node.
 	 * @return The HTML code of the Jsoup Node.
 	 */
-	protected String toString(Node node) {
+	protected String toString(final Node node) {
 		String string = "";
 		List<Node> childNodes = node.childNodes();
 		if (node instanceof Comment) {

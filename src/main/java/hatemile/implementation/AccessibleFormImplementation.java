@@ -43,7 +43,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleFormImplementation(HTMLDOMParser parser, Configure configure) {
+	public AccessibleFormImplementation(final HTMLDOMParser parser, final Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
@@ -53,7 +53,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	 * @param field The field.
 	 * @return The ARIA value of field.
 	 */
-	protected String getARIAAutoComplete(HTMLDOMElement field) {
+	protected String getARIAAutoComplete(final HTMLDOMElement field) {
 		String tagName = field.getTagName();
 		String type = null;
 		if (field.hasAttribute("type")) {
@@ -91,7 +91,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void markRequiredField(HTMLDOMElement requiredField) {
+	public void markRequiredField(final HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
 		}
@@ -112,7 +112,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void markRangeField(HTMLDOMElement rangeField) {
+	public void markRangeField(final HTMLDOMElement rangeField) {
 		if (rangeField.hasAttribute("min")) {
 			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min"));
 		}
@@ -136,7 +136,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void markAutoCompleteField(HTMLDOMElement autoCompleteField) {
+	public void markAutoCompleteField(final HTMLDOMElement autoCompleteField) {
 		String ariaAutoComplete = getARIAAutoComplete(autoCompleteField);
 		if (ariaAutoComplete != null) {
 			autoCompleteField.setAttribute("aria-autocomplete", ariaAutoComplete);

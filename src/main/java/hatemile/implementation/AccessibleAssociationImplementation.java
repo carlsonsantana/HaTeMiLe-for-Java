@@ -45,7 +45,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param parser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleAssociationImplementation(HTMLDOMParser parser, Configure configure) {
+	public AccessibleAssociationImplementation(final HTMLDOMParser parser, final Configure configure) {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
@@ -55,7 +55,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param part The table header, table footer or table body.
 	 * @return The list that represents the table.
 	 */
-	protected Collection<Collection<HTMLDOMElement>> getModelTable(HTMLDOMElement part) {
+	protected Collection<Collection<HTMLDOMElement>> getModelTable(final HTMLDOMElement part) {
 		Collection<HTMLDOMElement> rows = parser.find(part).findChildren("tr").listResults();
 		Collection<Collection<HTMLDOMElement>> table = new ArrayList<Collection<HTMLDOMElement>>();
 		for (HTMLDOMElement row : rows) {
@@ -69,7 +69,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param originalTable The list that represents the table without the rowspans.
 	 * @return The list that represents the table with the rowspans.
 	 */
-	protected Collection<Collection<HTMLDOMElement>> getValidModelTable(Collection<Collection<HTMLDOMElement>> originalTable) {
+	protected Collection<Collection<HTMLDOMElement>> getValidModelTable(final Collection<Collection<HTMLDOMElement>> originalTable) {
 		int cellsAdded;
 		int newCellIndex;
 		int rowspan;
@@ -120,7 +120,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * colspans.
 	 * @return The list that represents the line of table with the colspans.
 	 */
-	protected Collection<HTMLDOMElement> getModelRow(Collection<HTMLDOMElement> originalRow) {
+	protected Collection<HTMLDOMElement> getModelRow(final Collection<HTMLDOMElement> originalRow) {
 		List<HTMLDOMElement> newRow = new ArrayList<HTMLDOMElement>(originalRow);
 		List<HTMLDOMElement> rowList = new ArrayList<HTMLDOMElement>(originalRow);
 		if (!newRow.isEmpty()) {
@@ -147,7 +147,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @return True if the table header is valid or false if the table header is
 	 * not valid.
 	 */
-	protected boolean validateHeader(Collection<Collection<HTMLDOMElement>> header) {
+	protected boolean validateHeader(final Collection<Collection<HTMLDOMElement>> header) {
 		if (header.isEmpty()) {
 			return false;
 		}
@@ -170,7 +170,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param index The index of columns.
 	 * @return The list with ids of rows of same column.
 	 */
-	protected Collection<String> getCellsHeadersIds(Collection<Collection<HTMLDOMElement>> header, int index) {
+	protected Collection<String> getCellsHeadersIds(final Collection<Collection<HTMLDOMElement>> header, final int index) {
 		Collection<String> ids = new ArrayList<String>();
 		for (Collection<HTMLDOMElement> row : header) {
 			List<HTMLDOMElement> rowList = new ArrayList<HTMLDOMElement>(row);
@@ -186,7 +186,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * Associate the data cell with header cell of row.
 	 * @param element The table body or table footer.
 	 */
-	protected void associateDataCellsWithHeaderCellsOfRow(HTMLDOMElement element) {
+	protected void associateDataCellsWithHeaderCellsOfRow(final HTMLDOMElement element) {
 		Collection<Collection<HTMLDOMElement>> table = getModelTable(element);
 		Collection<String> headersIds = new ArrayList<String>();
 		for (Collection<HTMLDOMElement> row : table) {
@@ -217,7 +217,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * Set the scope of header cells of table header.
 	 * @param tableHeader The table header.
 	 */
-	protected void prepareHeaderCells(HTMLDOMElement tableHeader) {
+	protected void prepareHeaderCells(final HTMLDOMElement tableHeader) {
 		Collection<HTMLDOMElement> cells = parser.find(tableHeader)
 				.findChildren("tr").findChildren("th").listResults();
 		for (HTMLDOMElement cell : cells) {
@@ -230,7 +230,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	/**
 	 * {@inheritDoc}
 	 */
-	public void associateDataCellsWithHeaderCells(HTMLDOMElement table) {
+	public void associateDataCellsWithHeaderCells(final HTMLDOMElement table) {
 		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
 		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
 		HTMLDOMElement footer = parser.find(table).findChildren("tfoot").firstResult();
@@ -284,7 +284,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	/**
 	 * {@inheritDoc}
 	 */
-	public void associateLabelWithField(HTMLDOMElement label) {
+	public void associateLabelWithField(final HTMLDOMElement label) {
 		if (label.getTagName().equals("LABEL")) {
 			HTMLDOMElement field;
 			if (label.hasAttribute("for")) {
