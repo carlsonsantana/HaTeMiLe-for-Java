@@ -69,8 +69,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param originalTable The list that represents the table without the rowspans.
 	 * @return The list that represents the table with the rowspans.
 	 */
-	protected Collection<Collection<HTMLDOMElement>> getValidModelTable
-			(Collection<Collection<HTMLDOMElement>> originalTable) {
+	protected Collection<Collection<HTMLDOMElement>> getValidModelTable(Collection<Collection<HTMLDOMElement>> originalTable) {
 		int cellsAdded;
 		int newCellIndex;
 		int rowspan;
@@ -171,8 +170,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	 * @param index The index of columns.
 	 * @return The list with ids of rows of same column.
 	 */
-	protected Collection<String> getCellsHeadersIds
-				(Collection<Collection<HTMLDOMElement>> header, int index) {
+	protected Collection<String> getCellsHeadersIds(Collection<Collection<HTMLDOMElement>> header, int index) {
 		Collection<String> ids = new ArrayList<String>();
 		for (Collection<HTMLDOMElement> row : header) {
 			List<HTMLDOMElement> rowList = new ArrayList<HTMLDOMElement>(row);
@@ -306,8 +304,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 				}
 
 				CommonFunctions.generateId(label, prefixId);
-				field.setAttribute("aria-labelledby", CommonFunctions.increaseInList
-						(field.getAttribute("aria-labelledby"), label.getAttribute("id")));
+				field.setAttribute("aria-labelledby", CommonFunctions.increaseInList(field.getAttribute("aria-labelledby"), label.getAttribute("id")));
 			}
 		}
 	}
