@@ -18,7 +18,7 @@ import hatemile.util.html.HTMLDOMElement;
 /**
  * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
  */
-public class CommonFunctions {
+public final class CommonFunctions {
 	
 	/**
 	 * The name of attribute for not modify the elements.
