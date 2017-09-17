@@ -25,47 +25,47 @@ import java.util.Collection;
  * implementation of AccessibleDisplay interface for screen readers.
  */
 public class AccessibleDisplayScreenReaderImplementation implements AccessibleDisplay {
-	
+
 	/**
 	 * The HTML parser.
 	 */
 	protected final HTMLDOMParser htmlParser;
-	
+
 	/**
 	 * The id of list element that contains the description of shortcuts.
 	 */
 	protected final String idContainerShortcuts;
-	
+
 	/**
 	 * The id of text of description of container of shortcuts descriptions.
 	 */
 	protected final String idTextShortcuts;
-	
+
 	/**
 	 * The name of attribute that link the list item element with the shortcut.
 	 */
 	protected final String dataAccessKey;
-	
+
 	/**
 	 * The browser shortcut prefix.
 	 */
 	protected final String prefix;
-	
+
 	/**
 	 * The text of description of container of shortcuts descriptions.
 	 */
 	protected final String textShortcuts;
-	
+
 	/**
 	 * The list element of shortcuts.
 	 */
 	protected HTMLDOMElement listShortcuts;
-	
+
 	/**
 	 * The state that indicates if the list of shortcuts of page was added.
 	 */
 	protected boolean listShortcutsAdded;
-	
+
 	/**
 	 * Initializes a new object that manipulate the display for screen readers
 	 * of parser.
@@ -84,7 +84,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 		listShortcutsAdded = false;
 		listShortcuts = null;
 	}
-	
+
 	/**
 	 * Returns the shortcut prefix of browser.
 	 * @param userAgent The user agent of browser.
@@ -103,7 +103,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 			boolean chrome = userAgent.contains("chrome");
 			boolean firefox = userAgent.matches("firefox/[2-9]|minefield/3");
 			boolean ie = userAgent.contains("msie") || userAgent.contains("trident");
-			
+
 			if (opera) {
 				return "SHIFT + ESC";
 			} else if (chrome && mac && !spoofer) {
@@ -123,7 +123,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 			return standartPrefix;
 		}
 	}
-	
+
 	/**
 	 * Returns the description of element.
 	 * @param element The element.
@@ -166,25 +166,25 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 		}
 		return description.replaceAll("[ \n\t\r]+", " ").trim();
 	}
-	
+
 	/**
 	 * Generate the list of shortcuts of page.
 	 * @return The list of shortcuts of page.
 	 */
 	protected HTMLDOMElement generateListShortcuts() {
 		HTMLDOMElement container = htmlParser.find("#" + idContainerShortcuts).firstResult();
-		
+
 		HTMLDOMElement htmlList = null;
 		if (container == null) {
 			HTMLDOMElement local = htmlParser.find("body").firstResult();
 			if (local != null) {
 				container = htmlParser.createElement("div");
 				container.setAttribute("id", idContainerShortcuts);
-				
+
 				HTMLDOMElement textContainer = htmlParser.createElement("span");
 				textContainer.setAttribute("id", idTextShortcuts);
 				textContainer.appendText(textShortcuts);
-				
+
 				container.appendElement(textContainer);
 				local.appendElement(container);
 			}
@@ -197,21 +197,21 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 			}
 		}
 		listShortcutsAdded = true;
-		
+
 		return htmlList;
 	}
-	
+
 	public void displayShortcut(HTMLDOMElement element) {
 		if (element.hasAttribute("accesskey")) {
 			String description = getDescription(element);
 			if (!element.hasAttribute("title")) {
 				element.setAttribute("title", description);
 			}
-			
+
 			if (!listShortcutsAdded) {
 				listShortcuts = generateListShortcuts();
 			}
-			
+
 			if (listShortcuts != null) {
 				String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
 				for (int i = 0, length = keys.length; i < length; i++) {
@@ -227,7 +227,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 			}
 		}
 	}
-	
+
 	public void displayAllShortcuts() {
 		Collection<HTMLDOMElement> elements = htmlParser.find("[accesskey]").listResults();
 		for (HTMLDOMElement element : elements) {

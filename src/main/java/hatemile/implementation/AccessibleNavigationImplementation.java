@@ -41,110 +41,110 @@ import org.w3c.dom.NodeList;
  * AccessibleNavigation interface.
  */
 public class AccessibleNavigationImplementation implements AccessibleNavigation {
-	
+
 	/**
 	 * The HTML parser.
 	 */
 	protected final HTMLDOMParser parser;
-	
+
 	/**
 	 * The id of list element that contains the skippers.
 	 */
 	protected final String idContainerSkippers;
-	
+
 	/**
 	 * The id of list element that contains the links for the headings.
 	 */
 	protected final String idContainerHeading;
-	
+
 	/**
 	 * The id of text of description of container of heading links.
 	 */
 	protected final String idTextHeading;
-	
+
 	/**
 	 * The text of description of container of heading links.
 	 */
 	protected final String textHeading;
-	
+
 	/**
 	 * The prefix of content of long description.
 	 */
 	protected final String prefixLongDescriptionLink;
-	
+
 	/**
 	 * The suffix of content of long description.
 	 */
 	protected final String suffixLongDescriptionLink;
-	
+
 	/**
 	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
-	
+
 	/**
 	 * The skippers configured.
 	 */
 	protected final Collection<Map<String, String>> skippers;
-	
+
 	/**
 	 * The state that indicates if the container of skippers has added.
 	 */
 	protected boolean listSkippersAdded;
-	
+
 	/**
 	 * The list element of skippers.
 	 */
 	protected HTMLDOMElement listSkippers;
-	
+
 	/**
 	 * The name of attribute that links the anchor of skipper with the element.
 	 */
 	protected final String dataAnchorFor;
-	
+
 	/**
 	 * The HTML class of anchor of skipper.
 	 */
 	protected final String classSkipperAnchor;
-	
+
 	/**
 	 * The HTML class of anchor of heading link.
 	 */
 	protected final String classHeadingAnchor;
-	
+
 	/**
 	 * The HTML class of element for show the long description of image.
 	 */
 	protected final String classLongDescriptionLink;
-	
+
 	/**
 	 * The name of attribute that indicates the level of heading of link.
 	 */
 	protected final String dataHeadingLevel;
-	
+
 	/**
 	 * The name of attribute that links the anchor of heading link with heading.
 	 */
 	protected final String dataHeadingAnchorFor;
-	
+
 	/**
 	 * The name of attribute that link the anchor of long description with the
 	 * image.
 	 */
 	protected final String dataLongDescriptionForImage;
-	
+
 	/**
 	 * The state that indicates if the sintatic heading of parser be validated.
 	 */
 	protected boolean validateHeading;
-	
+
 	/**
 	 * The state that indicates if the sintatic heading of parser is correct.
 	 */
 	protected boolean validHeading;
-	
+
 	protected static final String SKIPPER_FILE_NAME = "skippers.xml";
-	
+
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
@@ -154,7 +154,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	public AccessibleNavigationImplementation(HTMLDOMParser parser, Configure configure) {
 		this(parser, configure, null);
 	}
-	
+
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
@@ -184,24 +184,24 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		validHeading = false;
 		listSkippers = null;
 	}
-	
+
 	protected static Collection<Map<String, String>> getSkippers() {
 		Collection<Map<String, String>> skippers = new ArrayList<Map<String, String>>();
-		
+
 		InputStream inputStream = File.class.getResourceAsStream("/" + SKIPPER_FILE_NAME);
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		
+
 		try {
 			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 			Document document = documentBuilder.parse(inputStream);
 			Element rootElement = document.getDocumentElement();
-			
+
 			if (rootElement.getTagName().equalsIgnoreCase("SKIPPERS")) {
 				NodeList nodeListSkippers = rootElement.getElementsByTagName("skipper");
-				
+
 				for (int i = 0, length = nodeListSkippers.getLength(); i < length; i++) {
 					Element skipperElement = (Element) nodeListSkippers.item(i);
-					
+
 					if ((skipperElement.hasAttribute("selector"))
 							&& (skipperElement.hasAttribute("description"))
 							&& (skipperElement.hasAttribute("shortcut"))) {
@@ -224,10 +224,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				}
 			}
 		}
-		
+
 		return skippers;
 	}
-	
+
 	/**
 	 * Generate the list of skippers of page.
 	 * @return The list of skippers of page.
@@ -251,10 +251,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			}
 		}
 		listSkippersAdded = true;
-		
+
 		return htmlList;
 	}
-	
+
 	/**
 	 * Generate the list of heading links of page.
 	 * @return The list of heading links of page.
@@ -267,11 +267,11 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			if (local != null) {
 				container = parser.createElement("div");
 				container.setAttribute("id", idContainerHeading);
-				
+
 				HTMLDOMElement textContainer = parser.createElement("span");
 				textContainer.setAttribute("id", idTextHeading);
 				textContainer.appendText(textHeading);
-				
+
 				container.appendElement(textContainer);
 				local.appendElement(container);
 			}
@@ -285,7 +285,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 		return htmlList;
 	}
-	
+
 	/**
 	 * Returns the level of heading.
 	 * @param element The heading.
@@ -309,7 +309,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Inform if the headings of page are sintatic correct.
 	 * @return True if the headings of page are sintatic correct or false if not.
@@ -336,7 +336,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Generate an anchor for the element.
 	 * @param element The element.
@@ -365,7 +365,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 		return anchor;
 	}
-	
+
 	/**
 	 * Replace the shortcut of elements, that has the shortcut passed.
 	 * @param shortcut The shortcut.
@@ -416,7 +416,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				break;
 			}
 		}
-		
+
 		if (skipper != null) {
 			if (!listSkippersAdded) {
 				listSkippers = generateListSkippers();
@@ -483,11 +483,11 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 				if (list != null) {
 					HTMLDOMElement item = parser.createElement("li");
 					item.setAttribute(dataHeadingLevel, Integer.toString(level));
-					
+
 					HTMLDOMElement link = parser.createElement("a");
 					link.setAttribute("href", "#" + anchor.getAttribute("name"));
 					link.appendText(element.getTextContent());
-					
+
 					item.appendElement(link);
 					list.appendElement(item);
 				}
@@ -503,7 +503,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			}
 		}
 	}
-	
+
 	public void provideNavigationToLongDescription(HTMLDOMElement image) {
 		if (image.hasAttribute("longdesc")) {
 			CommonFunctions.generateId(image, prefixId);
@@ -526,7 +526,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 			}
 		}
 	}
-	
+
 	public void provideNavigationToAllLongDescriptions() {
 		Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
 		for (HTMLDOMElement image : images) {

@@ -35,12 +35,12 @@ import org.jsoup.select.Elements;
  * interface for the Jsoup library.
  */
 public class JsoupHTMLDOMElement implements HTMLDOMElement {
-	
+
 	/**
 	 * The Jsoup native element encapsulated.
 	 */
 	protected Element element;
-	
+
 	/**
 	 * Initializes a new object that encapsulate the Jsoup Element.
 	 * @param element The Jsoup Element.
@@ -48,58 +48,58 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	public JsoupHTMLDOMElement(Element element) {
 		this.element = element;
 	}
-	
+
 	public String getTagName() {
 		return element.tagName().toUpperCase();
 	}
-	
+
 	public String getAttribute(String name) {
 		return element.attr(name);
 	}
-	
+
 	public void setAttribute(String name, String value) {
 		element.attr(name, value);
 	}
-	
+
 	public void removeAttribute(String name) {
 		if (hasAttribute(name)) {
 			element.removeAttr(name);
 		}
 	}
-	
+
 	public boolean hasAttribute(String name) {
 		return element.hasAttr(name);
 	}
-	
+
 	public boolean hasAttributes() {
 		return element.attributes().size() > 0;
 	}
-	
+
 	public HTMLDOMElement cloneElement() {
 		return new JsoupHTMLDOMElement(element.clone());
 	}
-	
+
 	public String getTextContent() {
 		return element.text();
 	}
-	
+
 	public Object getData() {
 		return element;
 	}
-	
+
 	public void setData(Object data) {
 		element = (Element) data;
 	}
-	
+
 	public HTMLDOMElement appendElement(HTMLDOMElement element) {
 		this.element.appendChild((Element) element.getData());
 		return element;
 	}
-	
+
 	public void appendText(String text) {
 		element.appendText(text);
 	}
-	
+
 	public String getInnerHTML() {
 		List<Node> childNodes = element.childNodes();
 		String string = "";
@@ -108,15 +108,15 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		}
 		return string;
 	}
-	
+
 	public void setInnerHTML(String html) {
 		element.html(html);
 	}
-	
+
 	public String getOuterHTML() {
 		return toString(element);
 	}
-	
+
 	public HTMLDOMElement insertBefore(HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
@@ -125,7 +125,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		parent.insertChildren(index, children);
 		return newElement;
 	}
-	
+
 	public HTMLDOMElement insertAfter(HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
@@ -138,17 +138,17 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		}
 		return newElement;
 	}
-	
+
 	public HTMLDOMElement removeElement() {
 		element.remove();
 		return this;
 	}
-	
+
 	public HTMLDOMElement replaceElement(HTMLDOMElement newElement) {
 		element.replaceWith((Element) newElement.getData());
 		return newElement;
 	}
-	
+
 	public Collection<HTMLDOMElement> getChildren() {
 		Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
 		Elements children = element.children();
@@ -157,11 +157,11 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		}
 		return elements;
 	}
-	
+
 	public boolean hasChildren() {
 		return !element.children().isEmpty();
 	}
-	
+
 	public HTMLDOMElement getParentElement() {
 		Element parent = element.parent();
 		if ((parent == null) || (parent instanceof Document)) {
@@ -169,21 +169,21 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		}
 		return new JsoupHTMLDOMElement(parent);
 	}
-	
+
 	public HTMLDOMElement getFirstElementChild() {
 		if (!hasChildren()) {
 			return null;
 		}
 		return new JsoupHTMLDOMElement(element.children().first());
 	}
-	
+
 	public HTMLDOMElement getLastElementChild() {
 		if (!hasChildren()) {
 			return null;
 		}
 		return new JsoupHTMLDOMElement(element.children().last());
 	}
-	
+
 	@Override
 	public boolean equals(Object object) {
 		if (this != object) {
@@ -198,12 +198,12 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public HTMLDOMElement clone() {
 		return cloneElement();
 	}
-	
+
 	/**
 	 * Convert a Jsoup Node to a HTML code.
 	 * @param node The Jsoup Node.

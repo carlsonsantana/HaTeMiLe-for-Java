@@ -19,35 +19,35 @@ import hatemile.util.html.HTMLDOMElement;
  * The AccessibleNavigation interface improve the accessibility of navigation.
  */
 public interface AccessibleNavigation {
-	
+
 	/**
 	 * Provide a content skipper for element.
 	 * @param element The element.
 	 */
 	void provideNavigationBySkipper(HTMLDOMElement element);
-	
+
 	/**
 	 * Provide navigation by content skippers.
 	 */
 	void provideNavigationByAllSkippers();
-	
+
 	/**
 	 * Provide navigation by heading.
 	 * @param heading The heading element.
 	 */
 	void provideNavigationByHeading(HTMLDOMElement heading);
-	
+
 	/**
 	 * Provide navigation by headings of page.
 	 */
 	void provideNavigationByAllHeadings();
-	
+
 	/**
 	 * Provide an alternative way to access the long description of element.
 	 * @param image The image with long description.
 	 */
 	void provideNavigationToLongDescription(HTMLDOMElement image);
-	
+
 	/**
 	 * Provide an alternative way to access the longs descriptions of all
 	 * elements of page.

@@ -26,17 +26,17 @@ import java.util.Collection;
  * AccessibleForm interface.
  */
 public class AccessibleFormImplementation implements AccessibleForm {
-	
+
 	/**
 	 * The HTML parser.
 	 */
 	protected final HTMLDOMParser parser;
-	
+
 	/**
 	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
-	
+
 	/**
 	 * Initializes a new object that manipulate the accessibility of the forms
 	 * of parser.
@@ -47,7 +47,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
-	
+
 	/**
 	 * Returns the appropriate value for attribute aria-autocomplete of field.
 	 * @param field The field.
@@ -87,13 +87,13 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 		return null;
 	}
-	
+
 	public void markRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
 		}
 	}
-	
+
 	public void markAllRequiredFields() {
 		Collection<HTMLDOMElement> requiredFields = parser.find("[required]").listResults();
 		for (HTMLDOMElement requiredField : requiredFields) {
@@ -102,7 +102,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 			}
 		}
 	}
-	
+
 	public void markRangeField(HTMLDOMElement rangeField) {
 		if (rangeField.hasAttribute("min")) {
 			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min"));
@@ -111,7 +111,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
 			rangeField.setAttribute("aria-valuemax", rangeField.getAttribute("max"));
 		}
 	}
-	
+
 	public void markAllRangeFields() {
 		Collection<HTMLDOMElement> rangeFields = parser.find("[min],[max]").listResults();
 		for (HTMLDOMElement rangeField : rangeFields) {

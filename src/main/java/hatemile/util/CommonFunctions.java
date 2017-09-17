@@ -19,24 +19,24 @@ import hatemile.util.html.HTMLDOMElement;
  * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
  */
 public final class CommonFunctions {
-	
+
 	/**
 	 * The name of attribute for not modify the elements.
 	 */
 	protected static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
-	
+
 	/**
 	 * Count the number of ids created.
 	 */
 	protected static int count = 0;
-	
+
 	/**
 	 * The private constructor prevents that the class not can be initialized.
 	 */
 	private CommonFunctions() {
-		
+
 	}
-	
+
 	/**
 	 * Generate a id for a element.
 	 * @param element The element.
@@ -48,14 +48,14 @@ public final class CommonFunctions {
 			count++;
 		}
 	}
-	
+
 	/**
 	 * Reset the count number of ids.
 	 */
 	public static void resetCount() {
 		count = 0;
 	}
-	
+
 	/**
 	 * Copy a list of attributes of a element for other element.
 	 * @param element1 The element that have attributes copied.
@@ -70,7 +70,7 @@ public final class CommonFunctions {
 			}
 		}
 	}
-	
+
 	/**
 	 * Increase a item in a list.
 	 * @param list The list.
@@ -92,7 +92,7 @@ public final class CommonFunctions {
 			return stringToIncrease;
 		}
 	}
-	
+
 	/**
 	 * Verify if the list contains the item.
 	 * @param list The list.
@@ -112,7 +112,7 @@ public final class CommonFunctions {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Check that the element can be manipulated by HaTeMiLe.
 	 * @param element The element

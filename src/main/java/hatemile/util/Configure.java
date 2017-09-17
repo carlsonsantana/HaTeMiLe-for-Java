@@ -32,19 +32,19 @@ import org.w3c.dom.NodeList;
  * The Configure class contains the configuration of HaTeMiLe.
  */
 public class Configure {
-	
+
 	/**
 	 * The parameters of configuration of HaTeMiLe.
 	 */
 	protected final Map<String, String> parameters;
-	
+
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 */
 	public Configure() {
 		this("hatemile-configure.xml");
 	}
-	
+
 	/**
 	 * Initializes a new object that contains the configuration of HaTeMiLe.
 	 * @param fileName The full path of file.
@@ -52,9 +52,9 @@ public class Configure {
 	public Configure(String fileName) {
 		parameters = new HashMap<String, String>();
 		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
-		
+
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		
+
 		try {
 			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 			Document document = documentBuilder.parse(inputStream);
@@ -82,7 +82,7 @@ public class Configure {
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the parameters of configuration.
 	 * @return The parameters of configuration.
@@ -90,7 +90,7 @@ public class Configure {
 	public Map<String, String> getParameters() {
 		return new HashMap<String, String>(parameters);
 	}
-	
+
 	/**
 	 * Returns the value of a parameter of configuration.
 	 * @param parameter The parameter.
@@ -99,7 +99,7 @@ public class Configure {
 	public String getParameter(String parameter) {
 		return parameters.get(parameter);
 	}
-	
+
 	@Override
 	public boolean equals(Object object) {
 		if (this != object) {

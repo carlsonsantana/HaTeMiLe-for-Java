@@ -19,13 +19,13 @@ import hatemile.util.html.HTMLDOMElement;
  * The AccessibleDisplay interface improve accessibility, showing informations.
  */
 public interface AccessibleDisplay {
-	
+
 	/**
 	 * Display the shortcuts of element.
 	 * @param element The element with shortcuts.
 	 */
 	void displayShortcut(HTMLDOMElement element);
-	
+
 	/**
 	 * Display all shortcuts of page.
 	 */

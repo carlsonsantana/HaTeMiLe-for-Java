@@ -28,17 +28,17 @@ import java.util.List;
  * AccessibleAssociation.
  */
 public class AccessibleAssociationImplementation implements AccessibleAssociation {
-	
+
 	/**
 	 * The HTML parser.
 	 */
 	protected final HTMLDOMParser parser;
-	
+
 	/**
 	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
-	
+
 	/**
 	 * Initializes a new object that improve the accessibility of associations
 	 * of parser.
@@ -49,7 +49,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		this.parser = parser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
-	
+
 	/**
 	 * Returns a list that represents the table.
 	 * @param part The table header, table footer or table body.
@@ -63,7 +63,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 		return getValidModelTable(table);
 	}
-	
+
 	/**
 	 * Returns a list that represents the table with the rowspans.
 	 * @param originalTable The list that represents the table without the rowspans.
@@ -114,7 +114,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 		return newTable;
 	}
-	
+
 	/**
 	 * Returns a list that represents the line of table with the colspans.
 	 * @param originalRow The list that represents the line of table without the
@@ -141,7 +141,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 		return newRow;
 	}
-	
+
 	/**
 	 * Validate the list that represents the table header.
 	 * @param header The list that represents the table header.
@@ -164,7 +164,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns a list with ids of rows of same column.
 	 * @param header The list that represents the table header.
@@ -183,7 +183,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 		return ids;
 	}
-	
+
 	/**
 	 * Associate the data cell with header cell of row.
 	 * @param element The table body or table footer.
@@ -197,7 +197,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 				if (cell.getTagName().equals("TH")) {
 					CommonFunctions.generateId(cell, prefixId);
 					headersIds.add(cell.getAttribute("id"));
-					
+
 					cell.setAttribute("scope", "row");
 				}
 			}
@@ -214,7 +214,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 			}
 		}
 	}
-	
+
 	/**
 	 * Set the scope of header cells of table header.
 	 * @param tableHeader The table header.
@@ -224,18 +224,18 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 				.findChildren("tr").findChildren("th").listResults();
 		for (HTMLDOMElement cell : cells) {
 			CommonFunctions.generateId(cell, prefixId);
-			
+
 			cell.setAttribute("scope", "col");
 		}
 	}
-	
+
 	public void associateDataCellsWithHeaderCells(HTMLDOMElement table) {
 		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
 		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
 		HTMLDOMElement footer = parser.find(table).findChildren("tfoot").firstResult();
 		if (header != null) {
 			prepareHeaderCells(header);
-			
+
 			Collection<Collection<HTMLDOMElement>> headerRows = getModelTable(header);
 			if ((body != null) && (validateHeader(headerRows))) {
 				int lengthHeader = headerRows.iterator().next().size();
@@ -267,7 +267,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 			associateDataCellsWithHeaderCellsOfRow(footer);
 		}
 	}
-	
+
 	public void associateAllDataCellsWithHeaderCells() {
 		Collection<HTMLDOMElement> tables = parser.find("table").listResults();
 		for (HTMLDOMElement table : tables) {
@@ -276,7 +276,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 			}
 		}
 	}
-	
+
 	public void associateLabelWithField(HTMLDOMElement label) {
 		if (label.getTagName().equals("LABEL")) {
 			HTMLDOMElement field;
@@ -284,7 +284,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 				field = parser.find("#" + label.getAttribute("for")).firstResult();
 			} else {
 				field = parser.find(label).findDescendants("input,select,textarea").firstResult();
-				
+
 				if (field != null) {
 					CommonFunctions.generateId(field, prefixId);
 					label.setAttribute("for", field.getAttribute("id"));
@@ -295,14 +295,14 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 					field.setAttribute("aria-label"
 							, label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim());
 				}
-				
+
 				CommonFunctions.generateId(label, prefixId);
 				field.setAttribute("aria-labelledby", CommonFunctions.increaseInList
 						(field.getAttribute("aria-labelledby"), label.getAttribute("id")));
 			}
 		}
 	}
-	
+
 	public void associateAllLabelsWithFields() {
 		Collection<HTMLDOMElement> labels = parser.find("label").listResults();
 		for (HTMLDOMElement label : labels) {

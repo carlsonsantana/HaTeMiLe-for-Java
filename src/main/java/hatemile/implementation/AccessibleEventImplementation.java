@@ -32,61 +32,61 @@ import java.util.logging.Logger;
  * AccessibleEvent interface.
  */
 public class AccessibleEventImplementation implements AccessibleEvent {
-	
+
 	/**
 	 * The HTML parser.
 	 */
 	protected final HTMLDOMParser parser;
-	
+
 	/**
 	 * The id of script element that replace the event listener methods.
 	 */
 	protected final String idScriptEventListener;
-	
+
 	/**
 	 * The id of script element that contains the list of elements that has
 	 * inaccessible events.
 	 */
 	protected final String idListIdsScript;
-	
+
 	/**
 	 * The id of script element that modify the events of elements.
 	 */
 	protected final String idFunctionScriptFix;
-	
+
 	/**
 	 * The prefix of generated ids.
 	 */
 	protected final String prefixId;
-	
+
 	/**
 	 * The state that indicates if the scripts used by solutions was added in
 	 * parser.
 	 */
 	protected boolean mainScriptAdded;
-	
+
 	/**
 	 * The script element that contains the list of elements that has
 	 * inaccessible events.
 	 */
 	protected HTMLDOMElement scriptList;
-	
+
 	/**
-	 * The state that indicates if the scripts used are stored or deleted, 
+	 * The state that indicates if the scripts used are stored or deleted,
 	 * after use.
 	 */
 	protected final boolean storeScriptsContent;
-	
+
 	/**
 	 * The content of eventlistener.js.
 	 */
 	protected static String eventListenerScriptContent = null;
-	
+
 	/**
 	 * The content of include.js.
 	 */
 	protected static String includeScriptContent = null;
-	
+
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * Javascript events of elements of parser.
@@ -106,7 +106,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		mainScriptAdded = false;
 		scriptList = null;
 	}
-	
+
 	/**
 	 * Returns the content of file.
 	 * @param file The name of file.
@@ -133,10 +133,10 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			Logger.getLogger(AccessibleEventImplementation.class.getName())
 					.log(Level.SEVERE, null, ex);
 		}
-		
+
 		return stringBuilder.toString();
 	}
-	
+
 	/**
 	 * Provide keyboard access for element, if it not has.
 	 * @param element The element.
@@ -153,7 +153,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			}
 		}
 	}
-	
+
 	/**
 	 * Include the scripts used by solutions.
 	 */
@@ -164,7 +164,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 						.firstResult() == null)) {
 			HTMLDOMElement script = parser.createElement("script");
 			String localEventListenerScriptContent;
-			
+
 			if (storeScriptsContent) {
 				if (eventListenerScriptContent == null) {
 					eventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
@@ -173,11 +173,11 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			} else {
 				localEventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
 			}
-			
+
 			script.setAttribute("id", idScriptEventListener);
 			script.setAttribute("type", "text/javascript");
 			script.appendText(localEventListenerScriptContent);
-			
+
 			if (head.hasChildren()) {
 				head.getFirstElementChild().insertBefore(script);
 			} else {
@@ -200,7 +200,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			if (parser.find("#" + idFunctionScriptFix).firstResult() == null) {
 				HTMLDOMElement scriptFunction = parser.createElement("script");
 				String localIncludeScriptContent;
-				
+
 				if (storeScriptsContent) {
 					if (includeScriptContent == null) {
 						includeScriptContent = getContentFromFile("/js/include.js");
@@ -209,17 +209,17 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				} else {
 					localIncludeScriptContent = getContentFromFile("/js/include.js");
 				}
-				
+
 				scriptFunction.setAttribute("id", idFunctionScriptFix);
 				scriptFunction.setAttribute("type", "text/javascript");
 				scriptFunction.appendText(localIncludeScriptContent);
-				
+
 				local.appendElement(scriptFunction);
 			}
 		}
 		mainScriptAdded = true;
 	}
-	
+
 	/**
 	 * Add a type of event in element.
 	 * @param element The element.
@@ -229,25 +229,25 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		if (!mainScriptAdded) {
 			generateMainScripts();
 		}
-		
+
 		if (scriptList != null) {
 			CommonFunctions.generateId(element, prefixId);
 			scriptList.appendText(event + "Elements.push('"
 					+ element.getAttribute("id") + "');");
 		}
 	}
-	
+
 	public void makeAccessibleDropEvents(HTMLDOMElement element) {
 		element.setAttribute("aria-dropeffect", "none");
-		
+
 		addEventInElement(element, "drop");
 	}
 
 	public void makeAccessibleDragEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
-		
+
 		element.setAttribute("aria-grabbed", "false");
-		
+
 		addEventInElement(element, "drag");
 	}
 
@@ -268,13 +268,13 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			}
 		}
 	}
-	
+
 	public void makeAccessibleHoverEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
-		
+
 		addEventInElement(element, "hover");
 	}
-	
+
 	public void makeAccessibleAllHoverEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onmouseover],[onmouseout]").listResults();
@@ -284,13 +284,13 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			}
 		}
 	}
-	
+
 	public void makeAccessibleClickEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
-		
+
 		addEventInElement(element, "active");
 	}
-	
+
 	public void makeAccessibleAllClickEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]")
