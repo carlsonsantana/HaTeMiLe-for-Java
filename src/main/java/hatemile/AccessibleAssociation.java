@@ -21,25 +21,25 @@ import hatemile.util.html.HTMLDOMElement;
  */
 public interface AccessibleAssociation {
 
-	/**
-	 * Associate all data cells with header cells of table.
-	 * @param table The table.
-	 */
-	void associateDataCellsWithHeaderCells(HTMLDOMElement table);
+    /**
+     * Associate all data cells with header cells of table.
+     * @param table The table.
+     */
+    void associateDataCellsWithHeaderCells(HTMLDOMElement table);
 
-	/**
-	 * Associate all data cells with header cells of all tables of page.
-	 */
-	void associateAllDataCellsWithHeaderCells();
+    /**
+     * Associate all data cells with header cells of all tables of page.
+     */
+    void associateAllDataCellsWithHeaderCells();
 
-	/**
-	 * Associate label with field.
-	 * @param label The label.
-	 */
-	void associateLabelWithField(HTMLDOMElement label);
+    /**
+     * Associate label with field.
+     * @param label The label.
+     */
+    void associateLabelWithField(HTMLDOMElement label);
 
-	/**
-	 * Associate all labels of page with fields.
-	 */
-	void associateAllLabelsWithFields();
+    /**
+     * Associate all labels of page with fields.
+     */
+    void associateAllLabelsWithFields();
 }

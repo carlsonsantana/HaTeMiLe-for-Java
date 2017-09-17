@@ -36,291 +36,291 @@ import org.jsoup.select.Elements;
  */
 public class JsoupHTMLDOMElement implements HTMLDOMElement {
 
-	/**
-	 * The Jsoup native element encapsulated.
-	 */
-	protected Element element;
+    /**
+     * The Jsoup native element encapsulated.
+     */
+    protected Element element;
 
-	/**
-	 * Initializes a new object that encapsulate the Jsoup Element.
-	 * @param jsoupElement The Jsoup Element.
-	 */
-	public JsoupHTMLDOMElement(final Element jsoupElement) {
-		this.element = jsoupElement;
-	}
+    /**
+     * Initializes a new object that encapsulate the Jsoup Element.
+     * @param jsoupElement The Jsoup Element.
+     */
+    public JsoupHTMLDOMElement(final Element jsoupElement) {
+        this.element = jsoupElement;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getTagName() {
-		return element.tagName().toUpperCase();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getTagName() {
+        return element.tagName().toUpperCase();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getAttribute(final String name) {
-		return element.attr(name);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getAttribute(final String name) {
+        return element.attr(name);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setAttribute(final String name, final String value) {
-		element.attr(name, value);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setAttribute(final String name, final String value) {
+        element.attr(name, value);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void removeAttribute(final String name) {
-		if (hasAttribute(name)) {
-			element.removeAttr(name);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void removeAttribute(final String name) {
+        if (hasAttribute(name)) {
+            element.removeAttr(name);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean hasAttribute(final String name) {
-		return element.hasAttr(name);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasAttribute(final String name) {
+        return element.hasAttr(name);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean hasAttributes() {
-		return element.attributes().size() > 0;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasAttributes() {
+        return element.attributes().size() > 0;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement cloneElement() {
-		return new JsoupHTMLDOMElement(element.clone());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement cloneElement() {
+        return new JsoupHTMLDOMElement(element.clone());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getTextContent() {
-		return element.text();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getTextContent() {
+        return element.text();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object getData() {
-		return element;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public Object getData() {
+        return element;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setData(final Object data) {
-		element = (Element) data;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setData(final Object data) {
+        element = (Element) data;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
-		this.element.appendChild((Element) newElement.getData());
-		return newElement;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
+        this.element.appendChild((Element) newElement.getData());
+        return newElement;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void appendText(final String text) {
-		element.appendText(text);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void appendText(final String text) {
+        element.appendText(text);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getInnerHTML() {
-		List<Node> childNodes = element.childNodes();
-		String string = "";
-		for (Node node : childNodes) {
-			string += toString(node);
-		}
-		return string;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getInnerHTML() {
+        List<Node> childNodes = element.childNodes();
+        String string = "";
+        for (Node node : childNodes) {
+            string += toString(node);
+        }
+        return string;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setInnerHTML(final String html) {
-		element.html(html);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setInnerHTML(final String html) {
+        element.html(html);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getOuterHTML() {
-		return toString(element);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String getOuterHTML() {
+        return toString(element);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement insertBefore(final HTMLDOMElement newElement) {
-		Element parent = element.parent();
-		int index = parent.childNodes().indexOf(element);
-		Collection<Element> children = new ArrayList<Element>();
-		children.add((Element) newElement.getData());
-		parent.insertChildren(index, children);
-		return newElement;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement insertBefore(final HTMLDOMElement newElement) {
+        Element parent = element.parent();
+        int index = parent.childNodes().indexOf(element);
+        Collection<Element> children = new ArrayList<Element>();
+        children.add((Element) newElement.getData());
+        parent.insertChildren(index, children);
+        return newElement;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement insertAfter(final HTMLDOMElement newElement) {
-		Element parent = element.parent();
-		int index = parent.childNodes().indexOf(element);
-		if (index < parent.childNodes().size()) {
-			Collection<Element> children = new ArrayList<Element>();
-			children.add((Element) newElement.getData());
-			parent.insertChildren(index + 1, children);
-		} else {
-			parent.appendChild((Element) newElement.getData());
-		}
-		return newElement;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement insertAfter(final HTMLDOMElement newElement) {
+        Element parent = element.parent();
+        int index = parent.childNodes().indexOf(element);
+        if (index < parent.childNodes().size()) {
+            Collection<Element> children = new ArrayList<Element>();
+            children.add((Element) newElement.getData());
+            parent.insertChildren(index + 1, children);
+        } else {
+            parent.appendChild((Element) newElement.getData());
+        }
+        return newElement;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement removeElement() {
-		element.remove();
-		return this;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement removeElement() {
+        element.remove();
+        return this;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement replaceElement(final HTMLDOMElement newElement) {
-		element.replaceWith((Element) newElement.getData());
-		return newElement;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement replaceElement(final HTMLDOMElement newElement) {
+        element.replaceWith((Element) newElement.getData());
+        return newElement;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Collection<HTMLDOMElement> getChildren() {
-		Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
-		Elements children = element.children();
-		for (Element child : children) {
-			elements.add(new JsoupHTMLDOMElement(child));
-		}
-		return elements;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public Collection<HTMLDOMElement> getChildren() {
+        Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
+        Elements children = element.children();
+        for (Element child : children) {
+            elements.add(new JsoupHTMLDOMElement(child));
+        }
+        return elements;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean hasChildren() {
-		return !element.children().isEmpty();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasChildren() {
+        return !element.children().isEmpty();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement getParentElement() {
-		Element parent = element.parent();
-		if ((parent == null) || (parent instanceof Document)) {
-			return null;
-		}
-		return new JsoupHTMLDOMElement(parent);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement getParentElement() {
+        Element parent = element.parent();
+        if ((parent == null) || (parent instanceof Document)) {
+            return null;
+        }
+        return new JsoupHTMLDOMElement(parent);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement getFirstElementChild() {
-		if (!hasChildren()) {
-			return null;
-		}
-		return new JsoupHTMLDOMElement(element.children().first());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement getFirstElementChild() {
+        if (!hasChildren()) {
+            return null;
+        }
+        return new JsoupHTMLDOMElement(element.children().first());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public HTMLDOMElement getLastElementChild() {
-		if (!hasChildren()) {
-			return null;
-		}
-		return new JsoupHTMLDOMElement(element.children().last());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement getLastElementChild() {
+        if (!hasChildren()) {
+            return null;
+        }
+        return new JsoupHTMLDOMElement(element.children().last());
+    }
 
-	@Override
-	public boolean equals(final Object object) {
-		if (this != object) {
-			if (object == null) {
-				return false;
-			}
-			if (!(object instanceof HTMLDOMElement)) {
-				return false;
-			}
-			HTMLDOMElement htmlDOMElement = (HTMLDOMElement) object;
-			return this.getData().equals(htmlDOMElement.getData());
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object object) {
+        if (this != object) {
+            if (object == null) {
+                return false;
+            }
+            if (!(object instanceof HTMLDOMElement)) {
+                return false;
+            }
+            HTMLDOMElement htmlDOMElement = (HTMLDOMElement) object;
+            return this.getData().equals(htmlDOMElement.getData());
+        }
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.element.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.element.hashCode();
+    }
 
-	@Override
-	public HTMLDOMElement clone() {
-		return cloneElement();
-	}
+    @Override
+    public HTMLDOMElement clone() {
+        return cloneElement();
+    }
 
-	/**
-	 * Convert a Jsoup Node to a HTML code.
-	 * @param node The Jsoup Node.
-	 * @return The HTML code of the Jsoup Node.
-	 */
-	protected String toString(final Node node) {
-		String string = "";
-		List<Node> childNodes = node.childNodes();
-		if (node instanceof Comment) {
-			string += ((Comment) node).toString();
-		} else if (node instanceof DataNode) {
-			string += ((DataNode) node).toString();
-		} else if (node instanceof DocumentType) {
-			string += ((DocumentType) node).toString();
-		} else if (node instanceof TextNode) {
-			string += ((TextNode) node).getWholeText();
-		} else if ((node instanceof Element) && (!(node instanceof Document))) {
-			Element jsoupElement = (Element) node;
-			string += "<" + jsoupElement.tagName();
-			Attributes attributes = jsoupElement.attributes();
-			for (Attribute attribute : attributes) {
-				string += " " + attribute.getKey() + "=\"" + attribute.getValue() + "\"";
-			}
-			if (childNodes.isEmpty() && jsoupElement.tag().isSelfClosing()) {
-				string += " />";
-			} else {
-				string += ">";
-			}
-		}
-		if (!childNodes.isEmpty()) {
-			for (Node childNode : childNodes) {
-				string += toString(childNode);
-			}
-		}
-		if ((node instanceof Element) && (!(node instanceof Document))) {
-			Element jsoupElement = (Element) node;
-			if (!childNodes.isEmpty() || !jsoupElement.tag().isSelfClosing()) {
-				string += "</" + jsoupElement.tagName() + ">";
-			}
-		}
-		return string;
-	}
+    /**
+     * Convert a Jsoup Node to a HTML code.
+     * @param node The Jsoup Node.
+     * @return The HTML code of the Jsoup Node.
+     */
+    protected String toString(final Node node) {
+        String string = "";
+        List<Node> childNodes = node.childNodes();
+        if (node instanceof Comment) {
+            string += ((Comment) node).toString();
+        } else if (node instanceof DataNode) {
+            string += ((DataNode) node).toString();
+        } else if (node instanceof DocumentType) {
+            string += ((DocumentType) node).toString();
+        } else if (node instanceof TextNode) {
+            string += ((TextNode) node).getWholeText();
+        } else if ((node instanceof Element) && (!(node instanceof Document))) {
+            Element jsoupElement = (Element) node;
+            string += "<" + jsoupElement.tagName();
+            Attributes attributes = jsoupElement.attributes();
+            for (Attribute attribute : attributes) {
+                string += " " + attribute.getKey() + "=\"" + attribute.getValue() + "\"";
+            }
+            if (childNodes.isEmpty() && jsoupElement.tag().isSelfClosing()) {
+                string += " />";
+            } else {
+                string += ">";
+            }
+        }
+        if (!childNodes.isEmpty()) {
+            for (Node childNode : childNodes) {
+                string += toString(childNode);
+            }
+        }
+        if ((node instanceof Element) && (!(node instanceof Document))) {
+            Element jsoupElement = (Element) node;
+            if (!childNodes.isEmpty() || !jsoupElement.tag().isSelfClosing()) {
+                string += "</" + jsoupElement.tagName() + ">";
+            }
+        }
+        return string;
+    }
 }

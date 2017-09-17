@@ -21,42 +21,42 @@ import hatemile.util.html.HTMLDOMElement;
  */
 public interface AccessibleEvent {
 
-	/**
-	 * Make the drop events of element available from a keyboard.
-	 * @param element The element with drop event.
-	 */
-	void makeAccessibleDropEvents(HTMLDOMElement element);
+    /**
+     * Make the drop events of element available from a keyboard.
+     * @param element The element with drop event.
+     */
+    void makeAccessibleDropEvents(HTMLDOMElement element);
 
-	/**
-	 * Make the drag events of element available from a keyboard.
-	 * @param element The element with drag event.
-	 */
-	void makeAccessibleDragEvents(HTMLDOMElement element);
+    /**
+     * Make the drag events of element available from a keyboard.
+     * @param element The element with drag event.
+     */
+    void makeAccessibleDragEvents(HTMLDOMElement element);
 
-	/**
-	 * Make all Drag-and-Drop events of page available from a keyboard.
-	 */
-	void makeAccessibleAllDragandDropEvents();
+    /**
+     * Make all Drag-and-Drop events of page available from a keyboard.
+     */
+    void makeAccessibleAllDragandDropEvents();
 
-	/**
-	 * Make the hover events of element available from a keyboard.
-	 * @param element The element with hover event.
-	 */
-	void makeAccessibleHoverEvents(HTMLDOMElement element);
+    /**
+     * Make the hover events of element available from a keyboard.
+     * @param element The element with hover event.
+     */
+    void makeAccessibleHoverEvents(HTMLDOMElement element);
 
-	/**
-	 * Make all hover events of page available from a keyboard.
-	 */
-	void makeAccessibleAllHoverEvents();
+    /**
+     * Make all hover events of page available from a keyboard.
+     */
+    void makeAccessibleAllHoverEvents();
 
-	/**
-	 * Make the click events of element available from a keyboard.
-	 * @param element The element with click events.
-	 */
-	void makeAccessibleClickEvents(HTMLDOMElement element);
+    /**
+     * Make the click events of element available from a keyboard.
+     * @param element The element with click events.
+     */
+    void makeAccessibleClickEvents(HTMLDOMElement element);
 
-	/**
-	 * Make all click events of page available from a keyboard.
-	 */
-	void makeAccessibleAllClickEvents();
+    /**
+     * Make all click events of page available from a keyboard.
+     */
+    void makeAccessibleAllClickEvents();
 }

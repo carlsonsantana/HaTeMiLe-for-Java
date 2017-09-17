@@ -20,14 +20,14 @@ import hatemile.util.html.HTMLDOMElement;
  */
 public interface AccessibleDisplay {
 
-	/**
-	 * Display the shortcuts of element.
-	 * @param element The element with shortcuts.
-	 */
-	void displayShortcut(HTMLDOMElement element);
+    /**
+     * Display the shortcuts of element.
+     * @param element The element with shortcuts.
+     */
+    void displayShortcut(HTMLDOMElement element);
 
-	/**
-	 * Display all shortcuts of page.
-	 */
-	void displayAllShortcuts();
+    /**
+     * Display all shortcuts of page.
+     */
+    void displayAllShortcuts();
 }

@@ -33,92 +33,92 @@ import org.w3c.dom.NodeList;
  */
 public class Configure {
 
-	/**
-	 * The parameters of configuration of HaTeMiLe.
-	 */
-	protected final Map<String, String> parameters;
+    /**
+     * The parameters of configuration of HaTeMiLe.
+     */
+    protected final Map<String, String> parameters;
 
-	/**
-	 * Initializes a new object that contains the configuration of HaTeMiLe.
-	 */
-	public Configure() {
-		this("hatemile-configure.xml");
-	}
+    /**
+     * Initializes a new object that contains the configuration of HaTeMiLe.
+     */
+    public Configure() {
+        this("hatemile-configure.xml");
+    }
 
-	/**
-	 * Initializes a new object that contains the configuration of HaTeMiLe.
-	 * @param fileName The full path of file.
-	 */
-	public Configure(final String fileName) {
-		parameters = new HashMap<String, String>();
-		InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
+    /**
+     * Initializes a new object that contains the configuration of HaTeMiLe.
+     * @param fileName The full path of file.
+     */
+    public Configure(final String fileName) {
+        parameters = new HashMap<String, String>();
+        InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
 
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		try {
-			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-			Document document = documentBuilder.parse(inputStream);
-			Element rootElement = document.getDocumentElement();
+        try {
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            Document document = documentBuilder.parse(inputStream);
+            Element rootElement = document.getDocumentElement();
 
-			if (rootElement.getTagName().equalsIgnoreCase("PARAMETERS")) {
-				NodeList nodeListParameters = rootElement.getElementsByTagName("parameter");
+            if (rootElement.getTagName().equalsIgnoreCase("PARAMETERS")) {
+                NodeList nodeListParameters = rootElement.getElementsByTagName("parameter");
 
-				for (int i = 0, length = nodeListParameters.getLength(); i < length; i++) {
-					Element parameterElement = (Element) nodeListParameters.item(i);
-					if (parameterElement.hasAttribute("name")) {
-						parameters.put(parameterElement.getAttribute("name"), parameterElement.getTextContent());
-					}
-				}
-			}
-		} catch (Exception exception) {
-			throw new RuntimeException(exception);
-		} finally {
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException ex) {
-					Logger.getLogger(Configure.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-		}
-	}
+                for (int i = 0, length = nodeListParameters.getLength(); i < length; i++) {
+                    Element parameterElement = (Element) nodeListParameters.item(i);
+                    if (parameterElement.hasAttribute("name")) {
+                        parameters.put(parameterElement.getAttribute("name"), parameterElement.getTextContent());
+                    }
+                }
+            }
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Configure.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Returns the parameters of configuration.
-	 * @return The parameters of configuration.
-	 */
-	public Map<String, String> getParameters() {
-		return new HashMap<String, String>(parameters);
-	}
+    /**
+     * Returns the parameters of configuration.
+     * @return The parameters of configuration.
+     */
+    public Map<String, String> getParameters() {
+        return new HashMap<String, String>(parameters);
+    }
 
-	/**
-	 * Returns the value of a parameter of configuration.
-	 * @param parameter The parameter.
-	 * @return The value of the parameter.
-	 */
-	public String getParameter(final String parameter) {
-		return parameters.get(parameter);
-	}
+    /**
+     * Returns the value of a parameter of configuration.
+     * @param parameter The parameter.
+     * @return The value of the parameter.
+     */
+    public String getParameter(final String parameter) {
+        return parameters.get(parameter);
+    }
 
-	@Override
-	public boolean equals(final Object object) {
-		if (this != object) {
-			if (object == null) {
-				return false;
-			}
-			if (!(object instanceof Configure)) {
-				return false;
-			}
-			Configure configure = (Configure) object;
-			if (!parameters.equals(configure.getParameters())) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object object) {
+        if (this != object) {
+            if (object == null) {
+                return false;
+            }
+            if (!(object instanceof Configure)) {
+                return false;
+            }
+            Configure configure = (Configure) object;
+            if (!parameters.equals(configure.getParameters())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		return this.parameters.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.parameters.hashCode();
+    }
 }
