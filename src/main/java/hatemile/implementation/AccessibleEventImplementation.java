@@ -95,8 +95,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	 * @param storeScriptsContent The state that indicates if the scripts used
 	 * are stored or deleted, after use.
 	 */
-	public AccessibleEventImplementation(HTMLDOMParser parser
-			, Configure configure, boolean storeScriptsContent) {
+	public AccessibleEventImplementation(HTMLDOMParser parser, Configure configure, boolean storeScriptsContent) {
 		this.parser = parser;
 		this.storeScriptsContent = storeScriptsContent;
 		prefixId = configure.getParameter("prefix-generated-ids");

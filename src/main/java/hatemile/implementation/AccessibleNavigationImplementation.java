@@ -349,8 +349,7 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	 * @param anchorClass The HTML class of anchor.
 	 * @return The anchor.
 	 */
-	protected HTMLDOMElement generateAnchorFor(HTMLDOMElement element
-			, String dataAttribute, String anchorClass) {
+	protected HTMLDOMElement generateAnchorFor(HTMLDOMElement element, String dataAttribute, String anchorClass) {
 		CommonFunctions.generateId(element, prefixId);
 		HTMLDOMElement anchor = null;
 		if (parser.find("[" + dataAttribute + "=\"" + element.getAttribute("id") + "\"]").firstResult() == null) {

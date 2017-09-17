@@ -145,8 +145,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 	public HTMLDOMParser findDescendants(HTMLDOMElement descendant) {
 		Collection<Element> elements = new ArrayList<Element>();
 		for (Element resultElement : results) {
-			Element element = getDescendantOf(resultElement
-					, (Element) descendant.getData());
+			Element element = getDescendantOf(resultElement, (Element) descendant.getData());
 			if ((element != null) && (!elements.contains(element))) {
 				elements.add(element);
 			}

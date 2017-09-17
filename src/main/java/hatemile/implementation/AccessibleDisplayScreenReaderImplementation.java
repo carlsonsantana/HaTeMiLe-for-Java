@@ -73,8 +73,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @param configure The configuration of HaTeMiLe.
 	 * @param userAgent The user agent of browser.
 	 */
-	public AccessibleDisplayScreenReaderImplementation(HTMLDOMParser htmlParser
-		, Configure configure, String userAgent) {
+	public AccessibleDisplayScreenReaderImplementation(HTMLDOMParser htmlParser, Configure configure, String userAgent) {
 		this.htmlParser = htmlParser;
 		idContainerShortcuts = "container-shortcuts";
 		idTextShortcuts = "text-shortcuts";

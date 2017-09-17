@@ -62,8 +62,7 @@ public final class CommonFunctions {
 	 * @param element2 The element that copy the attributes.
 	 * @param attributes The list of attributes that will be copied.
 	 */
-	public static void setListAttributes(HTMLDOMElement element1
-			, HTMLDOMElement element2, String[] attributes) {
+	public static void setListAttributes(HTMLDOMElement element1, HTMLDOMElement element2, String[] attributes) {
 		for (int i = 0, length = attributes.length; i < length; i++) {
 			if (element1.hasAttribute(attributes[i])) {
 				element2.setAttribute(attributes[i], element1.getAttribute(attributes[i]));

@@ -299,8 +299,7 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 			}
 			if (field != null) {
 				if (!field.hasAttribute("aria-label")) {
-					field.setAttribute("aria-label"
-							, label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim());
+					field.setAttribute("aria-label", label.getTextContent().replaceAll("[ \n\t\r]+", " ").trim());
 				}
 
 				CommonFunctions.generateId(label, prefixId);
