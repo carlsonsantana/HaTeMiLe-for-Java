@@ -246,9 +246,6 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return new JsoupHTMLDOMElement(document.createElement(tag));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (this != object) {
@@ -264,5 +261,12 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 89 * hash + this.document.hashCode();
+		return hash;
 	}
 }

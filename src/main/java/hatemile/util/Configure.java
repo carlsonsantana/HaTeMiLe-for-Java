@@ -116,4 +116,11 @@ public class Configure {
 		}
 		return true;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 67 * hash + this.parameters.hashCode();
+		return hash;
+	}
 }

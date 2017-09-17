@@ -256,9 +256,6 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return new JsoupHTMLDOMElement(element.children().last());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean equals(final Object object) {
 		if (this != object) {
@@ -274,9 +271,13 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 13 * hash + this.element.hashCode();
+		return hash;
+	}
+
 	@Override
 	public HTMLDOMElement clone() {
 		return cloneElement();
