@@ -273,9 +273,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		hash = 13 * hash + this.element.hashCode();
-		return hash;
+		return this.element.hashCode();
 	}
 
 	@Override

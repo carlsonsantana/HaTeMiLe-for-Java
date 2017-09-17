@@ -265,8 +265,6 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 
 	@Override
 	public int hashCode() {
-		int hash = 3;
-		hash = 89 * hash + this.document.hashCode();
-		return hash;
+		return this.document.hashCode();
 	}
 }

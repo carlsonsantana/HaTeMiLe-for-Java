@@ -146,6 +146,41 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected static final String SKIPPER_FILE_NAME = "skippers.xml";
 
 	/**
+	 * Level value of h1.
+	 */
+	protected static final int HEADING_LEVEL_1 = 1;
+
+	/**
+	 * Level value of h2.
+	 */
+	protected static final int HEADING_LEVEL_2 = 2;
+
+	/**
+	 * Level value of h3.
+	 */
+	protected static final int HEADING_LEVEL_3 = 3;
+
+	/**
+	 * Level value of h4.
+	 */
+	protected static final int HEADING_LEVEL_4 = 4;
+
+	/**
+	 * Level value of h5.
+	 */
+	protected static final int HEADING_LEVEL_5 = 5;
+
+	/**
+	 * Level value of h6.
+	 */
+	protected static final int HEADING_LEVEL_6 = 6;
+
+	/**
+	 * Level value of invalid heading.
+	 */
+	protected static final int HEADING_LEVEL_INVALID = -1;
+
+	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
 	 * @param parser The HTML parser.
@@ -298,19 +333,19 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	protected int getHeadingLevel(final HTMLDOMElement element) {
 		String tag = element.getTagName();
 		if (tag.equals("H1")) {
-			return 1;
+			return HEADING_LEVEL_1;
 		} else if (tag.equals("H2")) {
-			return 2;
+			return HEADING_LEVEL_2;
 		} else if (tag.equals("H3")) {
-			return 3;
+			return HEADING_LEVEL_3;
 		} else if (tag.equals("H4")) {
-			return 4;
+			return HEADING_LEVEL_4;
 		} else if (tag.equals("H5")) {
-			return 5;
+			return HEADING_LEVEL_5;
 		} else if (tag.equals("H6")) {
-			return 6;
+			return HEADING_LEVEL_6;
 		} else {
-			return -1;
+			return HEADING_LEVEL_INVALID;
 		}
 	}
 
