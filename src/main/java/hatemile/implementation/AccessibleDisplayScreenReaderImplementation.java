@@ -24,7 +24,8 @@ import java.util.Collection;
  * The AccessibleDisplayScreenReaderImplementation class is official
  * implementation of AccessibleDisplay interface for screen readers.
  */
-public class AccessibleDisplayScreenReaderImplementation implements AccessibleDisplay {
+public class AccessibleDisplayScreenReaderImplementation
+        implements AccessibleDisplay {
 
     /**
      * The HTML parser.
@@ -73,12 +74,15 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
      * @param configure The configuration of HaTeMiLe.
      * @param userAgent The user agent of browser.
      */
-    public AccessibleDisplayScreenReaderImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String userAgent) {
+    public AccessibleDisplayScreenReaderImplementation(
+            final HTMLDOMParser htmlParser, final Configure configure,
+            final String userAgent) {
         this.parser = htmlParser;
         idContainerShortcuts = "container-shortcuts";
         idTextShortcuts = "text-shortcuts";
         dataAccessKey = "data-shortcutdescriptionfor";
-        prefix = getShortcutPrefix(userAgent, configure.getParameter("text-standart-shortcut-prefix"));
+        prefix = getShortcutPrefix(userAgent,
+                configure.getParameter("text-standart-shortcut-prefix"));
         textShortcuts = configure.getParameter("text-shortcuts");
         listShortcutsAdded = false;
         listShortcuts = null;
@@ -90,7 +94,8 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
      * @param standartPrefix The default prefix.
      * @return The shortcut prefix of browser.
      */
-    protected final String getShortcutPrefix(final String userAgent, final String standartPrefix) {
+    protected final String getShortcutPrefix(final String userAgent,
+            final String standartPrefix) {
         if (userAgent != null) {
             String lowerUserAgent = userAgent.toLowerCase();
             boolean opera = lowerUserAgent.contains("opera");
@@ -100,8 +105,10 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
             boolean safari = lowerUserAgent.contains("applewebkit");
             boolean windows = lowerUserAgent.contains("windows");
             boolean chrome = lowerUserAgent.contains("chrome");
-            boolean firefox = lowerUserAgent.matches("firefox/[2-9]|minefield/3");
-            boolean ie = lowerUserAgent.contains("msie") || lowerUserAgent.contains("trident");
+            boolean firefox = lowerUserAgent
+                    .matches("firefox/[2-9]|minefield/3");
+            boolean ie = lowerUserAgent.contains("msie")
+                    || lowerUserAgent.contains("trident");
 
             if (opera) {
                 return "SHIFT + ESC";
@@ -142,20 +149,25 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
                 || (element.hasAttribute("aria-describedby"))) {
             String[] descriptionIds;
             if (element.hasAttribute("aria-labelledby")) {
-                descriptionIds = element.getAttribute("aria-labelledby").split("[ \n\t\r]+");
+                descriptionIds = element.getAttribute("aria-labelledby")
+                        .split("[ \n\t\r]+");
             } else {
-                descriptionIds = element.getAttribute("aria-describedby").split("[ \n\t\r]+");
+                descriptionIds = element.getAttribute("aria-describedby")
+                        .split("[ \n\t\r]+");
             }
             for (int i = 0, length = descriptionIds.length; i < length; i++) {
-                HTMLDOMElement elementDescription = parser.find("#" + descriptionIds[i]).firstResult();
+                HTMLDOMElement elementDescription = parser
+                        .find("#" + descriptionIds[i]).firstResult();
                 if (elementDescription != null) {
                     description = elementDescription.getTextContent();
                     break;
                 }
             }
-        } else if ((element.getTagName().equals("INPUT")) && (element.hasAttribute("type"))) {
+        } else if ((element.getTagName().equals("INPUT"))
+                && (element.hasAttribute("type"))) {
             String type = element.getAttribute("type").toLowerCase();
-            if (((type.equals("button")) || (type.equals("submit")) || (type.equals("reset")))
+            if (((type.equals("button")) || (type.equals("submit"))
+                    || (type.equals("reset")))
                     && (element.hasAttribute("value"))) {
                 description = element.getAttribute("value");
             }
@@ -171,7 +183,8 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
      * @return The list of shortcuts of page.
      */
     protected HTMLDOMElement generateListShortcuts() {
-        HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
+        HTMLDOMElement container = parser.find("#" + idContainerShortcuts)
+                .firstResult();
 
         HTMLDOMElement htmlList = null;
         if (container == null) {
@@ -215,14 +228,18 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
             }
 
             if (listShortcuts != null) {
-                String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
+                String[] keys = element.getAttribute("accesskey")
+                        .split("[ \n\t\r]+");
                 for (int i = 0, length = keys.length; i < length; i++) {
                     String key = keys[i].toUpperCase();
-                    if (parser.find(listShortcuts).findChildren("[" + dataAccessKey + "=\"" + key + "\"]")
+                    String attribute =
+                            "[" + dataAccessKey + "=\"" + key + "\"]";
+                    if (parser.find(listShortcuts).findChildren(attribute)
                             .firstResult() == null) {
                         HTMLDOMElement item = parser.createElement("li");
                         item.setAttribute(dataAccessKey, key);
-                        item.appendText(prefix + " + " + key + ": " + description);
+                        item.appendText(prefix + " + " + key + ": "
+                                + description);
                         listShortcuts.appendElement(item);
                     }
                 }
@@ -234,7 +251,8 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
      * {@inheritDoc}
      */
     public void displayAllShortcuts() {
-        Collection<HTMLDOMElement> elements = parser.find("[accesskey]").listResults();
+        Collection<HTMLDOMElement> elements = parser.find("[accesskey]")
+                .listResults();
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayShortcut(element);

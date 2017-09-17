@@ -23,12 +23,12 @@ public final class CommonFunctions {
     /**
      * The name of attribute for not modify the elements.
      */
-    protected static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
+    private static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
 
     /**
      * Count the number of ids created.
      */
-    protected static int count = 0;
+    private static int count = 0;
 
     /**
      * The private constructor prevents that the class not can be initialized.
@@ -42,7 +42,8 @@ public final class CommonFunctions {
      * @param element The element.
      * @param prefix The prefix of id.
      */
-    public static void generateId(final HTMLDOMElement element, final String prefix) {
+    public static void generateId(final HTMLDOMElement element,
+            final String prefix) {
         if (!element.hasAttribute("id")) {
             element.setAttribute("id", prefix + Integer.toString(count));
             count++;
@@ -62,10 +63,12 @@ public final class CommonFunctions {
      * @param element2 The element that copy the attributes.
      * @param attributes The list of attributes that will be copied.
      */
-    public static void setListAttributes(final HTMLDOMElement element1, final HTMLDOMElement element2, final String[] attributes) {
+    public static void setListAttributes(final HTMLDOMElement element1,
+            final HTMLDOMElement element2, final String[] attributes) {
         for (int i = 0, length = attributes.length; i < length; i++) {
             if (element1.hasAttribute(attributes[i])) {
-                element2.setAttribute(attributes[i], element1.getAttribute(attributes[i]));
+                element2.setAttribute(attributes[i],
+                        element1.getAttribute(attributes[i]));
             }
         }
     }
@@ -77,7 +80,8 @@ public final class CommonFunctions {
      * @return The HTML list with the item added, if the item not was contained
      * in list.
      */
-    public static String increaseInList(final String list, final String stringToIncrease) {
+    public static String increaseInList(final String list,
+            final String stringToIncrease) {
         if ((list != null) && (!list.isEmpty()) && (stringToIncrease != null)
                 && (!stringToIncrease.isEmpty())) {
             if (inList(list, stringToIncrease)) {
@@ -98,7 +102,8 @@ public final class CommonFunctions {
      * @param stringToSearch The value of item.
      * @return True if the list contains the item or false is not contains.
      */
-    public static boolean inList(final String list, final String stringToSearch) {
+    public static boolean inList(final String list,
+            final String stringToSearch) {
         if ((list != null) && (!list.isEmpty()) && (stringToSearch != null)
                 && (!stringToSearch.isEmpty())) {
             String[] elements = list.split("[ \n\t\r]+");

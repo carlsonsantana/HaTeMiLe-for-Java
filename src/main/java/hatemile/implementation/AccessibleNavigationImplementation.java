@@ -40,7 +40,8 @@ import org.w3c.dom.NodeList;
  * The AccessibleNavigationImplementation class is official implementation of
  * AccessibleNavigation interface.
  */
-public class AccessibleNavigationImplementation implements AccessibleNavigation {
+public class AccessibleNavigationImplementation
+        implements AccessibleNavigation {
 
     /**
      * The HTML parser.
@@ -184,7 +185,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @param htmlParser The HTML parser.
      * @param configure The configuration of HaTeMiLe.
      */
-    public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+    public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
+            final Configure configure) {
         this(htmlParser, configure, null);
     }
 
@@ -195,7 +197,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @param configure The configuration of HaTeMiLe.
      * @param skipperFileName The file path of skippers configuration.
      */
-    public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String skipperFileName) {
+    public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
+            final Configure configure, final String skipperFileName) {
         this.parser = htmlParser;
         idContainerSkippers = "container-skippers";
         idContainerHeading = "container-heading";
@@ -209,8 +212,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
         dataLongDescriptionForImage = "data-longdescriptionfor";
         prefixId = configure.getParameter("prefix-generated-ids");
         textHeading = configure.getParameter("text-heading");
-        prefixLongDescriptionLink = configure.getParameter("prefix-longdescription");
-        suffixLongDescriptionLink = configure.getParameter("suffix-longdescription");
+        prefixLongDescriptionLink =
+                configure.getParameter("prefix-longdescription");
+        suffixLongDescriptionLink =
+                configure.getParameter("suffix-longdescription");
         skippers = getSkippers(skipperFileName);
         listSkippersAdded = false;
         validateHeading = false;
@@ -223,8 +228,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @param fileName The file path of skippers configuration.
      * @return The skippers of configuration.
      */
-    protected static Collection<Map<String, String>> getSkippers(final String fileName) {
-        Collection<Map<String, String>> skippers = new ArrayList<Map<String, String>>();
+    protected static Collection<Map<String, String>> getSkippers(
+            final String fileName) {
+        Collection<Map<String, String>> skippers =
+                new ArrayList<Map<String, String>>();
 
         InputStream inputStream = File.class.getResourceAsStream(fileName);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -235,18 +242,24 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
             Element rootElement = document.getDocumentElement();
 
             if (rootElement.getTagName().equalsIgnoreCase("SKIPPERS")) {
-                NodeList nodeListSkippers = rootElement.getElementsByTagName("skipper");
+                NodeList nodeListSkippers = rootElement
+                        .getElementsByTagName("skipper");
 
-                for (int i = 0, length = nodeListSkippers.getLength(); i < length; i++) {
+                for (int i = 0, length = nodeListSkippers.getLength();
+                        i < length; i++) {
                     Element skipperElement = (Element) nodeListSkippers.item(i);
 
                     if ((skipperElement.hasAttribute("selector"))
                             && (skipperElement.hasAttribute("description"))
                             && (skipperElement.hasAttribute("shortcut"))) {
-                        Map<String, String> skipper = new HashMap<String, String>();
-                        skipper.put("selector", skipperElement.getAttribute("selector"));
-                        skipper.put("description", skipperElement.getAttribute("description"));
-                        skipper.put("shortcut", skipperElement.getAttribute("shortcut"));
+                        Map<String, String> skipper =
+                                new HashMap<String, String>();
+                        skipper.put("selector",
+                                skipperElement.getAttribute("selector"));
+                        skipper.put("description",
+                                skipperElement.getAttribute("description"));
+                        skipper.put("shortcut",
+                                skipperElement.getAttribute("shortcut"));
                         skippers.add(skipper);
                     }
                 }
@@ -258,7 +271,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
                 try {
                     inputStream.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(AccessibleNavigationImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AccessibleNavigationImplementation.class
+                        .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -271,7 +285,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @return The list of skippers of page.
      */
     protected HTMLDOMElement generateListSkippers() {
-        HTMLDOMElement container = parser.find("#" + idContainerSkippers).firstResult();
+        HTMLDOMElement container = parser.find("#" + idContainerSkippers)
+                .firstResult();
         HTMLDOMElement htmlList = null;
         if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
@@ -298,7 +313,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @return The list of heading links of page.
      */
     protected HTMLDOMElement generateListHeading() {
-        HTMLDOMElement container = parser.find("#" + idContainerHeading).firstResult();
+        HTMLDOMElement container = parser.find("#" + idContainerHeading)
+                .firstResult();
         HTMLDOMElement htmlList = null;
         if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
@@ -350,10 +366,12 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 
     /**
      * Inform if the headings of page are sintatic correct.
-     * @return True if the headings of page are sintatic correct or false if not.
+     * @return True if the headings of page are sintatic correct or false if
+     * not.
      */
     protected boolean isValidHeading() {
-        Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6").listResults();
+        Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6")
+                .listResults();
         int lastLevel = 0;
         int countMainHeading = 0;
         int level;
@@ -383,10 +401,12 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * @param anchorClass The HTML class of anchor.
      * @return The anchor.
      */
-    protected HTMLDOMElement generateAnchorFor(final HTMLDOMElement element, final String dataAttribute, final String anchorClass) {
+    protected HTMLDOMElement generateAnchorFor(final HTMLDOMElement element,
+            final String dataAttribute, final String anchorClass) {
         CommonFunctions.generateId(element, prefixId);
         HTMLDOMElement anchor = null;
-        if (parser.find("[" + dataAttribute + "=\"" + element.getAttribute("id") + "\"]").firstResult() == null) {
+        if (parser.find("[" + dataAttribute + "=\"" + element
+                .getAttribute("id") + "\"]").firstResult() == null) {
             if (element.getTagName().equals("A")) {
                 anchor = element;
             } else {
@@ -412,15 +432,18 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
         String key;
         boolean found = false;
         String alphaNumbers = "1234567890abcdefghijklmnopqrstuvwxyz";
-        Collection<HTMLDOMElement> elements = parser.find("[accesskey]").listResults();
+        Collection<HTMLDOMElement> elements = parser.find("[accesskey]")
+                .listResults();
         for (HTMLDOMElement element : elements) {
             shortcuts = element.getAttribute("accesskey").toLowerCase();
             if (CommonFunctions.inList(shortcuts, shortcut)) {
-                for (int i = 0, length = alphaNumbers.length(); i < length; i++) {
+                for (int i = 0, length = alphaNumbers.length(); i < length;
+                        i++) {
                     key = Character.toString(alphaNumbers.charAt(i));
                     found = true;
                     for (HTMLDOMElement elementWithShortcuts : elements) {
-                        shortcuts = elementWithShortcuts.getAttribute("accesskey").toLowerCase();
+                        shortcuts = elementWithShortcuts
+                                .getAttribute("accesskey").toLowerCase();
                         if (CommonFunctions.inList(shortcuts, key)) {
                             found = false;
                             break;
@@ -445,7 +468,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
         Map<String, String> skipper = null;
         Collection<HTMLDOMElement> auxiliarElements;
         for (Map<String, String> auxiliarSkipper : skippers) {
-            auxiliarElements = parser.find(auxiliarSkipper.get("selector")).listResults();
+            auxiliarElements = parser.find(auxiliarSkipper.get("selector"))
+                    .listResults();
             for (HTMLDOMElement auxiliarElement : auxiliarElements) {
                 if (auxiliarElement.equals(element)) {
                     skipper = auxiliarSkipper;
@@ -462,14 +486,17 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
                 listSkippers = generateListSkippers();
             }
             if (listSkippers != null) {
-                HTMLDOMElement anchor = generateAnchorFor(element, dataAnchorFor, classSkipperAnchor);
+                HTMLDOMElement anchor = generateAnchorFor(element,
+                        dataAnchorFor, classSkipperAnchor);
                 if (anchor != null) {
                     HTMLDOMElement itemLink = parser.createElement("li");
                     HTMLDOMElement link = parser.createElement("a");
-                    link.setAttribute("href", "#" + anchor.getAttribute("name"));
+                    link.setAttribute("href",
+                            "#" + anchor.getAttribute("name"));
                     link.appendText(skipper.get("description"));
 
-                    List<String> shortcuts = new ArrayList<String>(Arrays.asList(skipper.get("shortcut").split(" ")));
+                    List<String> shortcuts = new ArrayList<String>(Arrays
+                            .asList(skipper.get("shortcut").split(" ")));
                     if (!shortcuts.isEmpty()) {
                         String shortcut = shortcuts.get(0);
                         if (!shortcut.isEmpty()) {
@@ -509,17 +536,22 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
             validHeading = isValidHeading();
         }
         if (validHeading) {
-            HTMLDOMElement anchor = generateAnchorFor(element, dataHeadingAnchorFor, classHeadingAnchor);
+            HTMLDOMElement anchor = generateAnchorFor(element,
+                    dataHeadingAnchorFor, classHeadingAnchor);
             if (anchor != null) {
                 HTMLDOMElement list = null;
                 int level = getHeadingLevel(element);
                 if (level == 1) {
                     list = generateListHeading();
                 } else {
-                    HTMLDOMElement superItem = parser.find("#" + idContainerHeading)
-                            .findDescendants("[" + dataHeadingLevel + "=\"" + Integer.toString(level - 1) + "\"]").lastResult();
+                    HTMLDOMElement superItem = parser
+                            .find("#" + idContainerHeading)
+                            .findDescendants("[" + dataHeadingLevel + "=\""
+                                + Integer.toString(level - 1) + "\"]")
+                            .lastResult();
                     if (superItem != null) {
-                        list = parser.find(superItem).findChildren("ol").firstResult();
+                        list = parser.find(superItem).findChildren("ol")
+                                .firstResult();
                         if (list == null) {
                             list = parser.createElement("ol");
                             superItem.appendElement(list);
@@ -528,10 +560,12 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
                 }
                 if (list != null) {
                     HTMLDOMElement item = parser.createElement("li");
-                    item.setAttribute(dataHeadingLevel, Integer.toString(level));
+                    item.setAttribute(dataHeadingLevel,
+                            Integer.toString(level));
 
                     HTMLDOMElement link = parser.createElement("a");
-                    link.setAttribute("href", "#" + anchor.getAttribute("name"));
+                    link.setAttribute("href",
+                            "#" + anchor.getAttribute("name"));
                     link.appendText(element.getTextContent());
 
                     item.appendElement(link);
@@ -545,7 +579,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * {@inheritDoc}
      */
     public void provideNavigationByAllHeadings() {
-        Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6").listResults();
+        Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6")
+                .listResults();
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 provideNavigationByHeading(element);
@@ -560,13 +595,16 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
         if (image.hasAttribute("longdesc")) {
             CommonFunctions.generateId(image, prefixId);
             String id = image.getAttribute("id");
-            if (parser.find("[" + dataLongDescriptionForImage + "=\"" + id + "\"]").firstResult() == null) {
+            if (parser.find("[" + dataLongDescriptionForImage + "=\""
+                    + id + "\"]").firstResult() == null) {
                 String text;
                 if (image.hasAttribute("alt")) {
-                    text = prefixLongDescriptionLink + " " + image.getAttribute("alt")
-                            + " " + suffixLongDescriptionLink;
+                    text = prefixLongDescriptionLink + " "
+                            + image.getAttribute("alt") + " "
+                            + suffixLongDescriptionLink;
                 } else {
-                    text = prefixLongDescriptionLink + " " + suffixLongDescriptionLink;
+                    text = prefixLongDescriptionLink + " "
+                            + suffixLongDescriptionLink;
                 }
                 HTMLDOMElement anchor = parser.createElement("a");
                 anchor.setAttribute("href", image.getAttribute("longdesc"));
@@ -583,7 +621,8 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
      * {@inheritDoc}
      */
     public void provideNavigationToAllLongDescriptions() {
-        Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
+        Collection<HTMLDOMElement> images = parser.find("[longdesc]")
+                .listResults();
         for (HTMLDOMElement image : images) {
             if (CommonFunctions.isValidElement(image)) {
                 provideNavigationToLongDescription(image);

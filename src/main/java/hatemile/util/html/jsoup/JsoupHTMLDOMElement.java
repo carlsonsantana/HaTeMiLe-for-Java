@@ -302,7 +302,8 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
             string += "<" + jsoupElement.tagName();
             Attributes attributes = jsoupElement.attributes();
             for (Attribute attribute : attributes) {
-                string += " " + attribute.getKey() + "=\"" + attribute.getValue() + "\"";
+                string += " " + attribute.getKey() + "=\""
+                        + attribute.getValue() + "\"";
             }
             if (childNodes.isEmpty() && jsoupElement.tag().isSelfClosing()) {
                 string += " />";

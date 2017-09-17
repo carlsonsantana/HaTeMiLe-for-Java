@@ -87,7 +87,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      * @param htmlParser The HTML parser.
      * @param configure The configuration of HaTeMiLe.
      */
-    public AccessibleEventImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+    public AccessibleEventImplementation(final HTMLDOMParser htmlParser,
+            final Configure configure) {
         this.parser = htmlParser;
         prefixId = configure.getParameter("prefix-generated-ids");
         idScriptEventListener = "script-eventlistener";
@@ -155,7 +156,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             HTMLDOMElement script = parser.createElement("script");
 
             if (eventListenerScriptContent == null) {
-                eventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
+                eventListenerScriptContent =
+                        getContentFromFile("/js/eventlistener.js");
             }
 
             script.setAttribute("id", idScriptEventListener);
@@ -203,7 +205,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      * @param element The element.
      * @param event The type of event.
      */
-    protected void addEventInElement(final HTMLDOMElement element, final String event) {
+    protected void addEventInElement(final HTMLDOMElement element,
+            final String event) {
         if (!mainScriptAdded) {
             generateMainScripts();
         }

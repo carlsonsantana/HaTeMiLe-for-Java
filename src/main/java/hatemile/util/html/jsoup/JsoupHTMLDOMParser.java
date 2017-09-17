@@ -63,7 +63,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * @return The element searched if it is descendant of reference element or
      * null if not is.
      */
-    protected Element getDescendantOf(final Element reference, final Element searched) {
+    protected Element getDescendantOf(final Element reference,
+            final Element searched) {
         if (reference.children().contains(searched)) {
             return searched;
         } else if (!reference.children().isEmpty()) {
@@ -145,7 +146,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
     public HTMLDOMParser findDescendants(final HTMLDOMElement descendant) {
         Collection<Element> elements = new ArrayList<Element>();
         for (Element resultElement : results) {
-            Element element = getDescendantOf(resultElement, (Element) descendant.getData());
+            Element element = getDescendantOf(resultElement,
+                    (Element) descendant.getData());
             if ((element != null) && (!elements.contains(element))) {
                 elements.add(element);
             }

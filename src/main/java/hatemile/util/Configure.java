@@ -51,7 +51,8 @@ public class Configure {
      */
     public Configure(final String fileName) {
         parameters = new HashMap<String, String>();
-        InputStream inputStream = File.class.getResourceAsStream("/" + fileName);
+        InputStream inputStream = File.class
+                .getResourceAsStream("/" + fileName);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -61,12 +62,16 @@ public class Configure {
             Element rootElement = document.getDocumentElement();
 
             if (rootElement.getTagName().equalsIgnoreCase("PARAMETERS")) {
-                NodeList nodeListParameters = rootElement.getElementsByTagName("parameter");
+                NodeList nodeListParameters = rootElement
+                        .getElementsByTagName("parameter");
 
-                for (int i = 0, length = nodeListParameters.getLength(); i < length; i++) {
-                    Element parameterElement = (Element) nodeListParameters.item(i);
+                for (int i = 0, length = nodeListParameters.getLength();
+                        i < length; i++) {
+                    Element parameterElement = (Element) nodeListParameters
+                            .item(i);
                     if (parameterElement.hasAttribute("name")) {
-                        parameters.put(parameterElement.getAttribute("name"), parameterElement.getTextContent());
+                        parameters.put(parameterElement.getAttribute("name"),
+                                parameterElement.getTextContent());
                     }
                 }
             }
@@ -77,7 +82,8 @@ public class Configure {
                 try {
                     inputStream.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(Configure.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Configure.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
             }
         }
