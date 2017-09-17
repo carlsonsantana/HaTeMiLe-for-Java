@@ -25,7 +25,7 @@ public interface HTMLDOMParser {
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
-	public HTMLDOMParser find(String selector);
+	HTMLDOMParser find(String selector);
 	
 	/**
 	 * Find if a element is contained in parser.
@@ -33,14 +33,14 @@ public interface HTMLDOMParser {
 	 * @return The parser with the element, if the element is contained in
 	 * parser.
 	 */
-	public HTMLDOMParser find(HTMLDOMElement element);
+	HTMLDOMParser find(HTMLDOMElement element);
 	
 	/**
 	 * Find all elements in the parser by selector, children of found elements.
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
-	public HTMLDOMParser findChildren(String selector);
+	HTMLDOMParser findChildren(String selector);
 	
 	/**
 	 * Find if a element is a child of found elements.
@@ -48,7 +48,7 @@ public interface HTMLDOMParser {
 	 * @return The parser with the element, if the element is child of found
 	 * elements.
 	 */
-	public HTMLDOMParser findChildren(HTMLDOMElement child);
+	HTMLDOMParser findChildren(HTMLDOMElement child);
 	
 	/**
 	 * Find all elements in the parser by selector, descendants of found
@@ -56,7 +56,7 @@ public interface HTMLDOMParser {
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
-	public HTMLDOMParser findDescendants(String selector);
+	HTMLDOMParser findDescendants(String selector);
 	
 	/**
 	 * Find if a element is descendant of found elements.
@@ -64,14 +64,14 @@ public interface HTMLDOMParser {
 	 * @return The parser with the element, if the element is descendant of
 	 * found elements.
 	 */
-	public HTMLDOMParser findDescendants(HTMLDOMElement element);
+	HTMLDOMParser findDescendants(HTMLDOMElement element);
 	
 	/**
 	 * Find all elements in the parser by selector, ancestors of found elements.
 	 * @param selector The selector.
 	 * @return The parser with the elements found.
 	 */
-	public HTMLDOMParser findAncestors(String selector);
+	HTMLDOMParser findAncestors(String selector);
 	
 	/**
 	 * Find if a element is ancestor of found elements.
@@ -79,47 +79,47 @@ public interface HTMLDOMParser {
 	 * @return The parser with the element, if the element is ancestor of found
 	 * elements.
 	 */
-	public HTMLDOMParser findAncestors(HTMLDOMElement element);
+	HTMLDOMParser findAncestors(HTMLDOMElement element);
 	
 	/**
 	 * Returns the first element found.
 	 * @return The first element found or null if not have elements found.
 	 */
-	public HTMLDOMElement firstResult();
+	HTMLDOMElement firstResult();
 	
 	/**
 	 * Returns the last element found.
 	 * @return The last element found or null if not have elements found.
 	 */
-	public HTMLDOMElement lastResult();
+	HTMLDOMElement lastResult();
 	
 	/**
 	 * Returns a list with all elements found.
 	 * @return The list with all elements found.
 	 */
-	public Collection<HTMLDOMElement> listResults();
+	Collection<HTMLDOMElement> listResults();
 	
 	/**
 	 * Create a element.
 	 * @param tag The tag of element.
 	 * @return The element created.
 	 */
-	public HTMLDOMElement createElement(String tag);
+	HTMLDOMElement createElement(String tag);
 	
 	/**
 	 * Returns the HTML code of parser.
 	 * @return The HTML code of parser.
 	 */
-	public String getHTML();
+	String getHTML();
 	
 	/**
 	 * Returns the parser.
 	 * @return The parser or root element of the parser.
 	 */
-	public Object getParser();
+	Object getParser();
 	
 	/**
 	 * Clear the memory of this object.
 	 */
-	public void clearParser();
+	void clearParser();
 }

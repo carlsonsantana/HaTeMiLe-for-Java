@@ -24,10 +24,10 @@ public interface AccessibleDisplay {
 	 * Display the shortcuts of element.
 	 * @param element The element with shortcuts.
 	 */
-	public void displayShortcut(HTMLDOMElement element);
+	void displayShortcut(HTMLDOMElement element);
 	
 	/**
 	 * Display all shortcuts of page.
 	 */
-	public void displayAllShortcuts();
+	void displayAllShortcuts();
 }

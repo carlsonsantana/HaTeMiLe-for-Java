@@ -24,33 +24,33 @@ public interface AccessibleNavigation {
 	 * Provide a content skipper for element.
 	 * @param element The element.
 	 */
-	public void provideNavigationBySkipper(HTMLDOMElement element);
+	void provideNavigationBySkipper(HTMLDOMElement element);
 	
 	/**
 	 * Provide navigation by content skippers.
 	 */
-	public void provideNavigationByAllSkippers();
+	void provideNavigationByAllSkippers();
 	
 	/**
 	 * Provide navigation by heading.
 	 * @param heading The heading element.
 	 */
-	public void provideNavigationByHeading(HTMLDOMElement heading);
+	void provideNavigationByHeading(HTMLDOMElement heading);
 	
 	/**
 	 * Provide navigation by headings of page.
 	 */
-	public void provideNavigationByAllHeadings();
+	void provideNavigationByAllHeadings();
 	
 	/**
 	 * Provide an alternative way to access the long description of element.
 	 * @param image The image with long description.
 	 */
-	public void provideNavigationToLongDescription(HTMLDOMElement image);
+	void provideNavigationToLongDescription(HTMLDOMElement image);
 	
 	/**
 	 * Provide an alternative way to access the longs descriptions of all
 	 * elements of page.
 	 */
-	public void provideNavigationToAllLongDescriptions();
+	void provideNavigationToAllLongDescriptions();
 }

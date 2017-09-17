@@ -24,32 +24,32 @@ public interface AccessibleForm {
 	 * Mark that the field is required.
 	 * @param requiredField The required field.
 	 */
-	public void markRequiredField(HTMLDOMElement requiredField);
+	void markRequiredField(HTMLDOMElement requiredField);
 	
 	/**
 	 * Mark that the fields is required.
 	 */
-	public void markAllRequiredFields();
+	void markAllRequiredFields();
 	
 	/**
 	 * Mark that the field have range.
 	 * @param rangeField The range field.
 	 */
-	public void markRangeField(HTMLDOMElement rangeField);
+	void markRangeField(HTMLDOMElement rangeField);
 	
 	/**
 	 * Mark that the fields have range.
 	 */
-	public void markAllRangeFields();
+	void markAllRangeFields();
 	
 	/**
 	 * Mark that the field have autocomplete.
 	 * @param autoCompleteField The field with autocomplete.
 	 */
-	public void markAutoCompleteField(HTMLDOMElement autoCompleteField);
+	void markAutoCompleteField(HTMLDOMElement autoCompleteField);
 	
 	/**
 	 * Mark that the fields have autocomplete.
 	 */
-	public void markAllAutoCompleteFields();
+	void markAllAutoCompleteFields();
 }
