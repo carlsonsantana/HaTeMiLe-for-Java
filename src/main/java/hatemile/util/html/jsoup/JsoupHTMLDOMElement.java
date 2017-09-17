@@ -49,57 +49,96 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		this.element = element;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getTagName() {
 		return element.tagName().toUpperCase();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getAttribute(String name) {
 		return element.attr(name);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setAttribute(String name, String value) {
 		element.attr(name, value);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void removeAttribute(String name) {
 		if (hasAttribute(name)) {
 			element.removeAttr(name);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean hasAttribute(String name) {
 		return element.hasAttr(name);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean hasAttributes() {
 		return element.attributes().size() > 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement cloneElement() {
 		return new JsoupHTMLDOMElement(element.clone());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getTextContent() {
 		return element.text();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Object getData() {
 		return element;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setData(Object data) {
 		element = (Element) data;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement appendElement(HTMLDOMElement element) {
 		this.element.appendChild((Element) element.getData());
 		return element;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void appendText(String text) {
 		element.appendText(text);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getInnerHTML() {
 		List<Node> childNodes = element.childNodes();
 		String string = "";
@@ -109,14 +148,23 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return string;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setInnerHTML(String html) {
 		element.html(html);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getOuterHTML() {
 		return toString(element);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement insertBefore(HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
@@ -126,6 +174,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return newElement;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement insertAfter(HTMLDOMElement newElement) {
 		Element parent = element.parent();
 		int index = parent.childNodes().indexOf(element);
@@ -139,16 +190,25 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return newElement;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement removeElement() {
 		element.remove();
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement replaceElement(HTMLDOMElement newElement) {
 		element.replaceWith((Element) newElement.getData());
 		return newElement;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Collection<HTMLDOMElement> getChildren() {
 		Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
 		Elements children = element.children();
@@ -158,10 +218,16 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return elements;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean hasChildren() {
 		return !element.children().isEmpty();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement getParentElement() {
 		Element parent = element.parent();
 		if ((parent == null) || (parent instanceof Document)) {
@@ -170,6 +236,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return new JsoupHTMLDOMElement(parent);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement getFirstElementChild() {
 		if (!hasChildren()) {
 			return null;
@@ -177,6 +246,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return new JsoupHTMLDOMElement(element.children().first());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement getLastElementChild() {
 		if (!hasChildren()) {
 			return null;
@@ -184,6 +256,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return new JsoupHTMLDOMElement(element.children().last());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this != object) {
@@ -199,6 +274,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public HTMLDOMElement clone() {
 		return cloneElement();

@@ -78,12 +78,18 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser find(String selector) {
 		results = document.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser find(HTMLDOMElement element) {
 		Collection<Element> elements = new ArrayList<Element>();
 		elements.add((Element) element.getData());
@@ -91,6 +97,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findChildren(String selector) {
 		Collection<Element> elements = new ArrayList<Element>();
 		Elements descendants = results.select(selector.replaceAll("\"", "")
@@ -105,6 +114,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findChildren(HTMLDOMElement child) {
 		Collection<Element> elements = new ArrayList<Element>();
 		Element element = (Element) child.getData();
@@ -118,12 +130,18 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findDescendants(String selector) {
 		results = results.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findDescendants(HTMLDOMElement descendant) {
 		Collection<Element> elements = new ArrayList<Element>();
 		for (Element resultElement : results) {
@@ -137,6 +155,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findAncestors(String selector) {
 		Elements findedElements = document.select(selector.replaceAll("\"", "")
 				.replaceAll("'", ""));
@@ -151,6 +172,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMParser findAncestors(HTMLDOMElement element) {
 		if (results.parents().contains((Element) element.getData())) {
 			Collection<Element> elements = new ArrayList<Element>();
@@ -162,12 +186,18 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void clearParser() {
 		results.clear();
 		results = null;
 		document = null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement firstResult() {
 		if (results.isEmpty()) {
 			return null;
@@ -175,6 +205,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return new JsoupHTMLDOMElement(results.first());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement lastResult() {
 		if (results.isEmpty()) {
 			return null;
@@ -182,6 +215,9 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return new JsoupHTMLDOMElement(results.last());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Collection<HTMLDOMElement> listResults() {
 		Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
 		for (Element element : results) {
@@ -190,18 +226,30 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 		return elements;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getHTML() {
 		return (new JsoupHTMLDOMElement(document)).getOuterHTML();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Object getParser() {
 		return document;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public HTMLDOMElement createElement(String tag) {
 		return new JsoupHTMLDOMElement(document.createElement(tag));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this != object) {

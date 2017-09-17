@@ -88,12 +88,18 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markRequiredField(HTMLDOMElement requiredField) {
 		if (requiredField.hasAttribute("required")) {
 			requiredField.setAttribute("aria-required", "true");
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markAllRequiredFields() {
 		Collection<HTMLDOMElement> requiredFields = parser.find("[required]").listResults();
 		for (HTMLDOMElement requiredField : requiredFields) {
@@ -103,6 +109,9 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markRangeField(HTMLDOMElement rangeField) {
 		if (rangeField.hasAttribute("min")) {
 			rangeField.setAttribute("aria-valuemin", rangeField.getAttribute("min"));
@@ -112,6 +121,9 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markAllRangeFields() {
 		Collection<HTMLDOMElement> rangeFields = parser.find("[min],[max]").listResults();
 		for (HTMLDOMElement rangeField : rangeFields) {
@@ -121,6 +133,9 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markAutoCompleteField(HTMLDOMElement autoCompleteField) {
 		String ariaAutoComplete = getARIAAutoComplete(autoCompleteField);
 		if (ariaAutoComplete != null) {
@@ -128,6 +143,9 @@ public class AccessibleFormImplementation implements AccessibleForm {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void markAllAutoCompleteFields() {
 		Collection<HTMLDOMElement> autoCompleteFields = parser
 				.find("input[autocomplete],textarea[autocomplete],form[autocomplete] input,form[autocomplete] textarea,[list],[form]").listResults();

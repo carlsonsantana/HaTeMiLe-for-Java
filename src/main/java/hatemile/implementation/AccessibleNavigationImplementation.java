@@ -185,6 +185,10 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		listSkippers = null;
 	}
 
+	/**
+	 * Returns the skippers of configuration.
+	 * @return The skippers of configuration.
+	 */
 	protected static Collection<Map<String, String>> getSkippers() {
 		Collection<Map<String, String>> skippers = new ArrayList<Map<String, String>>();
 
@@ -401,6 +405,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationBySkipper(HTMLDOMElement element) {
 		Map<String, String> skipper = null;
 		Collection<HTMLDOMElement> auxiliarElements;
@@ -446,6 +453,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationByAllSkippers() {
 		Collection<HTMLDOMElement> elements;
 		for (Map<String, String> skipper : skippers) {
@@ -458,6 +468,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationByHeading(HTMLDOMElement element) {
 		if (!validateHeading) {
 			validHeading = isValidHeading();
@@ -495,6 +508,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationByAllHeadings() {
 		Collection<HTMLDOMElement> elements = parser.find("h1,h2,h3,h4,h5,h6").listResults();
 		for (HTMLDOMElement element : elements) {
@@ -504,6 +520,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationToLongDescription(HTMLDOMElement image) {
 		if (image.hasAttribute("longdesc")) {
 			CommonFunctions.generateId(image, prefixId);
@@ -527,6 +546,9 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void provideNavigationToAllLongDescriptions() {
 		Collection<HTMLDOMElement> images = parser.find("[longdesc]").listResults();
 		for (HTMLDOMElement image : images) {

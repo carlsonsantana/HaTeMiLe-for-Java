@@ -229,6 +229,9 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void associateDataCellsWithHeaderCells(HTMLDOMElement table) {
 		HTMLDOMElement header = parser.find(table).findChildren("thead").firstResult();
 		HTMLDOMElement body = parser.find(table).findChildren("tbody").firstResult();
@@ -268,6 +271,9 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void associateAllDataCellsWithHeaderCells() {
 		Collection<HTMLDOMElement> tables = parser.find("table").listResults();
 		for (HTMLDOMElement table : tables) {
@@ -277,6 +283,9 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void associateLabelWithField(HTMLDOMElement label) {
 		if (label.getTagName().equals("LABEL")) {
 			HTMLDOMElement field;
@@ -303,6 +312,9 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void associateAllLabelsWithFields() {
 		Collection<HTMLDOMElement> labels = parser.find("label").listResults();
 		for (HTMLDOMElement label : labels) {

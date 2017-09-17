@@ -237,12 +237,18 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleDropEvents(HTMLDOMElement element) {
 		element.setAttribute("aria-dropeffect", "none");
 
 		addEventInElement(element, "drop");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleDragEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 
@@ -251,6 +257,9 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		addEventInElement(element, "drag");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleAllDragandDropEvents() {
 		Collection<HTMLDOMElement> draggableElements = parser
 				.find("[ondrag],[ondragstart],[ondragend]").listResults();
@@ -269,12 +278,18 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleHoverEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 
 		addEventInElement(element, "hover");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleAllHoverEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onmouseover],[onmouseout]").listResults();
@@ -285,12 +300,18 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleClickEvents(HTMLDOMElement element) {
 		keyboardAccess(element);
 
 		addEventInElement(element, "active");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void makeAccessibleAllClickEvents() {
 		Collection<HTMLDOMElement> elements = parser
 				.find("[onclick],[onmousedown],[onmouseup],[ondblclick]")

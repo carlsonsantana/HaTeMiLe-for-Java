@@ -201,6 +201,9 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 		return htmlList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void displayShortcut(HTMLDOMElement element) {
 		if (element.hasAttribute("accesskey")) {
 			String description = getDescription(element);
@@ -228,6 +231,9 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void displayAllShortcuts() {
 		Collection<HTMLDOMElement> elements = htmlParser.find("[accesskey]").listResults();
 		for (HTMLDOMElement element : elements) {
