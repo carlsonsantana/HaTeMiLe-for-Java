@@ -43,10 +43,10 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 
 	/**
 	 * Initializes a new object that encapsulate the Jsoup Element.
-	 * @param element The Jsoup Element.
+	 * @param jsoupElement The Jsoup Element.
 	 */
-	public JsoupHTMLDOMElement(final Element element) {
-		this.element = element;
+	public JsoupHTMLDOMElement(final Element jsoupElement) {
+		this.element = jsoupElement;
 	}
 
 	/**
@@ -124,9 +124,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 	/**
 	 * {@inheritDoc}
 	 */
-	public HTMLDOMElement appendElement(final HTMLDOMElement element) {
-		this.element.appendChild((Element) element.getData());
-		return element;
+	public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
+		this.element.appendChild((Element) newElement.getData());
+		return newElement;
 	}
 
 	/**
@@ -298,13 +298,13 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 		} else if (node instanceof TextNode) {
 			string += ((TextNode) node).getWholeText();
 		} else if ((node instanceof Element) && (!(node instanceof Document))) {
-			Element element = (Element) node;
-			string += "<" + element.tagName();
-			Attributes attributes = element.attributes();
+			Element jsoupElement = (Element) node;
+			string += "<" + jsoupElement.tagName();
+			Attributes attributes = jsoupElement.attributes();
 			for (Attribute attribute : attributes) {
 				string += " " + attribute.getKey() + "=\"" + attribute.getValue() + "\"";
 			}
-			if (childNodes.isEmpty() && element.tag().isSelfClosing()) {
+			if (childNodes.isEmpty() && jsoupElement.tag().isSelfClosing()) {
 				string += " />";
 			} else {
 				string += ">";
@@ -316,9 +316,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
 			}
 		}
 		if ((node instanceof Element) && (!(node instanceof Document))) {
-			Element element = (Element) node;
-			if (!childNodes.isEmpty() || !element.tag().isSelfClosing()) {
-				string += "</" + element.tagName() + ">";
+			Element jsoupElement = (Element) node;
+			if (!childNodes.isEmpty() || !jsoupElement.tag().isSelfClosing()) {
+				string += "</" + jsoupElement.tagName() + ">";
 			}
 		}
 		return string;

@@ -42,10 +42,10 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
 
 	/**
 	 * Initializes a new object that encapsulate the parser of Jsoup.
-	 * @param document The root element of the parser.
+	 * @param jsoupDocument The root element of the parser.
 	 */
-	public JsoupHTMLDOMParser(final Document document) {
-		this.document = document;
+	public JsoupHTMLDOMParser(final Document jsoupDocument) {
+		this.document = jsoupDocument;
 	}
 
 	/**

@@ -42,11 +42,11 @@ public class AccessibleAssociationImplementation implements AccessibleAssociatio
 	/**
 	 * Initializes a new object that improve the accessibility of associations
 	 * of parser.
-	 * @param parser The HTML parser.
+	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleAssociationImplementation(final HTMLDOMParser parser, final Configure configure) {
-		this.parser = parser;
+	public AccessibleAssociationImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+		this.parser = htmlParser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
 

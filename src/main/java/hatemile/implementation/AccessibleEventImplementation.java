@@ -72,12 +72,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	protected HTMLDOMElement scriptList;
 
 	/**
-	 * The state that indicates if the scripts used are stored or deleted,
-	 * after use.
-	 */
-	protected final boolean storeScriptsContent;
-
-	/**
 	 * The content of eventlistener.js.
 	 */
 	protected static String eventListenerScriptContent = null;
@@ -90,14 +84,11 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * Javascript events of elements of parser.
-	 * @param parser The HTML parser.
+	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
-	 * @param storeScriptsContent The state that indicates if the scripts used
-	 * are stored or deleted, after use.
 	 */
-	public AccessibleEventImplementation(final HTMLDOMParser parser, final Configure configure, final boolean storeScriptsContent) {
-		this.parser = parser;
-		this.storeScriptsContent = storeScriptsContent;
+	public AccessibleEventImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+		this.parser = htmlParser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 		idScriptEventListener = "script-eventlistener";
 		idListIdsScript = "list-ids-script";
@@ -162,20 +153,14 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 				&& (parser.find("#" + idScriptEventListener)
 						.firstResult() == null)) {
 			HTMLDOMElement script = parser.createElement("script");
-			String localEventListenerScriptContent;
 
-			if (storeScriptsContent) {
-				if (eventListenerScriptContent == null) {
-					eventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
-				}
-				localEventListenerScriptContent = eventListenerScriptContent;
-			} else {
-				localEventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
+			if (eventListenerScriptContent == null) {
+				eventListenerScriptContent = getContentFromFile("/js/eventlistener.js");
 			}
 
 			script.setAttribute("id", idScriptEventListener);
 			script.setAttribute("type", "text/javascript");
-			script.appendText(localEventListenerScriptContent);
+			script.appendText(eventListenerScriptContent);
 
 			if (head.hasChildren()) {
 				head.getFirstElementChild().insertBefore(script);
@@ -198,20 +183,14 @@ public class AccessibleEventImplementation implements AccessibleEvent {
 			}
 			if (parser.find("#" + idFunctionScriptFix).firstResult() == null) {
 				HTMLDOMElement scriptFunction = parser.createElement("script");
-				String localIncludeScriptContent;
 
-				if (storeScriptsContent) {
-					if (includeScriptContent == null) {
-						includeScriptContent = getContentFromFile("/js/include.js");
-					}
-					localIncludeScriptContent = includeScriptContent;
-				} else {
-					localIncludeScriptContent = getContentFromFile("/js/include.js");
+				if (includeScriptContent == null) {
+					includeScriptContent = getContentFromFile("/js/include.js");
 				}
 
 				scriptFunction.setAttribute("id", idFunctionScriptFix);
 				scriptFunction.setAttribute("type", "text/javascript");
-				scriptFunction.appendText(localIncludeScriptContent);
+				scriptFunction.appendText(includeScriptContent);
 
 				local.appendElement(scriptFunction);
 			}

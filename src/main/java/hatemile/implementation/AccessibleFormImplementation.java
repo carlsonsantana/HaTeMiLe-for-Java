@@ -40,11 +40,11 @@ public class AccessibleFormImplementation implements AccessibleForm {
 	/**
 	 * Initializes a new object that manipulate the accessibility of the forms
 	 * of parser.
-	 * @param parser The HTML parser.
+	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleFormImplementation(final HTMLDOMParser parser, final Configure configure) {
-		this.parser = parser;
+	public AccessibleFormImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+		this.parser = htmlParser;
 		prefixId = configure.getParameter("prefix-generated-ids");
 	}
 

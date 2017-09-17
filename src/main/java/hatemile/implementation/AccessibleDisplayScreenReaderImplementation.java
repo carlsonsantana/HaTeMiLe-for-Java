@@ -29,7 +29,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	/**
 	 * The HTML parser.
 	 */
-	protected final HTMLDOMParser htmlParser;
+	protected final HTMLDOMParser parser;
 
 	/**
 	 * The id of list element that contains the description of shortcuts.
@@ -74,7 +74,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @param userAgent The user agent of browser.
 	 */
 	public AccessibleDisplayScreenReaderImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String userAgent) {
-		this.htmlParser = htmlParser;
+		this.parser = htmlParser;
 		idContainerShortcuts = "container-shortcuts";
 		idTextShortcuts = "text-shortcuts";
 		dataAccessKey = "data-shortcutdescriptionfor";
@@ -147,7 +147,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 				descriptionIds = element.getAttribute("aria-describedby").split("[ \n\t\r]+");
 			}
 			for (int i = 0, length = descriptionIds.length; i < length; i++) {
-				HTMLDOMElement elementDescription = htmlParser.find("#" + descriptionIds[i]).firstResult();
+				HTMLDOMElement elementDescription = parser.find("#" + descriptionIds[i]).firstResult();
 				if (elementDescription != null) {
 					description = elementDescription.getTextContent();
 					break;
@@ -171,16 +171,16 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * @return The list of shortcuts of page.
 	 */
 	protected HTMLDOMElement generateListShortcuts() {
-		HTMLDOMElement container = htmlParser.find("#" + idContainerShortcuts).firstResult();
+		HTMLDOMElement container = parser.find("#" + idContainerShortcuts).firstResult();
 
 		HTMLDOMElement htmlList = null;
 		if (container == null) {
-			HTMLDOMElement local = htmlParser.find("body").firstResult();
+			HTMLDOMElement local = parser.find("body").firstResult();
 			if (local != null) {
-				container = htmlParser.createElement("div");
+				container = parser.createElement("div");
 				container.setAttribute("id", idContainerShortcuts);
 
-				HTMLDOMElement textContainer = htmlParser.createElement("span");
+				HTMLDOMElement textContainer = parser.createElement("span");
 				textContainer.setAttribute("id", idTextShortcuts);
 				textContainer.appendText(textShortcuts);
 
@@ -189,9 +189,9 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 			}
 		}
 		if (container != null) {
-			htmlList = htmlParser.find(container).findChildren("ul").firstResult();
+			htmlList = parser.find(container).findChildren("ul").firstResult();
 			if (htmlList == null) {
-				htmlList = htmlParser.createElement("ul");
+				htmlList = parser.createElement("ul");
 				container.appendElement(htmlList);
 			}
 		}
@@ -218,9 +218,9 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 				String[] keys = element.getAttribute("accesskey").split("[ \n\t\r]+");
 				for (int i = 0, length = keys.length; i < length; i++) {
 					String key = keys[i].toUpperCase();
-					if (htmlParser.find(listShortcuts).findChildren("[" + dataAccessKey + "=\"" + key + "\"]")
+					if (parser.find(listShortcuts).findChildren("[" + dataAccessKey + "=\"" + key + "\"]")
 							.firstResult() == null) {
-						HTMLDOMElement item = htmlParser.createElement("li");
+						HTMLDOMElement item = parser.createElement("li");
 						item.setAttribute(dataAccessKey, key);
 						item.appendText(prefix + " + " + key + ": " + description);
 						listShortcuts.appendElement(item);
@@ -234,7 +234,7 @@ public class AccessibleDisplayScreenReaderImplementation implements AccessibleDi
 	 * {@inheritDoc}
 	 */
 	public void displayAllShortcuts() {
-		Collection<HTMLDOMElement> elements = htmlParser.find("[accesskey]").listResults();
+		Collection<HTMLDOMElement> elements = parser.find("[accesskey]").listResults();
 		for (HTMLDOMElement element : elements) {
 			if (CommonFunctions.isValidElement(element)) {
 				displayShortcut(element);

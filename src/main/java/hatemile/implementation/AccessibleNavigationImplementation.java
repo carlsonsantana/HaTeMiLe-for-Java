@@ -183,22 +183,22 @@ public class AccessibleNavigationImplementation implements AccessibleNavigation 
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
-	 * @param parser The HTML parser.
+	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 */
-	public AccessibleNavigationImplementation(final HTMLDOMParser parser, final Configure configure) {
-		this(parser, configure, null);
+	public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure) {
+		this(htmlParser, configure, null);
 	}
 
 	/**
 	 * Initializes a new object that manipulate the accessibility of the
 	 * navigation of parser.
-	 * @param parser The HTML parser.
+	 * @param htmlParser The HTML parser.
 	 * @param configure The configuration of HaTeMiLe.
 	 * @param userAgent The user agent of the user.
 	 */
-	public AccessibleNavigationImplementation(final HTMLDOMParser parser, final Configure configure, final String userAgent) {
-		this.parser = parser;
+	public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser, final Configure configure, final String userAgent) {
+		this.parser = htmlParser;
 		idContainerSkippers = "container-skippers";
 		idContainerHeading = "container-heading";
 		idTextHeading = "text-heading";
