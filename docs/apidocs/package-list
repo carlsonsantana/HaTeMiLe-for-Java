@@ -1,5 +1,5 @@
-hatemile
-hatemile.implementation
-hatemile.util
-hatemile.util.html
-hatemile.util.html.jsoup
+org.hatemile
+org.hatemile.implementation
+org.hatemile.util
+org.hatemile.util.html
+org.hatemile.util.html.jsoup
