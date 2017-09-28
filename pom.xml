@@ -80,6 +80,7 @@
 	</build>
 	
 	<reporting>
+		<outputDirectory>${basedir}/docs</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
