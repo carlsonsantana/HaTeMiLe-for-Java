@@ -495,8 +495,8 @@ public class AccessibleNavigationImplementation
                             "#" + anchor.getAttribute("name"));
                     link.appendText(skipper.get("description"));
 
-                    List<String> shortcuts = new ArrayList<String>(Arrays
-                            .asList(skipper.get("shortcut").split(" ")));
+                    List<String> shortcuts = Arrays
+                            .asList(skipper.get("shortcut").split(" "));
                     if (!shortcuts.isEmpty()) {
                         String shortcut = shortcuts.get(0);
                         if (!shortcut.isEmpty()) {

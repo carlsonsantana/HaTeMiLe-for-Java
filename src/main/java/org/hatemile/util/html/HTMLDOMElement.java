@@ -13,7 +13,7 @@ limitations under the License.
  */
 package org.hatemile.util.html;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * The HTMLDOMElement interface contains the methods for access of the HTML
@@ -107,7 +107,7 @@ public interface HTMLDOMElement extends Cloneable {
      * Returns the children of this element.
      * @return The children of this element.
      */
-    Collection<HTMLDOMElement> getChildren();
+    List<HTMLDOMElement> getChildren();
 
     /**
      * Append a text child.

@@ -17,7 +17,7 @@ import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -92,9 +92,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser find(final HTMLDOMElement element) {
-        Collection<Element> elements = new ArrayList<Element>();
-        elements.add((Element) element.getData());
-        results = new Elements(elements);
+        results = new Elements((Element) element.getData());
         return this;
     }
 
@@ -102,7 +100,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser findChildren(final String selector) {
-        Collection<Element> elements = new ArrayList<Element>();
+        Elements elements = new Elements();
         Elements descendants = results.select(selector.replaceAll("\"", "")
                 .replaceAll("'", ""));
         for (Element element : descendants) {
@@ -111,7 +109,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
                 elements.add(element);
             }
         }
-        results = new Elements(elements);
+        results = elements;
         return this;
     }
 
@@ -119,15 +117,13 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser findChildren(final HTMLDOMElement child) {
-        Collection<Element> elements = new ArrayList<Element>();
         Element element = (Element) child.getData();
         for (Element result : results) {
             if (result.children().contains(element)) {
-                elements.add(element);
+                results = new Elements(element);
                 break;
             }
         }
-        results = new Elements(elements);
         return this;
     }
 
@@ -144,7 +140,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser findDescendants(final HTMLDOMElement descendant) {
-        Collection<Element> elements = new ArrayList<Element>();
+        Elements elements = new Elements();
         for (Element resultElement : results) {
             Element element = getDescendantOf(resultElement,
                     (Element) descendant.getData());
@@ -152,7 +148,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
                 elements.add(element);
             }
         }
-        results = new Elements(elements);
+        results = elements;
         return this;
     }
 
@@ -162,14 +158,14 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
     public HTMLDOMParser findAncestors(final String selector) {
         Elements findedElements = document.select(selector.replaceAll("\"", "")
                 .replaceAll("'", ""));
-        Collection<Element> elements = new ArrayList<Element>();
+        Elements elements = new Elements();
         for (Element element : findedElements) {
             if ((results.parents().contains(element))
                     && (!elements.contains(element))) {
                 elements.add(element);
             }
         }
-        results = new Elements(elements);
+        results = elements;
         return this;
     }
 
@@ -178,9 +174,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      */
     public HTMLDOMParser findAncestors(final HTMLDOMElement element) {
         if (results.parents().contains((Element) element.getData())) {
-            Collection<Element> elements = new ArrayList<Element>();
-            elements.add((Element) element.getData());
-            results = new Elements(elements);
+            results = new Elements((Element) element.getData());
         } else {
             results = new Elements();
         }
@@ -219,8 +213,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
     /**
      * {@inheritDoc}
      */
-    public Collection<HTMLDOMElement> listResults() {
-        Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
+    public List<HTMLDOMElement> listResults() {
+        List<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
         for (Element element : results) {
             elements.add(new JsoupHTMLDOMElement(element));
         }

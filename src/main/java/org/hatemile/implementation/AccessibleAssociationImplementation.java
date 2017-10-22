@@ -21,6 +21,7 @@ import org.hatemile.util.html.HTMLDOMParser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -57,12 +58,12 @@ public class AccessibleAssociationImplementation
      * @param part The table header, table footer or table body.
      * @return The list that represents the table.
      */
-    protected Collection<Collection<HTMLDOMElement>> getModelTable(
+    protected List<List<HTMLDOMElement>> getModelTable(
             final HTMLDOMElement part) {
-        Collection<HTMLDOMElement> rows = parser.find(part).findChildren("tr")
+        List<HTMLDOMElement> rows = parser.find(part).findChildren("tr")
                 .listResults();
-        Collection<Collection<HTMLDOMElement>> table =
-                new ArrayList<Collection<HTMLDOMElement>>();
+        List<List<HTMLDOMElement>> table =
+                new ArrayList<List<HTMLDOMElement>>();
         for (HTMLDOMElement row : rows) {
             table.add(getModelRow(parser.find(row).findChildren("td,th")
                     .listResults()));
@@ -76,22 +77,18 @@ public class AccessibleAssociationImplementation
      * rowspans.
      * @return The list that represents the table with the rowspans.
      */
-    protected Collection<Collection<HTMLDOMElement>> getValidModelTable(
-            final Collection<Collection<HTMLDOMElement>> originalTable) {
+    protected List<List<HTMLDOMElement>> getValidModelTable(
+            final List<List<HTMLDOMElement>> originalTable) {
         int cellsAdded;
         int newCellIndex;
         int rowspan;
-        List<Collection<HTMLDOMElement>> originalTableList =
-                new ArrayList<Collection<HTMLDOMElement>>(originalTable);
-        List<Collection<HTMLDOMElement>> newTable =
-                new ArrayList<Collection<HTMLDOMElement>>();
-        if (!originalTableList.isEmpty()) {
-            for (int rowIndex = 0, lengthTable = originalTableList.size();
+        List<List<HTMLDOMElement>> newTable =
+                new ArrayList<List<HTMLDOMElement>>();
+        if (!originalTable.isEmpty()) {
+            for (int rowIndex = 0, lengthTable = originalTable.size();
                     rowIndex < lengthTable; rowIndex++) {
                 cellsAdded = 0;
-                List<HTMLDOMElement> originalRow =
-                        new ArrayList<HTMLDOMElement>(originalTableList
-                        .get(rowIndex));
+                List<HTMLDOMElement> originalRow = originalTable.get(rowIndex);
                 if (newTable.size() <= rowIndex) {
                     newTable.add(new ArrayList<HTMLDOMElement>());
                 }
@@ -139,24 +136,22 @@ public class AccessibleAssociationImplementation
      * colspans.
      * @return The list that represents the line of table with the colspans.
      */
-    protected Collection<HTMLDOMElement> getModelRow(
-            final Collection<HTMLDOMElement> originalRow) {
+    protected List<HTMLDOMElement> getModelRow(
+            final List<HTMLDOMElement> originalRow) {
         List<HTMLDOMElement> newRow =
-                new ArrayList<HTMLDOMElement>(originalRow);
-        List<HTMLDOMElement> rowList =
                 new ArrayList<HTMLDOMElement>(originalRow);
         if (!newRow.isEmpty()) {
             int size = newRow.size();
             int cellsAdded = 0;
             int colspan;
             for (int i = size - 1; 0 <= i; i--) {
-                if (rowList.get(i).hasAttribute("colspan")) {
-                    colspan = Integer.parseInt(rowList.get(i)
+                if (originalRow.get(i).hasAttribute("colspan")) {
+                    colspan = Integer.parseInt(originalRow.get(i)
                             .getAttribute("colspan"));
                     while (colspan > 1) {
                         colspan--;
                         cellsAdded++;
-                        newRow.add(i + cellsAdded, rowList.get(i));
+                        newRow.add(i + cellsAdded, originalRow.get(i));
                     }
                 }
             }
@@ -170,8 +165,7 @@ public class AccessibleAssociationImplementation
      * @return True if the table header is valid or false if the table header is
      * not valid.
      */
-    protected boolean validateHeader(
-            final Collection<Collection<HTMLDOMElement>> header) {
+    protected boolean validateHeader(final List<List<HTMLDOMElement>> header) {
         if (header.isEmpty()) {
             return false;
         }
@@ -195,12 +189,10 @@ public class AccessibleAssociationImplementation
      * @return The list with ids of rows of same column.
      */
     protected Collection<String> getCellsHeadersIds(
-            final Collection<Collection<HTMLDOMElement>> header,
-            final int index) {
-        Collection<String> ids = new ArrayList<String>();
-        for (Collection<HTMLDOMElement> row : header) {
-            List<HTMLDOMElement> rowList = new ArrayList<HTMLDOMElement>(row);
-            HTMLDOMElement cell = rowList.get(index);
+            final List<List<HTMLDOMElement>> header, final int index) {
+        Collection<String> ids = new LinkedHashSet<String>();
+        for (List<HTMLDOMElement> row : header) {
+            HTMLDOMElement cell = row.get(index);
             if ((cell.getTagName().equals("TH"))
                     && (cell.getAttribute("scope").equals("col"))) {
                 ids.add(cell.getAttribute("id"));
@@ -215,9 +207,9 @@ public class AccessibleAssociationImplementation
      */
     protected void associateDataCellsWithHeaderCellsOfRow(
             final HTMLDOMElement element) {
-        Collection<Collection<HTMLDOMElement>> table = getModelTable(element);
-        Collection<String> headersIds = new ArrayList<String>();
-        for (Collection<HTMLDOMElement> row : table) {
+        List<List<HTMLDOMElement>> table = getModelTable(element);
+        Collection<String> headersIds = new LinkedHashSet<String>();
+        for (List<HTMLDOMElement> row : table) {
             headersIds.clear();
             for (HTMLDOMElement cell : row) {
                 if (cell.getTagName().equals("TH")) {
@@ -269,17 +261,15 @@ public class AccessibleAssociationImplementation
         if (header != null) {
             prepareHeaderCells(header);
 
-            Collection<Collection<HTMLDOMElement>> headerRows =
-                    getModelTable(header);
+            List<List<HTMLDOMElement>> headerRows = getModelTable(header);
             if ((body != null) && (validateHeader(headerRows))) {
-                int lengthHeader = headerRows.iterator().next().size();
-                Collection<Collection<HTMLDOMElement>> fakeTable =
-                        getModelTable(body);
+                int lengthHeader = headerRows.get(0).size();
+                List<List<HTMLDOMElement>> fakeTable = getModelTable(body);
                 if (footer != null) {
                     fakeTable.addAll(getModelTable(footer));
                 }
                 int i;
-                for (Collection<HTMLDOMElement> row : fakeTable) {
+                for (List<HTMLDOMElement> row : fakeTable) {
                     if (row.size() == lengthHeader) {
                         i = 0;
                         for (HTMLDOMElement cell : row) {
@@ -344,7 +334,7 @@ public class AccessibleAssociationImplementation
                 CommonFunctions.generateId(label, prefixId);
                 field.setAttribute("aria-labelledby",
                         CommonFunctions.increaseInList(field
-                        .getAttribute("aria-labelledby"),
+                            .getAttribute("aria-labelledby"),
                         label.getAttribute("id")));
             }
         }

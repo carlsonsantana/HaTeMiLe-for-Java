@@ -13,7 +13,7 @@ limitations under the License.
  */
 package org.hatemile.util.html;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * The HTMLDOMParser interface contains the methods for access a native parser.
@@ -97,7 +97,7 @@ public interface HTMLDOMParser {
      * Returns a list with all elements found.
      * @return The list with all elements found.
      */
-    Collection<HTMLDOMElement> listResults();
+    List<HTMLDOMElement> listResults();
 
     /**
      * Create a element.

@@ -16,7 +16,6 @@ package org.hatemile.util.html.jsoup;
 import org.hatemile.util.html.HTMLDOMElement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -168,9 +167,8 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
     public HTMLDOMElement insertBefore(final HTMLDOMElement newElement) {
         Element parent = element.parent();
         int index = parent.childNodes().indexOf(element);
-        Collection<Element> children = new ArrayList<Element>();
-        children.add((Element) newElement.getData());
-        parent.insertChildren(index, children);
+        parent.insertChildren(index,
+                new Elements((Element) newElement.getData()));
         return newElement;
     }
 
@@ -181,9 +179,8 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
         Element parent = element.parent();
         int index = parent.childNodes().indexOf(element);
         if (index < parent.childNodes().size()) {
-            Collection<Element> children = new ArrayList<Element>();
-            children.add((Element) newElement.getData());
-            parent.insertChildren(index + 1, children);
+            parent.insertChildren(index + 1,
+                    new Elements((Element) newElement.getData()));
         } else {
             parent.appendChild((Element) newElement.getData());
         }
@@ -209,8 +206,8 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
     /**
      * {@inheritDoc}
      */
-    public Collection<HTMLDOMElement> getChildren() {
-        Collection<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
+    public List<HTMLDOMElement> getChildren() {
+        List<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
         Elements children = element.children();
         for (Element child : children) {
             elements.add(new JsoupHTMLDOMElement(child));
