@@ -17,6 +17,7 @@ import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -218,7 +219,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
         for (Element element : results) {
             elements.add(new JsoupHTMLDOMElement(element));
         }
-        return elements;
+        return Collections.unmodifiableList(elements);
     }
 
     /**

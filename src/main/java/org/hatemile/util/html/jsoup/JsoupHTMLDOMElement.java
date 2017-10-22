@@ -16,6 +16,7 @@ package org.hatemile.util.html.jsoup;
 import org.hatemile.util.html.HTMLDOMElement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -212,7 +213,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
         for (Element child : children) {
             elements.add(new JsoupHTMLDOMElement(child));
         }
-        return elements;
+        return Collections.unmodifiableList(elements);
     }
 
     /**
