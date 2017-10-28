@@ -35,7 +35,8 @@ import org.jsoup.select.Elements;
  * The JsoupHTMLDOMElement class is official implementation of HTMLDOMElement
  * interface for the Jsoup library.
  */
-public class JsoupHTMLDOMElement implements HTMLDOMElement {
+public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
+        implements HTMLDOMElement {
 
     /**
      * The Jsoup native element encapsulated.
@@ -48,6 +49,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      */
     public JsoupHTMLDOMElement(final Element jsoupElement) {
         this.element = Objects.requireNonNull(jsoupElement);
+        this.node = this.element;
     }
 
     /**
@@ -77,7 +79,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      */
     public void removeAttribute(final String name) {
         Objects.requireNonNull(name);
-        
+
         if (hasAttribute(name)) {
             element.removeAttr(name);
         }
@@ -107,37 +109,9 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
     /**
      * {@inheritDoc}
      */
-    public String getTextContent() {
-        return element.text();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object getData() {
-        return element;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setData(final Object data) {
-        element = (Element) Objects.requireNonNull(data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
         this.element.appendChild((Element) newElement.getData());
         return newElement;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void appendText(final String text) {
-        element.appendText(Objects.requireNonNull(text));
     }
 
     /**
@@ -169,48 +143,6 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
     /**
      * {@inheritDoc}
      */
-    public HTMLDOMElement insertBefore(final HTMLDOMElement newElement) {
-        Element parent = element.parent();
-        int index = parent.childNodes().indexOf(element);
-        parent.insertChildren(index,
-                new Elements((Element) newElement.getData()));
-        return newElement;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public HTMLDOMElement insertAfter(final HTMLDOMElement newElement) {
-        Element parent = element.parent();
-        int index = parent.childNodes().indexOf(element);
-        if (index < parent.childNodes().size()) {
-            parent.insertChildren(index + 1,
-                    new Elements((Element) newElement.getData()));
-        } else {
-            parent.appendChild((Element) newElement.getData());
-        }
-        return newElement;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public HTMLDOMElement removeElement() {
-        element.remove();
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public HTMLDOMElement replaceElement(final HTMLDOMElement newElement) {
-        element.replaceWith((Element) newElement.getData());
-        return newElement;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public List<HTMLDOMElement> getChildren() {
         List<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
         Elements children = element.children();
@@ -225,17 +157,6 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      */
     public boolean hasChildren() {
         return !element.children().isEmpty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public HTMLDOMElement getParentElement() {
-        Element parent = element.parent();
-        if ((parent == null) || (parent instanceof Document)) {
-            return null;
-        }
-        return new JsoupHTMLDOMElement(parent);
     }
 
     /**

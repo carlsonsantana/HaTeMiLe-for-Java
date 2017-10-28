@@ -107,7 +107,7 @@ public class Configure {
         if (!parameters.containsKey(parameter)) {
             throw new IllegalArgumentException();
         }
-        
+
         return parameters.get(parameter);
     }
 

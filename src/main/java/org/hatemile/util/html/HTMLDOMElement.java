@@ -19,7 +19,7 @@ import java.util.List;
  * The HTMLDOMElement interface contains the methods for access of the HTML
  * element.
  */
-public interface HTMLDOMElement extends Cloneable {
+public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
 
     /**
      * Returns the tag name of element.
@@ -64,39 +64,6 @@ public interface HTMLDOMElement extends Cloneable {
     boolean hasAttributes();
 
     /**
-     * Returns the text of element.
-     * @return The text of element.
-     */
-    String getTextContent();
-
-    /**
-     * Insert a element before this element.
-     * @param newElement The element that be inserted.
-     * @return The element inserted.
-     */
-    HTMLDOMElement insertBefore(HTMLDOMElement newElement);
-
-    /**
-     * Insert a element after this element.
-     * @param newElement The element that be inserted.
-     * @return The element inserted.
-     */
-    HTMLDOMElement insertAfter(HTMLDOMElement newElement);
-
-    /**
-     * Remove this element of the parser.
-     * @return The removed element.
-     */
-    HTMLDOMElement removeElement();
-
-    /**
-     * Replace this element for other element.
-     * @param newElement The element that replace this element.
-     * @return The element replaced.
-     */
-    HTMLDOMElement replaceElement(HTMLDOMElement newElement);
-
-    /**
      * Append a element child.
      * @param element The element that be inserted.
      * @return The element inserted.
@@ -110,23 +77,11 @@ public interface HTMLDOMElement extends Cloneable {
     List<HTMLDOMElement> getChildren();
 
     /**
-     * Append a text child.
-     * @param text The text.
-     */
-    void appendText(String text);
-
-    /**
      * Returns if the element has children.
      * @return True if the element has children or false if the element not has
      * children.
      */
     boolean hasChildren();
-
-    /**
-     * Returns the parent element of this element.
-     * @return The parent element of this element.
-     */
-    HTMLDOMElement getParentElement();
 
     /**
      * Returns the inner HTML code of this element.
@@ -145,18 +100,6 @@ public interface HTMLDOMElement extends Cloneable {
      * @return The HTML code of this element.
      */
     String getOuterHTML();
-
-    /**
-     * Returns the native object of this element.
-     * @return The native object of this element.
-     */
-    Object getData();
-
-    /**
-     * Modify the native object of this element.
-     * @param data The native object of this element.
-     */
-    void setData(Object data);
 
     /**
      * Returns the first element child of this element.
