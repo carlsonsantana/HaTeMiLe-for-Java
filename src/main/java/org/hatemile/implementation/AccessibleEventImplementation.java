@@ -165,7 +165,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             script.setAttribute("type", "text/javascript");
             script.appendText(eventListenerScriptContent);
 
-            if (head.hasChildren()) {
+            if (head.hasChildrenElements()) {
                 head.getFirstElementChild().insertBefore(script);
             } else {
                 head.appendElement(script);

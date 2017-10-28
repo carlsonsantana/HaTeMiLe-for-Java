@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import org.hatemile.util.html.HTMLDOMNode;
+import org.hatemile.util.html.HTMLDOMTextNode;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Comment;
@@ -48,8 +50,8 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
      * @param jsoupElement The Jsoup Element.
      */
     public JsoupHTMLDOMElement(final Element jsoupElement) {
-        this.element = Objects.requireNonNull(jsoupElement);
-        this.node = this.element;
+        super(Objects.requireNonNull(jsoupElement));
+        this.element = jsoupElement;
     }
 
     /**
@@ -102,16 +104,106 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
     /**
      * {@inheritDoc}
      */
-    public HTMLDOMElement cloneElement() {
-        return new JsoupHTMLDOMElement(element.clone());
+    public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
+        this.element.appendChild((Element) newElement.getData());
+        return this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
-        this.element.appendChild((Element) newElement.getData());
-        return newElement;
+    public HTMLDOMElement prependElement(final HTMLDOMElement newElement) {
+        this.element.prependChild((Element) newElement.getData());
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<HTMLDOMElement> getChildrenElements() {
+        List<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
+        Elements children = element.children();
+        for (Element child : children) {
+            elements.add(new JsoupHTMLDOMElement(child));
+        }
+        return Collections.unmodifiableList(elements);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<HTMLDOMNode> getChildren() {
+        List<HTMLDOMNode> children = new ArrayList<HTMLDOMNode>();
+        List<Node> childNodes = element.childNodes();
+        for (Node child : childNodes) {
+            if (child instanceof Element) {
+                children.add(new JsoupHTMLDOMElement((Element) child));
+            } else if (child instanceof TextNode) {
+                children.add(new JsoupHTMLDOMTextNode((TextNode) child));
+            }
+        }
+        return Collections.unmodifiableList(children);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement appendText(final String text) {
+        element.appendText(Objects.requireNonNull(text));
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement prependText(final String text) {
+        element.prependText(Objects.requireNonNull(text));
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMElement normalize() {
+        HTMLDOMNode lastNode = null;
+        List<HTMLDOMNode> children = this.getChildren();
+        for (HTMLDOMNode child : children) {
+            if (lastNode != null) {
+                if ((lastNode instanceof HTMLDOMTextNode)
+                        && (child instanceof HTMLDOMTextNode)) {
+                    child.prependText(lastNode.getTextContent());
+                    lastNode.removeNode();
+                }
+            }
+            if (child instanceof HTMLDOMElement) {
+                ((HTMLDOMElement) child).normalize();
+            }
+            lastNode = child;
+        }
+
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasChildrenElements() {
+        return !element.children().isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasChildren() {
+        List<Node> childNodes = element.childNodes();
+        for (Node child : childNodes) {
+            if (child instanceof Element) {
+                return true;
+            } else if (child instanceof TextNode) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -120,8 +212,8 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
     public String getInnerHTML() {
         List<Node> childNodes = element.childNodes();
         String string = "";
-        for (Node node : childNodes) {
-            string += toString(node);
+        for (Node child : childNodes) {
+            string += toString(child);
         }
         return string;
     }
@@ -143,27 +235,15 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
     /**
      * {@inheritDoc}
      */
-    public List<HTMLDOMElement> getChildren() {
-        List<HTMLDOMElement> elements = new ArrayList<HTMLDOMElement>();
-        Elements children = element.children();
-        for (Element child : children) {
-            elements.add(new JsoupHTMLDOMElement(child));
-        }
-        return Collections.unmodifiableList(elements);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean hasChildren() {
-        return !element.children().isEmpty();
+    public HTMLDOMElement cloneElement() {
+        return new JsoupHTMLDOMElement(element.clone());
     }
 
     /**
      * {@inheritDoc}
      */
     public HTMLDOMElement getFirstElementChild() {
-        if (!hasChildren()) {
+        if (!hasChildrenElements()) {
             return null;
         }
         return new JsoupHTMLDOMElement(element.children().first());
@@ -173,10 +253,50 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
      * {@inheritDoc}
      */
     public HTMLDOMElement getLastElementChild() {
-        if (!hasChildren()) {
+        if (!hasChildrenElements()) {
             return null;
         }
         return new JsoupHTMLDOMElement(element.children().last());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMNode getFirstNodeChild() {
+        List<Node> childNodes = element.childNodes();
+        for (Node child : childNodes) {
+            if (child instanceof Element) {
+                return new JsoupHTMLDOMElement((Element) child);
+            } else if (child instanceof TextNode) {
+                return new JsoupHTMLDOMTextNode((TextNode) child);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public HTMLDOMNode getLastNodeChild() {
+        Node lastNode = null;
+        List<Node> childNodes = element.childNodes();
+        for (Node child : childNodes) {
+            if (child instanceof Element) {
+                lastNode = child;
+            } else if (child instanceof TextNode) {
+                lastNode = child;
+            }
+        }
+
+        if (lastNode != null) {
+            if (lastNode instanceof Element) {
+                return new JsoupHTMLDOMElement((Element) lastNode);
+            } else if (lastNode instanceof TextNode) {
+                return new JsoupHTMLDOMTextNode((TextNode) lastNode);
+            }
+        }
+        return null;
     }
 
     @Override

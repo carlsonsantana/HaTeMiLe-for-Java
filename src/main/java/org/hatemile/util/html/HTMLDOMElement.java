@@ -30,8 +30,8 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     /**
      * Returns the value of a attribute.
      * @param name The name of attribute.
-     * @return The value of the attribute, if the element not contains the
-     * attribute returns null.
+     * @return The value of the attribute or null if the element not contains
+     * the attribute.
      */
     String getAttribute(String name);
 
@@ -49,7 +49,7 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     void removeAttribute(String name);
 
     /**
-     * Returns if the element has an attribute.
+     * Check that the element has an attribute.
      * @param name The name of attribute.
      * @return True if the element has the attribute or false if the element not
      * has the attribute.
@@ -57,7 +57,7 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     boolean hasAttribute(String name);
 
     /**
-     * Returns if the element has attributes.
+     * Check that the element has attributes.
      * @return True if the element has attributes or false if the element not
      * has attributes.
      */
@@ -66,18 +66,44 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     /**
      * Append a element child.
      * @param element The element that be inserted.
-     * @return The element inserted.
+     * @return This element.
      */
     HTMLDOMElement appendElement(HTMLDOMElement element);
+
+    /**
+     * Prepend a element child.
+     * @param element The element that be inserted.
+     * @return This element.
+     */
+    HTMLDOMElement prependElement(HTMLDOMElement element);
+
+    /**
+     * Returns the elements children of this element.
+     * @return The elements children of this element.
+     */
+    List<HTMLDOMElement> getChildrenElements();
 
     /**
      * Returns the children of this element.
      * @return The children of this element.
      */
-    List<HTMLDOMElement> getChildren();
+    List<HTMLDOMNode> getChildren();
 
     /**
-     * Returns if the element has children.
+     * Joins adjacent Text nodes.
+     * @return This element.
+     */
+    HTMLDOMElement normalize();
+
+    /**
+     * Check that the element has elements children.
+     * @return True if the element has elements children or false if the element
+     * not has elements children.
+     */
+    boolean hasChildrenElements();
+
+    /**
+     * Check that the element has children.
      * @return True if the element has children or false if the element not has
      * children.
      */
@@ -102,6 +128,12 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     String getOuterHTML();
 
     /**
+     * Clone this element.
+     * @return The clone.
+     */
+    HTMLDOMElement cloneElement();
+
+    /**
      * Returns the first element child of this element.
      * @return The first element child of this element.
      */
@@ -114,8 +146,14 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     HTMLDOMElement getLastElementChild();
 
     /**
-     * Clone this element.
-     * @return The clone.
+     * Returns the first node child of this element.
+     * @return The first node child of this element.
      */
-    HTMLDOMElement cloneElement();
+    HTMLDOMNode getFirstNodeChild();
+
+    /**
+     * Returns the last node child of this element.
+     * @return The last node child of this element.
+     */
+    HTMLDOMNode getLastNodeChild();
 }
