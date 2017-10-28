@@ -16,6 +16,7 @@ package org.hatemile.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -94,7 +95,7 @@ public class Configure {
      * @return The parameters of configuration.
      */
     public Map<String, String> getParameters() {
-        return new HashMap<String, String>(parameters);
+        return Collections.unmodifiableMap(parameters);
     }
 
     /**
