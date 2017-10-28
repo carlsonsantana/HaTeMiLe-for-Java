@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -199,7 +200,7 @@ public class AccessibleNavigationImplementation
      */
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure, final String skipperFileName) {
-        this.parser = htmlParser;
+        this.parser = Objects.requireNonNull(htmlParser);
         idContainerSkippers = "container-skippers";
         idContainerHeading = "container-heading";
         idTextHeading = "text-heading";

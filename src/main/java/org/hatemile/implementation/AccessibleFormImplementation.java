@@ -20,6 +20,7 @@ import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * The AccessibleFormImplementation class is official implementation of
@@ -45,7 +46,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
      */
     public AccessibleFormImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this.parser = htmlParser;
+        this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
     }
 

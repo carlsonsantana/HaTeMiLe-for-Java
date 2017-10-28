@@ -19,6 +19,7 @@ import org.hatemile.util.Configure;
 import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * The AccessibleDisplayScreenReaderImplementation class is official
@@ -77,7 +78,7 @@ public class AccessibleDisplayScreenReaderImplementation
     public AccessibleDisplayScreenReaderImplementation(
             final HTMLDOMParser htmlParser, final Configure configure,
             final String userAgent) {
-        this.parser = htmlParser;
+        this.parser = Objects.requireNonNull(htmlParser);
         idContainerShortcuts = "container-shortcuts";
         idTextShortcuts = "text-shortcuts";
         dataAccessKey = "data-shortcutdescriptionfor";

@@ -103,6 +103,10 @@ public class Configure {
      * @return The value of the parameter.
      */
     public String getParameter(final String parameter) {
+        if (!parameters.containsKey(parameter)) {
+            throw new IllegalArgumentException();
+        }
+        
         return parameters.get(parameter);
     }
 

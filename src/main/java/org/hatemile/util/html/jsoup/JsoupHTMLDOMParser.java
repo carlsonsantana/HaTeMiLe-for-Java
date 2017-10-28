@@ -19,6 +19,7 @@ import org.hatemile.util.html.HTMLDOMParser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -46,7 +47,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * @param jsoupDocument The root element of the parser.
      */
     public JsoupHTMLDOMParser(final Document jsoupDocument) {
-        this.document = jsoupDocument;
+        this.document = Objects.requireNonNull(jsoupDocument);
     }
 
     /**
@@ -54,7 +55,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * @param code The HTML code.
      */
     public JsoupHTMLDOMParser(final String code) {
-        document = Jsoup.parse(code);
+        document = Jsoup.parse(Objects.requireNonNull(code));
     }
 
     /**
@@ -240,7 +241,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMElement createElement(final String tag) {
-        return new JsoupHTMLDOMElement(document.createElement(tag));
+        return new JsoupHTMLDOMElement(document.createElement(Objects
+                .requireNonNull(tag)));
     }
 
     @Override

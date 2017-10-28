@@ -18,6 +18,7 @@ import org.hatemile.util.html.HTMLDOMElement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Comment;
@@ -46,7 +47,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      * @param jsoupElement The Jsoup Element.
      */
     public JsoupHTMLDOMElement(final Element jsoupElement) {
-        this.element = jsoupElement;
+        this.element = Objects.requireNonNull(jsoupElement);
     }
 
     /**
@@ -67,13 +68,16 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      * {@inheritDoc}
      */
     public void setAttribute(final String name, final String value) {
-        element.attr(name, value);
+        element.attr(Objects.requireNonNull(name),
+                Objects.requireNonNull(value));
     }
 
     /**
      * {@inheritDoc}
      */
     public void removeAttribute(final String name) {
+        Objects.requireNonNull(name);
+        
         if (hasAttribute(name)) {
             element.removeAttr(name);
         }
@@ -118,7 +122,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      * {@inheritDoc}
      */
     public void setData(final Object data) {
-        element = (Element) data;
+        element = (Element) Objects.requireNonNull(data);
     }
 
     /**
@@ -133,7 +137,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      * {@inheritDoc}
      */
     public void appendText(final String text) {
-        element.appendText(text);
+        element.appendText(Objects.requireNonNull(text));
     }
 
     /**
@@ -152,7 +156,7 @@ public class JsoupHTMLDOMElement implements HTMLDOMElement {
      * {@inheritDoc}
      */
     public void setInnerHTML(final String html) {
-        element.html(html);
+        element.html(Objects.requireNonNull(html));
     }
 
     /**

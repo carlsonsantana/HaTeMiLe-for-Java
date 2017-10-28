@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The AccessibleAssociationImplementation class is official implementation of
@@ -49,7 +50,7 @@ public class AccessibleAssociationImplementation
      */
     public AccessibleAssociationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this.parser = htmlParser;
+        this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
     }
 
@@ -252,8 +253,8 @@ public class AccessibleAssociationImplementation
      * {@inheritDoc}
      */
     public void associateDataCellsWithHeaderCells(final HTMLDOMElement table) {
-        HTMLDOMElement header = parser.find(table).findChildren("thead")
-                .firstResult();
+        HTMLDOMElement header = parser.find(Objects.requireNonNull(table))
+                .findChildren("thead").firstResult();
         HTMLDOMElement body = parser.find(table).findChildren("tbody")
                 .firstResult();
         HTMLDOMElement footer = parser.find(table).findChildren("tfoot")

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -89,7 +90,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      */
     public AccessibleEventImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this.parser = htmlParser;
+        this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
         idScriptEventListener = "script-eventlistener";
         idListIdsScript = "list-ids-script";
