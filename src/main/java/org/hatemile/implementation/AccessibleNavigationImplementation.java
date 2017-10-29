@@ -144,14 +144,24 @@ public class AccessibleNavigationImplementation
     protected final String textHeading;
 
     /**
-     * The prefix of content of long description.
+     * The prefix of content of long description, before the image.
      */
-    protected final String prefixLongDescriptionLink;
+    protected final String attributeLongDescriptionPrefixBefore;
 
     /**
-     * The suffix of content of long description.
+     * The suffix of content of long description, before the image.
      */
-    protected final String suffixLongDescriptionLink;
+    protected final String attributeLongDescriptionSuffixBefore;
+
+    /**
+     * The prefix of content of long description, after the image.
+     */
+    protected final String attributeLongDescriptionPrefixAfter;
+
+    /**
+     * The suffix of content of long description, after the image.
+     */
+    protected final String attributeLongDescriptionSuffixAfter;
 
     /**
      * The prefix of generated ids.
@@ -206,9 +216,13 @@ public class AccessibleNavigationImplementation
         this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
         textHeading = configure.getParameter("elements-heading-before");
-        prefixLongDescriptionLink = configure
+        attributeLongDescriptionPrefixBefore = configure
                 .getParameter("attribute-longdescription-prefix-after");
-        suffixLongDescriptionLink = configure
+        attributeLongDescriptionSuffixBefore = configure
+                .getParameter("attribute-longdescription-suffix-after");
+        attributeLongDescriptionPrefixAfter = configure
+                .getParameter("attribute-longdescription-prefix-after");
+        attributeLongDescriptionSuffixAfter = configure
                 .getParameter("attribute-longdescription-suffix-after");
         skippers = getSkippers(skipperFileName);
         listSkippersAdded = false;
@@ -591,22 +605,43 @@ public class AccessibleNavigationImplementation
             String id = image.getAttribute("id");
             if (parser.find("[" + DATA_LONG_DESCRIPTION_FOR_IMAGE + "=\""
                     + id + "\"]").firstResult() == null) {
-                String text;
                 if (image.hasAttribute("alt")) {
-                    text = prefixLongDescriptionLink + " "
-                            + image.getAttribute("alt") + " "
-                            + suffixLongDescriptionLink;
-                } else {
-                    text = prefixLongDescriptionLink + " "
-                            + suffixLongDescriptionLink;
+                    if (!(attributeLongDescriptionPrefixBefore.isEmpty()
+                            || attributeLongDescriptionSuffixBefore
+                                .isEmpty())) {
+                        String beforeText = attributeLongDescriptionPrefixBefore
+                                + " " + image.getAttribute("alt") + " "
+                                + attributeLongDescriptionSuffixBefore;
+                        HTMLDOMElement beforeAnchor = parser.createElement("a");
+                        beforeAnchor.setAttribute("href",
+                                image.getAttribute("longdesc"));
+                        beforeAnchor.setAttribute("target", "_blank");
+                        beforeAnchor
+                                .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
+                                    id);
+                        beforeAnchor.setAttribute("class",
+                                CLASS_LONG_DESCRIPTION_LINK);
+                        beforeAnchor.appendText(beforeText.trim());
+                        image.insertBefore(beforeAnchor);
+                    }
+                    if (!(attributeLongDescriptionPrefixAfter.isEmpty()
+                            || attributeLongDescriptionSuffixAfter.isEmpty())) {
+                        String afterText = attributeLongDescriptionPrefixAfter
+                                + " " + image.getAttribute("alt") + " "
+                                + attributeLongDescriptionSuffixAfter;
+                        HTMLDOMElement afterAnchor = parser.createElement("a");
+                        afterAnchor.setAttribute("href",
+                                image.getAttribute("longdesc"));
+                        afterAnchor.setAttribute("target", "_blank");
+                        afterAnchor
+                                .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
+                                    id);
+                        afterAnchor.setAttribute("class",
+                                CLASS_LONG_DESCRIPTION_LINK);
+                        afterAnchor.appendText(afterText.trim());
+                        image.insertAfter(afterAnchor);
+                    }
                 }
-                HTMLDOMElement anchor = parser.createElement("a");
-                anchor.setAttribute("href", image.getAttribute("longdesc"));
-                anchor.setAttribute("target", "_blank");
-                anchor.setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE, id);
-                anchor.setAttribute("class", CLASS_LONG_DESCRIPTION_LINK);
-                anchor.appendText(text.trim());
-                image.insertAfter(anchor);
             }
         }
     }
