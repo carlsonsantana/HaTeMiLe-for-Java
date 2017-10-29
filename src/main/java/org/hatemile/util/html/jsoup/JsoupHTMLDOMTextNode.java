@@ -41,6 +41,13 @@ public class JsoupHTMLDOMTextNode extends JsoupHTMLDOMNode
     /**
      * {@inheritDoc}
      */
+    public String getTextContent() {
+        return textNode.text();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void setTextContent(final String text) {
         textNode.text(Objects.requireNonNull(text));
     }

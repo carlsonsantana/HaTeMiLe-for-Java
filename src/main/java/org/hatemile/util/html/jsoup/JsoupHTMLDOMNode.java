@@ -43,13 +43,6 @@ public abstract class JsoupHTMLDOMNode implements HTMLDOMNode {
     /**
      * {@inheritDoc}
      */
-    public String getTextContent() {
-        return ((Element) node).text();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public HTMLDOMNode insertBefore(final HTMLDOMNode newNode) {
         Element parent = (Element) node.parent();
         int index = parent.childNodes().indexOf(node);

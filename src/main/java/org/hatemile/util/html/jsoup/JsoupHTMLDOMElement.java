@@ -104,6 +104,13 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
     /**
      * {@inheritDoc}
      */
+    public String getTextContent() {
+        return element.text();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public HTMLDOMElement appendElement(final HTMLDOMElement newElement) {
         this.element.appendChild((Element) newElement.getData());
         return this;
