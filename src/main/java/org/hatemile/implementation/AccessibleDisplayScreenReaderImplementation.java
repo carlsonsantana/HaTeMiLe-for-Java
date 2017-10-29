@@ -83,8 +83,9 @@ public class AccessibleDisplayScreenReaderImplementation
         idTextShortcuts = "text-shortcuts";
         dataAccessKey = "data-shortcutdescriptionfor";
         prefix = getShortcutPrefix(userAgent,
-                configure.getParameter("text-standart-shortcut-prefix"));
-        textShortcuts = configure.getParameter("text-shortcuts");
+                configure.getParameter("attribute-accesskey-default"));
+        textShortcuts = configure
+                .getParameter("attribute-accesskey-prefix-before");
         listShortcutsAdded = false;
         listShortcuts = null;
     }

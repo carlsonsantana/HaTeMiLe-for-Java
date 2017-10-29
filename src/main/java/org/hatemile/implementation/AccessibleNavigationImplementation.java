@@ -212,11 +212,11 @@ public class AccessibleNavigationImplementation
         dataHeadingLevel = "data-headinglevel";
         dataLongDescriptionForImage = "data-longdescriptionfor";
         prefixId = configure.getParameter("prefix-generated-ids");
-        textHeading = configure.getParameter("text-heading");
-        prefixLongDescriptionLink =
-                configure.getParameter("prefix-longdescription");
-        suffixLongDescriptionLink =
-                configure.getParameter("suffix-longdescription");
+        textHeading = configure.getParameter("elements-heading-before");
+        prefixLongDescriptionLink = configure
+                .getParameter("attribute-longdescription-prefix-after");
+        suffixLongDescriptionLink = configure
+                .getParameter("attribute-longdescription-suffix-after");
         skippers = getSkippers(skipperFileName);
         listSkippersAdded = false;
         validateHeading = false;

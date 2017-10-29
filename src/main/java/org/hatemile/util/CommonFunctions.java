@@ -74,7 +74,7 @@ public final class CommonFunctions {
     }
 
     /**
-     * Increase a item in a list.
+     * Increase a item in a HTML list.
      * @param list The list.
      * @param stringToIncrease The value of item.
      * @return The HTML list with the item added, if the item not was contained

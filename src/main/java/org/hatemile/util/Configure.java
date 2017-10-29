@@ -13,21 +13,13 @@ limitations under the License.
  */
 package org.hatemile.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * The Configure class contains the configuration of HaTeMiLe.
@@ -37,13 +29,13 @@ public class Configure {
     /**
      * The parameters of configuration of HaTeMiLe.
      */
-    protected final Map<String, String> parameters;
+    protected final ResourceBundle resourceBundle;
 
     /**
      * Initializes a new object that contains the configuration of HaTeMiLe.
      */
     public Configure() {
-        this("hatemile-configure.xml");
+        this("hatemile-configure");
     }
 
     /**
@@ -51,43 +43,26 @@ public class Configure {
      * @param fileName The full path of file.
      */
     public Configure(final String fileName) {
-        parameters = new HashMap<String, String>();
-        InputStream inputStream = File.class
-                .getResourceAsStream("/" + fileName);
+        this(fileName, Locale.getDefault());
+    }
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    /**
+     * Initializes a new object that contains the configuration of HaTeMiLe.
+     * @param locale The locale of configuration.
+     */
+    public Configure(final Locale locale) {
+        this("hatemile-configure", locale);
+    }
 
-        try {
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-            Document document = documentBuilder.parse(inputStream);
-            Element rootElement = document.getDocumentElement();
-
-            if (rootElement.getTagName().equalsIgnoreCase("PARAMETERS")) {
-                NodeList nodeListParameters = rootElement
-                        .getElementsByTagName("parameter");
-
-                for (int i = 0, length = nodeListParameters.getLength();
-                        i < length; i++) {
-                    Element parameterElement = (Element) nodeListParameters
-                            .item(i);
-                    if (parameterElement.hasAttribute("name")) {
-                        parameters.put(parameterElement.getAttribute("name"),
-                                parameterElement.getTextContent());
-                    }
-                }
-            }
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Configure.class.getName())
-                            .log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+    /**
+     * Initializes a new object that contains the configuration of HaTeMiLe.
+     * @param fileName The full path of file.
+     * @param locale The locale of configuration.
+     */
+    public Configure(final String fileName, final Locale locale) {
+        resourceBundle = ResourceBundle
+                .getBundle(Objects.requireNonNull(fileName),
+                    Objects.requireNonNull(locale));
     }
 
     /**
@@ -95,7 +70,14 @@ public class Configure {
      * @return The parameters of configuration.
      */
     public Map<String, String> getParameters() {
-        return Collections.unmodifiableMap(parameters);
+        Enumeration<String> keys;
+        String key;
+        Map<String, String> map = new HashMap<String, String>();
+        for (keys = resourceBundle.getKeys(); keys.hasMoreElements();) {
+            key = keys.nextElement().replace('.', '-');
+            map.put(key, resourceBundle.getString(key));
+        }
+        return Collections.unmodifiableMap(map);
     }
 
     /**
@@ -104,11 +86,7 @@ public class Configure {
      * @return The value of the parameter.
      */
     public String getParameter(final String parameter) {
-        if (!parameters.containsKey(parameter)) {
-            throw new IllegalArgumentException();
-        }
-
-        return parameters.get(parameter);
+        return resourceBundle.getString(parameter.replace('-', '.'));
     }
 
     @Override
@@ -121,7 +99,7 @@ public class Configure {
                 return false;
             }
             Configure configure = (Configure) object;
-            if (!parameters.equals(configure.getParameters())) {
+            if (!getParameters().equals(configure.getParameters())) {
                 return false;
             }
         }
@@ -130,6 +108,6 @@ public class Configure {
 
     @Override
     public int hashCode() {
-        return this.parameters.hashCode();
+        return this.resourceBundle.hashCode();
     }
 }
