@@ -139,9 +139,16 @@ public class AccessibleNavigationImplementation
     protected final HTMLDOMParser parser;
 
     /**
-     * The text of description of container of heading links.
+     * The text of description of container of heading links, before all
+     * elements.
      */
-    protected final String textHeading;
+    protected final String elementsHeadingBefore;
+
+    /**
+     * The text of description of container of heading links, after all
+     * elements.
+     */
+    protected final String elementsHeadingAfter;
 
     /**
      * The prefix of content of long description, before the image.
@@ -215,7 +222,9 @@ public class AccessibleNavigationImplementation
             final Configure configure, final String skipperFileName) {
         this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
-        textHeading = configure.getParameter("elements-heading-before");
+        elementsHeadingBefore = configure
+                .getParameter("elements-heading-before");
+        elementsHeadingAfter = configure.getParameter("elements-heading-after");
         attributeLongDescriptionPrefixBefore = configure
                 .getParameter("attribute-longdescription-prefix-after");
         attributeLongDescriptionSuffixBefore = configure
@@ -324,7 +333,9 @@ public class AccessibleNavigationImplementation
         HTMLDOMElement container = parser.find("#" + ID_CONTAINER_HEADING)
                 .firstResult();
         HTMLDOMElement htmlList = null;
-        if (container == null) {
+
+        if ((container == null) && ((!elementsHeadingBefore.isEmpty())
+                || (!elementsHeadingAfter.isEmpty()))) {
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
                 container = parser.createElement("div");
@@ -332,12 +343,19 @@ public class AccessibleNavigationImplementation
 
                 HTMLDOMElement textContainer = parser.createElement("span");
                 textContainer.setAttribute("id", ID_TEXT_HEADING);
-                textContainer.appendText(textHeading);
 
                 container.appendElement(textContainer);
-                local.appendElement(container);
+
+                if (!elementsHeadingBefore.isEmpty()) {
+                    textContainer.appendText(elementsHeadingBefore);
+                    local.prependElement(container);
+                } else {
+                    textContainer.appendText(elementsHeadingAfter);
+                    local.appendElement(container);
+                }
             }
         }
+
         if (container != null) {
             htmlList = parser.find(container).findChildren("ol").firstResult();
             if (htmlList == null) {
@@ -345,6 +363,7 @@ public class AccessibleNavigationImplementation
                 container.appendElement(htmlList);
             }
         }
+
         return htmlList;
     }
 
