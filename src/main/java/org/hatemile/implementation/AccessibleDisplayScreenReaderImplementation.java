@@ -29,24 +29,26 @@ public class AccessibleDisplayScreenReaderImplementation
         implements AccessibleDisplay {
 
     /**
-     * The HTML parser.
-     */
-    protected final HTMLDOMParser parser;
-
-    /**
      * The id of list element that contains the description of shortcuts.
      */
-    protected final String idContainerShortcuts;
+    protected static final String ID_CONTAINER_SHORTCUTS =
+            "container-shortcuts";
 
     /**
      * The id of text of description of container of shortcuts descriptions.
      */
-    protected final String idTextShortcuts;
+    protected static final String ID_TEXT_SHORTCUTS = "text-shortcuts";
 
     /**
      * The name of attribute that link the list item element with the shortcut.
      */
-    protected final String dataAccessKey;
+    protected static final String DATA_ACCESS_KEY =
+            "data-shortcutdescriptionfor";
+
+    /**
+     * The HTML parser.
+     */
+    protected final HTMLDOMParser parser;
 
     /**
      * The browser shortcut prefix.
@@ -79,9 +81,6 @@ public class AccessibleDisplayScreenReaderImplementation
             final HTMLDOMParser htmlParser, final Configure configure,
             final String userAgent) {
         this.parser = Objects.requireNonNull(htmlParser);
-        idContainerShortcuts = "container-shortcuts";
-        idTextShortcuts = "text-shortcuts";
-        dataAccessKey = "data-shortcutdescriptionfor";
         prefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
         textShortcuts = configure
@@ -185,7 +184,7 @@ public class AccessibleDisplayScreenReaderImplementation
      * @return The list of shortcuts of page.
      */
     protected HTMLDOMElement generateListShortcuts() {
-        HTMLDOMElement container = parser.find("#" + idContainerShortcuts)
+        HTMLDOMElement container = parser.find("#" + ID_CONTAINER_SHORTCUTS)
                 .firstResult();
 
         HTMLDOMElement htmlList = null;
@@ -193,10 +192,10 @@ public class AccessibleDisplayScreenReaderImplementation
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
                 container = parser.createElement("div");
-                container.setAttribute("id", idContainerShortcuts);
+                container.setAttribute("id", ID_CONTAINER_SHORTCUTS);
 
                 HTMLDOMElement textContainer = parser.createElement("span");
-                textContainer.setAttribute("id", idTextShortcuts);
+                textContainer.setAttribute("id", ID_TEXT_SHORTCUTS);
                 textContainer.appendText(textShortcuts);
 
                 container.appendElement(textContainer);
@@ -235,11 +234,11 @@ public class AccessibleDisplayScreenReaderImplementation
                 for (int i = 0, length = keys.length; i < length; i++) {
                     String key = keys[i].toUpperCase();
                     String attribute =
-                            "[" + dataAccessKey + "=\"" + key + "\"]";
+                            "[" + DATA_ACCESS_KEY + "=\"" + key + "\"]";
                     if (parser.find(listShortcuts).findChildren(attribute)
                             .firstResult() == null) {
                         HTMLDOMElement item = parser.createElement("li");
-                        item.setAttribute(dataAccessKey, key);
+                        item.setAttribute(DATA_ACCESS_KEY, key);
                         item.appendText(prefix + " + " + key + ": "
                                 + description);
                         listShortcuts.appendElement(item);

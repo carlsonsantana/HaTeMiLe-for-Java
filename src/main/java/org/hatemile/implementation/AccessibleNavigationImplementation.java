@@ -45,105 +45,58 @@ public class AccessibleNavigationImplementation
         implements AccessibleNavigation {
 
     /**
-     * The HTML parser.
-     */
-    protected final HTMLDOMParser parser;
-
-    /**
      * The id of list element that contains the skippers.
      */
-    protected final String idContainerSkippers;
+    protected static final String ID_CONTAINER_SKIPPERS = "container-skippers";
 
     /**
      * The id of list element that contains the links for the headings.
      */
-    protected final String idContainerHeading;
+    protected static final String ID_CONTAINER_HEADING = "container-heading";
 
     /**
      * The id of text of description of container of heading links.
      */
-    protected final String idTextHeading;
-
-    /**
-     * The text of description of container of heading links.
-     */
-    protected final String textHeading;
-
-    /**
-     * The prefix of content of long description.
-     */
-    protected final String prefixLongDescriptionLink;
-
-    /**
-     * The suffix of content of long description.
-     */
-    protected final String suffixLongDescriptionLink;
-
-    /**
-     * The prefix of generated ids.
-     */
-    protected final String prefixId;
-
-    /**
-     * The skippers configured.
-     */
-    protected final Collection<Map<String, String>> skippers;
-
-    /**
-     * The state that indicates if the container of skippers has added.
-     */
-    protected boolean listSkippersAdded;
-
-    /**
-     * The list element of skippers.
-     */
-    protected HTMLDOMElement listSkippers;
-
-    /**
-     * The name of attribute that links the anchor of skipper with the element.
-     */
-    protected final String dataAnchorFor;
+    protected static final String ID_TEXT_HEADING = "text-heading";
 
     /**
      * The HTML class of anchor of skipper.
      */
-    protected final String classSkipperAnchor;
+    protected static final String CLASS_SKIPPER_ANCHOR = "skipper-anchor";
 
     /**
      * The HTML class of anchor of heading link.
      */
-    protected final String classHeadingAnchor;
+    protected static final String CLASS_HEADING_ANCHOR = "heading-anchor";
 
     /**
      * The HTML class of element for show the long description of image.
      */
-    protected final String classLongDescriptionLink;
+    protected static final String CLASS_LONG_DESCRIPTION_LINK =
+            "longdescription-link";
+
+    /**
+     * The name of attribute that links the anchor of skipper with the element.
+     */
+    protected static final String DATA_ANCHOR_FOR = "data-anchorfor";
 
     /**
      * The name of attribute that indicates the level of heading of link.
      */
-    protected final String dataHeadingLevel;
+    protected static final String DATA_HEADING_LEVEL = "data-headinglevel";
 
     /**
      * The name of attribute that links the anchor of heading link with heading.
      */
-    protected final String dataHeadingAnchorFor;
+    protected static final String DATA_HEADING_ANCHOR_FOR =
+            "data-headinganchorfor";
 
     /**
      * The name of attribute that link the anchor of long description with the
      * image.
      */
-    protected final String dataLongDescriptionForImage;
-
-    /**
-     * The state that indicates if the sintatic heading of parser be validated.
-     */
-    protected boolean validateHeading;
-
-    /**
-     * The state that indicates if the sintatic heading of parser is correct.
-     */
-    protected boolean validHeading;
+    protected static final String DATA_LONG_DESCRIPTION_FOR_IMAGE =
+            "data-longdescriptionfor";
 
     /**
      * Level value of h1.
@@ -181,6 +134,56 @@ public class AccessibleNavigationImplementation
     protected static final int HEADING_LEVEL_INVALID = -1;
 
     /**
+     * The HTML parser.
+     */
+    protected final HTMLDOMParser parser;
+
+    /**
+     * The text of description of container of heading links.
+     */
+    protected final String textHeading;
+
+    /**
+     * The prefix of content of long description.
+     */
+    protected final String prefixLongDescriptionLink;
+
+    /**
+     * The suffix of content of long description.
+     */
+    protected final String suffixLongDescriptionLink;
+
+    /**
+     * The prefix of generated ids.
+     */
+    protected final String prefixId;
+
+    /**
+     * The skippers configured.
+     */
+    protected final Collection<Map<String, String>> skippers;
+
+    /**
+     * The state that indicates if the container of skippers has added.
+     */
+    protected boolean listSkippersAdded;
+
+    /**
+     * The list element of skippers.
+     */
+    protected HTMLDOMElement listSkippers;
+
+    /**
+     * The state that indicates if the sintatic heading of parser be validated.
+     */
+    protected boolean validateHeading;
+
+    /**
+     * The state that indicates if the sintatic heading of parser is correct.
+     */
+    protected boolean validHeading;
+
+    /**
      * Initializes a new object that manipulate the accessibility of the
      * navigation of parser.
      * @param htmlParser The HTML parser.
@@ -201,16 +204,6 @@ public class AccessibleNavigationImplementation
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure, final String skipperFileName) {
         this.parser = Objects.requireNonNull(htmlParser);
-        idContainerSkippers = "container-skippers";
-        idContainerHeading = "container-heading";
-        idTextHeading = "text-heading";
-        classSkipperAnchor = "skipper-anchor";
-        classHeadingAnchor = "heading-anchor";
-        classLongDescriptionLink = "longdescription-link";
-        dataAnchorFor = "data-anchorfor";
-        dataHeadingAnchorFor = "data-headinganchorfor";
-        dataHeadingLevel = "data-headinglevel";
-        dataLongDescriptionForImage = "data-longdescriptionfor";
         prefixId = configure.getParameter("prefix-generated-ids");
         textHeading = configure.getParameter("elements-heading-before");
         prefixLongDescriptionLink = configure
@@ -286,14 +279,14 @@ public class AccessibleNavigationImplementation
      * @return The list of skippers of page.
      */
     protected HTMLDOMElement generateListSkippers() {
-        HTMLDOMElement container = parser.find("#" + idContainerSkippers)
+        HTMLDOMElement container = parser.find("#" + ID_CONTAINER_SKIPPERS)
                 .firstResult();
         HTMLDOMElement htmlList = null;
         if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
                 container = parser.createElement("div");
-                container.setAttribute("id", idContainerSkippers);
+                container.setAttribute("id", ID_CONTAINER_SKIPPERS);
                 local.getFirstElementChild().insertBefore(container);
             }
         }
@@ -314,17 +307,17 @@ public class AccessibleNavigationImplementation
      * @return The list of heading links of page.
      */
     protected HTMLDOMElement generateListHeading() {
-        HTMLDOMElement container = parser.find("#" + idContainerHeading)
+        HTMLDOMElement container = parser.find("#" + ID_CONTAINER_HEADING)
                 .firstResult();
         HTMLDOMElement htmlList = null;
         if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
                 container = parser.createElement("div");
-                container.setAttribute("id", idContainerHeading);
+                container.setAttribute("id", ID_CONTAINER_HEADING);
 
                 HTMLDOMElement textContainer = parser.createElement("span");
-                textContainer.setAttribute("id", idTextHeading);
+                textContainer.setAttribute("id", ID_TEXT_HEADING);
                 textContainer.appendText(textHeading);
 
                 container.appendElement(textContainer);
@@ -488,7 +481,7 @@ public class AccessibleNavigationImplementation
             }
             if (listSkippers != null) {
                 HTMLDOMElement anchor = generateAnchorFor(element,
-                        dataAnchorFor, classSkipperAnchor);
+                        DATA_ANCHOR_FOR, CLASS_SKIPPER_ANCHOR);
                 if (anchor != null) {
                     HTMLDOMElement itemLink = parser.createElement("li");
                     HTMLDOMElement link = parser.createElement("a");
@@ -538,7 +531,7 @@ public class AccessibleNavigationImplementation
         }
         if (validHeading) {
             HTMLDOMElement anchor = generateAnchorFor(element,
-                    dataHeadingAnchorFor, classHeadingAnchor);
+                    DATA_HEADING_ANCHOR_FOR, CLASS_HEADING_ANCHOR);
             if (anchor != null) {
                 HTMLDOMElement list = null;
                 int level = getHeadingLevel(element);
@@ -546,8 +539,8 @@ public class AccessibleNavigationImplementation
                     list = generateListHeading();
                 } else {
                     HTMLDOMElement superItem = parser
-                            .find("#" + idContainerHeading)
-                            .findDescendants("[" + dataHeadingLevel + "=\""
+                            .find("#" + ID_CONTAINER_HEADING)
+                            .findDescendants("[" + DATA_HEADING_LEVEL + "=\""
                                 + Integer.toString(level - 1) + "\"]")
                             .lastResult();
                     if (superItem != null) {
@@ -561,7 +554,7 @@ public class AccessibleNavigationImplementation
                 }
                 if (list != null) {
                     HTMLDOMElement item = parser.createElement("li");
-                    item.setAttribute(dataHeadingLevel,
+                    item.setAttribute(DATA_HEADING_LEVEL,
                             Integer.toString(level));
 
                     HTMLDOMElement link = parser.createElement("a");
@@ -596,7 +589,7 @@ public class AccessibleNavigationImplementation
         if (image.hasAttribute("longdesc")) {
             CommonFunctions.generateId(image, prefixId);
             String id = image.getAttribute("id");
-            if (parser.find("[" + dataLongDescriptionForImage + "=\""
+            if (parser.find("[" + DATA_LONG_DESCRIPTION_FOR_IMAGE + "=\""
                     + id + "\"]").firstResult() == null) {
                 String text;
                 if (image.hasAttribute("alt")) {
@@ -610,8 +603,8 @@ public class AccessibleNavigationImplementation
                 HTMLDOMElement anchor = parser.createElement("a");
                 anchor.setAttribute("href", image.getAttribute("longdesc"));
                 anchor.setAttribute("target", "_blank");
-                anchor.setAttribute(dataLongDescriptionForImage, id);
-                anchor.setAttribute("class", classLongDescriptionLink);
+                anchor.setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE, id);
+                anchor.setAttribute("class", CLASS_LONG_DESCRIPTION_LINK);
                 anchor.appendText(text.trim());
                 image.insertAfter(anchor);
             }

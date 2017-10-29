@@ -35,25 +35,27 @@ import java.util.logging.Logger;
 public class AccessibleEventImplementation implements AccessibleEvent {
 
     /**
-     * The HTML parser.
-     */
-    protected final HTMLDOMParser parser;
-
-    /**
      * The id of script element that replace the event listener methods.
      */
-    protected final String idScriptEventListener;
+    protected static final String ID_SCRIPT_EVENT_LISTENER =
+            "script-eventlistener";
 
     /**
      * The id of script element that contains the list of elements that has
      * inaccessible events.
      */
-    protected final String idListIdsScript;
+    protected static final String ID_LIST_IDS_SCRIPT = "list-ids-script";
 
     /**
      * The id of script element that modify the events of elements.
      */
-    protected final String idFunctionScriptFix;
+    protected static final String ID_FUNCTION_SCRIPT_FIX =
+            "id-function-script-fix";
+
+    /**
+     * The HTML parser.
+     */
+    protected final HTMLDOMParser parser;
 
     /**
      * The prefix of generated ids.
@@ -92,9 +94,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             final Configure configure) {
         this.parser = Objects.requireNonNull(htmlParser);
         prefixId = configure.getParameter("prefix-generated-ids");
-        idScriptEventListener = "script-eventlistener";
-        idListIdsScript = "list-ids-script";
-        idFunctionScriptFix = "id-function-script-fix";
         mainScriptAdded = false;
         scriptList = null;
     }
@@ -152,7 +151,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     protected void generateMainScripts() {
         HTMLDOMElement head = parser.find("head").firstResult();
         if ((head != null)
-                && (parser.find("#" + idScriptEventListener)
+                && (parser.find("#" + ID_SCRIPT_EVENT_LISTENER)
                         .firstResult() == null)) {
             HTMLDOMElement script = parser.createElement("script");
 
@@ -161,7 +160,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
                         getContentFromFile("/js/eventlistener.js");
             }
 
-            script.setAttribute("id", idScriptEventListener);
+            script.setAttribute("id", ID_SCRIPT_EVENT_LISTENER);
             script.setAttribute("type", "text/javascript");
             script.appendText(eventListenerScriptContent);
 
@@ -173,10 +172,10 @@ public class AccessibleEventImplementation implements AccessibleEvent {
         }
         HTMLDOMElement local = parser.find("body").firstResult();
         if (local != null) {
-            scriptList = parser.find("#" + idListIdsScript).firstResult();
+            scriptList = parser.find("#" + ID_LIST_IDS_SCRIPT).firstResult();
             if (scriptList == null) {
                 scriptList = parser.createElement("script");
-                scriptList.setAttribute("id", idListIdsScript);
+                scriptList.setAttribute("id", ID_LIST_IDS_SCRIPT);
                 scriptList.setAttribute("type", "text/javascript");
                 scriptList.appendText("var activeElements = [];");
                 scriptList.appendText("var hoverElements = [];");
@@ -184,14 +183,15 @@ public class AccessibleEventImplementation implements AccessibleEvent {
                 scriptList.appendText("var dropElements = [];");
                 local.appendElement(scriptList);
             }
-            if (parser.find("#" + idFunctionScriptFix).firstResult() == null) {
+            if (parser.find("#" + ID_FUNCTION_SCRIPT_FIX).firstResult()
+                    == null) {
                 HTMLDOMElement scriptFunction = parser.createElement("script");
 
                 if (includeScriptContent == null) {
                     includeScriptContent = getContentFromFile("/js/include.js");
                 }
 
-                scriptFunction.setAttribute("id", idFunctionScriptFix);
+                scriptFunction.setAttribute("id", ID_FUNCTION_SCRIPT_FIX);
                 scriptFunction.setAttribute("type", "text/javascript");
                 scriptFunction.appendText(includeScriptContent);
 
