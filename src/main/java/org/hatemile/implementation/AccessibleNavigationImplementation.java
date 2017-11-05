@@ -629,7 +629,7 @@ public class AccessibleNavigationImplementation
                             || attributeLongDescriptionSuffixBefore
                                 .isEmpty())) {
                         String beforeText = attributeLongDescriptionPrefixBefore
-                                + " " + image.getAttribute("alt") + " "
+                                + image.getAttribute("alt")
                                 + attributeLongDescriptionSuffixBefore;
                         HTMLDOMElement beforeAnchor = parser.createElement("a");
                         beforeAnchor.setAttribute("href",
@@ -646,7 +646,7 @@ public class AccessibleNavigationImplementation
                     if (!(attributeLongDescriptionPrefixAfter.isEmpty()
                             || attributeLongDescriptionSuffixAfter.isEmpty())) {
                         String afterText = attributeLongDescriptionPrefixAfter
-                                + " " + image.getAttribute("alt") + " "
+                                + image.getAttribute("alt")
                                 + attributeLongDescriptionSuffixAfter;
                         HTMLDOMElement afterAnchor = parser.createElement("a");
                         afterAnchor.setAttribute("href",
