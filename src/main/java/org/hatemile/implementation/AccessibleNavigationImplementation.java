@@ -310,7 +310,7 @@ public class AccessibleNavigationImplementation
             if (local != null) {
                 container = parser.createElement("div");
                 container.setAttribute("id", ID_CONTAINER_SKIPPERS);
-                local.getFirstElementChild().insertBefore(container);
+                local.prependElement(container);
             }
         }
         if (container != null) {
@@ -392,7 +392,7 @@ public class AccessibleNavigationImplementation
     }
 
     /**
-     * Inform if the headings of page are sintatic correct.
+     * Check that the headings of page are sintatic correct.
      * @return True if the headings of page are sintatic correct or false if
      * not.
      */
@@ -423,7 +423,7 @@ public class AccessibleNavigationImplementation
     /**
      * Generate an anchor for the element.
      * @param element The element.
-     * @param dataAttribute The name of attribute that links the element with
+     * @param dataAttribute The custom of attribute that links the element with
      * the anchor.
      * @param anchorClass The HTML class of anchor.
      * @return The anchor.
@@ -455,23 +455,23 @@ public class AccessibleNavigationImplementation
      * @param shortcut The shortcut.
      */
     protected void freeShortcut(final String shortcut) {
-        String shortcuts;
+        String elementShortcut;
         String key;
         boolean found = false;
         String alphaNumbers = "1234567890abcdefghijklmnopqrstuvwxyz";
         Collection<HTMLDOMElement> elements = parser.find("[accesskey]")
                 .listResults();
         for (HTMLDOMElement element : elements) {
-            shortcuts = element.getAttribute("accesskey").toLowerCase();
-            if (CommonFunctions.inList(shortcuts, shortcut)) {
+            elementShortcut = element.getAttribute("accesskey").toLowerCase();
+            if (CommonFunctions.inList(elementShortcut, shortcut)) {
                 for (int i = 0, length = alphaNumbers.length(); i < length;
                         i++) {
                     key = Character.toString(alphaNumbers.charAt(i));
                     found = true;
                     for (HTMLDOMElement elementWithShortcuts : elements) {
-                        shortcuts = elementWithShortcuts
+                        elementShortcut = elementWithShortcuts
                                 .getAttribute("accesskey").toLowerCase();
-                        if (CommonFunctions.inList(shortcuts, key)) {
+                        if (CommonFunctions.inList(elementShortcut, key)) {
                             found = false;
                             break;
                         }
@@ -493,17 +493,10 @@ public class AccessibleNavigationImplementation
      */
     public void provideNavigationBySkipper(final HTMLDOMElement element) {
         Map<String, String> skipper = null;
-        Collection<HTMLDOMElement> auxiliarElements;
         for (Map<String, String> auxiliarSkipper : skippers) {
-            auxiliarElements = parser.find(auxiliarSkipper.get("selector"))
-                    .listResults();
-            for (HTMLDOMElement auxiliarElement : auxiliarElements) {
-                if (auxiliarElement.equals(element)) {
-                    skipper = auxiliarSkipper;
-                    break;
-                }
-            }
-            if (skipper != null) {
+            if (parser.find(auxiliarSkipper.get("selector")).listResults()
+                    .contains(element)) {
+                skipper = auxiliarSkipper;
                 break;
             }
         }
