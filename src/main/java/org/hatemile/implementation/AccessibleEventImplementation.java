@@ -81,16 +81,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     protected HTMLDOMElement scriptList;
 
     /**
-     * The content of eventlistener.js.
-     */
-    protected static String eventListenerScriptContent = null;
-
-    /**
-     * The content of include.js.
-     */
-    protected static String includeScriptContent = null;
-
-    /**
      * Initializes a new object that manipulate the accessibility of the
      * Javascript events of elements of parser.
      * @param htmlParser The HTML parser.
@@ -171,15 +161,9 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             if (parser.find("#" + ID_SCRIPT_EVENT_LISTENER).firstResult()
                     == null) {
                 HTMLDOMElement script = parser.createElement("script");
-
-                if (eventListenerScriptContent == null) {
-                    eventListenerScriptContent =
-                            getContentFromFile("/js/eventlistener.js");
-                }
-
                 script.setAttribute("id", ID_SCRIPT_EVENT_LISTENER);
                 script.setAttribute("type", "text/javascript");
-                script.appendText(eventListenerScriptContent);
+                script.appendText(getContentFromFile("/js/eventlistener.js"));
 
                 if (head.hasChildrenElements()) {
                     head.getFirstElementChild().insertBefore(script);
@@ -204,14 +188,9 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             if (parser.find("#" + ID_FUNCTION_SCRIPT_FIX).firstResult()
                     == null) {
                 HTMLDOMElement scriptFunction = parser.createElement("script");
-
-                if (includeScriptContent == null) {
-                    includeScriptContent = getContentFromFile("/js/include.js");
-                }
-
                 scriptFunction.setAttribute("id", ID_FUNCTION_SCRIPT_FIX);
                 scriptFunction.setAttribute("type", "text/javascript");
-                scriptFunction.appendText(includeScriptContent);
+                scriptFunction.appendText(getContentFromFile("/js/include.js"));
 
                 local.appendElement(scriptFunction);
             }
