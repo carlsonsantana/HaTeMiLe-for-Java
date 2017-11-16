@@ -18,15 +18,11 @@ import org.hatemile.util.CommonFunctions;
 import org.hatemile.util.Configure;
 import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
 /**
  * The AccessibleEventImplementation class is official implementation of
@@ -100,25 +96,10 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      * @return The content of file.
      */
     protected String getContentFromFile(final String file) {
-        InputStreamReader inputStreamReader = new InputStreamReader(File.class
-                        .getResourceAsStream(file));
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        String line;
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(AccessibleEventImplementation.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
-        try {
-            bufferedReader.close();
-            inputStreamReader.close();
-        } catch (IOException ex) {
-            Logger.getLogger(AccessibleEventImplementation.class.getName())
-                    .log(Level.SEVERE, null, ex);
+        Scanner scanner = new Scanner(File.class.getResourceAsStream(file));
+        while (scanner.hasNextLine()) {
+            stringBuilder.append(scanner.nextLine()).append("\n");
         }
 
         return stringBuilder.toString();
