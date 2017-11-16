@@ -52,4 +52,15 @@ public interface AccessibleForm {
      * Mark that the fields have autocomplete.
      */
     void markAllAutoCompleteFields();
+
+    /**
+     * Mark a solution to display that this field is invalid.
+     * @param field The field.
+     */
+    void markInvalidField(HTMLDOMElement field);
+
+    /**
+     * Mark a solution to display that a fields are invalid.
+     */
+    void markAllInvalidFields();
 }

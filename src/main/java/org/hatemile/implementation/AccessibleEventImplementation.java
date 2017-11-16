@@ -53,6 +53,12 @@ public class AccessibleEventImplementation implements AccessibleEvent {
             "id-function-script-fix";
 
     /**
+     * The ID of script element that contains the common functions of scripts.
+     */
+    protected static final String ID_SCRIPT_COMMON_FUNCTIONS =
+            "hatemile-common-functions";
+
+    /**
      * The HTML parser.
      */
     protected final HTMLDOMParser parser;
@@ -150,24 +156,36 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      */
     protected void generateMainScripts() {
         HTMLDOMElement head = parser.find("head").firstResult();
-        if ((head != null)
-                && (parser.find("#" + ID_SCRIPT_EVENT_LISTENER)
-                        .firstResult() == null)) {
-            HTMLDOMElement script = parser.createElement("script");
-
-            if (eventListenerScriptContent == null) {
-                eventListenerScriptContent =
-                        getContentFromFile("/js/eventlistener.js");
+        if (head != null) {
+            if (parser.find("#" + ID_SCRIPT_COMMON_FUNCTIONS)
+                    .firstResult() == null) {
+                HTMLDOMElement commonFunctionsScript =
+                        parser.createElement("script");
+                commonFunctionsScript
+                        .setAttribute("id", ID_SCRIPT_COMMON_FUNCTIONS);
+                commonFunctionsScript.setAttribute("type", "text/javascript");
+                commonFunctionsScript
+                        .appendText(getContentFromFile("/js/common.js"));
+                head.prependElement(commonFunctionsScript);
             }
+            if (parser.find("#" + ID_SCRIPT_EVENT_LISTENER).firstResult()
+                    == null) {
+                HTMLDOMElement script = parser.createElement("script");
 
-            script.setAttribute("id", ID_SCRIPT_EVENT_LISTENER);
-            script.setAttribute("type", "text/javascript");
-            script.appendText(eventListenerScriptContent);
+                if (eventListenerScriptContent == null) {
+                    eventListenerScriptContent =
+                            getContentFromFile("/js/eventlistener.js");
+                }
 
-            if (head.hasChildrenElements()) {
-                head.getFirstElementChild().insertBefore(script);
-            } else {
-                head.appendElement(script);
+                script.setAttribute("id", ID_SCRIPT_EVENT_LISTENER);
+                script.setAttribute("type", "text/javascript");
+                script.appendText(eventListenerScriptContent);
+
+                if (head.hasChildrenElements()) {
+                    head.getFirstElementChild().insertBefore(script);
+                } else {
+                    head.appendElement(script);
+                }
             }
         }
         HTMLDOMElement local = parser.find("body").firstResult();
