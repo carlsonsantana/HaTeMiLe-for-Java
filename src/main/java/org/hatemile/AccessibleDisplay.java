@@ -30,4 +30,15 @@ public interface AccessibleDisplay {
      * Display all shortcuts of page.
      */
     void displayAllShortcuts();
+
+    /**
+     * Display the WAI-ARIA role of element.
+     * @param element The element.
+     */
+    void displayRole(HTMLDOMElement element);
+
+    /**
+     * Display the WAI-ARIA roles of all elements of page.
+     */
+    void displayAllRoles();
 }
