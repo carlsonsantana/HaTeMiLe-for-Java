@@ -40,25 +40,52 @@ public class AccessibleDisplayScreenReaderImplementation
     protected static final String ID_TEXT_SHORTCUTS = "text-shortcuts";
 
     /**
-     * The name of attribute that link the list item element with the shortcut.
+     * The name of attribute that links the description of shortcut, before the
+     * element, with the element.
      */
-    protected static final String DATA_ACCESS_KEY =
-            "data-shortcutdescriptionfor";
+    protected static final String DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF =
+            "data-attributeaccesskeybeforeof";
+
+    /**
+     * The name of attribute that links the description of shortcut, after the
+     * element, with the element.
+     */
+    protected static final String DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF =
+            "data-attributeaccesskeyafterof";
+
+    /**
+     * The browser shortcut prefix.
+     */
+    protected final String shortcutPrefix;
+
+    /**
+     * The prefix text of description of container of shortcut list, before all
+     * elements.
+     */
+    protected final String attributeAccesskeyPrefixBefore;
+
+    /**
+     * The suffix text of description of container of shortcut list, before all
+     * elements.
+     */
+    protected final String attributeAccesskeySuffixBefore;
+
+    /**
+     * The prefix text of description of container of shortcut list, after all
+     * elements.
+     */
+    protected final String attributeAccesskeyPrefixAfter;
+
+    /**
+     * The suffix text of description of container of shortcut list, after all
+     * elements.
+     */
+    protected final String attributeAccesskeySuffixAfter;
 
     /**
      * The HTML parser.
      */
     protected final HTMLDOMParser parser;
-
-    /**
-     * The browser shortcut prefix.
-     */
-    protected final String prefix;
-
-    /**
-     * The text of description of container of shortcuts descriptions.
-     */
-    protected final String textShortcuts;
 
     /**
      * The list element of shortcuts.
@@ -81,10 +108,16 @@ public class AccessibleDisplayScreenReaderImplementation
             final HTMLDOMParser htmlParser, final Configure configure,
             final String userAgent) {
         this.parser = Objects.requireNonNull(htmlParser);
-        prefix = getShortcutPrefix(userAgent,
+        shortcutPrefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
-        textShortcuts = configure
+        attributeAccesskeyPrefixBefore = configure
                 .getParameter("attribute-accesskey-prefix-before");
+        attributeAccesskeySuffixBefore = configure
+                .getParameter("attribute-accesskey-suffix-before");
+        attributeAccesskeyPrefixAfter = configure
+                .getParameter("attribute-accesskey-prefix-after");
+        attributeAccesskeySuffixAfter = configure
+                .getParameter("attribute-accesskey-suffix-after");
         listShortcutsAdded = false;
         listShortcuts = null;
     }
@@ -186,8 +219,6 @@ public class AccessibleDisplayScreenReaderImplementation
     protected HTMLDOMElement generateListShortcuts() {
         HTMLDOMElement container = parser.find("#" + ID_CONTAINER_SHORTCUTS)
                 .firstResult();
-
-        HTMLDOMElement htmlList = null;
         if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
@@ -196,12 +227,23 @@ public class AccessibleDisplayScreenReaderImplementation
 
                 HTMLDOMElement textContainer = parser.createElement("span");
                 textContainer.setAttribute("id", ID_TEXT_SHORTCUTS);
-                textContainer.appendText(textShortcuts);
 
                 container.appendElement(textContainer);
-                local.appendElement(container);
+
+                String beforeText = attributeAccesskeyPrefixBefore
+                        + attributeAccesskeySuffixBefore;
+                if (!beforeText.isEmpty()) {
+                    textContainer.appendText(beforeText);
+                    local.prependElement(container);
+                } else {
+                    textContainer.appendText(attributeAccesskeyPrefixAfter
+                            + attributeAccesskeySuffixAfter);
+                    local.appendElement(container);
+                }
             }
         }
+
+        HTMLDOMElement htmlList = null;
         if (container != null) {
             htmlList = parser.find(container).findChildren("ul").firstResult();
             if (htmlList == null) {
@@ -233,13 +275,16 @@ public class AccessibleDisplayScreenReaderImplementation
                         .split("[ \n\t\r]+");
                 for (int i = 0, length = keys.length; i < length; i++) {
                     String key = keys[i].toUpperCase();
-                    String attribute =
-                            "[" + DATA_ACCESS_KEY + "=\"" + key + "\"]";
+                    String attribute = "[" + DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF
+                            + "=\"" + key + "\"]";
                     if (parser.find(listShortcuts).findChildren(attribute)
                             .firstResult() == null) {
                         HTMLDOMElement item = parser.createElement("li");
-                        item.setAttribute(DATA_ACCESS_KEY, key);
-                        item.appendText(prefix + " + " + key + ": "
+                        item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF,
+                                key);
+                        item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF,
+                                key);
+                        item.appendText(shortcutPrefix + " + " + key + ": "
                                 + description);
                         listShortcuts.appendElement(item);
                     }
