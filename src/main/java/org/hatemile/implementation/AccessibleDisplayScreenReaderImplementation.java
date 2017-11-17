@@ -22,6 +22,7 @@ import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -70,6 +71,20 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-attributeaccesskeyafterof";
 
     /**
+     * The name of attribute that links the content of header cell with the
+     * data cell, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_HEADERS_BEFORE_OF =
+            "data-headersbeforeof";
+
+    /**
+     * The name of attribute that links the content of header cell with the
+     * data cell, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_HEADERS_AFTER_OF =
+            "data-headersafterof";
+
+    /**
      * The name of attribute that links the content of role of element with the
      * element, before it.
      */
@@ -109,6 +124,26 @@ public class AccessibleDisplayScreenReaderImplementation
      * elements.
      */
     protected final String attributeAccesskeySuffixAfter;
+
+    /**
+     * The prefix text of header cell, before the element.
+     */
+    protected final String attributeHeadersPrefixBefore;
+
+    /**
+     * The suffix text of header cell, before the element.
+     */
+    protected final String attributeHeadersSuffixBefore;
+
+    /**
+     * The prefix text of header cell, after the element.
+     */
+    protected final String attributeHeadersPrefixAfter;
+
+    /**
+     * The suffix text of header cell, after the element.
+     */
+    protected final String attributeHeadersSuffixAfter;
 
     /**
      * The prefix text of roles, before the element.
@@ -177,6 +212,14 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-accesskey-prefix-after");
         attributeAccesskeySuffixAfter = configure
                 .getParameter("attribute-accesskey-suffix-after");
+        attributeHeadersPrefixBefore = configure
+                .getParameter("attribute-headers-prefix-before");
+        attributeHeadersSuffixBefore = configure
+                .getParameter("attribute-headers-suffix-before");
+        attributeHeadersPrefixAfter = configure
+                .getParameter("attribute-headers-prefix-after");
+        attributeHeadersSuffixAfter = configure
+                .getParameter("attribute-headers-suffix-after");
         attributeRolePrefixBefore = configure
                 .getParameter("attribute-role-prefix-before");
         attributeRoleSuffixBefore = configure
@@ -579,6 +622,50 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayRole(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayCellHeader(final HTMLDOMElement tableCell) {
+        if (tableCell.hasAttribute("headers")) {
+            String textHeader = "";
+            List<String> idsHeaders = Arrays.asList(tableCell
+                    .getAttribute("headers").split("[ \n\t\r]+"));
+            for (String idHeader : idsHeaders) {
+                HTMLDOMElement header = parser.find("#" + idHeader)
+                        .firstResult();
+                if (header != null) {
+                    if (textHeader.equals("")) {
+                        textHeader = header.getTextContent().trim();
+                    } else {
+                        textHeader = textHeader + " "
+                                + header.getTextContent().trim();
+                    }
+                }
+            }
+            if (!textHeader.trim().isEmpty()) {
+                forceRead(tableCell, textHeader, attributeHeadersPrefixBefore,
+                        attributeHeadersSuffixBefore,
+                        attributeHeadersPrefixAfter,
+                        attributeHeadersSuffixAfter,
+                        DATA_ATTRIBUTE_HEADERS_BEFORE_OF,
+                        DATA_ATTRIBUTE_HEADERS_AFTER_OF);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllCellHeaders() {
+        Collection<HTMLDOMElement> elements = parser
+                .find("td[headers],th[headers]").listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayCellHeader(element);
             }
         }
     }

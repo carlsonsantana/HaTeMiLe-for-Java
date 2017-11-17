@@ -41,4 +41,15 @@ public interface AccessibleDisplay {
      * Display the WAI-ARIA roles of all elements of page.
      */
     void displayAllRoles();
+
+    /**
+     * Display the headers of each data cell of table.
+     * @param tableCell The table cell.
+     */
+    void displayCellHeader(HTMLDOMElement tableCell);
+
+    /**
+     * Display the headers of each data cell of all tables of page.
+     */
+    void displayAllCellHeaders();
 }
