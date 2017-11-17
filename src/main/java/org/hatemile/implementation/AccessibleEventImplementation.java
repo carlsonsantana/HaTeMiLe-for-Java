@@ -128,10 +128,10 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     protected void generateMainScripts() {
         HTMLDOMElement head = parser.find("head").firstResult();
         if (head != null) {
-            if (parser.find("#" + ID_SCRIPT_COMMON_FUNCTIONS)
-                    .firstResult() == null) {
-                HTMLDOMElement commonFunctionsScript =
-                        parser.createElement("script");
+            HTMLDOMElement commonFunctionsScript = parser
+                    .find("#" + ID_SCRIPT_COMMON_FUNCTIONS).firstResult();
+            if (commonFunctionsScript == null) {
+                commonFunctionsScript = parser.createElement("script");
                 commonFunctionsScript
                         .setAttribute("id", ID_SCRIPT_COMMON_FUNCTIONS);
                 commonFunctionsScript.setAttribute("type", "text/javascript");
@@ -145,12 +145,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
                 script.setAttribute("id", ID_SCRIPT_EVENT_LISTENER);
                 script.setAttribute("type", "text/javascript");
                 script.appendText(getContentFromFile("/js/eventlistener.js"));
-
-                if (head.hasChildrenElements()) {
-                    head.getFirstElementChild().insertBefore(script);
-                } else {
-                    head.appendElement(script);
-                }
+                commonFunctionsScript.insertAfter(script);
             }
         }
         HTMLDOMElement local = parser.find("body").firstResult();
