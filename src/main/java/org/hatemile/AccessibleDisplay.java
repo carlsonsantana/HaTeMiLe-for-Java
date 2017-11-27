@@ -52,4 +52,15 @@ public interface AccessibleDisplay {
      * Display the headers of each data cell of all tables of page.
      */
     void displayAllCellHeaders();
+
+    /**
+     * Display the WAI-ARIA attributes of element.
+     * @param element The element with WAI-ARIA attributes.
+     */
+    void displayWAIARIAStates(HTMLDOMElement element);
+
+    /**
+     * Display the WAI-ARIA attributes of all elements of page.
+     */
+    void displayAllWAIARIAStates();
 }

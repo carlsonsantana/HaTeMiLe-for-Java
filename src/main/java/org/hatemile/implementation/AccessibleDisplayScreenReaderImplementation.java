@@ -57,15 +57,15 @@ public class AccessibleDisplayScreenReaderImplementation
     protected static final String CLASS_FORCE_READ_AFTER = "force-read-after";
 
     /**
-     * The name of attribute that links the description of shortcut, before the
-     * element, with the element.
+     * The name of attribute that links the description of shortcut of element,
+     * before it.
      */
     protected static final String DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF =
             "data-attributeaccesskeybeforeof";
 
     /**
-     * The name of attribute that links the description of shortcut, after the
-     * element, with the element.
+     * The name of attribute that links the description of shortcut of element,
+     * after it.
      */
     protected static final String DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF =
             "data-attributeaccesskeyafterof";
@@ -85,6 +85,216 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-headersafterof";
 
     /**
+     * The name of attribute that links the content of autocomplete state of
+     * field, before it.
+     */
+    protected static final String DATA_ARIA_AUTOCOMPLETE_BEFORE_OF =
+            "data-ariaautocompletebeforeof";
+
+    /**
+     * The name of attribute that links the content of autocomplete state of
+     * field, after it.
+     */
+    protected static final String DATA_ARIA_AUTOCOMPLETE_AFTER_OF =
+            "data-ariaautocompleteafterof";
+
+    /**
+     * The name of attribute that links the content of busy state of element,
+     * before it.
+     */
+    protected static final String DATA_ARIA_BUSY_BEFORE_OF =
+            "data-ariabusybeforeof";
+
+    /**
+     * The name of attribute that links the content of busy state of element,
+     * after it.
+     */
+    protected static final String DATA_ARIA_BUSY_AFTER_OF =
+            "data-ariabusyafterof";
+
+    /**
+     * The name of attribute that links the content of checked state field,
+     * before it.
+     */
+    protected static final String DATA_ARIA_CHECKED_BEFORE_OF =
+            "data-ariacheckedbeforeof";
+
+    /**
+     * The name of attribute that links the content of checked state field,
+     * after it.
+     */
+    protected static final String DATA_ARIA_CHECKED_AFTER_OF =
+            "data-ariacheckedafterof";
+
+    /**
+     * The name of attribute that links the content of drop effect state of
+     * element, before it.
+     */
+    protected static final String DATA_ARIA_DROPEFFECT_BEFORE_OF =
+            "data-ariadropeffectbeforeof";
+
+    /**
+     * The name of attribute that links the content of drop effect state of
+     * element, after it.
+     */
+    protected static final String DATA_ARIA_DROPEFFECT_AFTER_OF =
+            "data-ariadropeffectafterof";
+
+    /**
+     * The name of attribute that links the content of expanded state of
+     * element, before it.
+     */
+    protected static final String DATA_ARIA_EXPANDED_BEFORE_OF =
+            "data-ariaexpandedbeforeof";
+
+    /**
+     * The name of attribute that links the content of expanded state of
+     * element, after it.
+     */
+    protected static final String DATA_ARIA_EXPANDED_AFTER_OF =
+            "data-ariaexpandedafterof";
+
+    /**
+     * The name of attribute that links the content of grabbed state of element,
+     * before it.
+     */
+    protected static final String DATA_ARIA_GRABBED_BEFORE_OF =
+            "data-ariagrabbedbeforeof";
+
+    /**
+     * The name of attribute that links the content of grabbed state of element,
+     * after it.
+     */
+    protected static final String DATA_ARIA_GRABBED_AFTER_OF =
+            "data-ariagrabbedafterof";
+
+    /**
+     * The name of attribute that links the content that show if the field has
+     * popup, before it.
+     */
+    protected static final String DATA_ARIA_HASPOPUP_BEFORE_OF =
+            "data-ariahaspopupbeforeof";
+
+    /**
+     * The name of attribute that links the content that show if the field has
+     * popup, after it.
+     */
+    protected static final String DATA_ARIA_HASPOPUP_AFTER_OF =
+            "data-ariahaspopupafterof";
+
+    /**
+     * The name of attribute that links the content of level state of element,
+     * before it.
+     */
+    protected static final String DATA_ARIA_LEVEL_BEFORE_OF =
+            "data-arialevelbeforeof";
+
+    /**
+     * The name of attribute that links the content of level state of element,
+     * after it.
+     */
+    protected static final String DATA_ARIA_LEVEL_AFTER_OF =
+            "data-arialevelafterof";
+
+    /**
+     * The name of attribute that links the content of orientation state of
+     * element, before it.
+     */
+    protected static final String DATA_ARIA_ORIENTATION_BEFORE_OF =
+            "data-ariaorientationbeforeof";
+
+    /**
+     * The name of attribute that links the content of orientation state of
+     * element, after it.
+     */
+    protected static final String DATA_ARIA_ORIENTATION_AFTER_OF =
+            "data-ariaorientationafterof";
+
+    /**
+     * The name of attribute that links the content of pressed state of field,
+     * before it.
+     */
+    protected static final String DATA_ARIA_PRESSED_BEFORE_OF =
+            "data-ariapressedbeforeof";
+
+    /**
+     * The name of attribute that links the content of pressed state of field,
+     * after it.
+     */
+    protected static final String DATA_ARIA_PRESSED_AFTER_OF =
+            "data-ariapressedafterof";
+
+    /**
+     * The name of attribute that links the content of minimum range state of
+     * field, before it.
+     */
+    protected static final String DATA_ARIA_RANGE_MIN_BEFORE_OF =
+            "data-attributevalueminbeforeof";
+
+    /**
+     * The name of attribute that links the content of minimum range state of
+     * field, after it.
+     */
+    protected static final String DATA_ARIA_RANGE_MIN_AFTER_OF =
+            "data-attributevalueminafterof";
+
+    /**
+     * The name of attribute that links the content of maximum range state of
+     * field, before it.
+     */
+    protected static final String DATA_ARIA_RANGE_MAX_BEFORE_OF =
+            "data-attributevaluemaxbeforeof";
+
+    /**
+     * The name of attribute that links the content of maximum range state of
+     * field, after it.
+     */
+    protected static final String DATA_ARIA_RANGE_MAX_AFTER_OF =
+            "data-attributevaluemaxafterof";
+
+    /**
+     * The name of attribute that links the content of required state of field,
+     * before it.
+     */
+    protected static final String DATA_ARIA_REQUIRED_BEFORE_OF =
+            "data-attributerequiredbeforeof";
+
+    /**
+     * The name of attribute that links the content of required state of field,
+     * after it.
+     */
+    protected static final String DATA_ARIA_REQUIRED_AFTER_OF =
+            "data-attributerequiredafterof";
+
+    /**
+     * The name of attribute that links the content of selected state of field,
+     * before it.
+     */
+    protected static final String DATA_ARIA_SELECTED_BEFORE_OF =
+            "data-ariaselectedbeforeof";
+
+    /**
+     * The name of attribute that links the content of selected state of field,
+     * after it.
+     */
+    protected static final String DATA_ARIA_SELECTED_AFTER_OF =
+            "data-ariaselectedafterof";
+
+    /**
+     * The name of attribute that links the content of sort state of element,
+     * before it.
+     */
+    protected static final String DATA_ARIA_SORT_BEFORE_OF =
+            "data-ariasortbeforeof";
+
+    /**
+     * The name of attribute that links the content of sort state of element,
+     * after it.
+     */
+    protected static final String DATA_ARIA_SORT_AFTER_OF =
+            "data-ariasortafterof";
+
+    /**
      * The name of attribute that links the content of role of element with the
      * element, before it.
      */
@@ -102,68 +312,404 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final String shortcutPrefix;
 
     /**
-     * The prefix text of description of container of shortcut list, before all
-     * elements.
+     * The prefix description of shortcut list, before all elements.
      */
     protected final String attributeAccesskeyPrefixBefore;
 
     /**
-     * The suffix text of description of container of shortcut list, before all
-     * elements.
+     * The suffix description of shortcut list, before all elements.
      */
     protected final String attributeAccesskeySuffixBefore;
 
     /**
-     * The prefix text of description of container of shortcut list, after all
-     * elements.
+     * The prefix description of shortcut list, after all elements.
      */
     protected final String attributeAccesskeyPrefixAfter;
 
     /**
-     * The suffix text of description of container of shortcut list, after all
-     * elements.
+     * The suffix description of shortcut list, after all elements.
      */
     protected final String attributeAccesskeySuffixAfter;
 
     /**
-     * The prefix text of header cell, before the element.
+     * The prefix text of header cell, before it content.
      */
     protected final String attributeHeadersPrefixBefore;
 
     /**
-     * The suffix text of header cell, before the element.
+     * The suffix text of header cell, before it content.
      */
     protected final String attributeHeadersSuffixBefore;
 
     /**
-     * The prefix text of header cell, after the element.
+     * The prefix text of header cell, after it content.
      */
     protected final String attributeHeadersPrefixAfter;
 
     /**
-     * The suffix text of header cell, after the element.
+     * The suffix text of header cell, after it content.
      */
     protected final String attributeHeadersSuffixAfter;
 
     /**
-     * The prefix text of roles, before the element.
+     * The prefix text of role of element, before it.
      */
     protected final String attributeRolePrefixBefore;
 
     /**
-     * The suffix text of roles, before the element.
+     * The suffix text of role of element, before it.
      */
     protected final String attributeRoleSuffixBefore;
 
     /**
-     * The prefix text of roles, after the element.
+     * The prefix text of role of element, after it.
      */
     protected final String attributeRolePrefixAfter;
 
     /**
-     * The suffix text of roles, after the element.
+     * The suffix text of role of element, after it.
      */
     protected final String attributeRoleSuffixAfter;
+
+    /**
+     * The content of autocomplete inline and list state of field, before it.
+     */
+    protected final String ariaAutoCompleteBothBefore;
+
+    /**
+     * The content of autocomplete inline and list state of field, after it.
+     */
+    protected final String ariaAutoCompleteBothAfter;
+
+    /**
+     * The content of autocomplete inline state of field, before it.
+     */
+    protected final String ariaAutoCompleteInlineBefore;
+
+    /**
+     * The content of autocomplete inline state of field, after it.
+     */
+    protected final String ariaAutoCompleteInlineAfter;
+
+    /**
+     * The content of autocomplete list state of field, before it.
+     */
+    protected final String ariaAutoCompleteListBefore;
+
+    /**
+     * The content of autocomplete list state of field, after it.
+     */
+    protected final String ariaAutoCompleteListAfter;
+
+    /**
+     * The content of busy state of element, before it.
+     */
+    protected final String ariaBusyTrueBefore;
+
+    /**
+     * The content of busy state of element, after it.
+     */
+    protected final String ariaBusyTrueAfter;
+
+    /**
+     * The content of unchecked state field, before it.
+     */
+    protected final String ariaCheckedFalseBefore;
+
+    /**
+     * The content of unchecked state field, after it.
+     */
+    protected final String ariaCheckedFalseAfter;
+
+    /**
+     * The content of mixed checked state field, before it.
+     */
+    protected final String ariaCheckedMixedBefore;
+
+    /**
+     * The content of mixed checked state field, after it.
+     */
+    protected final String ariaCheckedMixedAfter;
+
+    /**
+     * The content of checked state field, before it.
+     */
+    protected final String ariaCheckedTrueBefore;
+
+    /**
+     * The content of checked state field, after it.
+     */
+    protected final String ariaCheckedTrueAfter;
+
+    /**
+     * The content of drop with copy effect state of element, before it.
+     */
+    protected final String ariaDropeffectCopyBefore;
+
+    /**
+     * The content of drop with copy effect state of element, after it.
+     */
+    protected final String ariaDropeffectCopyAfter;
+
+    /**
+     * The content of drop with execute effect state of element, before it.
+     */
+    protected final String ariaDropeffectExecuteBefore;
+
+    /**
+     * The content of drop with execute effect state of element, after it.
+     */
+    protected final String ariaDropeffectExecuteAfter;
+
+    /**
+     * The content of drop with link effect state of element, before it.
+     */
+    protected final String ariaDropeffectLinkBefore;
+
+    /**
+     * The content of drop with link effect state of element, after it.
+     */
+    protected final String ariaDropeffectLinkAfter;
+
+    /**
+     * The content of drop with move effect state of element, before it.
+     */
+    protected final String ariaDropeffectMoveBefore;
+
+    /**
+     * The content of drop with move effect state of element, after it.
+     */
+    protected final String ariaDropeffectMoveAfter;
+
+    /**
+     * The content of drop with popup effect state of element, before it.
+     */
+    protected final String ariaDropeffectPopupBefore;
+
+    /**
+     * The content of drop with popup effect state of element, after it.
+     */
+    protected final String ariaDropeffectPopupAfter;
+
+    /**
+     * The content of collapsed state of element, before it.
+     */
+    protected final String ariaExpandedFalseBefore;
+
+    /**
+     * The content of collapsed state of element, after it.
+     */
+    protected final String ariaExpandedFalseAfter;
+
+    /**
+     * The content of expanded state of element, before it.
+     */
+    protected final String ariaExpandedTrueBefore;
+
+    /**
+     * The content of expanded state of element, after it.
+     */
+    protected final String ariaExpandedTrueAfter;
+
+    /**
+     * The content of ungrabbed state of element, before it.
+     */
+    protected final String ariaGrabbedFalseBefore;
+
+    /**
+     * The content of ungrabbed state of element, after it.
+     */
+    protected final String ariaGrabbedFalseAfter;
+
+    /**
+     * The content of grabbed state of element, before it.
+     */
+    protected final String ariaGrabbedTrueBefore;
+
+    /**
+     * The content of grabbed state of element, after it.
+     */
+    protected final String ariaGrabbedTrueAfter;
+
+    /**
+     * The content that show if the field has popup, before it.
+     */
+    protected final String ariaHaspopupTrueBefore;
+
+    /**
+     * The content that show if the field has popup, after it.
+     */
+    protected final String ariaHaspopupTrueAfter;
+
+    /**
+     * The prefix content of level state of element, before it.
+     */
+    protected final String ariaLevelPrefixBefore;
+
+    /**
+     * The suffix content of level state of element, before it.
+     */
+    protected final String ariaLevelSuffixBefore;
+
+    /**
+     * The prefix content of level state of element, after it.
+     */
+    protected final String ariaLevelPrefixAfter;
+
+    /**
+     * The suffix content of level state of element, after it.
+     */
+    protected final String ariaLevelSuffixAfter;
+
+    /**
+     * The prefix content of maximum range state of field, before it.
+     */
+    protected final String ariaValueMaximumPrefixBefore;
+
+    /**
+     * The suffix content of maximum range state of field, before it.
+     */
+    protected final String ariaValueMaximumSuffixBefore;
+
+    /**
+     * The prefix content of maximum range state of field, after it.
+     */
+    protected final String ariaValueMaximumPrefixAfter;
+
+    /**
+     * The suffix content of maximum range state of field, after it.
+     */
+    protected final String ariaValueMaximumSuffixAfter;
+
+    /**
+     * The prefix content of minimum range state of field, before it.
+     */
+    protected final String ariaValueMinimumPrefixBefore;
+
+    /**
+     * The suffix content of minimum range state of field, before it.
+     */
+    protected final String ariaValueMinimumSuffixBefore;
+
+    /**
+     * The prefix content of minimum range state of field, after it.
+     */
+    protected final String ariaValueMinimumPrefixAfter;
+
+    /**
+     * The suffix content of minimum range state of field, after it.
+     */
+    protected final String ariaValueMinimumSuffixAfter;
+
+    /**
+     * The content of horizontal orientation state of element, before it.
+     */
+    protected final String ariaOrientationHorizontalBefore;
+
+    /**
+     * The content of horizontal orientation state of element, after it.
+     */
+    protected final String ariaOrientationHorizontalAfter;
+
+    /**
+     * The content of vertical orientation state of element, before it.
+     */
+    protected final String ariaOrientationVerticalBefore;
+
+    /**
+     * The content of vertical orientation state of element, after it.
+     */
+    protected final String ariaOrientationVerticalAfter;
+
+    /**
+     * The content of unpressed state of field, before it.
+     */
+    protected final String ariaPressedFalseBefore;
+
+    /**
+     * The content of unpressed state of field, after it.
+     */
+    protected final String ariaPressedFalseAfter;
+
+    /**
+     * The content of mixed pressed state of field, before it.
+     */
+    protected final String ariaPressedMixedBefore;
+
+    /**
+     * The content of mixed pressed state of field, after it.
+     */
+    protected final String ariaPressedMixedAfter;
+
+    /**
+     * The content of pressed state of field, before it.
+     */
+    protected final String ariaPressedTrueBefore;
+
+    /**
+     * The content of pressed state of field, after it.
+     */
+    protected final String ariaPressedTrueAfter;
+
+    /**
+     * The content of required state of field, before it.
+     */
+    protected final String ariaRequiredTrueBefore;
+
+    /**
+     * The content of required state of field, after it.
+     */
+    protected final String ariaRequiredTrueAfter;
+
+    /**
+     * The content of unselected state of field, before it.
+     */
+    protected final String ariaSelectedFalseBefore;
+
+    /**
+     * The content of unselected state of field, after it.
+     */
+    protected final String ariaSelectedFalseAfter;
+
+    /**
+     * The content of selected state of field, before it.
+     */
+    protected final String ariaSelectedTrueBefore;
+
+    /**
+     * The content of selected state of field, after it.
+     */
+    protected final String ariaSelectedTrueAfter;
+
+    /**
+     * The content of ascending sort state of element, before it.
+     */
+    protected final String ariaSortAscendingBefore;
+
+    /**
+     * The content of ascending sort state of element, after it.
+     */
+    protected final String ariaSortAscendingAfter;
+
+    /**
+     * The content of descending sort state of element, before it.
+     */
+    protected final String ariaSortDescendingBefore;
+
+    /**
+     * The content of descending sort state of element, after it.
+     */
+    protected final String ariaSortDescendingAfter;
+
+    /**
+     * The content of sorted state of element, before it.
+     */
+    protected final String ariaSortOtherBefore;
+
+    /**
+     * The content of sorted state of element, after it.
+     */
+    protected final String ariaSortOtherAfter;
 
     /**
      * The HTML parser.
@@ -228,6 +774,141 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-role-prefix-after");
         attributeRoleSuffixAfter = configure
                 .getParameter("attribute-role-suffix-after");
+        ariaAutoCompleteBothBefore = configure
+                .getParameter("aria-autocomplete-both-before");
+        ariaAutoCompleteBothAfter = configure
+                .getParameter("aria-autocomplete-both-after");
+        ariaAutoCompleteInlineBefore = configure
+                .getParameter("aria-autocomplete-inline-before");
+        ariaAutoCompleteInlineAfter = configure
+                .getParameter("aria-autocomplete-inline-after");
+        ariaAutoCompleteListBefore = configure
+                .getParameter("aria-autocomplete-list-before");
+        ariaAutoCompleteListAfter = configure
+                .getParameter("aria-autocomplete-list-after");
+        ariaBusyTrueBefore = configure
+                .getParameter("aria-busy-true-before");
+        ariaBusyTrueAfter = configure
+                .getParameter("aria-busy-true-after");
+        ariaCheckedFalseBefore = configure
+                .getParameter("aria-checked-false-before");
+        ariaCheckedFalseAfter = configure
+                .getParameter("aria-checked-false-after");
+        ariaCheckedMixedBefore = configure
+                .getParameter("aria-checked-mixed-before");
+        ariaCheckedMixedAfter = configure
+                .getParameter("aria-checked-mixed-after");
+        ariaCheckedTrueBefore = configure
+                .getParameter("aria-checked-true-before");
+        ariaCheckedTrueAfter = configure
+                .getParameter("aria-checked-true-after");
+        ariaDropeffectCopyBefore = configure
+                .getParameter("aria-dropeffect-copy-before");
+        ariaDropeffectCopyAfter = configure
+                .getParameter("aria-dropeffect-copy-after");
+        ariaDropeffectExecuteBefore = configure
+                .getParameter("aria-dropeffect-execute-before");
+        ariaDropeffectExecuteAfter = configure
+                .getParameter("aria-dropeffect-execute-after");
+        ariaDropeffectLinkBefore = configure
+                .getParameter("aria-dropeffect-link-before");
+        ariaDropeffectLinkAfter = configure
+                .getParameter("aria-dropeffect-link-after");
+        ariaDropeffectMoveBefore = configure
+                .getParameter("aria-dropeffect-move-before");
+        ariaDropeffectMoveAfter = configure
+                .getParameter("aria-dropeffect-move-after");
+        ariaDropeffectPopupBefore = configure
+                .getParameter("aria-dropeffect-popup-before");
+        ariaDropeffectPopupAfter = configure
+                .getParameter("aria-dropeffect-popup-after");
+        ariaExpandedFalseBefore = configure
+                .getParameter("aria-expanded-false-before");
+        ariaExpandedFalseAfter = configure
+                .getParameter("aria-expanded-false-after");
+        ariaExpandedTrueBefore = configure
+                .getParameter("aria-expanded-true-before");
+        ariaExpandedTrueAfter = configure
+                .getParameter("aria-expanded-true-after");
+        ariaGrabbedFalseBefore = configure
+                .getParameter("aria-grabbed-false-before");
+        ariaGrabbedFalseAfter = configure
+                .getParameter("aria-grabbed-false-after");
+        ariaGrabbedTrueBefore = configure
+                .getParameter("aria-grabbed-true-before");
+        ariaGrabbedTrueAfter = configure
+                .getParameter("aria-grabbed-true-after");
+        ariaHaspopupTrueBefore = configure
+                .getParameter("aria-haspopup-true-before");
+        ariaHaspopupTrueAfter = configure
+                .getParameter("aria-haspopup-true-after");
+        ariaLevelPrefixBefore = configure
+                .getParameter("aria-level-prefix-before");
+        ariaLevelSuffixBefore = configure
+                .getParameter("aria-level-suffix-before");
+        ariaLevelPrefixAfter = configure
+                .getParameter("aria-level-prefix-after");
+        ariaLevelSuffixAfter = configure
+                .getParameter("aria-level-suffix-after");
+        ariaValueMaximumPrefixBefore = configure
+                .getParameter("aria-value-maximum-prefix-before");
+        ariaValueMaximumSuffixBefore = configure
+                .getParameter("aria-value-maximum-suffix-before");
+        ariaValueMaximumPrefixAfter = configure
+                .getParameter("aria-value-maximum-prefix-after");
+        ariaValueMaximumSuffixAfter = configure
+                .getParameter("aria-value-maximum-suffix-after");
+        ariaValueMinimumPrefixBefore = configure
+                .getParameter("aria-value-minimum-prefix-before");
+        ariaValueMinimumSuffixBefore = configure
+                .getParameter("aria-value-minimum-suffix-before");
+        ariaValueMinimumPrefixAfter = configure
+                .getParameter("aria-value-minimum-prefix-after");
+        ariaValueMinimumSuffixAfter = configure
+                .getParameter("aria-value-minimum-suffix-after");
+        ariaOrientationHorizontalBefore = configure
+                .getParameter("aria-orientation-horizontal-before");
+        ariaOrientationHorizontalAfter = configure
+                .getParameter("aria-orientation-horizontal-after");
+        ariaOrientationVerticalBefore = configure
+                .getParameter("aria-orientation-vertical-before");
+        ariaOrientationVerticalAfter = configure
+                .getParameter("aria-orientation-vertical-after");
+        ariaPressedFalseBefore = configure
+                .getParameter("aria-pressed-false-before");
+        ariaPressedFalseAfter = configure
+                .getParameter("aria-pressed-false-after");
+        ariaPressedMixedBefore = configure
+                .getParameter("aria-pressed-mixed-before");
+        ariaPressedMixedAfter = configure
+                .getParameter("aria-pressed-mixed-after");
+        ariaPressedTrueBefore = configure
+                .getParameter("aria-pressed-true-before");
+        ariaPressedTrueAfter = configure
+                .getParameter("aria-pressed-true-after");
+        ariaRequiredTrueBefore = configure
+                .getParameter("aria-required-true-before");
+        ariaRequiredTrueAfter = configure
+                .getParameter("aria-required-true-after");
+        ariaSelectedFalseBefore = configure
+                .getParameter("aria-selected-false-before");
+        ariaSelectedFalseAfter = configure
+                .getParameter("aria-selected-false-after");
+        ariaSelectedTrueBefore = configure
+                .getParameter("aria-selected-true-before");
+        ariaSelectedTrueAfter = configure
+                .getParameter("aria-selected-true-after");
+        ariaSortAscendingBefore = configure
+                .getParameter("aria-sort-ascending-before");
+        ariaSortAscendingAfter = configure
+                .getParameter("aria-sort-ascending-after");
+        ariaSortDescendingBefore = configure
+                .getParameter("aria-sort-descending-before");
+        ariaSortDescendingAfter = configure
+                .getParameter("aria-sort-descending-after");
+        ariaSortOtherBefore = configure.getParameter("aria-sort-other-before");
+        ariaSortOtherAfter = configure.getParameter("aria-sort-other-after");
+
         listShortcutsAdded = false;
         listShortcuts = null;
 
@@ -666,6 +1347,210 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayCellHeader(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayWAIARIAStates(final HTMLDOMElement element) {
+        if ((element.hasAttribute("aria-busy"))
+                && (element.getAttribute("aria-busy").equals("true"))) {
+            forceReadSimple(element, ariaBusyTrueBefore, ariaBusyTrueAfter,
+                    DATA_ARIA_BUSY_BEFORE_OF, DATA_ARIA_BUSY_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-checked")) {
+            String attributeValue = element.getAttribute("aria-checked");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaCheckedTrueBefore,
+                        ariaCheckedTrueAfter, DATA_ARIA_CHECKED_BEFORE_OF,
+                        DATA_ARIA_CHECKED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaCheckedFalseBefore,
+                        ariaCheckedFalseAfter, DATA_ARIA_CHECKED_BEFORE_OF,
+                        DATA_ARIA_CHECKED_AFTER_OF);
+            } else if (attributeValue.equals("mixed")) {
+                forceReadSimple(element, ariaCheckedMixedBefore,
+                        ariaCheckedMixedAfter, DATA_ARIA_CHECKED_BEFORE_OF,
+                        DATA_ARIA_CHECKED_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-dropeffect")) {
+            String attributeValue = element.getAttribute("aria-dropeffect");
+            if (attributeValue.equals("copy")) {
+                forceReadSimple(element, ariaDropeffectCopyBefore,
+                        ariaDropeffectCopyAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("move")) {
+                forceReadSimple(element, ariaDropeffectMoveBefore,
+                        ariaDropeffectMoveAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("link")) {
+                forceReadSimple(element, ariaDropeffectLinkBefore,
+                        ariaDropeffectLinkAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("execute")) {
+                forceReadSimple(element, ariaDropeffectExecuteBefore,
+                        ariaDropeffectExecuteAfter,
+                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("popup")) {
+                forceReadSimple(element, ariaDropeffectPopupBefore,
+                        ariaDropeffectPopupAfter,
+                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-expanded")) {
+            String attributeValue = element.getAttribute("aria-expanded");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaExpandedTrueBefore,
+                        ariaExpandedTrueAfter, DATA_ARIA_EXPANDED_BEFORE_OF,
+                        DATA_ARIA_EXPANDED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaExpandedFalseBefore,
+                        ariaExpandedFalseAfter, DATA_ARIA_EXPANDED_BEFORE_OF,
+                        DATA_ARIA_EXPANDED_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-grabbed")) {
+            String attributeValue = element.getAttribute("aria-grabbed");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaGrabbedTrueBefore,
+                        ariaGrabbedTrueAfter, DATA_ARIA_GRABBED_BEFORE_OF,
+                        DATA_ARIA_GRABBED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaGrabbedFalseBefore,
+                        ariaGrabbedFalseAfter, DATA_ARIA_GRABBED_BEFORE_OF,
+                        DATA_ARIA_GRABBED_AFTER_OF);
+            }
+        }
+        if ((element.hasAttribute("aria-haspopup"))
+                && (element.getAttribute("aria-haspopup").equals("true"))) {
+            forceReadSimple(element, ariaHaspopupTrueBefore,
+                    ariaHaspopupTrueAfter, DATA_ARIA_HASPOPUP_BEFORE_OF,
+                    DATA_ARIA_HASPOPUP_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-level")) {
+            forceRead(element, element.getAttribute("aria-level"),
+                    ariaLevelPrefixBefore, ariaLevelSuffixBefore,
+                    ariaLevelPrefixAfter, ariaLevelSuffixAfter,
+                    DATA_ARIA_LEVEL_BEFORE_OF, DATA_ARIA_LEVEL_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-orientation")) {
+            String attributeValue = element.getAttribute("aria-orientation");
+            if (attributeValue.equals("vertical")) {
+                forceReadSimple(element, ariaOrientationVerticalBefore,
+                        ariaOrientationVerticalAfter,
+                        DATA_ARIA_ORIENTATION_BEFORE_OF,
+                        DATA_ARIA_ORIENTATION_AFTER_OF);
+            } else if (attributeValue.equals("horizontal")) {
+                forceReadSimple(element, ariaOrientationHorizontalBefore,
+                        ariaOrientationHorizontalAfter,
+                        DATA_ARIA_ORIENTATION_BEFORE_OF,
+                        DATA_ARIA_ORIENTATION_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-pressed")) {
+            String attributeValue = element.getAttribute("aria-pressed");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaPressedTrueBefore,
+                        ariaPressedTrueAfter, DATA_ARIA_PRESSED_BEFORE_OF,
+                        DATA_ARIA_PRESSED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaPressedFalseBefore,
+                        ariaPressedFalseAfter, DATA_ARIA_PRESSED_BEFORE_OF,
+                        DATA_ARIA_PRESSED_AFTER_OF);
+            } else if (attributeValue.equals("mixed")) {
+                forceReadSimple(element, ariaPressedMixedBefore,
+                        ariaPressedMixedAfter, DATA_ARIA_PRESSED_BEFORE_OF,
+                        DATA_ARIA_PRESSED_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-selected")) {
+            String attributeValue = element.getAttribute("aria-selected");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaSelectedTrueBefore,
+                        ariaSelectedTrueAfter, DATA_ARIA_SELECTED_BEFORE_OF,
+                        DATA_ARIA_SELECTED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaSelectedFalseBefore,
+                        ariaSelectedFalseAfter, DATA_ARIA_SELECTED_BEFORE_OF,
+                        DATA_ARIA_SELECTED_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-sort")) {
+            String attributeValue = element.getAttribute("aria-sort");
+            if (attributeValue.equals("ascending")) {
+                forceReadSimple(element, ariaSortAscendingBefore,
+                        ariaSortAscendingAfter, DATA_ARIA_SORT_BEFORE_OF,
+                        DATA_ARIA_SORT_AFTER_OF);
+            } else if (attributeValue.equals("descending")) {
+                forceReadSimple(element, ariaSortDescendingBefore,
+                        ariaSortDescendingAfter, DATA_ARIA_SORT_BEFORE_OF,
+                        DATA_ARIA_SORT_AFTER_OF);
+            } else if (attributeValue.equals("other")) {
+                forceReadSimple(element, ariaSortOtherBefore,
+                        ariaSortOtherAfter, DATA_ARIA_SORT_BEFORE_OF,
+                        DATA_ARIA_SORT_AFTER_OF);
+            }
+        }
+        if ((element.hasAttribute("aria-required"))
+                && (element.getAttribute("aria-required").equals("true"))) {
+            forceReadSimple(element, ariaRequiredTrueBefore,
+                    ariaRequiredTrueAfter, DATA_ARIA_REQUIRED_BEFORE_OF,
+                    DATA_ARIA_REQUIRED_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-valuemin")) {
+            forceRead(element, element.getAttribute("aria-valuemin"),
+                    ariaValueMinimumPrefixBefore, ariaValueMinimumSuffixBefore,
+                    ariaValueMinimumPrefixAfter, ariaValueMinimumSuffixAfter,
+                    DATA_ARIA_RANGE_MIN_BEFORE_OF,
+                    DATA_ARIA_RANGE_MIN_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-valuemax")) {
+            forceRead(element, element.getAttribute("aria-valuemax"),
+                    ariaValueMaximumPrefixBefore, ariaValueMaximumSuffixBefore,
+                    ariaValueMaximumPrefixAfter, ariaValueMaximumSuffixAfter,
+                    DATA_ARIA_RANGE_MAX_BEFORE_OF,
+                    DATA_ARIA_RANGE_MAX_AFTER_OF);
+        }
+        if (element.hasAttribute("aria-autocomplete")) {
+            String attributeValue = element.getAttribute("aria-autocomplete");
+            if (attributeValue.equals("both")) {
+                forceReadSimple(element, ariaAutoCompleteBothBefore,
+                        ariaAutoCompleteBothAfter,
+                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
+                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+            } else if (attributeValue.equals("inline")) {
+                forceReadSimple(element, ariaAutoCompleteListBefore,
+                        ariaAutoCompleteListAfter,
+                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
+                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+            } else if (attributeValue.equals("list")) {
+                forceReadSimple(element, ariaAutoCompleteInlineBefore,
+                        ariaAutoCompleteInlineAfter,
+                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
+                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllWAIARIAStates() {
+        Collection<HTMLDOMElement> elements = parser
+                .find("[aria-busy=true],[aria-checked],[aria-dropeffect],"
+                    + "[aria-expanded],[aria-grabbed],[aria-haspopup],"
+                    + "[aria-level],[aria-orientation],[aria-pressed],"
+                    + "[aria-selected],[aria-sort],[aria-required=true],"
+                    + "[aria-valuemin],[aria-valuemax],[aria-autocomplete]")
+                .listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayWAIARIAStates(element);
             }
         }
     }
