@@ -71,6 +71,18 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-attributeaccesskeyafterof";
 
     /**
+     * The name of attribute that links the content of download link, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF =
+            "data-attributedownloadbeforeof";
+
+    /**
+     * The name of attribute that links the content of download link, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF =
+            "data-attributedownloadafterof";
+
+    /**
      * The name of attribute that links the content of header cell with the
      * data cell, before it.
      */
@@ -83,6 +95,20 @@ public class AccessibleDisplayScreenReaderImplementation
      */
     protected static final String DATA_ATTRIBUTE_HEADERS_AFTER_OF =
             "data-headersafterof";
+
+    /**
+     * The name of attribute that links the content of link that open a new
+     * instance, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_TARGET_BEFORE_OF =
+            "data-attributetargetbeforeof";
+
+    /**
+     * The name of attribute that links the content of link that open a new
+     * instance, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_TARGET_AFTER_OF =
+            "data-attributetargetafterof";
 
     /**
      * The name of attribute that links the content of autocomplete state of
@@ -332,6 +358,16 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final String attributeAccesskeySuffixAfter;
 
     /**
+     * The text of link that download a file, before it.
+     */
+    protected final String attributeDownloadBefore;
+
+    /**
+     * The text of link that download a file, after it.
+     */
+    protected final String attributeDownloadAfter;
+
+    /**
      * The prefix text of header cell, before it content.
      */
     protected final String attributeHeadersPrefixBefore;
@@ -370,6 +406,16 @@ public class AccessibleDisplayScreenReaderImplementation
      * The suffix text of role of element, after it.
      */
     protected final String attributeRoleSuffixAfter;
+
+    /**
+     * The text of link that open new instance, before it.
+     */
+    protected final String attributeTargetBlankBefore;
+
+    /**
+     * The text of link that open new instance, after it.
+     */
+    protected final String attributeTargetBlankAfter;
 
     /**
      * The content of autocomplete inline and list state of field, before it.
@@ -750,6 +796,7 @@ public class AccessibleDisplayScreenReaderImplementation
         prefixId = configure.getParameter("prefix-generated-ids");
         shortcutPrefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
+
         attributeAccesskeyPrefixBefore = configure
                 .getParameter("attribute-accesskey-prefix-before");
         attributeAccesskeySuffixBefore = configure
@@ -758,6 +805,10 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-accesskey-prefix-after");
         attributeAccesskeySuffixAfter = configure
                 .getParameter("attribute-accesskey-suffix-after");
+        attributeDownloadBefore = configure
+                .getParameter("attribute-download-before");
+        attributeDownloadAfter = configure
+                .getParameter("attribute-download-after");
         attributeHeadersPrefixBefore = configure
                 .getParameter("attribute-headers-prefix-before");
         attributeHeadersSuffixBefore = configure
@@ -774,6 +825,11 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-role-prefix-after");
         attributeRoleSuffixAfter = configure
                 .getParameter("attribute-role-suffix-after");
+        attributeTargetBlankBefore = configure
+                .getParameter("attribute-target-blank-before");
+        attributeTargetBlankAfter = configure
+                .getParameter("attribute-target-blank-after");
+
         ariaAutoCompleteBothBefore = configure
                 .getParameter("aria-autocomplete-both-before");
         ariaAutoCompleteBothAfter = configure
@@ -1551,6 +1607,36 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayWAIARIAStates(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayLinkAttributes(final HTMLDOMElement link) {
+        if (link.hasAttribute("download")) {
+            forceReadSimple(link, attributeDownloadBefore,
+                    attributeDownloadAfter, DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF,
+                    DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF);
+        }
+        if ((link.hasAttribute("target"))
+                && (link.getAttribute("target").equals("_blank"))) {
+            forceReadSimple(link, attributeTargetBlankBefore,
+                    attributeTargetBlankAfter, DATA_ATTRIBUTE_TARGET_BEFORE_OF,
+                    DATA_ATTRIBUTE_TARGET_AFTER_OF);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllLinksAttributes() {
+        Collection<HTMLDOMElement> elements = parser
+                .find("a[download],a[target=\"_blank\"]").listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayLinkAttributes(element);
             }
         }
     }

@@ -63,4 +63,15 @@ public interface AccessibleDisplay {
      * Display the WAI-ARIA attributes of all elements of page.
      */
     void displayAllWAIARIAStates();
+
+    /**
+     * Display the attributes of link.
+     * @param link The link element.
+     */
+    void displayLinkAttributes(HTMLDOMElement link);
+
+    /**
+     * Display the attributes of all links of page.
+     */
+    void displayAllLinksAttributes();
 }
