@@ -111,6 +111,20 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-attributetargetafterof";
 
     /**
+     * The name of attribute that links the content of title of element, before
+     * it.
+     */
+    protected static final String DATA_ATTRIBUTE_TITLE_BEFORE_OF =
+            "data-attributetitlebeforeof";
+
+    /**
+     * The name of attribute that links the content of title of element, after
+     * it.
+     */
+    protected static final String DATA_ATTRIBUTE_TITLE_AFTER_OF =
+            "data-attributetitleafterof";
+
+    /**
      * The name of attribute that links the content of autocomplete state of
      * field, before it.
      */
@@ -416,6 +430,26 @@ public class AccessibleDisplayScreenReaderImplementation
      * The text of link that open new instance, after it.
      */
     protected final String attributeTargetBlankAfter;
+
+    /**
+     * The prefix text of title of element, before it.
+     */
+    protected final String attributeTitlePrefixBefore;
+
+    /**
+     * The suffix text of title of element, before it.
+     */
+    protected final String attributeTitleSuffixBefore;
+
+    /**
+     * The prefix text of title of element, after it.
+     */
+    protected final String attributeTitlePrefixAfter;
+
+    /**
+     * The suffix text of title of element, after it.
+     */
+    protected final String attributeTitleSuffixAfter;
 
     /**
      * The content of autocomplete inline and list state of field, before it.
@@ -829,6 +863,14 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-target-blank-before");
         attributeTargetBlankAfter = configure
                 .getParameter("attribute-target-blank-after");
+        attributeTitlePrefixBefore = configure
+                .getParameter("attribute-title-prefix-before");
+        attributeTitleSuffixBefore = configure
+                .getParameter("attribute-title-suffix-before");
+        attributeTitlePrefixAfter = configure
+                .getParameter("attribute-title-prefix-after");
+        attributeTitleSuffixAfter = configure
+                .getParameter("attribute-title-suffix-after");
 
         ariaAutoCompleteBothBefore = configure
                 .getParameter("aria-autocomplete-both-before");
@@ -1637,6 +1679,33 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayLinkAttributes(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayTitle(final HTMLDOMElement element) {
+        if ((element.hasAttribute("title"))
+                && (!element.getAttribute("title").isEmpty())) {
+            forceRead(element, element.getAttribute("title"),
+                    attributeTitlePrefixBefore, attributeTitleSuffixBefore,
+                    attributeTitlePrefixAfter, attributeTitleSuffixAfter,
+                    DATA_ATTRIBUTE_TITLE_BEFORE_OF,
+                    DATA_ATTRIBUTE_TITLE_AFTER_OF);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllTitles() {
+        Collection<HTMLDOMElement> elements = parser.find("body [title]")
+                .listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayTitle(element);
             }
         }
     }

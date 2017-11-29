@@ -74,4 +74,15 @@ public interface AccessibleDisplay {
      * Display the attributes of all links of page.
      */
     void displayAllLinksAttributes();
+
+    /**
+     * Display the title of element.
+     * @param element The element with title.
+     */
+    void displayTitle(HTMLDOMElement element);
+
+    /**
+     * Display the titles of all elements of page.
+     */
+    void displayAllTitles();
 }
