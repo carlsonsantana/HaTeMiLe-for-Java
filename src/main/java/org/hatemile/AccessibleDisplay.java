@@ -85,4 +85,15 @@ public interface AccessibleDisplay {
      * Display the titles of all elements of page.
      */
     void displayAllTitles();
+
+    /**
+     * Display that the element has drag-and-drop event.
+     * @param element The element with drag or drop events.
+     */
+    void displayDragAndDrop(HTMLDOMElement element);
+
+    /**
+     * Display that an elements of page have drag-and-drop events.
+     */
+    void displayAllDragsAndDrops();
 }

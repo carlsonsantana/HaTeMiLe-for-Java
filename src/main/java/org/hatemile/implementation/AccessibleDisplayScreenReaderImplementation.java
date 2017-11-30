@@ -83,6 +83,34 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-attributedownloadafterof";
 
     /**
+     * The name of attribute that links the content of draggable state with
+     * element, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF =
+            "data-attributedraggablebeforeof";
+
+    /**
+     * The name of attribute that links the content of draggable state with
+     * element, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF =
+            "data-attributedraggableafterof";
+
+    /**
+     * The name of attribute that links the content of dropzone state with
+     * element, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_DROPZONE_BEFORE_OF =
+            "data-attributedropzonebeforeof";
+
+    /**
+     * The name of attribute that links the content of dropzone state with
+     * element, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_DROPZONE_AFTER_OF =
+            "data-attributedropzoneafterof";
+
+    /**
      * The name of attribute that links the content of header cell with the
      * data cell, before it.
      */
@@ -380,6 +408,46 @@ public class AccessibleDisplayScreenReaderImplementation
      * The text of link that download a file, after it.
      */
     protected final String attributeDownloadAfter;
+
+    /**
+     * The content of draggable element, before it.
+     */
+    protected final String attributeDraggableBefore;
+
+    /**
+     * The content of draggable element, after it.
+     */
+    protected final String attributeDraggableAfter;
+
+    /**
+     * The content of drop with copy effect state of element, before it.
+     */
+    protected final String attributeDropzoneCopyBefore;
+
+    /**
+     * The content of drop with copy effect state of element, after it.
+     */
+    protected final String attributeDropzoneCopyAfter;
+
+    /**
+     * The content of drop with link effect state of element, before it.
+     */
+    protected final String attributeDropzoneLinkBefore;
+
+    /**
+     * The content of drop with link effect state of element, after it.
+     */
+    protected final String attributeDropzoneLinkAfter;
+
+    /**
+     * The content of drop with move effect state of element, before it.
+     */
+    protected final String attributeDropzoneMoveBefore;
+
+    /**
+     * The content of drop with move effect state of element, after it.
+     */
+    protected final String attributeDropzoneMoveAfter;
 
     /**
      * The prefix text of header cell, before it content.
@@ -843,6 +911,22 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-download-before");
         attributeDownloadAfter = configure
                 .getParameter("attribute-download-after");
+        attributeDraggableBefore = configure
+                .getParameter("attribute-draggable-before");
+        attributeDraggableAfter = configure
+                .getParameter("attribute-draggable-after");
+        attributeDropzoneCopyBefore = configure
+                .getParameter("attribute-dropzone-copy-before");
+        attributeDropzoneCopyAfter = configure
+                .getParameter("attribute-dropzone-copy-after");
+        attributeDropzoneLinkBefore = configure
+                .getParameter("attribute-dropzone-link-before");
+        attributeDropzoneLinkAfter = configure
+                .getParameter("attribute-dropzone-link-after");
+        attributeDropzoneMoveBefore = configure
+                .getParameter("attribute-dropzone-move-before");
+        attributeDropzoneMoveAfter = configure
+                .getParameter("attribute-dropzone-move-after");
         attributeHeadersPrefixBefore = configure
                 .getParameter("attribute-headers-prefix-before");
         attributeHeadersSuffixBefore = configure
@@ -1328,6 +1412,51 @@ public class AccessibleDisplayScreenReaderImplementation
     }
 
     /**
+     * Display that the element has WAI-ARIA drag-and-drop state.
+     * @param element The element with WAI-ARIA drag-and-drop state.
+     */
+    protected void displayWAIARIADragandDrop(final HTMLDOMElement element) {
+        if (element.hasAttribute("aria-dropeffect")) {
+            String attributeValue = element.getAttribute("aria-dropeffect");
+            if (attributeValue.equals("copy")) {
+                forceReadSimple(element, ariaDropeffectCopyBefore,
+                        ariaDropeffectCopyAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("move")) {
+                forceReadSimple(element, ariaDropeffectMoveBefore,
+                        ariaDropeffectMoveAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("link")) {
+                forceReadSimple(element, ariaDropeffectLinkBefore,
+                        ariaDropeffectLinkAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("execute")) {
+                forceReadSimple(element, ariaDropeffectExecuteBefore,
+                        ariaDropeffectExecuteAfter,
+                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            } else if (attributeValue.equals("popup")) {
+                forceReadSimple(element, ariaDropeffectPopupBefore,
+                        ariaDropeffectPopupAfter,
+                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
+                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+            }
+        }
+        if (element.hasAttribute("aria-grabbed")) {
+            String attributeValue = element.getAttribute("aria-grabbed");
+            if (attributeValue.equals("true")) {
+                forceReadSimple(element, ariaGrabbedTrueBefore,
+                        ariaGrabbedTrueAfter, DATA_ARIA_GRABBED_BEFORE_OF,
+                        DATA_ARIA_GRABBED_AFTER_OF);
+            } else if (attributeValue.equals("false")) {
+                forceReadSimple(element, ariaGrabbedFalseBefore,
+                        ariaGrabbedFalseAfter, DATA_ARIA_GRABBED_BEFORE_OF,
+                        DATA_ARIA_GRABBED_AFTER_OF);
+            }
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public void displayShortcut(final HTMLDOMElement element) {
@@ -1474,32 +1603,6 @@ public class AccessibleDisplayScreenReaderImplementation
                         DATA_ARIA_CHECKED_AFTER_OF);
             }
         }
-        if (element.hasAttribute("aria-dropeffect")) {
-            String attributeValue = element.getAttribute("aria-dropeffect");
-            if (attributeValue.equals("copy")) {
-                forceReadSimple(element, ariaDropeffectCopyBefore,
-                        ariaDropeffectCopyAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
-            } else if (attributeValue.equals("move")) {
-                forceReadSimple(element, ariaDropeffectMoveBefore,
-                        ariaDropeffectMoveAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
-            } else if (attributeValue.equals("link")) {
-                forceReadSimple(element, ariaDropeffectLinkBefore,
-                        ariaDropeffectLinkAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
-            } else if (attributeValue.equals("execute")) {
-                forceReadSimple(element, ariaDropeffectExecuteBefore,
-                        ariaDropeffectExecuteAfter,
-                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
-            } else if (attributeValue.equals("popup")) {
-                forceReadSimple(element, ariaDropeffectPopupBefore,
-                        ariaDropeffectPopupAfter,
-                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
-            }
-        }
         if (element.hasAttribute("aria-expanded")) {
             String attributeValue = element.getAttribute("aria-expanded");
             if (attributeValue.equals("true")) {
@@ -1510,18 +1613,6 @@ public class AccessibleDisplayScreenReaderImplementation
                 forceReadSimple(element, ariaExpandedFalseBefore,
                         ariaExpandedFalseAfter, DATA_ARIA_EXPANDED_BEFORE_OF,
                         DATA_ARIA_EXPANDED_AFTER_OF);
-            }
-        }
-        if (element.hasAttribute("aria-grabbed")) {
-            String attributeValue = element.getAttribute("aria-grabbed");
-            if (attributeValue.equals("true")) {
-                forceReadSimple(element, ariaGrabbedTrueBefore,
-                        ariaGrabbedTrueAfter, DATA_ARIA_GRABBED_BEFORE_OF,
-                        DATA_ARIA_GRABBED_AFTER_OF);
-            } else if (attributeValue.equals("false")) {
-                forceReadSimple(element, ariaGrabbedFalseBefore,
-                        ariaGrabbedFalseAfter, DATA_ARIA_GRABBED_BEFORE_OF,
-                        DATA_ARIA_GRABBED_AFTER_OF);
             }
         }
         if ((element.hasAttribute("aria-haspopup"))
@@ -1633,6 +1724,7 @@ public class AccessibleDisplayScreenReaderImplementation
                         DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
             }
         }
+        displayWAIARIADragandDrop(element);
     }
 
     /**
@@ -1706,6 +1798,51 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayTitle(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayDragAndDrop(final HTMLDOMElement element) {
+        if (element.hasAttribute("draggable")) {
+            forceReadSimple(element, attributeDraggableBefore,
+                    attributeDraggableAfter, DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF,
+                    DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF);
+        }
+        if (element.hasAttribute("dropzone")) {
+            String attributeValue = element.getAttribute("dropzone");
+            if (attributeValue.equals("copy")) {
+                forceReadSimple(element, attributeDropzoneCopyBefore,
+                        attributeDropzoneCopyAfter,
+                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
+                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+            } else if (attributeValue.equals("move")) {
+                forceReadSimple(element, attributeDropzoneMoveBefore,
+                        attributeDropzoneMoveAfter,
+                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
+                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+            } else if (attributeValue.equals("link")) {
+                forceReadSimple(element, attributeDropzoneLinkBefore,
+                        attributeDropzoneLinkAfter,
+                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
+                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+            }
+        }
+        displayWAIARIADragandDrop(element);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllDragsAndDrops() {
+        Collection<HTMLDOMElement> elements = parser
+                .find("[draggable],[dropzone],[aria-dropeffect],[aria-grabbed]")
+                .listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayDragAndDrop(element);
             }
         }
     }
