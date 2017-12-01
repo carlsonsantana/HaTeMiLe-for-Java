@@ -21,9 +21,7 @@ import org.hatemile.util.Configure;
 import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -904,11 +902,6 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final String prefixId;
 
     /**
-     * The roles and it descriptions.
-     */
-    protected final Map<String, String> roles;
-
-    /**
      * The configuration of HaTeMiLe.
      */
     protected final Configure configure;
@@ -1142,72 +1135,6 @@ public class AccessibleDisplayScreenReaderImplementation
 
         listShortcutsAdded = false;
         listShortcuts = null;
-
-        roles = new HashMap<String, String>();
-        roles.put("alert", configure.getParameter("role-alert"));
-        roles.put("alertdialog", configure.getParameter("role-alertdialog"));
-        roles.put("application", configure.getParameter("role-application"));
-        roles.put("article", configure.getParameter("role-article"));
-        roles.put("banner", configure.getParameter("role-banner"));
-        roles.put("button", configure.getParameter("role-button"));
-        roles.put("checkbox", configure.getParameter("role-checkbox"));
-        roles.put("columnheader", configure.getParameter("role-columnheader"));
-        roles.put("combobox", configure.getParameter("role-combobox"));
-        roles.put("complementary",
-                configure.getParameter("role-complementary"));
-        roles.put("contentinfo", configure.getParameter("role-contentinfo"));
-        roles.put("definition", configure.getParameter("role-definition"));
-        roles.put("dialog", configure.getParameter("role-dialog"));
-        roles.put("directory", configure.getParameter("role-directory"));
-        roles.put("document", configure.getParameter("role-document"));
-        roles.put("form", configure.getParameter("role-form"));
-        roles.put("grid", configure.getParameter("role-grid"));
-        roles.put("gridcell", configure.getParameter("role-gridcell"));
-        roles.put("group", configure.getParameter("role-group"));
-        roles.put("heading", configure.getParameter("role-heading"));
-        roles.put("img", configure.getParameter("role-img"));
-        roles.put("link", configure.getParameter("role-link"));
-        roles.put("list", configure.getParameter("role-list"));
-        roles.put("listbox", configure.getParameter("role-listbox"));
-        roles.put("listitem", configure.getParameter("role-listitem"));
-        roles.put("log", configure.getParameter("role-log"));
-        roles.put("main", configure.getParameter("role-main"));
-        roles.put("marquee", configure.getParameter("role-marquee"));
-        roles.put("math", configure.getParameter("role-math"));
-        roles.put("menu", configure.getParameter("role-menu"));
-        roles.put("menubar", configure.getParameter("role-menubar"));
-        roles.put("menuitem", configure.getParameter("role-menuitem"));
-        roles.put("menuitemcheckbox",
-                configure.getParameter("role-menuitemcheckbox"));
-        roles.put("menuitemradio",
-                configure.getParameter("role-menuitemradio"));
-        roles.put("navigation", configure.getParameter("role-navigation"));
-        roles.put("note", configure.getParameter("role-note"));
-        roles.put("option", configure.getParameter("role-option"));
-        roles.put("presentation", configure.getParameter("role-presentation"));
-        roles.put("progressbar", configure.getParameter("role-progressbar"));
-        roles.put("radio", configure.getParameter("role-radio"));
-        roles.put("radiogroup", configure.getParameter("role-radiogroup"));
-        roles.put("region", configure.getParameter("role-region"));
-        roles.put("row", configure.getParameter("role-row"));
-        roles.put("rowgroup", configure.getParameter("role-rowgroup"));
-        roles.put("rowheader", configure.getParameter("role-rowheader"));
-        roles.put("scrollbar", configure.getParameter("role-scrollbar"));
-        roles.put("search", configure.getParameter("role-search"));
-        roles.put("separator", configure.getParameter("role-separator"));
-        roles.put("slider", configure.getParameter("role-slider"));
-        roles.put("spinbutton", configure.getParameter("role-spinbutton"));
-        roles.put("status", configure.getParameter("role-status"));
-        roles.put("tab", configure.getParameter("role-tab"));
-        roles.put("tablist", configure.getParameter("role-tablist"));
-        roles.put("tabpanel", configure.getParameter("role-tabpanel"));
-        roles.put("textbox", configure.getParameter("role-textbox"));
-        roles.put("timer", configure.getParameter("role-timer"));
-        roles.put("toolbar", configure.getParameter("role-toolbar"));
-        roles.put("tooltip", configure.getParameter("role-tooltip"));
-        roles.put("tree", configure.getParameter("role-tree"));
-        roles.put("treegrid", configure.getParameter("role-treegrid"));
-        roles.put("treeitem", configure.getParameter("role-treeitem"));
     }
 
     /**
@@ -1250,6 +1177,15 @@ public class AccessibleDisplayScreenReaderImplementation
         } else {
             return standartPrefix;
         }
+    }
+
+    /**
+     * Returns the description of role.
+     * @param role The role.
+     * @return The description of role.
+     */
+    protected String getRoleDescription(final String role) {
+        return configure.getParameter("role-" + role.toLowerCase());
     }
 
     /**
@@ -1569,9 +1505,10 @@ public class AccessibleDisplayScreenReaderImplementation
      */
     public void displayRole(final HTMLDOMElement element) {
         if (element.hasAttribute("role")) {
-            String role = element.getAttribute("role");
-            if (roles.containsKey(role)) {
-                forceRead(element, roles.get(role), attributeRolePrefixBefore,
+            String roleDescription =
+                    getRoleDescription(element.getAttribute("role"));
+            if (roleDescription != null) {
+                forceRead(element, roleDescription, attributeRolePrefixBefore,
                         attributeRoleSuffixBefore, attributeRolePrefixAfter,
                         attributeRoleSuffixAfter, DATA_ROLE_BEFORE_OF,
                         DATA_ROLE_AFTER_OF);
