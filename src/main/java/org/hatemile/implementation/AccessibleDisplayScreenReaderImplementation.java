@@ -125,6 +125,20 @@ public class AccessibleDisplayScreenReaderImplementation
             "data-headersafterof";
 
     /**
+     * The name of attribute that links the description of language with the
+     * element, before it.
+     */
+    protected static final String DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF =
+            "data-languagebeforeof";
+
+    /**
+     * The name of attribute that links the description of language with the
+     * element, after it.
+     */
+    protected static final String DATA_ATTRIBUTE_LANGUAGE_AFTER_OF =
+            "data-languageafterof";
+
+    /**
      * The name of attribute that links the content of link that open a new
      * instance, before it.
      */
@@ -468,6 +482,26 @@ public class AccessibleDisplayScreenReaderImplementation
      * The suffix text of header cell, after it content.
      */
     protected final String attributeHeadersSuffixAfter;
+
+    /**
+     * The prefix text of description of language element, before it.
+     */
+    protected final String attributeLanguagePrefixBefore;
+
+    /**
+     * The suffix text of description of language element, after it.
+     */
+    protected final String attributeLanguageSuffixBefore;
+
+    /**
+     * The prefix text of description of language element, before it.
+     */
+    protected final String attributeLanguagePrefixAfter;
+
+    /**
+     * The suffix text of description of language element, after it.
+     */
+    protected final String attributeLanguageSuffixAfter;
 
     /**
      * The prefix text of role of element, before it.
@@ -875,6 +909,11 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final Map<String, String> roles;
 
     /**
+     * The configuration of HaTeMiLe.
+     */
+    protected final Configure configure;
+
+    /**
      * The list element of shortcuts.
      */
     protected HTMLDOMElement listShortcuts;
@@ -888,13 +927,15 @@ public class AccessibleDisplayScreenReaderImplementation
      * Initializes a new object that manipulate the display for screen readers
      * of parser.
      * @param htmlParser The HTML parser.
-     * @param configure The configuration of HaTeMiLe.
+     * @param hatemileConfiguration The configuration of HaTeMiLe.
      * @param userAgent The user agent of browser.
      */
     public AccessibleDisplayScreenReaderImplementation(
-            final HTMLDOMParser htmlParser, final Configure configure,
+            final HTMLDOMParser htmlParser,
+            final Configure hatemileConfiguration,
             final String userAgent) {
-        this.parser = Objects.requireNonNull(htmlParser);
+        parser = Objects.requireNonNull(htmlParser);
+        configure = hatemileConfiguration;
         prefixId = configure.getParameter("prefix-generated-ids");
         shortcutPrefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
@@ -935,6 +976,14 @@ public class AccessibleDisplayScreenReaderImplementation
                 .getParameter("attribute-headers-prefix-after");
         attributeHeadersSuffixAfter = configure
                 .getParameter("attribute-headers-suffix-after");
+        attributeLanguagePrefixBefore = configure
+                .getParameter("attribute-language-prefix-before");
+        attributeLanguageSuffixBefore = configure
+                .getParameter("attribute-language-suffix-before");
+        attributeLanguagePrefixAfter = configure
+                .getParameter("attribute-language-prefix-after");
+        attributeLanguageSuffixAfter = configure
+                .getParameter("attribute-language-suffix-after");
         attributeRolePrefixBefore = configure
                 .getParameter("attribute-role-prefix-before");
         attributeRoleSuffixBefore = configure
@@ -1201,6 +1250,15 @@ public class AccessibleDisplayScreenReaderImplementation
         } else {
             return standartPrefix;
         }
+    }
+
+    /**
+     * Returns the description of language.
+     * @param languageCode The BCP 47 code language.
+     * @return The description of language.
+     */
+    protected String getLanguageDescription(final String languageCode) {
+        return configure.getParameter("language-" + languageCode.toLowerCase());
     }
 
     /**
@@ -1843,6 +1901,40 @@ public class AccessibleDisplayScreenReaderImplementation
         for (HTMLDOMElement element : elements) {
             if (CommonFunctions.isValidElement(element)) {
                 displayDragAndDrop(element);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayLanguage(final HTMLDOMElement element) {
+        String languageCode = null;
+        if (element.hasAttribute("lang")) {
+            languageCode = element.getAttribute("lang");
+        } else if (element.hasAttribute("hreflang")) {
+            languageCode = element.getAttribute("hreflang");
+        }
+        String language = getLanguageDescription(languageCode);
+        if (language != null) {
+            forceRead(element, language, attributeLanguagePrefixBefore,
+                    attributeLanguageSuffixBefore, attributeLanguagePrefixAfter,
+                    attributeLanguageSuffixAfter,
+                    DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF,
+                    DATA_ATTRIBUTE_LANGUAGE_AFTER_OF);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllLanguages() {
+        Collection<HTMLDOMElement> elements = parser
+                .find("html[lang],body[lang],body [lang],body [hreflang]")
+                .listResults();
+        for (HTMLDOMElement element : elements) {
+            if (CommonFunctions.isValidElement(element)) {
+                displayLanguage(element);
             }
         }
     }

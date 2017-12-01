@@ -96,4 +96,15 @@ public interface AccessibleDisplay {
      * Display that an elements of page have drag-and-drop events.
      */
     void displayAllDragsAndDrops();
+
+    /**
+     * Display the language of element.
+     * @param element The element.
+     */
+    void displayLanguage(HTMLDOMElement element);
+
+    /**
+     * Display the language of all elements of page.
+     */
+    void displayAllLanguages();
 }
