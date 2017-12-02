@@ -1875,4 +1875,39 @@ public class AccessibleDisplayScreenReaderImplementation
             }
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAlternativeTextImage(final HTMLDOMElement image) {
+        if ((image.hasAttribute("alt")) || (image.hasAttribute("title"))) {
+            if ((image.hasAttribute("alt")) && (!image.hasAttribute("title"))) {
+                image.setAttribute("title", image.getAttribute("alt"));
+            } else if ((image.hasAttribute("title"))
+                    && (!image.hasAttribute("alt"))) {
+                image.setAttribute("alt", image.getAttribute("title"));
+            }
+            CommonFunctions.generateId(image, prefixId);
+            image.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
+                    image.getAttribute("id"));
+            image.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,
+                    image.getAttribute("id"));
+        } else {
+            image.setAttribute("alt", "");
+            image.setAttribute("role", "presentation");
+            image.setAttribute("aria-hidden", "true");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void displayAllAlternativeTextImages() {
+        Collection<HTMLDOMElement> images = parser.find("img").listResults();
+        for (HTMLDOMElement image : images) {
+            if (CommonFunctions.isValidElement(image)) {
+                displayAlternativeTextImage(image);
+            }
+        }
+    }
 }

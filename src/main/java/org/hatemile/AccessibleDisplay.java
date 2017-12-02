@@ -107,4 +107,15 @@ public interface AccessibleDisplay {
      * Display the language of all elements of page.
      */
     void displayAllLanguages();
+
+    /**
+     * Display the alternative text of image.
+     * @param image The image.
+     */
+    void displayAlternativeTextImage(HTMLDOMElement image);
+
+    /**
+     * Display the alternative text of all images of page.
+     */
+    void displayAllAlternativeTextImages();
 }
