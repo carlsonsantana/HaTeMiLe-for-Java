@@ -13,6 +13,6 @@ limitations under the License.
  */
 
 /**
- * The org.hatemile.util.html package contains the interfaces of HTML handles.
+ * The org.hatemile.util.css package contains the interfaces of CSS handles.
  */
-package org.hatemile.util.html;
+package org.hatemile.util.css;

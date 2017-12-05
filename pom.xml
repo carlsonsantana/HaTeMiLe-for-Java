@@ -51,6 +51,11 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.7.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.helger</groupId>
+			<artifactId>ph-css</artifactId>
+			<version>5.0.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>

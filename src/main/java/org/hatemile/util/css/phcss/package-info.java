@@ -13,6 +13,7 @@ limitations under the License.
  */
 
 /**
- * The org.hatemile.util.html package contains the interfaces of HTML handles.
+ * The org.hatemile.util.css.phcss package contains the implementation of CSS
+ * handles for ph-css library.
  */
-package org.hatemile.util.html;
+package org.hatemile.util.css.phcss;

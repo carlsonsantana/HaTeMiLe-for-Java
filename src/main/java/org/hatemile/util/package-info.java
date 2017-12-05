@@ -13,6 +13,6 @@ limitations under the License.
  */
 
 /**
- * The hatemile.util package contains the utilities of library.
+ * The org.hatemile.util package contains the utilities of library.
  */
 package org.hatemile.util;

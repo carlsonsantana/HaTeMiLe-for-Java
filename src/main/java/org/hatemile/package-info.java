@@ -13,6 +13,7 @@ limitations under the License.
  */
 
 /**
- * The hatemile package contains the interfaces with the acessibility solutions.
+ * The org.hatemile package contains the interfaces with the acessibility
+ * solutions.
  */
 package org.hatemile;

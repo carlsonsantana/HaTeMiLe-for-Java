@@ -13,7 +13,7 @@ limitations under the License.
  */
 
 /**
- * The hatemile.util.html.jsoup package contains the implementation of HTML
+ * The org.hatemile.util.html.jsoup package contains the implementation of HTML
  * handles for Jsoup library.
  */
 package org.hatemile.util.html.jsoup;

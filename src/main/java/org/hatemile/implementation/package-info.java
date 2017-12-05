@@ -13,7 +13,7 @@ limitations under the License.
  */
 
 /**
- * The hatemile.implementation package contains the official implementation
+ * The org.hatemile.implementation package contains the official implementation
  * of interfaces solutions.
  */
 package org.hatemile.implementation;

@@ -11,8 +11,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+package org.hatemile.util.css;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
- * The org.hatemile.util.html package contains the interfaces of HTML handles.
+ * The StyleSheetParser interface contains the methods for access the CSS
+ * parser.
  */
-package org.hatemile.util.html;
+public interface StyleSheetParser {
+    /**
+     * Returns the rules of parser by properties.
+     * @param properties The properties.
+     * @return The rules.
+     */
+    List<StyleSheetRule> getRules(Collection<String> properties);
+}
