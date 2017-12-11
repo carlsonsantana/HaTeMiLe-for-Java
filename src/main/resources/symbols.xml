@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<symbols>
+	<symbol symbol="!" description="Exclamation mark" />
+	<symbol symbol="&quot;" description="Double quotes" />
+	<symbol symbol="#" description="Number" />
+	<symbol symbol="$" description="Dollar" />
+	<symbol symbol="%" description="Procenttecken" />
+	<symbol symbol="&" description="Ampersand" />
+	<symbol symbol="'" description="Single quote" />
+	<symbol symbol="(" description="Open parenthesis" />
+	<symbol symbol=")" description="Close parenthesis" />
+	<symbol symbol="*" description="Asterisk" />
+	<symbol symbol="+" description="Plus" />
+	<symbol symbol="," description="Comma" />
+	<symbol symbol="-" description="Hyphen" />
+	<symbol symbol="." description="Dot" />
+	<symbol symbol="/" description="Slash" />
+	<symbol symbol=":" description="Colon" />
+	<symbol symbol=";" description="Semicolon" />
+	<symbol symbol="&lt;" description="Less than" />
+	<symbol symbol="=" description="Equals" />
+	<symbol symbol=">" description="Greater than" />
+	<symbol symbol="?" description="Question mark" />
+	<symbol symbol="@" description="At symbol" />
+	<symbol symbol="[" description="Open bracket" />
+	<symbol symbol="\" description="Backslash" />
+	<symbol symbol="]" description="Close bracket" />
+	<symbol symbol="^" description="Caret" />
+	<symbol symbol="_" description="Underscore" />
+	<symbol symbol="`" description="Grave accent" />
+	<symbol symbol="{" description="Open brace" />
+	<symbol symbol="|" description="Vertical bar" />
+	<symbol symbol="}" description="Close brace" />
+	<symbol symbol="~" description="Tilde" />
+</symbols>
