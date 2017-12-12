@@ -1319,7 +1319,11 @@ public class AccessibleDisplayScreenReaderImplementation
                 insert(body, insertedElement, before);
             }
         } else if (appendTags.contains(tagName)) {
-            element.prependElement(insertedElement);
+            if (before) {
+                element.prependElement(insertedElement);
+            } else {
+                element.appendElement(insertedElement);
+            }
         } else if (controls.contains(tagName)) {
             Collection<HTMLDOMElement> labels = new ArrayList<HTMLDOMElement>();
             if (element.hasAttribute("id")) {
