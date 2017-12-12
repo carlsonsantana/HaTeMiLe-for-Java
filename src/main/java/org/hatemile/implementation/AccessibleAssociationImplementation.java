@@ -113,7 +113,7 @@ public class AccessibleAssociationImplementation
                     if (cell.hasAttribute("rowspan")) {
                         rowspan = Integer
                                 .parseInt(cell.getAttribute("rowspan"));
-                        for (int newRowIndex = rowIndex; rowspan > 1;
+                        for (int newRowIndex = rowIndex + 1; rowspan > 1;
                                 rowspan--, newRowIndex++) {
                             if (newTable.size() <= newRowIndex) {
                                 newTable.add(new ArrayList<HTMLDOMElement>());
