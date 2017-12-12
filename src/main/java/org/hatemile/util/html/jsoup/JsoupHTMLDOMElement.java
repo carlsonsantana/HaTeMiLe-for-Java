@@ -105,7 +105,11 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
      * {@inheritDoc}
      */
     public String getTextContent() {
-        return element.text();
+        if (getTagName().equals("STYLE")) {
+            return element.data();
+        } else {
+            return element.text();
+        }
     }
 
     /**
