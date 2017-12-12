@@ -208,7 +208,7 @@ public class AccessibleNavigationImplementation
      */
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this(htmlParser, configure, null);
+        this(htmlParser, configure, "/skippers.xml");
     }
 
     /**
