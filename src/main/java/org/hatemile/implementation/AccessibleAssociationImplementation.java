@@ -99,14 +99,14 @@ public class AccessibleAssociationImplementation
                     newCellIndex = cellIndex + cellsAdded;
                     List<HTMLDOMElement> newRow =
                             (List<HTMLDOMElement>) newTable.get(rowIndex);
-                    while ((newRow.size() > newCellIndex)
-                            && (newRow.get(newCellIndex) != null)) {
-                        if (newRow.size() <= newCellIndex) {
+                    while (newRow.size() <= newCellIndex) {
+                        newRow.add(null);
+                    }
+                    while (newRow.get(newCellIndex) != null) {
+                        cellsAdded++;
+                        newCellIndex = cellIndex + cellsAdded;
+                        if (newRow.size() == newCellIndex) {
                             newRow.add(null);
-                            break;
-                        } else {
-                            cellsAdded++;
-                            newCellIndex = cellIndex + cellsAdded;
                         }
                     }
                     newRow.set(newCellIndex, cell);
