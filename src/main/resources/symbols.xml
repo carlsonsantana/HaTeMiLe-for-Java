@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE symbols [
+<!ENTITY quot '"'>
+<!ENTITY amp '&#38;'>
+<!ENTITY lt '<'>
+]>
 <symbols>
 	<symbol symbol="!" description="Exclamation mark" />
 	<symbol symbol="&quot;" description="Double quotes" />
 	<symbol symbol="#" description="Number" />
 	<symbol symbol="$" description="Dollar" />
 	<symbol symbol="%" description="Procenttecken" />
-	<symbol symbol="&" description="Ampersand" />
+	<symbol symbol="&amp;" description="Ampersand" />
 	<symbol symbol="'" description="Single quote" />
 	<symbol symbol="(" description="Open parenthesis" />
 	<symbol symbol=")" description="Close parenthesis" />

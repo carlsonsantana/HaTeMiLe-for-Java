@@ -173,7 +173,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      */
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
             final StyleSheetParser styleSheetParser) {
-        this(htmlDOMParser, styleSheetParser, "symbols.xml");
+        this(htmlDOMParser, styleSheetParser, "/symbols.xml");
     }
 
     /**
