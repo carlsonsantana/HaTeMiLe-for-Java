@@ -392,6 +392,16 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final String shortcutPrefix;
 
     /**
+     * The description of shortcut list, before all elements.
+     */
+    protected final String attributeAccesskeyBefore;
+
+    /**
+     * The description of shortcut list, after all elements.
+     */
+    protected final String attributeAccesskeyAfter;
+
+    /**
      * The prefix description of shortcut list, before all elements.
      */
     protected final String attributeAccesskeyPrefixBefore;
@@ -933,6 +943,10 @@ public class AccessibleDisplayScreenReaderImplementation
         shortcutPrefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
 
+        attributeAccesskeyBefore = configure
+                .getParameter("attribute-accesskey-before");
+        attributeAccesskeyAfter = configure
+                .getParameter("attribute-accesskey-after");
         attributeAccesskeyPrefixBefore = configure
                 .getParameter("attribute-accesskey-prefix-before");
         attributeAccesskeySuffixBefore = configure
@@ -1263,14 +1277,11 @@ public class AccessibleDisplayScreenReaderImplementation
 
                 container.appendElement(textContainer);
 
-                String beforeText = attributeAccesskeyPrefixBefore
-                        + attributeAccesskeySuffixBefore;
-                if (!beforeText.isEmpty()) {
-                    textContainer.appendText(beforeText);
+                if (!attributeAccesskeyBefore.isEmpty()) {
+                    textContainer.appendText(attributeAccesskeyBefore);
                     local.prependElement(container);
                 } else {
-                    textContainer.appendText(attributeAccesskeyPrefixAfter
-                            + attributeAccesskeySuffixAfter);
+                    textContainer.appendText(attributeAccesskeyAfter);
                     local.appendElement(container);
                 }
             }
@@ -1464,21 +1475,29 @@ public class AccessibleDisplayScreenReaderImplementation
                 listShortcuts = generateListShortcuts();
             }
 
-            if (listShortcuts != null) {
-                String[] keys = element.getAttribute("accesskey")
-                        .split("[ \n\t\r]+");
-                for (int i = 0, length = keys.length; i < length; i++) {
-                    String key = keys[i].toUpperCase();
-                    String attribute = "[" + DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF
-                            + "=\"" + key + "\"]";
-                    if (parser.find(listShortcuts).findChildren(attribute)
-                            .firstResult() == null) {
+            String[] keys = element.getAttribute("accesskey")
+                    .split("[ \n\t\r]+");
+            for (int i = 0, length = keys.length; i < length; i++) {
+                String key = keys[i].toUpperCase();
+                String attribute = "[" + DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF
+                        + "=\"" + key + "\"]";
+                if (parser.find(listShortcuts).findChildren(attribute)
+                        .firstResult() == null) {
+                    String shortcut = shortcutPrefix + " + " + key;
+                    forceRead(element, shortcut, attributeAccesskeyPrefixBefore,
+                            attributeAccesskeySuffixBefore,
+                            attributeAccesskeyPrefixAfter,
+                            attributeAccesskeySuffixAfter,
+                            DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF,
+                            DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF);
+
+                    if (listShortcuts != null) {
                         HTMLDOMElement item = parser.createElement("li");
                         item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF,
                                 key);
                         item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF,
                                 key);
-                        item.appendText(shortcutPrefix + " + " + key + ": "
+                        item.appendText(shortcut + ": "
                                 + description);
                         listShortcuts.appendElement(item);
                     }
