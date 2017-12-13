@@ -1364,29 +1364,33 @@ public class AccessibleDisplayScreenReaderImplementation
             HTMLDOMElement referenceBefore = parser.find("[" + dataBeforeOf
                     + "=\"" + identifier + "\"]").firstResult();
 
-            if (referenceBefore != null) {
-                referenceBefore.removeNode();
-            }
+            if (referenceBefore != element) {
+                if (referenceBefore != null) {
+                    referenceBefore.removeNode();
+                }
 
-            HTMLDOMElement span = parser.createElement("span");
-            span.setAttribute("class", CLASS_FORCE_READ_BEFORE);
-            span.setAttribute(dataBeforeOf, identifier);
-            span.appendText(textBefore);
-            insert(element, span, true);
+                HTMLDOMElement span = parser.createElement("span");
+                span.setAttribute("class", CLASS_FORCE_READ_BEFORE);
+                span.setAttribute(dataBeforeOf, identifier);
+                span.appendText(textBefore);
+                insert(element, span, true);
+            }
         }
         if (!textAfter.isEmpty()) {
             HTMLDOMElement referenceAfter = parser.find("[" + dataAfterOf
                     + "=\"" + identifier + "\"]").firstResult();
 
-            if (referenceAfter != null) {
-                referenceAfter.removeNode();
-            }
+            if (referenceAfter != element) {
+                if (referenceAfter != null) {
+                    referenceAfter.removeNode();
+                }
 
-            HTMLDOMElement span = parser.createElement("span");
-            span.setAttribute("class", CLASS_FORCE_READ_AFTER);
-            span.setAttribute(dataAfterOf, identifier);
-            span.appendText(textAfter);
-            insert(element, span, false);
+                HTMLDOMElement span = parser.createElement("span");
+                span.setAttribute("class", CLASS_FORCE_READ_AFTER);
+                span.setAttribute(dataAfterOf, identifier);
+                span.appendText(textAfter);
+                insert(element, span, false);
+            }
         }
     }
 
