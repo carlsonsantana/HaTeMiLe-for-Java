@@ -70,10 +70,16 @@ public class AccessibleNavigationImplementation
     protected static final String CLASS_HEADING_ANCHOR = "heading-anchor";
 
     /**
-     * The HTML class of element for show the long description of image.
+     * The HTML class of force link, before it.
      */
-    protected static final String CLASS_LONG_DESCRIPTION_LINK =
-            "longdescription-link";
+    protected static final String CLASS_FORCE_LINK_BEFORE =
+            "force-link-before";
+
+    /**
+     * The HTML class of force link, after it.
+     */
+    protected static final String CLASS_FORCE_LINK_AFTER =
+            "force-link-after";
 
     /**
      * The name of attribute that links the anchor of skipper with the element.
@@ -226,9 +232,9 @@ public class AccessibleNavigationImplementation
                 .getParameter("elements-heading-before");
         elementsHeadingAfter = configure.getParameter("elements-heading-after");
         attributeLongDescriptionPrefixBefore = configure
-                .getParameter("attribute-longdescription-prefix-after");
+                .getParameter("attribute-longdescription-prefix-before");
         attributeLongDescriptionSuffixBefore = configure
-                .getParameter("attribute-longdescription-suffix-after");
+                .getParameter("attribute-longdescription-suffix-before");
         attributeLongDescriptionPrefixAfter = configure
                 .getParameter("attribute-longdescription-prefix-after");
         attributeLongDescriptionSuffixAfter = configure
@@ -632,7 +638,7 @@ public class AccessibleNavigationImplementation
                                 .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
                                     id);
                         beforeAnchor.setAttribute("class",
-                                CLASS_LONG_DESCRIPTION_LINK);
+                                CLASS_FORCE_LINK_BEFORE);
                         beforeAnchor.appendText(beforeText.trim());
                         image.insertBefore(beforeAnchor);
                     }
@@ -649,7 +655,7 @@ public class AccessibleNavigationImplementation
                                 .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
                                     id);
                         afterAnchor.setAttribute("class",
-                                CLASS_LONG_DESCRIPTION_LINK);
+                                CLASS_FORCE_LINK_AFTER);
                         afterAnchor.appendText(afterText.trim());
                         image.insertAfter(afterAnchor);
                     }
