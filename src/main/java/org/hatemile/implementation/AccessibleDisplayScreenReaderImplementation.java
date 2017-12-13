@@ -1364,7 +1364,7 @@ public class AccessibleDisplayScreenReaderImplementation
             HTMLDOMElement referenceBefore = parser.find("[" + dataBeforeOf
                     + "=\"" + identifier + "\"]").firstResult();
 
-            if (referenceBefore != element) {
+            if (!element.equals(referenceBefore)) {
                 if (referenceBefore != null) {
                     referenceBefore.removeNode();
                 }
@@ -1380,7 +1380,7 @@ public class AccessibleDisplayScreenReaderImplementation
             HTMLDOMElement referenceAfter = parser.find("[" + dataAfterOf
                     + "=\"" + identifier + "\"]").firstResult();
 
-            if (referenceAfter != element) {
+            if (!element.equals(referenceAfter)) {
                 if (referenceAfter != null) {
                     referenceAfter.removeNode();
                 }
