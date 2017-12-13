@@ -22,7 +22,7 @@ keyboardAccess = function(element) {
 
 clearDropEffect = function() {
 	var activeEvents, dragEvents, droppedElement, droppedElements, hoverEvents, _i, _len;
-	droppedElements = exports.__aria_dropeffect__elements__;
+	droppedElements = __exports.__aria_dropeffect__elements__;
 	for (_i = 0, _len = droppedElements.length; _i < _len; _i++) {
 		droppedElement = droppedElements[_i];
 		dragEvents = (!hasEvent(droppedElement, 'keydown', 'data-keydownadded', 'drag')) && (!hasEvent(droppedElement, 'keyup', 'data-keyupadded', 'drag'));
@@ -37,8 +37,8 @@ clearDropEffect = function() {
 
 generateDropEffect = function() {
 	var ariaDropEffect, dropEffect, droppedElement, droppedElements, effectAllowed, _i, _len;
-	dropEffect = exports.__dragEventDataTransfer__.dropEffect;
-	effectAllowed = exports.__dragEventDataTransfer__.effectAllowed;
+	dropEffect = __exports.__dragEventDataTransfer__.dropEffect;
+	effectAllowed = __exports.__dragEventDataTransfer__.effectAllowed;
 	if ((dropEffect === 'none') || ((dropEffect !== 'copy') && (dropEffect !== 'link') && (dropEffect !== 'move'))) {
 		if ((effectAllowed === 'copyLink') || (effectAllowed === 'copyMove') || (effectAllowed === 'linkMove') || (effectAllowed === 'all')) {
 			ariaDropEffect = 'popup';
@@ -50,7 +50,7 @@ generateDropEffect = function() {
 	} else {
 		ariaDropEffect = dropEffect;
 	}
-	droppedElements = exports.__aria_dropeffect__elements__;
+	droppedElements = __exports.__aria_dropeffect__elements__;
 	for (_i = 0, _len = droppedElements.length; _i < _len; _i++) {
 		droppedElement = droppedElements[_i];
 		if (hasEvent(droppedElement, 'drop')) {
@@ -65,29 +65,29 @@ executeMouseEvent = function(type, element, event) {
 };
 
 executeDragEvent = function(type, element, event) {
-	if (isEmpty(exports.__dragEventDataTransfer__)) {
-		exports.__dragEventDataTransfer__ = {
+	if (isEmpty(__exports.__dragEventDataTransfer__)) {
+		__exports.__dragEventDataTransfer__ = {
 			'files': null,
 			'types': null,
 			'effectAllowed': 'uninitialized',
 			'dropEffect': 'none'
 		};
-		exports.__dragEventDataTransfer__.setDragImage = function() {
+		__exports.__dragEventDataTransfer__.setDragImage = function() {
 		};
-		exports.__dragEventDataTransfer__.addElement = function() {
+		__exports.__dragEventDataTransfer__.addElement = function() {
 		};
-		exports.__dragEventDataTransfer__._data = {};
-		exports.__dragEventDataTransfer__.setData = function(format, data) {
-			exports.__dragEventDataTransfer__._data[format] = data;
+		__exports.__dragEventDataTransfer__._data = {};
+		__exports.__dragEventDataTransfer__.setData = function(format, data) {
+			__exports.__dragEventDataTransfer__._data[format] = data;
 		};
-		exports.__dragEventDataTransfer__.getData = function(format) {
-			return exports.__dragEventDataTransfer__._data[format];
+		__exports.__dragEventDataTransfer__.getData = function(format) {
+			return __exports.__dragEventDataTransfer__._data[format];
 		};
-		exports.__dragEventDataTransfer__.clearData = function(format) {
+		__exports.__dragEventDataTransfer__.clearData = function(format) {
 			if (isEmpty(format)) {
-				exports.__dragEventDataTransfer__._data = {};
+				__exports.__dragEventDataTransfer__._data = {};
 			} else {
-				exports.__dragEventDataTransfer__._data[format] = void 0;
+				__exports.__dragEventDataTransfer__._data[format] = void 0;
 			}
 		};
 	}
@@ -160,7 +160,7 @@ createMouseEvent = function(type, element, event) {
 createDragEvent = function(type, element, event) {
 	var dragEvent;
 	dragEvent = createMouseEvent(type, element, event);
-	dragEvent.dataTransfer = exports.__dragEventDataTransfer__;
+	dragEvent.dataTransfer = __exports.__dragEventDataTransfer__;
 	return dragEvent;
 };
 
@@ -202,7 +202,7 @@ fixDragInElement = function(element) {
 		addEventHandler(element, 'keydown', 'data-keydownadded', 'drag', function(event) {
 			var grabbedElement, grabbedElements, _i, _len;
 			if ((event.keyCode === ' '.charCodeAt(0)) && (!element.hasAttribute('data-keypressed'))) {
-				grabbedElements = exports.__aria_grabbed__elements__;
+				grabbedElements = __exports.__aria_grabbed__elements__;
 				for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
 					grabbedElement = grabbedElements[_i];
 					grabbedElement.setAttribute('aria-grabbed', 'false');
@@ -210,7 +210,7 @@ fixDragInElement = function(element) {
 				}
 				element.setAttribute('aria-grabbed', 'true');
 				element.setAttribute('data-keypressed', 'true');
-				exports.__aria_grabbed__elements__ = [element];
+				__exports.__aria_grabbed__elements__ = [element];
 				executeDragEvent('dragstart', element, event);
 				executeDragEvent('drag', element, event);
 				generateDropEffect();
@@ -223,16 +223,16 @@ fixDragInElement = function(element) {
 };
 
 fixDropInElement = function(element) {
-	exports.__aria_dropeffect__elements__.push(element);
+	__exports.__aria_dropeffect__elements__.push(element);
 	addEventHandler(element, 'focus', 'data-focusadded', 'drop', function(event) {
-		if (!isEmpty(exports.__aria_grabbed__elements__)) {
+		if (!isEmpty(__exports.__aria_grabbed__elements__)) {
 			executeDragEvent('dragenter', element, event);
 			executeDragEvent('dragover', element, event);
 			generateDropEffect();
 		}
 	});
 	addEventHandler(element, 'blur', 'data-bluradded', 'drop', function(event) {
-		if (!isEmpty(exports.__aria_grabbed__elements__)) {
+		if (!isEmpty(__exports.__aria_grabbed__elements__)) {
 			executeDragEvent('dragleave', element, event);
 			generateDropEffect();
 		}
@@ -240,16 +240,16 @@ fixDropInElement = function(element) {
 	if ((!hasEvent(element, 'keydown', 'data-keydownadded', 'drop')) && (!hasEvent(element, 'keyup', 'data-keyupadded', 'drop'))) {
 		addEventHandler(element, 'keydown', 'data-keydownadded', 'drop', function(event) {
 			var grabbedElement, grabbedElements, _i, _len;
-			if ((enterPressed(event.keyCode)) && (!element.hasAttribute('data-keypressed')) && (!isEmpty(exports.__aria_grabbed__elements__))) {
+			if ((enterPressed(event.keyCode)) && (!element.hasAttribute('data-keypressed')) && (!isEmpty(__exports.__aria_grabbed__elements__))) {
 				element.setAttribute('data-keypressed', 'true');
 				if (hasEvent(element, 'drop')) {
-					grabbedElements = exports.__aria_grabbed__elements__;
+					grabbedElements = __exports.__aria_grabbed__elements__;
 					for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
 						grabbedElement = grabbedElements[_i];
 						grabbedElement.setAttribute('aria-grabbed', 'false');
 						executeDragEvent('dragend', grabbedElement, event);
 					}
-					exports.__aria_grabbed__elements__ = [];
+					__exports.__aria_grabbed__elements__ = [];
 					clearDropEffect();
 				}
 				executeDragEvent('drop', element, event);
@@ -264,13 +264,13 @@ fixDropInElement = function(element) {
 addEventHandler(document.documentElement, 'keypress', 'data-keypressadded', 'active', function(event) {
 	var grabbedElement, grabbedElements, _i, _len;
 	if (event.keyCode === 27) {
-		grabbedElements = exports.__aria_grabbed__elements__;
+		grabbedElements = __exports.__aria_grabbed__elements__;
 		for (_i = 0, _len = grabbedElements.length; _i < _len; _i++) {
 			grabbedElement = grabbedElements[_i];
 			grabbedElement.setAttribute('aria-grabbed', 'false');
 			executeDragEvent('dragend', grabbedElement, event);
 		}
-		exports.__aria_grabbed__elements__ = [];
+		__exports.__aria_grabbed__elements__ = [];
 		clearDropEffect();
 	}
 });
