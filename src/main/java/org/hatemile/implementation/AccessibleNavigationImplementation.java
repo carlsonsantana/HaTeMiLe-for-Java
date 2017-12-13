@@ -239,7 +239,7 @@ public class AccessibleNavigationImplementation
                 .getParameter("attribute-longdescription-prefix-after");
         attributeLongDescriptionSuffixAfter = configure
                 .getParameter("attribute-longdescription-suffix-after");
-        skippers = getSkippers(skipperFileName);
+        skippers = getSkippers(skipperFileName, configure);
         listSkippersAdded = false;
         validateHeading = false;
         validHeading = false;
@@ -249,10 +249,11 @@ public class AccessibleNavigationImplementation
     /**
      * Returns the skippers of configuration.
      * @param fileName The file path of skippers configuration.
+     * @param configure The configuration of HaTeMiLe.
      * @return The skippers of configuration.
      */
     protected static Collection<Map<String, String>> getSkippers(
-            final String fileName) {
+            final String fileName, final Configure configure) {
         Collection<Map<String, String>> skippers =
                 new ArrayList<Map<String, String>>();
 
@@ -279,8 +280,8 @@ public class AccessibleNavigationImplementation
                                 new HashMap<String, String>();
                         skipper.put("selector",
                                 skipperElement.getAttribute("selector"));
-                        skipper.put("description",
-                                skipperElement.getAttribute("description"));
+                        skipper.put("description", configure.getParameter(
+                                skipperElement.getAttribute("description")));
                         skipper.put("shortcut",
                                 skipperElement.getAttribute("shortcut"));
                         skippers.add(skipper);
