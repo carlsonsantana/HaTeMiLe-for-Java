@@ -931,6 +931,18 @@ public class AccessibleDisplayScreenReaderImplementation
      * of parser.
      * @param htmlParser The HTML parser.
      * @param hatemileConfiguration The configuration of HaTeMiLe.
+     */
+    public AccessibleDisplayScreenReaderImplementation(
+            final HTMLDOMParser htmlParser,
+            final Configure hatemileConfiguration) {
+        this(htmlParser, hatemileConfiguration, null);
+    }
+
+    /**
+     * Initializes a new object that manipulate the display for screen readers
+     * of parser.
+     * @param htmlParser The HTML parser.
+     * @param hatemileConfiguration The configuration of HaTeMiLe.
      * @param userAgent The user agent of browser.
      */
     public AccessibleDisplayScreenReaderImplementation(
