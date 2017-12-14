@@ -20,6 +20,7 @@ import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.writer.CSSWriterSettings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.hatemile.util.css.StyleSheetDeclaration;
 import org.hatemile.util.css.StyleSheetRule;
 
@@ -44,7 +45,7 @@ public class PHCSSRule implements StyleSheetRule {
      * @param styleRule The ph-css rule.
      */
     public PHCSSRule(final CSSStyleRule styleRule) {
-        rule = styleRule;
+        rule = Objects.requireNonNull(styleRule);
         if (writerSettings == null) {
             writerSettings = new CSSWriterSettings(ECSSVersion.CSS30);
         }

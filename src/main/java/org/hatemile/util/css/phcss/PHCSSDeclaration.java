@@ -18,6 +18,7 @@ import com.helger.css.decl.CSSDeclaration;
 import com.helger.css.writer.CSSWriterSettings;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.hatemile.util.css.StyleSheetDeclaration;
 
 /**
@@ -41,7 +42,7 @@ public class PHCSSDeclaration implements StyleSheetDeclaration {
      * @param cssDeclaration The ph-css declaration.
      */
     public PHCSSDeclaration(final CSSDeclaration cssDeclaration) {
-        this.declaration = cssDeclaration;
+        this.declaration = Objects.requireNonNull(cssDeclaration);
         if (writerSettings == null) {
             writerSettings = new CSSWriterSettings(ECSSVersion.CSS30);
         }

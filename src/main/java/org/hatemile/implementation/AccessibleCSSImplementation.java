@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -176,7 +177,9 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
             final StyleSheetParser styleSheetParser,
             final Configure configure) {
-        this(htmlDOMParser, styleSheetParser, configure,
+        this(Objects.requireNonNull(htmlDOMParser),
+                Objects.requireNonNull(styleSheetParser),
+                Objects.requireNonNull(configure),
                 "/symbols.xml");
     }
 
@@ -192,8 +195,8 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
             final StyleSheetParser styleSheetParser,
             final Configure configure,
             final String symbolFileName) {
-        this.htmlParser = htmlDOMParser;
-        this.cssParser = styleSheetParser;
+        this.htmlParser = Objects.requireNonNull(htmlDOMParser);
+        this.cssParser = Objects.requireNonNull(styleSheetParser);
         this.symbols = getSymbols(symbolFileName, configure);
     }
 
