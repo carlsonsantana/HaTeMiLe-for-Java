@@ -18,6 +18,79 @@ To generate the full API documentation of HaTeMiLe of Java:
 1. [Install Maven](https://maven.apache.org/install.html);
 2. Execute the command `mvn site` in HaTeMiLe of Java directory.
 
+## Import the library to your project
+
+### Maven
+
+**Step 1.** Add the JitPack repository to your build file
+
+```xml
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+```
+
+**Step 2.** Add the dependency
+
+```xml
+    <dependency>
+        <groupId>com.github.carlsonsantana</groupId>
+        <artifactId>HaTeMiLe-for-Java</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+```
+
+### Gradle
+
+**Step 1.** Add it in your root build.gradle at the end of repositories
+
+```gradle
+    allprojects {
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+
+**Step 2.** Add the dependency
+```gradle
+    dependencies {
+            compile 'com.github.carlsonsantana:HaTeMiLe-for-Java:2.0.0'
+    }
+```
+
+### sbt
+
+**Step 1.** Add it in your build.sbt at the end of resolvers
+
+```schala
+    resolvers += "jitpack" at "https://jitpack.io"
+```
+
+**Step 2.** Add the dependency
+
+```schala
+    libraryDependencies += "com.github.carlsonsantana" % "HaTeMiLe-for-Java" % "2.0.0"
+```
+
+### Leiningen
+
+**Step 1.** Add it in your project.clj at the end of repositories
+
+```clojure
+    :repositories [["jitpack" "https://jitpack.io"]]
+```
+
+**Step 2.** Add the dependency
+
+```clojure
+    :dependencies [[com.github.carlsonsantana/HaTeMiLe-for-Java "2.0.0"]]
+```
+
 ## Usage
 
 Import all needed classes:
