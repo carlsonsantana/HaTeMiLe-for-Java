@@ -5,36 +5,36 @@
 <!ENTITY lt '<'>
 ]>
 <symbols>
-	<symbol symbol="!" description="Exclamation mark" />
-	<symbol symbol="&quot;" description="Double quotes" />
-	<symbol symbol="#" description="Number" />
-	<symbol symbol="$" description="Dollar" />
-	<symbol symbol="%" description="Procenttecken" />
-	<symbol symbol="&amp;" description="Ampersand" />
-	<symbol symbol="'" description="Single quote" />
-	<symbol symbol="(" description="Open parenthesis" />
-	<symbol symbol=")" description="Close parenthesis" />
-	<symbol symbol="*" description="Asterisk" />
-	<symbol symbol="+" description="Plus" />
-	<symbol symbol="," description="Comma" />
-	<symbol symbol="-" description="Hyphen" />
-	<symbol symbol="." description="Dot" />
-	<symbol symbol="/" description="Slash" />
-	<symbol symbol=":" description="Colon" />
-	<symbol symbol=";" description="Semicolon" />
-	<symbol symbol="&lt;" description="Less than" />
-	<symbol symbol="=" description="Equals" />
-	<symbol symbol=">" description="Greater than" />
-	<symbol symbol="?" description="Question mark" />
-	<symbol symbol="@" description="At symbol" />
-	<symbol symbol="[" description="Open bracket" />
-	<symbol symbol="\" description="Backslash" />
-	<symbol symbol="]" description="Close bracket" />
-	<symbol symbol="^" description="Caret" />
-	<symbol symbol="_" description="Underscore" />
-	<symbol symbol="`" description="Grave accent" />
-	<symbol symbol="{" description="Open brace" />
-	<symbol symbol="|" description="Vertical bar" />
-	<symbol symbol="}" description="Close brace" />
-	<symbol symbol="~" description="Tilde" />
+	<symbol symbol="!" description="symbol-exclamation-mark" />
+	<symbol symbol="&quot;" description="symbol-double-quotes" />
+	<symbol symbol="#" description="symbol-number" />
+	<symbol symbol="$" description="symbol-dollar" />
+	<symbol symbol="%" description="symbol-percent" />
+	<symbol symbol="&amp;" description="symbol-ampersand" />
+	<symbol symbol="'" description="symbol-single-quote" />
+	<symbol symbol="(" description="symbol-open-parenthesis" />
+	<symbol symbol=")" description="symbol-close-parenthesis" />
+	<symbol symbol="*" description="symbol-asterisk" />
+	<symbol symbol="+" description="symbol-plus" />
+	<symbol symbol="," description="symbol-comma" />
+	<symbol symbol="-" description="symbol-hyphen" />
+	<symbol symbol="." description="symbol-dot" />
+	<symbol symbol="/" description="symbol-slash" />
+	<symbol symbol=":" description="symbol-colon" />
+	<symbol symbol=";" description="symbol-semicolon" />
+	<symbol symbol="&lt;" description="symbol-less-than" />
+	<symbol symbol="=" description="symbol-equals" />
+	<symbol symbol=">" description="symbol-greater-than" />
+	<symbol symbol="?" description="symbol-question-mark" />
+	<symbol symbol="@" description="symbol-at" />
+	<symbol symbol="[" description="symbol-open-bracket" />
+	<symbol symbol="\" description="symbol-backslash" />
+	<symbol symbol="]" description="symbol-close-bracket" />
+	<symbol symbol="^" description="symbol-caret" />
+	<symbol symbol="_" description="symbol-underscore" />
+	<symbol symbol="`" description="symbol-grave-accent" />
+	<symbol symbol="{" description="symbol-open-brace" />
+	<symbol symbol="|" description="symbol-vertical-bar" />
+	<symbol symbol="}" description="symbol-close-brace" />
+	<symbol symbol="~" description="symbol-tilde" />
 </symbols>

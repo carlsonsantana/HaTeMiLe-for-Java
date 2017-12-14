@@ -30,6 +30,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.hatemile.AccessibleCSS;
 import org.hatemile.util.CommonFunctions;
+import org.hatemile.util.Configure;
 import org.hatemile.util.css.StyleSheetDeclaration;
 import org.hatemile.util.css.StyleSheetParser;
 import org.hatemile.util.css.StyleSheetRule;
@@ -170,10 +171,13 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      * parser.
      * @param htmlDOMParser The HTML parser.
      * @param styleSheetParser The CSS parser.
+     * @param configure The configuration of HaTeMiLe.
      */
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
-            final StyleSheetParser styleSheetParser) {
-        this(htmlDOMParser, styleSheetParser, "/symbols.xml");
+            final StyleSheetParser styleSheetParser,
+            final Configure configure) {
+        this(htmlDOMParser, styleSheetParser, configure,
+                "/symbols.xml");
     }
 
     /**
@@ -181,23 +185,26 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      * parser.
      * @param htmlDOMParser The HTML parser.
      * @param styleSheetParser The CSS parser.
+     * @param configure The configuration of HaTeMiLe.
      * @param symbolFileName The file path of symbol configuration.
      */
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
             final StyleSheetParser styleSheetParser,
+            final Configure configure,
             final String symbolFileName) {
         this.htmlParser = htmlDOMParser;
         this.cssParser = styleSheetParser;
-        this.symbols = getSymbols(symbolFileName);
+        this.symbols = getSymbols(symbolFileName, configure);
     }
 
     /**
      * Returns the symbols of configuration.
      * @param fileName The file path of symbol configuration.
+     * @param configure The configuration of HaTeMiLe.
      * @return The symbols of configuration.
      */
-    protected static Map<String, String> getSymbols(
-            final String fileName) {
+    protected static Map<String, String> getSymbols(final String fileName,
+            final Configure configure) {
         Map<String, String> symbols = new HashMap<String, String>();
 
         InputStream inputStream = File.class.getResourceAsStream(fileName);
@@ -219,7 +226,8 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
                     if ((symbolElement.hasAttribute("symbol"))
                             && (symbolElement.hasAttribute("description"))) {
                         symbols.put(symbolElement.getAttribute("symbol"),
-                                symbolElement.getAttribute("description"));
+                                configure.getParameter(symbolElement
+                                        .getAttribute("description")));
                     }
                 }
             }
