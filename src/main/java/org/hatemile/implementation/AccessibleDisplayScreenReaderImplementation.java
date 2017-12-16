@@ -1813,7 +1813,9 @@ public class AccessibleDisplayScreenReaderImplementation
      * {@inheritDoc}
      */
     public void displayTitle(final HTMLDOMElement element) {
-        if ((element.hasAttribute("title"))
+        if (element.getTagName().equals("IMG")) {
+            displayAlternativeTextImage(element);
+        } else if ((element.hasAttribute("title"))
                 && (!element.getAttribute("title").isEmpty())) {
             forceRead(element, element.getAttribute("title"),
                     attributeTitlePrefixBefore, attributeTitleSuffixBefore,
