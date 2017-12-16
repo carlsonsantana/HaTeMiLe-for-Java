@@ -38,11 +38,6 @@ public class AccessibleAssociationImplementation
     protected final HTMLDOMParser parser;
 
     /**
-     * The prefix of generated ids.
-     */
-    protected final String prefixId;
-
-    /**
      * Initializes a new object that improve the accessibility of associations
      * of parser.
      * @param htmlParser The HTML parser.
@@ -51,7 +46,6 @@ public class AccessibleAssociationImplementation
     public AccessibleAssociationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
         this.parser = Objects.requireNonNull(htmlParser);
-        prefixId = configure.getParameter("prefix-generated-ids");
     }
 
     /**
@@ -214,7 +208,7 @@ public class AccessibleAssociationImplementation
             headersIds.clear();
             for (HTMLDOMElement cell : row) {
                 if (cell.getTagName().equals("TH")) {
-                    CommonFunctions.generateId(cell, prefixId);
+                    CommonFunctions.generateId(cell);
                     headersIds.add(cell.getAttribute("id"));
 
                     cell.setAttribute("scope", "row");
@@ -243,7 +237,7 @@ public class AccessibleAssociationImplementation
         Collection<HTMLDOMElement> cells = parser.find(tableHeader)
                 .findChildren("tr").findChildren("th").listResults();
         for (HTMLDOMElement cell : cells) {
-            CommonFunctions.generateId(cell, prefixId);
+            CommonFunctions.generateId(cell);
 
             cell.setAttribute("scope", "col");
         }
@@ -322,7 +316,7 @@ public class AccessibleAssociationImplementation
                         .findDescendants("input,select,textarea").firstResult();
 
                 if (field != null) {
-                    CommonFunctions.generateId(field, prefixId);
+                    CommonFunctions.generateId(field);
                     label.setAttribute("for", field.getAttribute("id"));
                 }
             }
@@ -332,7 +326,7 @@ public class AccessibleAssociationImplementation
                             .replaceAll("[ \n\t\r]+", " ").trim());
                 }
 
-                CommonFunctions.generateId(label, prefixId);
+                CommonFunctions.generateId(label);
                 field.setAttribute("aria-labelledby",
                         CommonFunctions.increaseInList(field
                             .getAttribute("aria-labelledby"),

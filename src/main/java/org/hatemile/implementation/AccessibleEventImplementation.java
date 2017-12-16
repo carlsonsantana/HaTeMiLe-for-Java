@@ -60,11 +60,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     protected final HTMLDOMParser parser;
 
     /**
-     * The prefix of generated ids.
-     */
-    protected final String prefixId;
-
-    /**
      * The state that indicates if the scripts used by solutions was added in
      * parser.
      */
@@ -85,7 +80,6 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     public AccessibleEventImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
         this.parser = Objects.requireNonNull(htmlParser);
-        prefixId = configure.getParameter("prefix-generated-ids");
         mainScriptAdded = false;
         scriptList = null;
     }
@@ -186,7 +180,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
         }
 
         if (scriptList != null) {
-            CommonFunctions.generateId(element, prefixId);
+            CommonFunctions.generateId(element);
             scriptList.appendText(event + "Elements.push('"
                     + element.getAttribute("id") + "');");
         }

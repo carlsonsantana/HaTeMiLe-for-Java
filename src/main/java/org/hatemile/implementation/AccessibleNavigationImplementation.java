@@ -175,11 +175,6 @@ public class AccessibleNavigationImplementation
     protected final String attributeLongDescriptionSuffixAfter;
 
     /**
-     * The prefix of generated ids.
-     */
-    protected final String prefixId;
-
-    /**
      * The skippers configured.
      */
     protected final Collection<Map<String, String>> skippers;
@@ -225,7 +220,6 @@ public class AccessibleNavigationImplementation
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure, final String skipperFileName) {
         this.parser = Objects.requireNonNull(htmlParser);
-        prefixId = configure.getParameter("prefix-generated-ids");
         elementsHeadingBefore = configure
                 .getParameter("elements-heading-before");
         elementsHeadingAfter = configure.getParameter("elements-heading-after");
@@ -435,7 +429,7 @@ public class AccessibleNavigationImplementation
      */
     protected HTMLDOMElement generateAnchorFor(final HTMLDOMElement element,
             final String dataAttribute, final String anchorClass) {
-        CommonFunctions.generateId(element, prefixId);
+        CommonFunctions.generateId(element);
         HTMLDOMElement anchor = null;
         if (parser.find("[" + dataAttribute + "=\"" + element
                 .getAttribute("id") + "\"]").firstResult() == null) {
@@ -443,7 +437,7 @@ public class AccessibleNavigationImplementation
                 anchor = element;
             } else {
                 anchor = parser.createElement("a");
-                CommonFunctions.generateId(anchor, prefixId);
+                CommonFunctions.generateId(anchor);
                 anchor.setAttribute("class", anchorClass);
                 element.insertBefore(anchor);
             }
@@ -529,7 +523,7 @@ public class AccessibleNavigationImplementation
                             link.setAttribute("accesskey", shortcut);
                         }
                     }
-                    CommonFunctions.generateId(link, prefixId);
+                    CommonFunctions.generateId(link);
 
                     itemLink.appendElement(link);
                     listSkippers.appendElement(itemLink);
@@ -618,7 +612,7 @@ public class AccessibleNavigationImplementation
      */
     public void provideNavigationToLongDescription(final HTMLDOMElement image) {
         if (image.hasAttribute("longdesc")) {
-            CommonFunctions.generateId(image, prefixId);
+            CommonFunctions.generateId(image);
             String id = image.getAttribute("id");
             if (parser.find("[" + DATA_LONG_DESCRIPTION_FOR_IMAGE + "=\""
                     + id + "\"]").firstResult() == null) {

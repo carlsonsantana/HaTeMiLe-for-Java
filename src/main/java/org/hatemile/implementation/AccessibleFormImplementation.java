@@ -104,11 +104,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
     protected final HTMLDOMParser parser;
 
     /**
-     * The prefix of generated ids.
-     */
-    protected final String prefixId;
-
-    /**
      * The state that indicates if the scripts used by solutions was added in
      * parser.
      */
@@ -129,7 +124,6 @@ public class AccessibleFormImplementation implements AccessibleForm {
     public AccessibleFormImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
         this.parser = Objects.requireNonNull(htmlParser);
-        prefixId = configure.getParameter("prefix-generated-ids");
     }
 
     /**
@@ -256,7 +250,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
         if (!scriptsAdded) {
             generateValidationScripts();
         }
-        CommonFunctions.generateId(field, prefixId);
+        CommonFunctions.generateId(field);
         scriptListFieldsWithValidation.appendText("hatemileValidationList."
                 + listAttribute + ".push('" + field.getAttribute("id") + "');");
     }
