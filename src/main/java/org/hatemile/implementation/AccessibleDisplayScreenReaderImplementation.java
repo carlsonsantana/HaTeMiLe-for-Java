@@ -1488,6 +1488,11 @@ public class AccessibleDisplayScreenReaderImplementation
         if (element.hasAttribute("accesskey")) {
             String description = getDescription(element);
             if (!element.hasAttribute("title")) {
+                CommonFunctions.generateId(element, prefixId);
+                element.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
+                        element.getAttribute("id"));
+                element.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,
+                        element.getAttribute("id"));
                 element.setAttribute("title", description);
             }
 
