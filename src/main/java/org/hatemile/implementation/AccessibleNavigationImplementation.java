@@ -47,97 +47,95 @@ public class AccessibleNavigationImplementation
     /**
      * The id of list element that contains the skippers.
      */
-    protected static final String ID_CONTAINER_SKIPPERS = "container-skippers";
+    public static final String ID_CONTAINER_SKIPPERS = "container-skippers";
 
     /**
      * The id of list element that contains the links for the headings.
      */
-    protected static final String ID_CONTAINER_HEADING = "container-heading";
+    public static final String ID_CONTAINER_HEADING = "container-heading";
 
     /**
      * The id of text of description of container of heading links.
      */
-    protected static final String ID_TEXT_HEADING = "text-heading";
+    public static final String ID_TEXT_HEADING = "text-heading";
 
     /**
      * The HTML class of anchor of skipper.
      */
-    protected static final String CLASS_SKIPPER_ANCHOR = "skipper-anchor";
+    public static final String CLASS_SKIPPER_ANCHOR = "skipper-anchor";
 
     /**
      * The HTML class of anchor of heading link.
      */
-    protected static final String CLASS_HEADING_ANCHOR = "heading-anchor";
+    public static final String CLASS_HEADING_ANCHOR = "heading-anchor";
 
     /**
      * The HTML class of force link, before it.
      */
-    protected static final String CLASS_FORCE_LINK_BEFORE =
-            "force-link-before";
+    public static final String CLASS_FORCE_LINK_BEFORE = "force-link-before";
 
     /**
      * The HTML class of force link, after it.
      */
-    protected static final String CLASS_FORCE_LINK_AFTER =
-            "force-link-after";
+    public static final String CLASS_FORCE_LINK_AFTER = "force-link-after";
 
     /**
      * The name of attribute that links the anchor of skipper with the element.
      */
-    protected static final String DATA_ANCHOR_FOR = "data-anchorfor";
+    public static final String DATA_ANCHOR_FOR = "data-anchorfor";
 
     /**
      * The name of attribute that indicates the level of heading of link.
      */
-    protected static final String DATA_HEADING_LEVEL = "data-headinglevel";
+    public static final String DATA_HEADING_LEVEL = "data-headinglevel";
 
     /**
      * The name of attribute that links the anchor of heading link with heading.
      */
-    protected static final String DATA_HEADING_ANCHOR_FOR =
+    public static final String DATA_HEADING_ANCHOR_FOR =
             "data-headinganchorfor";
 
     /**
      * The name of attribute that link the anchor of long description with the
      * image.
      */
-    protected static final String DATA_LONG_DESCRIPTION_FOR_IMAGE =
+    public static final String DATA_LONG_DESCRIPTION_FOR_IMAGE =
             "data-longdescriptionfor";
 
     /**
      * Level value of h1.
      */
-    protected static final int HEADING_LEVEL_1 = 1;
+    public static final int HEADING_LEVEL_1 = 1;
 
     /**
      * Level value of h2.
      */
-    protected static final int HEADING_LEVEL_2 = 2;
+    public static final int HEADING_LEVEL_2 = 2;
 
     /**
      * Level value of h3.
      */
-    protected static final int HEADING_LEVEL_3 = 3;
+    public static final int HEADING_LEVEL_3 = 3;
 
     /**
      * Level value of h4.
      */
-    protected static final int HEADING_LEVEL_4 = 4;
+    public static final int HEADING_LEVEL_4 = 4;
 
     /**
      * Level value of h5.
      */
-    protected static final int HEADING_LEVEL_5 = 5;
+    public static final int HEADING_LEVEL_5 = 5;
 
     /**
      * Level value of h6.
      */
-    protected static final int HEADING_LEVEL_6 = 6;
+    public static final int HEADING_LEVEL_6 = 6;
 
     /**
      * Level value of invalid heading.
      */
-    protected static final int HEADING_LEVEL_INVALID = -1;
+    public static final int HEADING_LEVEL_INVALID = -1;
 
     /**
      * The HTML parser.

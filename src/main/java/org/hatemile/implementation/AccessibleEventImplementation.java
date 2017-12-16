@@ -33,25 +33,25 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     /**
      * The id of script element that replace the event listener methods.
      */
-    protected static final String ID_SCRIPT_EVENT_LISTENER =
+    public static final String ID_SCRIPT_EVENT_LISTENER =
             "script-eventlistener";
 
     /**
      * The id of script element that contains the list of elements that has
      * inaccessible events.
      */
-    protected static final String ID_LIST_IDS_SCRIPT = "list-ids-script";
+    public static final String ID_LIST_IDS_SCRIPT = "list-ids-script";
 
     /**
      * The id of script element that modify the events of elements.
      */
-    protected static final String ID_FUNCTION_SCRIPT_FIX =
+    public static final String ID_FUNCTION_SCRIPT_FIX =
             "id-function-script-fix";
 
     /**
      * The ID of script element that contains the common functions of scripts.
      */
-    protected static final String ID_SCRIPT_COMMON_FUNCTIONS =
+    public static final String ID_SCRIPT_COMMON_FUNCTIONS =
             "hatemile-common-functions";
 
     /**

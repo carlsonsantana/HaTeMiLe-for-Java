@@ -31,78 +31,72 @@ import java.util.Scanner;
 public class AccessibleFormImplementation implements AccessibleForm {
 
     /**
-     * The ID of script element that contains the common functions of scripts.
-     */
-    protected static final String ID_SCRIPT_COMMON_FUNCTIONS =
-            "hatemile-common-functions";
-
-    /**
      * The ID of script element that contains the list of IDs of fields with
      * validation.
      */
-    protected static final String ID_SCRIPT_LIST_VALIDATION_FIELDS =
+    public static final String ID_SCRIPT_LIST_VALIDATION_FIELDS =
             "hatemile-scriptlist-validation-fields";
 
     /**
      * The ID of script element that execute validations on fields.
      */
-    protected static final String ID_SCRIPT_EXECUTE_VALIDATION =
+    public static final String ID_SCRIPT_EXECUTE_VALIDATION =
             "hatemile-validation-script";
 
     /**
      * The client-site required fields list.
      */
-    protected static final String REQUIRED_FIELDS_LIST = "required_fields";
+    public static final String REQUIRED_FIELDS_LIST = "required_fields";
 
     /**
      * The client-site pattern fields list.
      */
-    protected static final String PATTERN_FIELDS_LIST = "pattern_fields";
+    public static final String PATTERN_FIELDS_LIST = "pattern_fields";
 
     /**
      * The client-site fields with length list.
      */
-    protected static final String LIMITED_FIELDS_LIST = "fields_with_length";
+    public static final String LIMITED_FIELDS_LIST = "fields_with_length";
 
     /**
      * The client-site range fields list.
      */
-    protected static final String RANGE_FIELDS_LIST = "range_fields";
+    public static final String RANGE_FIELDS_LIST = "range_fields";
 
     /**
      * The client-site week fields list.
      */
-    protected static final String WEEK_FIELDS_LIST = "week_fields";
+    public static final String WEEK_FIELDS_LIST = "week_fields";
 
     /**
      * The client-site month fields list.
      */
-    protected static final String MONTH_FIELDS_LIST = "month_fields";
+    public static final String MONTH_FIELDS_LIST = "month_fields";
 
     /**
      * The client-site datetime fields list.
      */
-    protected static final String DATETIME_FIELDS_LIST = "datetime_fields";
+    public static final String DATETIME_FIELDS_LIST = "datetime_fields";
 
     /**
      * The client-site time fields list.
      */
-    protected static final String TIME_FIELDS_LIST = "time_fields";
+    public static final String TIME_FIELDS_LIST = "time_fields";
 
     /**
      * The client-site date fields list.
      */
-    protected static final String DATE_FIELDS_LIST = "date_fields";
+    public static final String DATE_FIELDS_LIST = "date_fields";
 
     /**
      * The client-site email fields list.
      */
-    protected static final String EMAIL_FIELDS_LIST = "email_fields";
+    public static final String EMAIL_FIELDS_LIST = "email_fields";
 
     /**
      * The client-site URL fields list.
      */
-    protected static final String URL_FIELDS_LIST = "url_fields";
+    public static final String URL_FIELDS_LIST = "url_fields";
 
     /**
      * The HTML parser.
@@ -202,12 +196,13 @@ public class AccessibleFormImplementation implements AccessibleForm {
     protected void generateValidationScripts() {
         HTMLDOMElement local = parser.find("head,body").firstResult();
         if (local != null) {
-            if (parser.find("#" + ID_SCRIPT_COMMON_FUNCTIONS)
-                    .firstResult() == null) {
+            if (parser.find("#" + AccessibleEventImplementation
+                    .ID_SCRIPT_COMMON_FUNCTIONS).firstResult() == null) {
                 HTMLDOMElement commonFunctionsScript =
                         parser.createElement("script");
-                commonFunctionsScript
-                        .setAttribute("id", ID_SCRIPT_COMMON_FUNCTIONS);
+                commonFunctionsScript.setAttribute("id",
+                        AccessibleEventImplementation
+                            .ID_SCRIPT_COMMON_FUNCTIONS);
                 commonFunctionsScript.setAttribute("type", "text/javascript");
                 commonFunctionsScript
                         .appendText(getContentFromFile("/js/common.js"));

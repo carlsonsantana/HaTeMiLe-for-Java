@@ -64,31 +64,26 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     }
 
     /**
-     * The name of attribute for not modify the elements.
-     */
-    protected static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
-
-    /**
      * The name of attribute for identify isolator elements.
      */
-    protected static final String DATA_ISOLATOR_ELEMENT = "data-auxiliarspan";
+    public static final String DATA_ISOLATOR_ELEMENT = "data-auxiliarspan";
 
     /**
      * The name of attribute for identify the element created or modified to
      * support speak property.
      */
-    protected static final String DATA_SPEAK = "data-cssspeak";
+    public static final String DATA_SPEAK = "data-cssspeak";
 
     /**
      * The name of attribute for identify the element created or modified to
      * support speak-as property.
      */
-    protected static final String DATA_SPEAK_AS = "data-cssspeakas";
+    public static final String DATA_SPEAK_AS = "data-cssspeakas";
 
     /**
      * The valid element tags for inherit the speak and speak-as properties.
      */
-    protected static final List<String> VALID_INHERIT_TAGS = Collections
+    public static final List<String> VALID_INHERIT_TAGS = Collections
             .unmodifiableList(Arrays.asList("SPAN", "A", "RT", "DFN", "ABBR",
                 "Q", "CITE", "EM", "TIME", "VAR", "SAMP", "I", "B", "SUB",
                 "SUP", "SMALL", "STRONG", "MARK", "RUBY", "INS", "DEL", "KBD",
@@ -102,7 +97,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     /**
      * The valid element tags for speak and speak-as properties.
      */
-    protected static final List<String> VALID_TAGS = Collections
+    public static final List<String> VALID_TAGS = Collections
             .unmodifiableList(Arrays.asList("SPAN", "A", "RT", "DFN", "ABBR",
                 "Q", "CITE", "EM", "TIME", "VAR", "SAMP", "I", "B", "SUB",
                 "SUP", "SMALL", "STRONG", "MARK", "RUBY", "INS", "DEL", "KBD",
@@ -115,7 +110,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     /**
      * The regular expression to validate speak-as property.
      */
-    protected static final Pattern REGULAR_EXPRESSION_SPEAK_AS = Pattern
+    public static final Pattern REGULAR_EXPRESSION_SPEAK_AS = Pattern
             .compile("^((normal)|(inherit)|(initial)|(digits)|"
                 + "(literal\\-punctuation)|(no\\-punctuation)|(spell\\-out)|"
                 + "((digits) ((literal\\-punctuation)|(no\\-punctuation)|"
@@ -314,7 +309,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      */
     protected boolean isValidInheritElement(final HTMLDOMElement element) {
         return (VALID_INHERIT_TAGS.contains(element.getTagName()))
-                && (!element.hasAttribute(DATA_IGNORE));
+                && (!element.hasAttribute(CommonFunctions.DATA_IGNORE));
     }
 
     /**

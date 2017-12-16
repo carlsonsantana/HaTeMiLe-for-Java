@@ -34,357 +34,354 @@ public class AccessibleDisplayScreenReaderImplementation
     /**
      * The id of list element that contains the description of shortcuts.
      */
-    protected static final String ID_CONTAINER_SHORTCUTS =
-            "container-shortcuts";
+    public static final String ID_CONTAINER_SHORTCUTS = "container-shortcuts";
 
     /**
      * The id of text of description of container of shortcuts descriptions.
      */
-    protected static final String ID_TEXT_SHORTCUTS = "text-shortcuts";
+    public static final String ID_TEXT_SHORTCUTS = "text-shortcuts";
 
     /**
      * The HTML class of content to force the screen reader show the current
      * state of element, before it.
      */
-    protected static final String CLASS_FORCE_READ_BEFORE = "force-read-before";
+    public static final String CLASS_FORCE_READ_BEFORE = "force-read-before";
 
     /**
      * The HTML class of content to force the screen reader show the current
      * state of element, after it.
      */
-    protected static final String CLASS_FORCE_READ_AFTER = "force-read-after";
+    public static final String CLASS_FORCE_READ_AFTER = "force-read-after";
 
     /**
      * The name of attribute that links the description of shortcut of element,
      * before it.
      */
-    protected static final String DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF =
             "data-attributeaccesskeybeforeof";
 
     /**
      * The name of attribute that links the description of shortcut of element,
      * after it.
      */
-    protected static final String DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF =
             "data-attributeaccesskeyafterof";
 
     /**
      * The name of attribute that links the content of download link, before it.
      */
-    protected static final String DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF =
             "data-attributedownloadbeforeof";
 
     /**
      * The name of attribute that links the content of download link, after it.
      */
-    protected static final String DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF =
             "data-attributedownloadafterof";
 
     /**
      * The name of attribute that links the content of draggable state with
      * element, before it.
      */
-    protected static final String DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF =
             "data-attributedraggablebeforeof";
 
     /**
      * The name of attribute that links the content of draggable state with
      * element, after it.
      */
-    protected static final String DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF =
             "data-attributedraggableafterof";
 
     /**
      * The name of attribute that links the content of dropzone state with
      * element, before it.
      */
-    protected static final String DATA_ATTRIBUTE_DROPZONE_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_DROPZONE_BEFORE_OF =
             "data-attributedropzonebeforeof";
 
     /**
      * The name of attribute that links the content of dropzone state with
      * element, after it.
      */
-    protected static final String DATA_ATTRIBUTE_DROPZONE_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_DROPZONE_AFTER_OF =
             "data-attributedropzoneafterof";
 
     /**
      * The name of attribute that links the content of header cell with the
      * data cell, before it.
      */
-    protected static final String DATA_ATTRIBUTE_HEADERS_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_HEADERS_BEFORE_OF =
             "data-headersbeforeof";
 
     /**
      * The name of attribute that links the content of header cell with the
      * data cell, after it.
      */
-    protected static final String DATA_ATTRIBUTE_HEADERS_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_HEADERS_AFTER_OF =
             "data-headersafterof";
 
     /**
      * The name of attribute that links the description of language with the
      * element, before it.
      */
-    protected static final String DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF =
             "data-languagebeforeof";
 
     /**
      * The name of attribute that links the description of language with the
      * element, after it.
      */
-    protected static final String DATA_ATTRIBUTE_LANGUAGE_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_LANGUAGE_AFTER_OF =
             "data-languageafterof";
 
     /**
      * The name of attribute that links the content of link that open a new
      * instance, before it.
      */
-    protected static final String DATA_ATTRIBUTE_TARGET_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_TARGET_BEFORE_OF =
             "data-attributetargetbeforeof";
 
     /**
      * The name of attribute that links the content of link that open a new
      * instance, after it.
      */
-    protected static final String DATA_ATTRIBUTE_TARGET_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_TARGET_AFTER_OF =
             "data-attributetargetafterof";
 
     /**
      * The name of attribute that links the content of title of element, before
      * it.
      */
-    protected static final String DATA_ATTRIBUTE_TITLE_BEFORE_OF =
+    public static final String DATA_ATTRIBUTE_TITLE_BEFORE_OF =
             "data-attributetitlebeforeof";
 
     /**
      * The name of attribute that links the content of title of element, after
      * it.
      */
-    protected static final String DATA_ATTRIBUTE_TITLE_AFTER_OF =
+    public static final String DATA_ATTRIBUTE_TITLE_AFTER_OF =
             "data-attributetitleafterof";
 
     /**
      * The name of attribute that links the content of autocomplete state of
      * field, before it.
      */
-    protected static final String DATA_ARIA_AUTOCOMPLETE_BEFORE_OF =
+    public static final String DATA_ARIA_AUTOCOMPLETE_BEFORE_OF =
             "data-ariaautocompletebeforeof";
 
     /**
      * The name of attribute that links the content of autocomplete state of
      * field, after it.
      */
-    protected static final String DATA_ARIA_AUTOCOMPLETE_AFTER_OF =
+    public static final String DATA_ARIA_AUTOCOMPLETE_AFTER_OF =
             "data-ariaautocompleteafterof";
 
     /**
      * The name of attribute that links the content of busy state of element,
      * before it.
      */
-    protected static final String DATA_ARIA_BUSY_BEFORE_OF =
+    public static final String DATA_ARIA_BUSY_BEFORE_OF =
             "data-ariabusybeforeof";
 
     /**
      * The name of attribute that links the content of busy state of element,
      * after it.
      */
-    protected static final String DATA_ARIA_BUSY_AFTER_OF =
-            "data-ariabusyafterof";
+    public static final String DATA_ARIA_BUSY_AFTER_OF = "data-ariabusyafterof";
 
     /**
      * The name of attribute that links the content of checked state field,
      * before it.
      */
-    protected static final String DATA_ARIA_CHECKED_BEFORE_OF =
+    public static final String DATA_ARIA_CHECKED_BEFORE_OF =
             "data-ariacheckedbeforeof";
 
     /**
      * The name of attribute that links the content of checked state field,
      * after it.
      */
-    protected static final String DATA_ARIA_CHECKED_AFTER_OF =
+    public static final String DATA_ARIA_CHECKED_AFTER_OF =
             "data-ariacheckedafterof";
 
     /**
      * The name of attribute that links the content of drop effect state of
      * element, before it.
      */
-    protected static final String DATA_ARIA_DROPEFFECT_BEFORE_OF =
+    public static final String DATA_ARIA_DROPEFFECT_BEFORE_OF =
             "data-ariadropeffectbeforeof";
 
     /**
      * The name of attribute that links the content of drop effect state of
      * element, after it.
      */
-    protected static final String DATA_ARIA_DROPEFFECT_AFTER_OF =
+    public static final String DATA_ARIA_DROPEFFECT_AFTER_OF =
             "data-ariadropeffectafterof";
 
     /**
      * The name of attribute that links the content of expanded state of
      * element, before it.
      */
-    protected static final String DATA_ARIA_EXPANDED_BEFORE_OF =
+    public static final String DATA_ARIA_EXPANDED_BEFORE_OF =
             "data-ariaexpandedbeforeof";
 
     /**
      * The name of attribute that links the content of expanded state of
      * element, after it.
      */
-    protected static final String DATA_ARIA_EXPANDED_AFTER_OF =
+    public static final String DATA_ARIA_EXPANDED_AFTER_OF =
             "data-ariaexpandedafterof";
 
     /**
      * The name of attribute that links the content of grabbed state of element,
      * before it.
      */
-    protected static final String DATA_ARIA_GRABBED_BEFORE_OF =
+    public static final String DATA_ARIA_GRABBED_BEFORE_OF =
             "data-ariagrabbedbeforeof";
 
     /**
      * The name of attribute that links the content of grabbed state of element,
      * after it.
      */
-    protected static final String DATA_ARIA_GRABBED_AFTER_OF =
+    public static final String DATA_ARIA_GRABBED_AFTER_OF =
             "data-ariagrabbedafterof";
 
     /**
      * The name of attribute that links the content that show if the field has
      * popup, before it.
      */
-    protected static final String DATA_ARIA_HASPOPUP_BEFORE_OF =
+    public static final String DATA_ARIA_HASPOPUP_BEFORE_OF =
             "data-ariahaspopupbeforeof";
 
     /**
      * The name of attribute that links the content that show if the field has
      * popup, after it.
      */
-    protected static final String DATA_ARIA_HASPOPUP_AFTER_OF =
+    public static final String DATA_ARIA_HASPOPUP_AFTER_OF =
             "data-ariahaspopupafterof";
 
     /**
      * The name of attribute that links the content of level state of element,
      * before it.
      */
-    protected static final String DATA_ARIA_LEVEL_BEFORE_OF =
+    public static final String DATA_ARIA_LEVEL_BEFORE_OF =
             "data-arialevelbeforeof";
 
     /**
      * The name of attribute that links the content of level state of element,
      * after it.
      */
-    protected static final String DATA_ARIA_LEVEL_AFTER_OF =
+    public static final String DATA_ARIA_LEVEL_AFTER_OF =
             "data-arialevelafterof";
 
     /**
      * The name of attribute that links the content of orientation state of
      * element, before it.
      */
-    protected static final String DATA_ARIA_ORIENTATION_BEFORE_OF =
+    public static final String DATA_ARIA_ORIENTATION_BEFORE_OF =
             "data-ariaorientationbeforeof";
 
     /**
      * The name of attribute that links the content of orientation state of
      * element, after it.
      */
-    protected static final String DATA_ARIA_ORIENTATION_AFTER_OF =
+    public static final String DATA_ARIA_ORIENTATION_AFTER_OF =
             "data-ariaorientationafterof";
 
     /**
      * The name of attribute that links the content of pressed state of field,
      * before it.
      */
-    protected static final String DATA_ARIA_PRESSED_BEFORE_OF =
+    public static final String DATA_ARIA_PRESSED_BEFORE_OF =
             "data-ariapressedbeforeof";
 
     /**
      * The name of attribute that links the content of pressed state of field,
      * after it.
      */
-    protected static final String DATA_ARIA_PRESSED_AFTER_OF =
+    public static final String DATA_ARIA_PRESSED_AFTER_OF =
             "data-ariapressedafterof";
 
     /**
      * The name of attribute that links the content of minimum range state of
      * field, before it.
      */
-    protected static final String DATA_ARIA_RANGE_MIN_BEFORE_OF =
+    public static final String DATA_ARIA_RANGE_MIN_BEFORE_OF =
             "data-attributevalueminbeforeof";
 
     /**
      * The name of attribute that links the content of minimum range state of
      * field, after it.
      */
-    protected static final String DATA_ARIA_RANGE_MIN_AFTER_OF =
+    public static final String DATA_ARIA_RANGE_MIN_AFTER_OF =
             "data-attributevalueminafterof";
 
     /**
      * The name of attribute that links the content of maximum range state of
      * field, before it.
      */
-    protected static final String DATA_ARIA_RANGE_MAX_BEFORE_OF =
+    public static final String DATA_ARIA_RANGE_MAX_BEFORE_OF =
             "data-attributevaluemaxbeforeof";
 
     /**
      * The name of attribute that links the content of maximum range state of
      * field, after it.
      */
-    protected static final String DATA_ARIA_RANGE_MAX_AFTER_OF =
+    public static final String DATA_ARIA_RANGE_MAX_AFTER_OF =
             "data-attributevaluemaxafterof";
 
     /**
      * The name of attribute that links the content of required state of field,
      * before it.
      */
-    protected static final String DATA_ARIA_REQUIRED_BEFORE_OF =
+    public static final String DATA_ARIA_REQUIRED_BEFORE_OF =
             "data-attributerequiredbeforeof";
 
     /**
      * The name of attribute that links the content of required state of field,
      * after it.
      */
-    protected static final String DATA_ARIA_REQUIRED_AFTER_OF =
+    public static final String DATA_ARIA_REQUIRED_AFTER_OF =
             "data-attributerequiredafterof";
 
     /**
      * The name of attribute that links the content of selected state of field,
      * before it.
      */
-    protected static final String DATA_ARIA_SELECTED_BEFORE_OF =
+    public static final String DATA_ARIA_SELECTED_BEFORE_OF =
             "data-ariaselectedbeforeof";
 
     /**
      * The name of attribute that links the content of selected state of field,
      * after it.
      */
-    protected static final String DATA_ARIA_SELECTED_AFTER_OF =
+    public static final String DATA_ARIA_SELECTED_AFTER_OF =
             "data-ariaselectedafterof";
 
     /**
      * The name of attribute that links the content of sort state of element,
      * before it.
      */
-    protected static final String DATA_ARIA_SORT_BEFORE_OF =
+    public static final String DATA_ARIA_SORT_BEFORE_OF =
             "data-ariasortbeforeof";
 
     /**
      * The name of attribute that links the content of sort state of element,
      * after it.
      */
-    protected static final String DATA_ARIA_SORT_AFTER_OF =
-            "data-ariasortafterof";
+    public static final String DATA_ARIA_SORT_AFTER_OF = "data-ariasortafterof";
 
     /**
      * The name of attribute that links the content of role of element with the
      * element, before it.
      */
-    protected static final String DATA_ROLE_BEFORE_OF = "data-rolebeforeof";
+    public static final String DATA_ROLE_BEFORE_OF = "data-rolebeforeof";
 
     /**
      * The name of attribute that links the content of role of element with the
      * element, after it.
      */
-    protected static final String DATA_ROLE_AFTER_OF = "data-roleafterof";
+    public static final String DATA_ROLE_AFTER_OF = "data-roleafterof";
 
     /**
      * The browser shortcut prefix.

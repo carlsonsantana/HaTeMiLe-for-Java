@@ -23,7 +23,7 @@ public final class CommonFunctions {
     /**
      * The name of attribute for not modify the elements.
      */
-    private static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
+    public static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
 
     /**
      * Count the number of ids created.
