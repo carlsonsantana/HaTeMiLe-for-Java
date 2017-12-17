@@ -18,7 +18,6 @@ import org.hatemile.util.CommonFunctions;
 import org.hatemile.util.Configure;
 import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
-import java.io.File;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -91,7 +90,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      */
     protected String getContentFromFile(final String file) {
         StringBuilder stringBuilder = new StringBuilder();
-        Scanner scanner = new Scanner(File.class.getResourceAsStream(file));
+        Scanner scanner = new Scanner(getClass().getResourceAsStream(file));
         while (scanner.hasNextLine()) {
             stringBuilder.append(scanner.nextLine()).append("\n");
         }

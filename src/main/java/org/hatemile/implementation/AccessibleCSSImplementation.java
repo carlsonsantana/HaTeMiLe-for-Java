@@ -13,7 +13,7 @@ limitations under the License.
  */
 package org.hatemile.implementation;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -175,7 +175,8 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
         this(Objects.requireNonNull(htmlDOMParser),
                 Objects.requireNonNull(styleSheetParser),
                 Objects.requireNonNull(configure),
-                "/symbols.xml");
+                AccessibleCSSImplementation.class
+                    .getResource("/hatemile-symbols.xml").getFile());
     }
 
     /**
@@ -204,11 +205,13 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     protected static Map<String, String> getSymbols(final String fileName,
             final Configure configure) {
         Map<String, String> symbols = new HashMap<String, String>();
-
-        InputStream inputStream = File.class.getResourceAsStream(fileName);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        InputStream inputStream = null;
 
         try {
+            inputStream = new FileInputStream(fileName);
+            DocumentBuilderFactory factory = DocumentBuilderFactory
+                    .newInstance();
+
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             Element rootElement = document.getDocumentElement();

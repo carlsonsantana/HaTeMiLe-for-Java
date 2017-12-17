@@ -18,7 +18,7 @@ import org.hatemile.util.CommonFunctions;
 import org.hatemile.util.Configure;
 import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -207,7 +207,8 @@ public class AccessibleNavigationImplementation
      */
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this(htmlParser, configure, "/skippers.xml");
+        this(htmlParser, configure, AccessibleNavigationImplementation.class
+                .getResource("/hatemile-skippers.xml").getFile());
     }
 
     /**
@@ -248,11 +249,13 @@ public class AccessibleNavigationImplementation
             final String fileName, final Configure configure) {
         Collection<Map<String, String>> skippers =
                 new ArrayList<Map<String, String>>();
-
-        InputStream inputStream = File.class.getResourceAsStream(fileName);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        InputStream inputStream = null;
 
         try {
+            inputStream = new FileInputStream(fileName);
+            DocumentBuilderFactory factory = DocumentBuilderFactory
+                    .newInstance();
+
             DocumentBuilder documentBuilder = factory.newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             Element rootElement = document.getDocumentElement();

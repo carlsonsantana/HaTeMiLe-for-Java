@@ -13,7 +13,6 @@ limitations under the License.
  */
 package org.hatemile.implementation;
 
-import java.io.File;
 import org.hatemile.AccessibleForm;
 import org.hatemile.util.CommonFunctions;
 import org.hatemile.util.Configure;
@@ -176,7 +175,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
      */
     protected String getContentFromFile(final String file) {
         StringBuilder stringBuilder = new StringBuilder();
-        Scanner scanner = new Scanner(File.class.getResourceAsStream(file));
+        Scanner scanner = new Scanner(getClass().getResourceAsStream(file));
         while (scanner.hasNextLine()) {
             stringBuilder.append(scanner.nextLine()).append("\n");
         }
