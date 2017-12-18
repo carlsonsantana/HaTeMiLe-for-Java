@@ -22,6 +22,7 @@ import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Scanner;
+import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleEventImplementation class is official implementation of
@@ -59,6 +60,11 @@ public class AccessibleEventImplementation implements AccessibleEvent {
     protected final HTMLDOMParser parser;
 
     /**
+     * The id generator.
+     */
+    protected final IDGenerator idGenerator;
+
+    /**
      * The state that indicates if the scripts used by solutions was added in
      * parser.
      */
@@ -78,7 +84,8 @@ public class AccessibleEventImplementation implements AccessibleEvent {
      */
     public AccessibleEventImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this.parser = Objects.requireNonNull(htmlParser);
+        parser = Objects.requireNonNull(htmlParser);
+        idGenerator = new IDGenerator("event");
         mainScriptAdded = false;
         scriptList = null;
     }
@@ -179,7 +186,7 @@ public class AccessibleEventImplementation implements AccessibleEvent {
         }
 
         if (scriptList != null) {
-            CommonFunctions.generateId(element);
+            idGenerator.generateId(element);
             scriptList.appendText(event + "Elements.push('"
                     + element.getAttribute("id") + "');");
         }

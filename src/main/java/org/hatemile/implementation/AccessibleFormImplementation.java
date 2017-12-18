@@ -22,6 +22,7 @@ import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Scanner;
+import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleFormImplementation class is official implementation of
@@ -103,6 +104,11 @@ public class AccessibleFormImplementation implements AccessibleForm {
     protected final HTMLDOMParser parser;
 
     /**
+     * The id generator.
+     */
+    protected final IDGenerator idGenerator;
+
+    /**
      * The state that indicates if the scripts used by solutions was added in
      * parser.
      */
@@ -122,7 +128,8 @@ public class AccessibleFormImplementation implements AccessibleForm {
      */
     public AccessibleFormImplementation(final HTMLDOMParser htmlParser,
             final Configure configure) {
-        this.parser = Objects.requireNonNull(htmlParser);
+        parser = Objects.requireNonNull(htmlParser);
+        idGenerator = new IDGenerator("form");
     }
 
     /**
@@ -249,7 +256,7 @@ public class AccessibleFormImplementation implements AccessibleForm {
         if (!scriptsAdded) {
             generateValidationScripts();
         }
-        CommonFunctions.generateId(field);
+        idGenerator.generateId(field);
         scriptListFieldsWithValidation.appendText("hatemileValidationList."
                 + listAttribute + ".push('" + field.getAttribute("id") + "');");
     }

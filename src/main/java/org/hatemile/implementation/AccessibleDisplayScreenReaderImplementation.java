@@ -23,6 +23,7 @@ import org.hatemile.util.html.HTMLDOMParser;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleDisplayScreenReaderImplementation class is official
@@ -904,6 +905,11 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final HTMLDOMParser parser;
 
     /**
+     * The id generator.
+     */
+    protected final IDGenerator idGenerator;
+
+    /**
      * The configuration of HaTeMiLe.
      */
     protected final Configure configure;
@@ -942,6 +948,7 @@ public class AccessibleDisplayScreenReaderImplementation
             final Configure hatemileConfiguration,
             final String userAgent) {
         parser = Objects.requireNonNull(htmlParser);
+        idGenerator = new IDGenerator("display");
         configure = hatemileConfiguration;
         shortcutPrefix = getShortcutPrefix(userAgent,
                 configure.getParameter("attribute-accesskey-default"));
@@ -1360,7 +1367,7 @@ public class AccessibleDisplayScreenReaderImplementation
     protected void forceReadSimple(final HTMLDOMElement element,
             final String textBefore, final String textAfter,
             final String dataBeforeOf, final String dataAfterOf) {
-        CommonFunctions.generateId(element);
+        idGenerator.generateId(element);
         String identifier = element.getAttribute("id");
 
         if (!textBefore.isEmpty()) {
@@ -1479,7 +1486,7 @@ public class AccessibleDisplayScreenReaderImplementation
         if (element.hasAttribute("accesskey")) {
             String description = getDescription(element);
             if (!element.hasAttribute("title")) {
-                CommonFunctions.generateId(element);
+                idGenerator.generateId(element);
                 element.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
                         element.getAttribute("id"));
                 element.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,
@@ -1924,7 +1931,7 @@ public class AccessibleDisplayScreenReaderImplementation
                     && (!image.hasAttribute("alt"))) {
                 image.setAttribute("alt", image.getAttribute("title"));
             }
-            CommonFunctions.generateId(image);
+            idGenerator.generateId(image);
             image.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
                     image.getAttribute("id"));
             image.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,

@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.hatemile.util.IDGenerator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -143,6 +144,11 @@ public class AccessibleNavigationImplementation
     protected final HTMLDOMParser parser;
 
     /**
+     * The id generator.
+     */
+    protected final IDGenerator idGenerator;
+
+    /**
      * The text of description of container of heading links, before all
      * elements.
      */
@@ -220,7 +226,8 @@ public class AccessibleNavigationImplementation
      */
     public AccessibleNavigationImplementation(final HTMLDOMParser htmlParser,
             final Configure configure, final String skipperFileName) {
-        this.parser = Objects.requireNonNull(htmlParser);
+        parser = Objects.requireNonNull(htmlParser);
+        idGenerator = new IDGenerator("navigation");
         elementsHeadingBefore = configure
                 .getParameter("elements-heading-before");
         elementsHeadingAfter = configure.getParameter("elements-heading-after");
@@ -432,7 +439,7 @@ public class AccessibleNavigationImplementation
      */
     protected HTMLDOMElement generateAnchorFor(final HTMLDOMElement element,
             final String dataAttribute, final String anchorClass) {
-        CommonFunctions.generateId(element);
+        idGenerator.generateId(element);
         HTMLDOMElement anchor = null;
         if (parser.find("[" + dataAttribute + "=\"" + element
                 .getAttribute("id") + "\"]").firstResult() == null) {
@@ -440,7 +447,7 @@ public class AccessibleNavigationImplementation
                 anchor = element;
             } else {
                 anchor = parser.createElement("a");
-                CommonFunctions.generateId(anchor);
+                idGenerator.generateId(anchor);
                 anchor.setAttribute("class", anchorClass);
                 element.insertBefore(anchor);
             }
@@ -526,7 +533,7 @@ public class AccessibleNavigationImplementation
                             link.setAttribute("accesskey", shortcut);
                         }
                     }
-                    CommonFunctions.generateId(link);
+                    idGenerator.generateId(link);
 
                     itemLink.appendElement(link);
                     listSkippers.appendElement(itemLink);
@@ -615,7 +622,7 @@ public class AccessibleNavigationImplementation
      */
     public void provideNavigationToLongDescription(final HTMLDOMElement image) {
         if (image.hasAttribute("longdesc")) {
-            CommonFunctions.generateId(image);
+            idGenerator.generateId(image);
             String id = image.getAttribute("id");
             if (parser.find("[" + DATA_LONG_DESCRIPTION_FOR_IMAGE + "=\""
                     + id + "\"]").firstResult() == null) {

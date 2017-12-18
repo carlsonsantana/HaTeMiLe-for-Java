@@ -13,7 +13,6 @@ limitations under the License.
  */
 package org.hatemile.util;
 
-import java.util.Random;
 import org.hatemile.util.html.HTMLDOMElement;
 
 /**
@@ -27,19 +26,9 @@ public final class CommonFunctions {
     public static final String DATA_IGNORE = "data-ignoreaccessibilityfix";
 
     /**
-     * The maximum length of random string.
-     */
-    public static final int MAXIMUM_RANDOM_STRING_LENGTH = 16;
-
-    /**
      * Count the number of ids created.
      */
     private static int count = 0;
-
-    /**
-     * The prefix of generated ids.
-     */
-    private static String prefixId;
 
     /**
      * The private constructor prevents that the class not can be initialized.
@@ -49,37 +38,11 @@ public final class CommonFunctions {
     }
 
     /**
-     * Returns the prefix of generated ids.
-     * @return The prefix of generated ids.
-     */
-    private static String getPrefix() {
-        if (prefixId == null) {
-            Random random = new Random();
-            String randomString = Long.toHexString(random.nextLong());
-            while (randomString.length() < MAXIMUM_RANDOM_STRING_LENGTH) {
-                randomString += Long.toHexString(random.nextLong());
-            }
-            if (randomString.length() > MAXIMUM_RANDOM_STRING_LENGTH) {
-                randomString = randomString.substring(0,
-                        MAXIMUM_RANDOM_STRING_LENGTH - 1);
-            }
-            prefixId = "id-hatemile-" + randomString + "-";
-        }
-        return prefixId;
-    }
-
-    /**
-     * Generate a id for a element.
-     * @param element The element.
-     */
-    public static void generateId(final HTMLDOMElement element) {
-        generateId(element, getPrefix());
-    }
-
-    /**
      * Generate a id for a element.
      * @param element The element.
      * @param prefix The prefix of id.
+     * @deprecated Prefer use {@link org.hatemile.util.IDGenerator} instead this
+     * constructor.
      */
     public static void generateId(final HTMLDOMElement element,
             final String prefix) {
@@ -93,7 +56,6 @@ public final class CommonFunctions {
      * Reset the count number of ids.
      */
     public static void resetCount() {
-        prefixId = null;
         count = 0;
     }
 
