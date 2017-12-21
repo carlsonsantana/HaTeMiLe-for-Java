@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.hatemile.AccessibleCSS;
+import org.hatemile.AccessibleDisplay;
 import org.hatemile.util.CommonFunctions;
 import org.hatemile.util.Configure;
 import org.hatemile.util.css.StyleSheetDeclaration;
@@ -138,6 +139,11 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     protected final StyleSheetParser cssParser;
 
     /**
+     * The configuration of HaTeMiLe.
+     */
+    protected final Configure configure;
+
+    /**
      * The symbols with descriptions.
      */
     protected final Map<String, String> symbols;
@@ -167,14 +173,14 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      * parser.
      * @param htmlDOMParser The HTML parser.
      * @param styleSheetParser The CSS parser.
-     * @param configure The configuration of HaTeMiLe.
+     * @param hatemileConfiguration The configuration of HaTeMiLe.
      */
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
             final StyleSheetParser styleSheetParser,
-            final Configure configure) {
+            final Configure hatemileConfiguration) {
         this(Objects.requireNonNull(htmlDOMParser),
                 Objects.requireNonNull(styleSheetParser),
-                Objects.requireNonNull(configure),
+                Objects.requireNonNull(hatemileConfiguration),
                 AccessibleCSSImplementation.class
                     .getResource("/hatemile-symbols.xml").getFile());
     }
@@ -184,16 +190,17 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      * parser.
      * @param htmlDOMParser The HTML parser.
      * @param styleSheetParser The CSS parser.
-     * @param configure The configuration of HaTeMiLe.
+     * @param hatemileConfiguration The configuration of HaTeMiLe.
      * @param symbolFileName The file path of symbol configuration.
      */
     public AccessibleCSSImplementation(final HTMLDOMParser htmlDOMParser,
             final StyleSheetParser styleSheetParser,
-            final Configure configure,
+            final Configure hatemileConfiguration,
             final String symbolFileName) {
-        this.htmlParser = Objects.requireNonNull(htmlDOMParser);
-        this.cssParser = Objects.requireNonNull(styleSheetParser);
-        this.symbols = getSymbols(symbolFileName, configure);
+        htmlParser = Objects.requireNonNull(htmlDOMParser);
+        cssParser = Objects.requireNonNull(styleSheetParser);
+        this.configure = hatemileConfiguration;
+        symbols = getSymbols(symbolFileName, configure);
     }
 
     /**
@@ -769,27 +776,6 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
     }
 
     /**
-     * The cells headers of data cell will be spoken for element only.
-     * @param element The element.
-     */
-    protected void speakHeaderAlways(final HTMLDOMElement element) {
-        HTMLDOMElement header;
-        String textHeader = "";
-        String[] idHeaders = element.getAttribute("headers").split("[ \n\t\r]");
-        for (String idHeader : idHeaders) {
-            header = htmlParser.find("#" + idHeader).firstResult();
-            if (header != null) {
-                textHeader += header.getTextContent().trim() + " ";
-            }
-        }
-        textHeader = textHeader.trim();
-        if (!textHeader.isEmpty()) {
-            element.prependElement(createAuralContentElement(textHeader,
-                    "always"));
-        }
-    }
-
-    /**
      * The cells headers will be spoken for every data cell for element and
      * descendants.
      * @param element The element.
@@ -799,8 +785,11 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
 
         List<HTMLDOMElement> cellElements = htmlParser.find(element)
                 .findDescendants("td[headers],th[headers]").listResults();
+        AccessibleDisplay accessibleDisplay =
+                new AccessibleDisplayScreenReaderImplementation(htmlParser,
+                    configure);
         for (HTMLDOMElement cellElement : cellElements) {
-            speakHeaderAlways(cellElement);
+            accessibleDisplay.displayCellHeader(cellElement);
         }
     }
 
@@ -810,8 +799,12 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
      */
     protected void speakHeaderOnceInherit(final HTMLDOMElement element) {
         List<HTMLDOMElement> headerElements = htmlParser.find(element)
-                .findDescendants("span[" + DATA_SPEAK_AS + "=\"always\"]")
-                .listResults();
+                .findDescendants("["
+                    + AccessibleDisplayScreenReaderImplementation
+                        .DATA_ATTRIBUTE_HEADERS_BEFORE_OF
+                    + "],[" + AccessibleDisplayScreenReaderImplementation
+                        .DATA_ATTRIBUTE_HEADERS_AFTER_OF
+                    + "]").listResults();
         for (HTMLDOMElement headerElement : headerElements) {
             headerElement.removeNode();
         }
