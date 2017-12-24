@@ -1209,7 +1209,12 @@ public class AccessibleDisplayScreenReaderImplementation
      * @return The description of role.
      */
     protected String getRoleDescription(final String role) {
-        return configure.getParameter("role-" + role.toLowerCase());
+        String parameter = "role-" + role.toLowerCase();
+        if (configure.hasParameter(parameter)) {
+            return configure.getParameter(parameter);
+        } else {
+            return null;
+        }
     }
 
     /**
