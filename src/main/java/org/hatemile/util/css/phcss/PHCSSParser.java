@@ -17,12 +17,17 @@ import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hatemile.util.css.StyleSheetParser;
 import org.hatemile.util.css.StyleSheetRule;
 import org.hatemile.util.html.HTMLDOMElement;
@@ -94,7 +99,8 @@ public class PHCSSParser implements StyleSheetParser {
                             + otherURL);
                 } else {
                     Stack<String> stackURL = new Stack<String>();
-                    for (String pathPart : currentURL.getPath().split("/")) {
+                    String currentPath = currentURL.getPath() + "a";
+                    for (String pathPart : currentPath.split("/")) {
                         stackURL.push(pathPart);
                     }
                     stackURL.pop();
@@ -106,7 +112,8 @@ public class PHCSSParser implements StyleSheetParser {
                         }
                     }
                     String path = "";
-                    for (String string : (String[]) stackURL.toArray()) {
+                    for (Object object : stackURL.toArray()) {
+                        String string = (String) object;
                         if (path.isEmpty()) {
                             path = string;
                         } else {
@@ -115,11 +122,34 @@ public class PHCSSParser implements StyleSheetParser {
                     }
                     return new URL(currentURL.getProtocol() + "://"
                             + currentURL.getHost() + ":"
-                            + Integer.toString(currentURL.getPort()) + path);
+                            + Integer.toString(currentURL.getPort()) + "/"
+                            + path);
                 }
             }
         } catch (MalformedURLException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * Returns the content of URL.
+     * @param cssURL The URL.
+     * @return The content of URL.
+     */
+    protected final String getContentFromURL(final URL cssURL) {
+        try {
+            StringBuilder response = new StringBuilder();
+            URLConnection connection = cssURL.openConnection();
+            connection.connect();
+            Scanner scanner = new Scanner(connection.getInputStream());
+            while (scanner.hasNextLine()) {
+                response.append(scanner.nextLine()).append("\n");
+            }
+            return response.toString();
+        } catch (IOException ex) {
+            Logger.getLogger(PHCSSParser.class.getName()).log(Level.SEVERE,
+                    null, ex);
+            return "";
         }
     }
 
@@ -139,8 +169,8 @@ public class PHCSSParser implements StyleSheetParser {
             if (element.getTagName().equals("STYLE")) {
                 cssCode.append(element.getTextContent());
             } else {
-                cssCode.append(getAbsolutePath(currentURL,
-                        element.getAttribute("href")));
+                cssCode.append(getContentFromURL(getAbsolutePath(currentURL,
+                        element.getAttribute("href"))));
             }
         }
 
