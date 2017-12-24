@@ -1218,7 +1218,17 @@ public class AccessibleDisplayScreenReaderImplementation
      * @return The description of language.
      */
     protected String getLanguageDescription(final String languageCode) {
-        return configure.getParameter("language-" + languageCode.toLowerCase());
+        String language = languageCode.toLowerCase();
+        String parameter = "language-" + language;
+        if (configure.hasParameter(parameter)) {
+            return configure.getParameter(parameter);
+        } else if (language.contains("-")) {
+            parameter = "language-" + language.split("-")[0];
+            if (configure.hasParameter(parameter)) {
+                return configure.getParameter(parameter);
+            }
+        }
+        return null;
     }
 
     /**
