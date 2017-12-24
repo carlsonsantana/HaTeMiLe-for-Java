@@ -1178,8 +1178,8 @@ public class AccessibleDisplayScreenReaderImplementation
             boolean safari = lowerUserAgent.contains("applewebkit");
             boolean windows = lowerUserAgent.contains("windows");
             boolean chrome = lowerUserAgent.contains("chrome");
-            boolean firefox = lowerUserAgent
-                    .matches("firefox/[2-9]|minefield/3");
+            boolean firefox = lowerUserAgent.contains("firefox")
+                    || lowerUserAgent.contains("minefield");
             boolean ie = lowerUserAgent.contains("msie")
                     || lowerUserAgent.contains("trident");
 
