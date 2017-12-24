@@ -13,6 +13,10 @@ limitations under the License.
  */
 package org.hatemile.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -35,7 +39,7 @@ public class Configure {
      * Initializes a new object that contains the configuration of HaTeMiLe.
      */
     public Configure() {
-        this("hatemile-configure");
+        this(Locale.getDefault());
     }
 
     /**
@@ -51,7 +55,8 @@ public class Configure {
      * @param locale The locale of configuration.
      */
     public Configure(final Locale locale) {
-        this("hatemile-configure", locale);
+        resourceBundle = ResourceBundle.getBundle("hatemile-configure",
+                Objects.requireNonNull(locale));
     }
 
     /**
@@ -60,9 +65,16 @@ public class Configure {
      * @param locale The locale of configuration.
      */
     public Configure(final String fileName, final Locale locale) {
-        resourceBundle = ResourceBundle
-                .getBundle(Objects.requireNonNull(fileName),
-                    Objects.requireNonNull(locale));
+        try {
+            File file = new File(fileName);
+            URL[] urls = {file.getParentFile().toURI().toURL()};
+            ClassLoader loader = new URLClassLoader(urls);
+            resourceBundle = ResourceBundle
+                    .getBundle(Objects.requireNonNull(file.getName()),
+                        Objects.requireNonNull(locale), loader);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**
