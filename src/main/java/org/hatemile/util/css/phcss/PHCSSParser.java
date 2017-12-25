@@ -16,6 +16,7 @@ package org.hatemile.util.css.phcss;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
+import com.helger.css.parser.ParseException;
 import com.helger.css.reader.CSSReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -183,7 +184,14 @@ public class PHCSSParser implements StyleSheetParser {
      * @return The ph-css stylesheet.
      */
     protected final CascadingStyleSheet createParser(final String cssCode) {
-        return CSSReader.readFromString(cssCode, ECSSVersion.CSS30);
+        CascadingStyleSheet cascadingStyleSheet =
+                CSSReader.readFromString(cssCode, ECSSVersion.CSS30);
+
+        if (cascadingStyleSheet == null) {
+            throw new RuntimeException(new ParseException("CSS parsing error"));
+        }
+
+        return cascadingStyleSheet;
     }
 
     /**
