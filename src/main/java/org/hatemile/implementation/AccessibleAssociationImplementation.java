@@ -120,10 +120,10 @@ public class AccessibleAssociationImplementation
                                 newTable.add(new ArrayList<HTMLDOMElement>());
                             }
                             while (newTable.get(newRowIndex).size()
-                                    < newCellIndex) {
+                                    <= newCellIndex) {
                                 newTable.get(newRowIndex).add(null);
                             }
-                            newTable.get(newRowIndex).add(cell);
+                            newTable.get(newRowIndex).set(newCellIndex, cell);
                         }
                     }
                 }
