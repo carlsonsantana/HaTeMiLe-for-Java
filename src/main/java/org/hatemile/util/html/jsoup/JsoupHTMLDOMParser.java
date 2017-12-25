@@ -82,11 +82,56 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
     }
 
     /**
+     * Convert the original selector in a selector specific for Jsoup.
+     * @param selector The original selector.
+     * @return The selector specific for Jsoup.
+     */
+    protected String getFormatedSelector(final String selector) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String semiFormatedSelector = selector.replaceAll("\"", "")
+                .replaceAll("'", "").replaceAll("\n", " ")
+                .replaceAll("\t", " ");
+
+        for (String selectorPart : semiFormatedSelector.split(" ")) {
+            if (selectorPart.startsWith("#")) {
+                int indexOpenBrackets = selectorPart.indexOf("[");
+                int indexDot = selectorPart.indexOf(".");
+                int lastCharacterId = -1;
+                if ((indexOpenBrackets != -1)
+                        && ((indexOpenBrackets < indexDot)
+                            || (indexDot == -1))) {
+                    lastCharacterId = indexOpenBrackets;
+                } else if (indexDot != -1) {
+                    lastCharacterId = indexDot;
+                }
+                if (lastCharacterId == -1) {
+                    lastCharacterId = selectorPart.length();
+                }
+                String string1 = "[id=" + selectorPart
+                        .substring(1, lastCharacterId) + "]";
+                String string2 = "";
+                if (selectorPart.length() > lastCharacterId) {
+                    string2 = selectorPart.substring(lastCharacterId);
+                }
+                if (!string2.startsWith(".")) {
+                    selectorPart = string1 + string2;
+                } else {
+                    selectorPart = string2 + string1;
+                }
+            }
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append(selectorPart);
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public HTMLDOMParser find(final String selector) {
-        results = document.select(selector.replaceAll("\"", "")
-                .replaceAll("'", ""));
+        results = document.select(getFormatedSelector(selector));
         return this;
     }
 
@@ -103,8 +148,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      */
     public HTMLDOMParser findChildren(final String selector) {
         Elements elements = new Elements();
-        Elements descendants = results.select(selector.replaceAll("\"", "")
-                .replaceAll("'", ""));
+        Elements descendants = results.select(getFormatedSelector(selector));
         for (Element element : descendants) {
             if ((results.contains(element.parent()))
                     && (!elements.contains(element))) {
@@ -133,8 +177,7 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser findDescendants(final String selector) {
-        results = results.select(selector.replaceAll("\"", "")
-                .replaceAll("'", ""));
+        results = results.select(getFormatedSelector(selector));
         return this;
     }
 
@@ -158,8 +201,8 @@ public class JsoupHTMLDOMParser implements HTMLDOMParser {
      * {@inheritDoc}
      */
     public HTMLDOMParser findAncestors(final String selector) {
-        Elements findedElements = document.select(selector.replaceAll("\"", "")
-                .replaceAll("'", ""));
+        Elements findedElements = document
+                .select(getFormatedSelector(selector));
         Elements elements = new Elements();
         for (Element element : findedElements) {
             if ((results.parents().contains(element))
