@@ -229,7 +229,10 @@ public class AccessibleAssociationImplementation
                             headers = CommonFunctions.increaseInList(headers,
                                     headerId);
                         }
-                        cell.setAttribute("headers", headers);
+                        headers = headers.trim();
+                        if (!headers.isEmpty()) {
+                            cell.setAttribute("headers", headers);
+                        }
                     }
                 }
             }
@@ -282,7 +285,10 @@ public class AccessibleAssociationImplementation
                                 headers = CommonFunctions
                                         .increaseInList(headers, headersId);
                             }
-                            cell.setAttribute("headers", headers);
+                            headers = headers.trim();
+                            if (!headers.isEmpty()) {
+                                cell.setAttribute("headers", headers);
+                            }
                             i++;
                         }
                     }
