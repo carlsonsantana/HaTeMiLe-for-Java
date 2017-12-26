@@ -39,7 +39,7 @@ To generate the full API documentation of HaTeMiLe of Java:
     <dependency>
         <groupId>com.github.carlsonsantana</groupId>
         <artifactId>HaTeMiLe-for-Java</artifactId>
-        <version>2.1.0</version>
+        <version>2.2.0</version>
     </dependency>
 ```
 
@@ -59,7 +59,7 @@ To generate the full API documentation of HaTeMiLe of Java:
 **Step 2.** Add the dependency
 ```gradle
     dependencies {
-            compile 'com.github.carlsonsantana:HaTeMiLe-for-Java:2.1.0'
+            compile 'com.github.carlsonsantana:HaTeMiLe-for-Java:2.2.0'
     }
 ```
 
@@ -74,7 +74,7 @@ To generate the full API documentation of HaTeMiLe of Java:
 **Step 2.** Add the dependency
 
 ```schala
-    libraryDependencies += "com.github.carlsonsantana" % "HaTeMiLe-for-Java" % "2.1.0"
+    libraryDependencies += "com.github.carlsonsantana" % "HaTeMiLe-for-Java" % "2.2.0"
 ```
 
 ### Leiningen
@@ -88,7 +88,7 @@ To generate the full API documentation of HaTeMiLe of Java:
 **Step 2.** Add the dependency
 
 ```clojure
-    :dependencies [[com.github.carlsonsantana/HaTeMiLe-for-Java "2.1.0"]]
+    :dependencies [[com.github.carlsonsantana/HaTeMiLe-for-Java "2.2.0"]]
 ```
 
 ## Usage
