@@ -95,7 +95,7 @@ public class Configure {
     /**
      * Check that the configuration has an parameter.
      * @param parameter The name of parameter.
-     * @return True if the configuration has the parameter false if the
+     * @return True if the configuration has the parameter or false if the
      * configuration not has the parameter.
      */
     public boolean hasParameter(final String parameter) {

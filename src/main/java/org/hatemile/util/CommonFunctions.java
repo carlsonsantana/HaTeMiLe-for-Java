@@ -122,8 +122,8 @@ public final class CommonFunctions {
     /**
      * Check that the element can be manipulated by HaTeMiLe.
      * @param element The element
-     * @return True if element can be manipulated or false if element
-     * and element can be manipulated.
+     * @return True if element can be manipulated or false if element cannot be
+     * manipulated.
      */
     public static boolean isValidElement(final HTMLDOMElement element) {
         if (element.hasAttribute(DATA_IGNORE)) {
