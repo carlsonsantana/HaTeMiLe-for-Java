@@ -350,8 +350,7 @@ public class AccessibleNavigationImplementation
                 .firstResult();
         HTMLDOMElement htmlList = null;
 
-        if ((container == null) && ((!elementsHeadingBefore.isEmpty())
-                || (!elementsHeadingAfter.isEmpty()))) {
+        if (container == null) {
             HTMLDOMElement local = parser.find("body").firstResult();
             if (local != null) {
                 container = parser.createElement("div");
@@ -365,7 +364,8 @@ public class AccessibleNavigationImplementation
                 if (!elementsHeadingBefore.isEmpty()) {
                     textContainer.appendText(elementsHeadingBefore);
                     local.prependElement(container);
-                } else {
+                }
+                if (!elementsHeadingAfter.isEmpty()) {
                     textContainer.appendText(elementsHeadingAfter);
                     local.appendElement(container);
                 }
