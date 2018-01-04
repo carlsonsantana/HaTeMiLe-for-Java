@@ -98,10 +98,17 @@ public class AccessibleNavigationImplementation
 
     /**
      * The name of attribute that link the anchor of long description with the
-     * image.
+     * image, before it.
      */
-    public static final String DATA_LONG_DESCRIPTION_FOR_IMAGE =
-            "data-longdescriptionfor";
+    public static final String DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF =
+            "data-attributelongdescriptionbeforeof";
+
+    /**
+     * The name of attribute that link the anchor of long description with the
+     * image, after it.
+     */
+    public static final String DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF =
+            "data-attributelongdescriptionafterof";
 
     /**
      * Level value of h1.
@@ -624,9 +631,9 @@ public class AccessibleNavigationImplementation
         if (image.hasAttribute("longdesc")) {
             idGenerator.generateId(image);
             String id = image.getAttribute("id");
-            if (parser.find("[" + DATA_LONG_DESCRIPTION_FOR_IMAGE + "=\""
-                    + id + "\"]").firstResult() == null) {
-                if (image.hasAttribute("alt")) {
+            if (image.hasAttribute("alt")) {
+                if (parser.find("[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF
+                        + "=\"" + id + "\"]").firstResult() == null) {
                     if (!(attributeLongDescriptionPrefixBefore.isEmpty()
                             || attributeLongDescriptionSuffixBefore
                                 .isEmpty())) {
@@ -637,14 +644,16 @@ public class AccessibleNavigationImplementation
                         beforeAnchor.setAttribute("href",
                                 image.getAttribute("longdesc"));
                         beforeAnchor.setAttribute("target", "_blank");
-                        beforeAnchor
-                                .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
-                                    id);
+                        beforeAnchor.setAttribute(
+                                DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF, id);
                         beforeAnchor.setAttribute("class",
                                 CLASS_FORCE_LINK_BEFORE);
                         beforeAnchor.appendText(beforeText.trim());
                         image.insertBefore(beforeAnchor);
                     }
+                }
+                if (parser.find("[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF
+                        + "=\"" + id + "\"]").firstResult() == null) {
                     if (!(attributeLongDescriptionPrefixAfter.isEmpty()
                             || attributeLongDescriptionSuffixAfter.isEmpty())) {
                         String afterText = attributeLongDescriptionPrefixAfter
@@ -654,9 +663,8 @@ public class AccessibleNavigationImplementation
                         afterAnchor.setAttribute("href",
                                 image.getAttribute("longdesc"));
                         afterAnchor.setAttribute("target", "_blank");
-                        afterAnchor
-                                .setAttribute(DATA_LONG_DESCRIPTION_FOR_IMAGE,
-                                    id);
+                        afterAnchor.setAttribute(
+                                DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF, id);
                         afterAnchor.setAttribute("class",
                                 CLASS_FORCE_LINK_AFTER);
                         afterAnchor.appendText(afterText.trim());
