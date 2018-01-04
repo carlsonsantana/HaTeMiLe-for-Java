@@ -22,8 +22,8 @@ import java.util.Objects;
 import org.hatemile.util.css.StyleSheetDeclaration;
 
 /**
- *
- * @author carlson
+ * The PHCSSDeclaration class is official implementation of
+ * {@link org.hatemile.util.css.StyleSheetDeclaration} for ph-css.
  */
 public class PHCSSDeclaration implements StyleSheetDeclaration {
 

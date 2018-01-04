@@ -35,8 +35,8 @@ import org.hatemile.util.html.HTMLDOMElement;
 import org.hatemile.util.html.HTMLDOMParser;
 
 /**
- *
- * @author carlson
+ * The PHCSSParser class is official implementation of
+ * {@link org.hatemile.util.css.StyleSheetParser} for ph-css.
  */
 public class PHCSSParser implements StyleSheetParser {
 

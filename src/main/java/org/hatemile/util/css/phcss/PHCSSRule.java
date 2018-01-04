@@ -25,8 +25,8 @@ import org.hatemile.util.css.StyleSheetDeclaration;
 import org.hatemile.util.css.StyleSheetRule;
 
 /**
- *
- * @author carlson
+ * The PHCSSRule class is official implementation of
+ * {@link org.hatemile.util.css.StyleSheetRule} for ph-css.
  */
 public class PHCSSRule implements StyleSheetRule {
 
