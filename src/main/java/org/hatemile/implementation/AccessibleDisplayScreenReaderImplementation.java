@@ -1305,7 +1305,8 @@ public class AccessibleDisplayScreenReaderImplementation
                 if (!attributeAccesskeyBefore.isEmpty()) {
                     textContainer.appendText(attributeAccesskeyBefore);
                     local.prependElement(container);
-                } else {
+                }
+                if (!attributeAccesskeyAfter.isEmpty()) {
                     textContainer.appendText(attributeAccesskeyAfter);
                     local.appendElement(container);
                 }
