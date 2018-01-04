@@ -18,8 +18,8 @@ import org.hatemile.util.html.HTMLDOMTextNode;
 import org.jsoup.nodes.TextNode;
 
 /**
- * The JsoupHTMLDOMTextNode class is official implementation of HTMLDOMTextNode
- * interface for the Jsoup library.
+ * The JsoupHTMLDOMTextNode class is official implementation of
+ * {@link org.hatemile.util.html.HTMLDOMTextNode} for the Jsoup library.
  */
 public class JsoupHTMLDOMTextNode extends JsoupHTMLDOMNode
         implements HTMLDOMTextNode {

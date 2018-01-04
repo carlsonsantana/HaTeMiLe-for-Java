@@ -27,8 +27,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * The class JsoupHTMLDOMParser is official implementation of HTMLDOMParser
- * interface for the Jsoup library.
+ * The class JsoupHTMLDOMParser is official implementation of
+ * {@link org.hatemile.util.html.HTMLDOMParser} for the Jsoup library.
  */
 public class JsoupHTMLDOMParser implements HTMLDOMParser {
 

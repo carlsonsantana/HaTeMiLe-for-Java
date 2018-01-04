@@ -34,8 +34,8 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 /**
- * The JsoupHTMLDOMElement class is official implementation of HTMLDOMElement
- * interface for the Jsoup library.
+ * The JsoupHTMLDOMElement class is official implementation of
+ * {@link org.hatemile.util.html.HTMLDOMElement} for the Jsoup library.
  */
 public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
         implements HTMLDOMElement {

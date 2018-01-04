@@ -26,7 +26,7 @@ import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleFormImplementation class is official implementation of
- * AccessibleForm interface.
+ * {@link org.hatemile.AccessibleForm}.
  */
 public class AccessibleFormImplementation implements AccessibleForm {
 

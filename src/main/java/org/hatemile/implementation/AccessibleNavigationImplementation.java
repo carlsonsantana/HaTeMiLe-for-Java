@@ -40,7 +40,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * The AccessibleNavigationImplementation class is official implementation of
- * AccessibleNavigation interface.
+ * {@link org.hatemile.AccessibleNavigation}.
  */
 public class AccessibleNavigationImplementation
         implements AccessibleNavigation {

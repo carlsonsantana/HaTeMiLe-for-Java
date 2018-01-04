@@ -26,7 +26,7 @@ import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleEventImplementation class is official implementation of
- * AccessibleEvent interface.
+ * {@link org.hatemile.AccessibleEvent}.
  */
 public class AccessibleEventImplementation implements AccessibleEvent {
 

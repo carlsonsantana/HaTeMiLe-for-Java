@@ -28,7 +28,7 @@ import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleAssociationImplementation class is official implementation of
- * AccessibleAssociation.
+ * {@link org.hatemile.AccessibleAssociation}.
  */
 public class AccessibleAssociationImplementation
         implements AccessibleAssociation {

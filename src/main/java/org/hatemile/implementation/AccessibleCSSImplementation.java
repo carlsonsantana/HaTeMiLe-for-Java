@@ -46,7 +46,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * The AccessibleCSSImplementation class is official implementation of
- * AccessibleCSS interface.
+ * {@link org.hatemile.AccessibleCSS}.
  */
 public class AccessibleCSSImplementation implements AccessibleCSS {
 

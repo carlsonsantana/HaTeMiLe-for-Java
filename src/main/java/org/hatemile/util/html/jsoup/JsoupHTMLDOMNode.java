@@ -22,8 +22,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
 /**
- * The JsoupHTMLDOMNode class is official implementation of HTMLDOMNode
- * interface for the Jsoup library.
+ * The JsoupHTMLDOMNode class is official implementation of
+ * {@link org.hatemile.util.html.HTMLDOMNode} for the Jsoup library.
  */
 public abstract class JsoupHTMLDOMNode implements HTMLDOMNode {
 

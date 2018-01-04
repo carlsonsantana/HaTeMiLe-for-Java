@@ -27,7 +27,7 @@ import org.hatemile.util.IDGenerator;
 
 /**
  * The AccessibleDisplayScreenReaderImplementation class is official
- * implementation of AccessibleDisplay interface for screen readers.
+ * implementation of {@link org.hatemile.AccessibleDisplay} for screen readers.
  */
 public class AccessibleDisplayScreenReaderImplementation
         implements AccessibleDisplay {
