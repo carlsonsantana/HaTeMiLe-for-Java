@@ -232,13 +232,6 @@ public class JsoupHTMLDOMElement extends JsoupHTMLDOMNode
     /**
      * {@inheritDoc}
      */
-    public void setInnerHTML(final String html) {
-        element.html(Objects.requireNonNull(html));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public String getOuterHTML() {
         return toString(element);
     }

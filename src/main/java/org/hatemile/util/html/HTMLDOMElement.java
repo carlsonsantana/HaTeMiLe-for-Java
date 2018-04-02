@@ -116,12 +116,6 @@ public interface HTMLDOMElement extends HTMLDOMNode, Cloneable {
     String getInnerHTML();
 
     /**
-     * Modify the inner HTML code of this element.
-     * @param html The HTML code.
-     */
-    void setInnerHTML(String html);
-
-    /**
      * Returns the HTML code of this element.
      * @return The HTML code of this element.
      */
