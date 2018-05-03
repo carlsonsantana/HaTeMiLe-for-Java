@@ -98,17 +98,10 @@ public class AccessibleNavigationImplementation
 
     /**
      * The name of attribute that link the anchor of long description with the
-     * image, before it.
+     * image.
      */
-    public static final String DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF =
-            "data-attributelongdescriptionbeforeof";
-
-    /**
-     * The name of attribute that link the anchor of long description with the
-     * image, after it.
-     */
-    public static final String DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF =
-            "data-attributelongdescriptionafterof";
+    public static final String DATA_ATTRIBUTE_LONG_DESCRIPTION_OF =
+            "data-attributelongdescriptionof";
 
     /**
      * Level value of h1.
@@ -628,49 +621,46 @@ public class AccessibleNavigationImplementation
      * {@inheritDoc}
      */
     public void provideNavigationToLongDescription(final HTMLDOMElement image) {
-        if (image.hasAttribute("longdesc")) {
+        if ((image.hasAttribute("longdesc")) && (image.hasAttribute("alt"))) {
             idGenerator.generateId(image);
             String id = image.getAttribute("id");
-            if (image.hasAttribute("alt")) {
-                if (parser.find("[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF
-                        + "=\"" + id + "\"]").firstResult() == null) {
-                    if (!(attributeLongDescriptionPrefixBefore.isEmpty()
-                            || attributeLongDescriptionSuffixBefore
-                                .isEmpty())) {
-                        String beforeText = attributeLongDescriptionPrefixBefore
-                                + image.getAttribute("alt")
-                                + attributeLongDescriptionSuffixBefore;
-                        HTMLDOMElement beforeAnchor = parser.createElement("a");
-                        beforeAnchor.setAttribute("href",
-                                image.getAttribute("longdesc"));
-                        beforeAnchor.setAttribute("target", "_blank");
-                        beforeAnchor.setAttribute(
-                                DATA_ATTRIBUTE_LONG_DESCRIPTION_BEFORE_OF, id);
-                        beforeAnchor.setAttribute("class",
-                                CLASS_FORCE_LINK_BEFORE);
-                        beforeAnchor.appendText(beforeText.trim());
-                        image.insertBefore(beforeAnchor);
-                    }
-                }
-                if (parser.find("[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF
-                        + "=\"" + id + "\"]").firstResult() == null) {
-                    if (!(attributeLongDescriptionPrefixAfter.isEmpty()
-                            || attributeLongDescriptionSuffixAfter.isEmpty())) {
-                        String afterText = attributeLongDescriptionPrefixAfter
-                                + image.getAttribute("alt")
-                                + attributeLongDescriptionSuffixAfter;
-                        HTMLDOMElement afterAnchor = parser.createElement("a");
-                        afterAnchor.setAttribute("href",
-                                image.getAttribute("longdesc"));
-                        afterAnchor.setAttribute("target", "_blank");
-                        afterAnchor.setAttribute(
-                                DATA_ATTRIBUTE_LONG_DESCRIPTION_AFTER_OF, id);
-                        afterAnchor.setAttribute("class",
-                                CLASS_FORCE_LINK_AFTER);
-                        afterAnchor.appendText(afterText.trim());
-                        image.insertAfter(afterAnchor);
-                    }
-                }
+            if ((parser.find("." + CLASS_FORCE_LINK_BEFORE
+                    + "[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_OF
+                    + "=\"" + id + "\"]").firstResult() == null)
+                    && (!(attributeLongDescriptionPrefixBefore.isEmpty()
+                        || attributeLongDescriptionSuffixBefore.isEmpty()))) {
+                String beforeText = attributeLongDescriptionPrefixBefore
+                        + image.getAttribute("alt")
+                        + attributeLongDescriptionSuffixBefore;
+                HTMLDOMElement beforeAnchor = parser.createElement("a");
+                beforeAnchor.setAttribute("href",
+                        image.getAttribute("longdesc"));
+                beforeAnchor.setAttribute("target", "_blank");
+                beforeAnchor.setAttribute(
+                        DATA_ATTRIBUTE_LONG_DESCRIPTION_OF, id);
+                beforeAnchor.setAttribute("class",
+                        CLASS_FORCE_LINK_BEFORE);
+                beforeAnchor.appendText(beforeText.trim());
+                image.insertBefore(beforeAnchor);
+            }
+            if ((parser.find("." + CLASS_FORCE_LINK_BEFORE
+                    + "[" + DATA_ATTRIBUTE_LONG_DESCRIPTION_OF
+                    + "=\"" + id + "\"]").firstResult() == null)
+                    && (!(attributeLongDescriptionPrefixAfter.isEmpty()
+                        || attributeLongDescriptionSuffixAfter.isEmpty()))) {
+                String afterText = attributeLongDescriptionPrefixAfter
+                        + image.getAttribute("alt")
+                        + attributeLongDescriptionSuffixAfter;
+                HTMLDOMElement afterAnchor = parser.createElement("a");
+                afterAnchor.setAttribute("href",
+                        image.getAttribute("longdesc"));
+                afterAnchor.setAttribute("target", "_blank");
+                afterAnchor.setAttribute(DATA_ATTRIBUTE_LONG_DESCRIPTION_OF,
+                        id);
+                afterAnchor.setAttribute("class",
+                        CLASS_FORCE_LINK_AFTER);
+                afterAnchor.appendText(afterText.trim());
+                image.insertAfter(afterAnchor);
             }
         }
     }
