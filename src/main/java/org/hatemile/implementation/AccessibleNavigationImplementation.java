@@ -51,14 +51,23 @@ public class AccessibleNavigationImplementation
     public static final String ID_CONTAINER_SKIPPERS = "container-skippers";
 
     /**
-     * The id of list element that contains the links for the headings.
+     * The id of list element that contains the links for the headings, before
+     * the whole page.
      */
-    public static final String ID_CONTAINER_HEADING = "container-heading";
+    public static final String ID_CONTAINER_HEADING_BEFORE
+            = "container-heading-before";
+
+    /**
+     * The id of list element that contains the links for the headings, after
+     * the whole page.
+     */
+    public static final String ID_CONTAINER_HEADING_AFTER
+            = "container-heading-after";
 
     /**
      * The id of text of description of container of heading links.
      */
-    public static final String ID_TEXT_HEADING = "text-heading";
+    public static final String CLASS_TEXT_HEADING = "text-heading";
 
     /**
      * The HTML class of anchor of skipper.
@@ -196,6 +205,16 @@ public class AccessibleNavigationImplementation
     protected HTMLDOMElement listSkippers;
 
     /**
+     * The list element of table of content, before the whole content of page.
+     */
+    protected HTMLDOMElement listHeadingBefore;
+
+    /**
+     * The list element of table of content, after the whole content of page.
+     */
+    protected HTMLDOMElement listHeadingAfter;
+
+    /**
      * The state that indicates if the sintatic heading of parser be validated.
      */
     protected boolean validateHeading;
@@ -204,6 +223,11 @@ public class AccessibleNavigationImplementation
      * The state that indicates if the sintatic heading of parser is correct.
      */
     protected boolean validHeading;
+
+    /**
+     * The state that indicates if the container of table of content has added.
+     */
+    protected boolean listHeadingAdded;
 
     /**
      * Initializes a new object that manipulate the accessibility of the
@@ -241,9 +265,12 @@ public class AccessibleNavigationImplementation
                 .getParameter("attribute-longdescription-suffix-after");
         skippers = getSkippers(skipperFileName, configure);
         listSkippersAdded = false;
+        listHeadingAdded = false;
         validateHeading = false;
         validHeading = false;
         listSkippers = null;
+        listHeadingBefore = null;
+        listHeadingAfter = null;
     }
 
     /**
@@ -336,44 +363,60 @@ public class AccessibleNavigationImplementation
 
     /**
      * Generate the list of heading links of page.
-     * @return The list of heading links of page.
      */
-    protected HTMLDOMElement generateListHeading() {
-        HTMLDOMElement container = parser.find("#" + ID_CONTAINER_HEADING)
-                .firstResult();
-        HTMLDOMElement htmlList = null;
-
-        if (container == null) {
-            HTMLDOMElement local = parser.find("body").firstResult();
-            if (local != null) {
-                container = parser.createElement("div");
-                container.setAttribute("id", ID_CONTAINER_HEADING);
+    protected void generateListHeading() {
+        HTMLDOMElement local = parser.find("body").firstResult();
+        if (local != null) {
+            HTMLDOMElement containerBefore = parser
+                    .find("#" + ID_CONTAINER_HEADING_BEFORE).firstResult();
+            if ((containerBefore == null)
+                    && (!elementsHeadingBefore.isEmpty())) {
+                containerBefore = parser.createElement("div");
+                containerBefore.setAttribute("id", ID_CONTAINER_HEADING_BEFORE);
 
                 HTMLDOMElement textContainer = parser.createElement("span");
-                textContainer.setAttribute("id", ID_TEXT_HEADING);
+                textContainer.setAttribute("class", CLASS_TEXT_HEADING);
+                textContainer.appendText(elementsHeadingBefore);
 
-                container.appendElement(textContainer);
+                containerBefore.appendElement(textContainer);
+                local.prependElement(containerBefore);
+            }
 
-                if (!elementsHeadingBefore.isEmpty()) {
-                    textContainer.appendText(elementsHeadingBefore);
-                    local.prependElement(container);
+            if (containerBefore != null) {
+                listHeadingBefore = parser.find(containerBefore)
+                        .findChildren("ol").firstResult();
+                if (listHeadingBefore == null) {
+                    listHeadingBefore = parser.createElement("ol");
+                    containerBefore.appendElement(listHeadingBefore);
                 }
-                if (!elementsHeadingAfter.isEmpty()) {
-                    textContainer.appendText(elementsHeadingAfter);
-                    local.appendElement(container);
+            }
+
+
+            HTMLDOMElement containerAfter = parser
+                    .find("#" + ID_CONTAINER_HEADING_AFTER).firstResult();
+            if ((containerAfter == null)
+                    && (!elementsHeadingAfter.isEmpty())) {
+                containerAfter = parser.createElement("div");
+                containerAfter.setAttribute("id", ID_CONTAINER_HEADING_AFTER);
+
+                HTMLDOMElement textContainer = parser.createElement("span");
+                textContainer.setAttribute("class", CLASS_TEXT_HEADING);
+                textContainer.appendText(elementsHeadingAfter);
+
+                containerAfter.appendElement(textContainer);
+                local.appendElement(containerAfter);
+            }
+
+            if (containerAfter != null) {
+                listHeadingAfter = parser.find(containerAfter)
+                        .findChildren("ol").firstResult();
+                if (listHeadingAfter == null) {
+                    listHeadingAfter = parser.createElement("ol");
+                    containerAfter.appendElement(listHeadingAfter);
                 }
             }
         }
-
-        if (container != null) {
-            htmlList = parser.find(container).findChildren("ol").firstResult();
-            if (htmlList == null) {
-                htmlList = parser.createElement("ol");
-                container.appendElement(htmlList);
-            }
-        }
-
-        return htmlList;
+        listHeadingAdded = true;
     }
 
     /**
@@ -568,37 +611,57 @@ public class AccessibleNavigationImplementation
             HTMLDOMElement anchor = generateAnchorFor(element,
                     DATA_HEADING_ANCHOR_FOR, CLASS_HEADING_ANCHOR);
             if (anchor != null) {
-                HTMLDOMElement list = null;
+                if (!listHeadingAdded) {
+                    generateListHeading();
+                }
+                HTMLDOMElement listBefore = null;
+                HTMLDOMElement listAfter = null;
                 int level = getHeadingLevel(element);
                 if (level == 1) {
-                    list = generateListHeading();
+                    listBefore = listHeadingBefore;
+                    listAfter = listHeadingAfter;
                 } else {
-                    HTMLDOMElement superItem = parser
-                            .find("#" + ID_CONTAINER_HEADING)
-                            .findDescendants("[" + DATA_HEADING_LEVEL + "=\""
-                                + Integer.toString(level - 1) + "\"]")
-                            .lastResult();
-                    if (superItem != null) {
-                        list = parser.find(superItem).findChildren("ol")
-                                .firstResult();
-                        if (list == null) {
-                            list = parser.createElement("ol");
-                            superItem.appendElement(list);
+                    String selector = "[" + DATA_HEADING_LEVEL + "=\""
+                                + Integer.toString(level - 1) + "\"]";
+                    if (listHeadingBefore != null) {
+                        HTMLDOMElement superItem = parser
+                                .find(listHeadingBefore)
+                                .findDescendants(selector).lastResult();
+                        if (superItem != null) {
+                            listBefore = parser.find(superItem)
+                                    .findChildren("ol").firstResult();
+                            if (listBefore == null) {
+                                listBefore = parser.createElement("ol");
+                                superItem.appendElement(listBefore);
+                            }
+                        }
+                    }
+                    if (listHeadingAfter != null) {
+                        HTMLDOMElement superItem = parser.find(listHeadingAfter)
+                                .findDescendants(selector).lastResult();
+                        if (superItem != null) {
+                            listAfter = parser.find(superItem)
+                                    .findChildren("ol").firstResult();
+                            if (listAfter == null) {
+                                listAfter = parser.createElement("ol");
+                                superItem.appendElement(listAfter);
+                            }
                         }
                     }
                 }
-                if (list != null) {
-                    HTMLDOMElement item = parser.createElement("li");
-                    item.setAttribute(DATA_HEADING_LEVEL,
-                            Integer.toString(level));
 
-                    HTMLDOMElement link = parser.createElement("a");
-                    link.setAttribute("href",
-                            "#" + anchor.getAttribute("name"));
-                    link.appendText(element.getTextContent());
+                HTMLDOMElement item = parser.createElement("li");
+                item.setAttribute(DATA_HEADING_LEVEL, Integer.toString(level));
+                HTMLDOMElement link = parser.createElement("a");
+                link.setAttribute("href", "#" + anchor.getAttribute("name"));
+                link.appendText(element.getTextContent());
+                item.appendElement(link);
 
-                    item.appendElement(link);
-                    list.appendElement(item);
+                if (listBefore != null) {
+                    listBefore.appendElement(item.cloneElement());
+                }
+                if (listAfter != null) {
+                    listAfter.appendElement(item.cloneElement());
                 }
             }
         }
