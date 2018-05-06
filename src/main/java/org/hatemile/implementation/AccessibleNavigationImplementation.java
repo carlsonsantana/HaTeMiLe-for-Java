@@ -603,12 +603,12 @@ public class AccessibleNavigationImplementation
     /**
      * {@inheritDoc}
      */
-    public void provideNavigationByHeading(final HTMLDOMElement element) {
+    public void provideNavigationByHeading(final HTMLDOMElement heading) {
         if (!validateHeading) {
             validHeading = isValidHeading();
         }
         if (validHeading) {
-            HTMLDOMElement anchor = generateAnchorFor(element,
+            HTMLDOMElement anchor = generateAnchorFor(heading,
                     DATA_HEADING_ANCHOR_FOR, CLASS_HEADING_ANCHOR);
             if (anchor != null) {
                 if (!listHeadingAdded) {
@@ -616,7 +616,7 @@ public class AccessibleNavigationImplementation
                 }
                 HTMLDOMElement listBefore = null;
                 HTMLDOMElement listAfter = null;
-                int level = getHeadingLevel(element);
+                int level = getHeadingLevel(heading);
                 if (level == 1) {
                     listBefore = listHeadingBefore;
                     listAfter = listHeadingAfter;
@@ -654,7 +654,7 @@ public class AccessibleNavigationImplementation
                 item.setAttribute(DATA_HEADING_LEVEL, Integer.toString(level));
                 HTMLDOMElement link = parser.createElement("a");
                 link.setAttribute("href", "#" + anchor.getAttribute("name"));
-                link.appendText(element.getTextContent());
+                link.appendText(heading.getTextContent());
                 item.appendElement(link);
 
                 if (listBefore != null) {
