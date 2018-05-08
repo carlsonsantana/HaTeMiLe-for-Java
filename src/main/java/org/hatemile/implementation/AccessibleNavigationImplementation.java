@@ -52,20 +52,20 @@ public class AccessibleNavigationImplementation
 
     /**
      * The id of list element that contains the links for the headings, before
-     * the whole page.
+     * the whole content of page.
      */
     public static final String ID_CONTAINER_HEADING_BEFORE
             = "container-heading-before";
 
     /**
      * The id of list element that contains the links for the headings, after
-     * the whole page.
+     * the whole content of page.
      */
     public static final String ID_CONTAINER_HEADING_AFTER
             = "container-heading-after";
 
     /**
-     * The id of text of description of container of heading links.
+     * The HTML class of text of description of container of heading links.
      */
     public static final String CLASS_TEXT_HEADING = "text-heading";
 
