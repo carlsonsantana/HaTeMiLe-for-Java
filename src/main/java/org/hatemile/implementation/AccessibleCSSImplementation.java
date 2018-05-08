@@ -801,9 +801,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
         List<HTMLDOMElement> headerElements = htmlParser.find(element)
                 .findDescendants("["
                     + AccessibleDisplayScreenReaderImplementation
-                        .DATA_ATTRIBUTE_HEADERS_BEFORE_OF
-                    + "],[" + AccessibleDisplayScreenReaderImplementation
-                        .DATA_ATTRIBUTE_HEADERS_AFTER_OF
+                        .DATA_ATTRIBUTE_HEADERS_OF
                     + "]").listResults();
         for (HTMLDOMElement headerElement : headerElements) {
             headerElement.removeNode();

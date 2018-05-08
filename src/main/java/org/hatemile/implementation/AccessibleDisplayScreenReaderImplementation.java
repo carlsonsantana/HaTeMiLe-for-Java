@@ -70,320 +70,143 @@ public class AccessibleDisplayScreenReaderImplementation
             = "data-attributeaccesskeyof";
 
     /**
-     * The name of attribute that links the content of download link, before it.
+     * The name of attribute that links the content of download link.
      */
-    public static final String DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF =
-            "data-attributedownloadbeforeof";
-
-    /**
-     * The name of attribute that links the content of download link, after it.
-     */
-    public static final String DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF =
-            "data-attributedownloadafterof";
+    public static final String DATA_ATTRIBUTE_DOWNLOAD_OF =
+            "data-attributedownloadof";
 
     /**
      * The name of attribute that links the content of draggable state with
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF =
-            "data-attributedraggablebeforeof";
-
-    /**
-     * The name of attribute that links the content of draggable state with
-     * element, after it.
-     */
-    public static final String DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF =
-            "data-attributedraggableafterof";
+    public static final String DATA_ATTRIBUTE_DRAGGABLE_OF =
+            "data-attributedraggableof";
 
     /**
      * The name of attribute that links the content of dropzone state with
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ATTRIBUTE_DROPZONE_BEFORE_OF =
-            "data-attributedropzonebeforeof";
-
-    /**
-     * The name of attribute that links the content of dropzone state with
-     * element, after it.
-     */
-    public static final String DATA_ATTRIBUTE_DROPZONE_AFTER_OF =
-            "data-attributedropzoneafterof";
+    public static final String DATA_ATTRIBUTE_DROPZONE_OF =
+            "data-attributedropzoneof";
 
     /**
      * The name of attribute that links the content of header cell with the
-     * data cell, before it.
+     * data cell.
      */
-    public static final String DATA_ATTRIBUTE_HEADERS_BEFORE_OF =
-            "data-headersbeforeof";
-
-    /**
-     * The name of attribute that links the content of header cell with the
-     * data cell, after it.
-     */
-    public static final String DATA_ATTRIBUTE_HEADERS_AFTER_OF =
-            "data-headersafterof";
+    public static final String DATA_ATTRIBUTE_HEADERS_OF = "data-headersof";
 
     /**
      * The name of attribute that links the description of language with the
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF =
-            "data-languagebeforeof";
-
-    /**
-     * The name of attribute that links the description of language with the
-     * element, after it.
-     */
-    public static final String DATA_ATTRIBUTE_LANGUAGE_AFTER_OF =
-            "data-languageafterof";
+    public static final String DATA_ATTRIBUTE_LANGUAGE_OF = "data-languageof";
 
     /**
      * The name of attribute that links the content of link that open a new
-     * instance, before it.
+     * instance.
      */
-    public static final String DATA_ATTRIBUTE_TARGET_BEFORE_OF =
-            "data-attributetargetbeforeof";
+    public static final String DATA_ATTRIBUTE_TARGET_OF =
+            "data-attributetargetof";
 
     /**
-     * The name of attribute that links the content of link that open a new
-     * instance, after it.
+     * The name of attribute that links the content of title of element.
      */
-    public static final String DATA_ATTRIBUTE_TARGET_AFTER_OF =
-            "data-attributetargetafterof";
-
-    /**
-     * The name of attribute that links the content of title of element, before
-     * it.
-     */
-    public static final String DATA_ATTRIBUTE_TITLE_BEFORE_OF =
-            "data-attributetitlebeforeof";
-
-    /**
-     * The name of attribute that links the content of title of element, after
-     * it.
-     */
-    public static final String DATA_ATTRIBUTE_TITLE_AFTER_OF =
-            "data-attributetitleafterof";
+    public static final String DATA_ATTRIBUTE_TITLE_OF =
+            "data-attributetitleof";
 
     /**
      * The name of attribute that links the content of autocomplete state of
-     * field, before it.
+     * field.
      */
-    public static final String DATA_ARIA_AUTOCOMPLETE_BEFORE_OF =
-            "data-ariaautocompletebeforeof";
+    public static final String DATA_ARIA_AUTOCOMPLETE_OF =
+            "data-ariaautocompleteof";
 
     /**
-     * The name of attribute that links the content of autocomplete state of
-     * field, after it.
+     * The name of attribute that links the content of busy state of element.
      */
-    public static final String DATA_ARIA_AUTOCOMPLETE_AFTER_OF =
-            "data-ariaautocompleteafterof";
+    public static final String DATA_ARIA_BUSY_OF = "data-ariabusyof";
 
     /**
-     * The name of attribute that links the content of busy state of element,
-     * before it.
+     * The name of attribute that links the content of checked state field.
      */
-    public static final String DATA_ARIA_BUSY_BEFORE_OF =
-            "data-ariabusybeforeof";
-
-    /**
-     * The name of attribute that links the content of busy state of element,
-     * after it.
-     */
-    public static final String DATA_ARIA_BUSY_AFTER_OF = "data-ariabusyafterof";
-
-    /**
-     * The name of attribute that links the content of checked state field,
-     * before it.
-     */
-    public static final String DATA_ARIA_CHECKED_BEFORE_OF =
-            "data-ariacheckedbeforeof";
-
-    /**
-     * The name of attribute that links the content of checked state field,
-     * after it.
-     */
-    public static final String DATA_ARIA_CHECKED_AFTER_OF =
-            "data-ariacheckedafterof";
+    public static final String DATA_ARIA_CHECKED_OF = "data-ariacheckedof";
 
     /**
      * The name of attribute that links the content of drop effect state of
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ARIA_DROPEFFECT_BEFORE_OF =
-            "data-ariadropeffectbeforeof";
-
-    /**
-     * The name of attribute that links the content of drop effect state of
-     * element, after it.
-     */
-    public static final String DATA_ARIA_DROPEFFECT_AFTER_OF =
-            "data-ariadropeffectafterof";
+    public static final String DATA_ARIA_DROPEFFECT_OF =
+            "data-ariadropeffectof";
 
     /**
      * The name of attribute that links the content of expanded state of
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ARIA_EXPANDED_BEFORE_OF =
-            "data-ariaexpandedbeforeof";
+    public static final String DATA_ARIA_EXPANDED_OF = "data-ariaexpandedof";
 
     /**
-     * The name of attribute that links the content of expanded state of
-     * element, after it.
+     * The name of attribute that links the content of grabbed state of element.
      */
-    public static final String DATA_ARIA_EXPANDED_AFTER_OF =
-            "data-ariaexpandedafterof";
-
-    /**
-     * The name of attribute that links the content of grabbed state of element,
-     * before it.
-     */
-    public static final String DATA_ARIA_GRABBED_BEFORE_OF =
-            "data-ariagrabbedbeforeof";
-
-    /**
-     * The name of attribute that links the content of grabbed state of element,
-     * after it.
-     */
-    public static final String DATA_ARIA_GRABBED_AFTER_OF =
-            "data-ariagrabbedafterof";
+    public static final String DATA_ARIA_GRABBED_OF = "data-ariagrabbedof";
 
     /**
      * The name of attribute that links the content that show if the field has
-     * popup, before it.
+     * popup.
      */
-    public static final String DATA_ARIA_HASPOPUP_BEFORE_OF =
-            "data-ariahaspopupbeforeof";
+    public static final String DATA_ARIA_HASPOPUP_OF = "data-ariahaspopupof";
 
     /**
-     * The name of attribute that links the content that show if the field has
-     * popup, after it.
+     * The name of attribute that links the content of level state of element.
      */
-    public static final String DATA_ARIA_HASPOPUP_AFTER_OF =
-            "data-ariahaspopupafterof";
-
-    /**
-     * The name of attribute that links the content of level state of element,
-     * before it.
-     */
-    public static final String DATA_ARIA_LEVEL_BEFORE_OF =
-            "data-arialevelbeforeof";
-
-    /**
-     * The name of attribute that links the content of level state of element,
-     * after it.
-     */
-    public static final String DATA_ARIA_LEVEL_AFTER_OF =
-            "data-arialevelafterof";
+    public static final String DATA_ARIA_LEVEL_OF = "data-arialevelof";
 
     /**
      * The name of attribute that links the content of orientation state of
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ARIA_ORIENTATION_BEFORE_OF =
-            "data-ariaorientationbeforeof";
+    public static final String DATA_ARIA_ORIENTATION_OF =
+            "data-ariaorientationof";
 
     /**
-     * The name of attribute that links the content of orientation state of
-     * element, after it.
+     * The name of attribute that links the content of pressed state of field.
      */
-    public static final String DATA_ARIA_ORIENTATION_AFTER_OF =
-            "data-ariaorientationafterof";
-
-    /**
-     * The name of attribute that links the content of pressed state of field,
-     * before it.
-     */
-    public static final String DATA_ARIA_PRESSED_BEFORE_OF =
-            "data-ariapressedbeforeof";
-
-    /**
-     * The name of attribute that links the content of pressed state of field,
-     * after it.
-     */
-    public static final String DATA_ARIA_PRESSED_AFTER_OF =
-            "data-ariapressedafterof";
+    public static final String DATA_ARIA_PRESSED_OF = "data-ariapressedof";
 
     /**
      * The name of attribute that links the content of minimum range state of
-     * field, before it.
+     * field.
      */
-    public static final String DATA_ARIA_RANGE_MIN_BEFORE_OF =
-            "data-attributevalueminbeforeof";
-
-    /**
-     * The name of attribute that links the content of minimum range state of
-     * field, after it.
-     */
-    public static final String DATA_ARIA_RANGE_MIN_AFTER_OF =
-            "data-attributevalueminafterof";
+    public static final String DATA_ARIA_RANGE_MIN_OF =
+            "data-attributevalueminof";
 
     /**
      * The name of attribute that links the content of maximum range state of
-     * field, before it.
+     * field.
      */
-    public static final String DATA_ARIA_RANGE_MAX_BEFORE_OF =
-            "data-attributevaluemaxbeforeof";
+    public static final String DATA_ARIA_RANGE_MAX_OF =
+            "data-attributevaluemaxof";
 
     /**
-     * The name of attribute that links the content of maximum range state of
-     * field, after it.
+     * The name of attribute that links the content of required state of field.
      */
-    public static final String DATA_ARIA_RANGE_MAX_AFTER_OF =
-            "data-attributevaluemaxafterof";
+    public static final String DATA_ARIA_REQUIRED_OF =
+            "data-attributerequiredof";
 
     /**
-     * The name of attribute that links the content of required state of field,
-     * before it.
+     * The name of attribute that links the content of selected state of field.
      */
-    public static final String DATA_ARIA_REQUIRED_BEFORE_OF =
-            "data-attributerequiredbeforeof";
+    public static final String DATA_ARIA_SELECTED_OF = "data-ariaselectedof";
 
     /**
-     * The name of attribute that links the content of required state of field,
-     * after it.
+     * The name of attribute that links the content of sort state of element.
      */
-    public static final String DATA_ARIA_REQUIRED_AFTER_OF =
-            "data-attributerequiredafterof";
-
-    /**
-     * The name of attribute that links the content of selected state of field,
-     * before it.
-     */
-    public static final String DATA_ARIA_SELECTED_BEFORE_OF =
-            "data-ariaselectedbeforeof";
-
-    /**
-     * The name of attribute that links the content of selected state of field,
-     * after it.
-     */
-    public static final String DATA_ARIA_SELECTED_AFTER_OF =
-            "data-ariaselectedafterof";
-
-    /**
-     * The name of attribute that links the content of sort state of element,
-     * before it.
-     */
-    public static final String DATA_ARIA_SORT_BEFORE_OF =
-            "data-ariasortbeforeof";
-
-    /**
-     * The name of attribute that links the content of sort state of element,
-     * after it.
-     */
-    public static final String DATA_ARIA_SORT_AFTER_OF = "data-ariasortafterof";
+    public static final String DATA_ARIA_SORT_OF = "data-ariasortof";
 
     /**
      * The name of attribute that links the content of role of element with the
-     * element, before it.
+     * element.
      */
-    public static final String DATA_ROLE_BEFORE_OF = "data-rolebeforeof";
-
-    /**
-     * The name of attribute that links the content of role of element with the
-     * element, after it.
-     */
-    public static final String DATA_ROLE_AFTER_OF = "data-roleafterof";
+    public static final String DATA_ROLE_OF = "data-roleof";
 
     /**
      * The browser shortcut prefix.
@@ -921,7 +744,7 @@ public class AccessibleDisplayScreenReaderImplementation
     protected HTMLDOMElement listShortcutsBefore;
 
     /**
-     * The list element of shortcuts, before the whole content of page.
+     * The list element of shortcuts, after the whole content of page.
      */
     protected HTMLDOMElement listShortcutsAfter;
 
@@ -1399,45 +1222,44 @@ public class AccessibleDisplayScreenReaderImplementation
      * @param element The reference element.
      * @param textBefore The text content to show before the element.
      * @param textAfter The text content to show after the element.
-     * @param dataBeforeOf The name of attribute that links the before content
-     * with element.
-     * @param dataAfterOf The name of attribute that links the after content
-     * with element.
+     * @param dataOf The name of attribute that links the content with element.
      */
     protected void forceReadSimple(final HTMLDOMElement element,
             final String textBefore, final String textAfter,
-            final String dataBeforeOf, final String dataAfterOf) {
+            final String dataOf) {
         idGenerator.generateId(element);
         String identifier = element.getAttribute("id");
+        String selector = "[" + dataOf + "=\"" + identifier + "\"]";
 
-        if (!textBefore.isEmpty()) {
-            HTMLDOMElement referenceBefore = parser.find("[" + dataBeforeOf
-                    + "=\"" + identifier + "\"]").firstResult();
+        HTMLDOMElement referenceBefore = parser.find("."
+                + CLASS_FORCE_READ_BEFORE + selector).firstResult();
+        HTMLDOMElement referenceAfter = parser.find("."
+                + CLASS_FORCE_READ_AFTER + selector).firstResult();
+        List<HTMLDOMElement> references = new ArrayList<HTMLDOMElement>(parser
+                .find(selector).listResults());
+        references.remove(referenceBefore);
+        references.remove(referenceAfter);
 
-            if (!element.equals(referenceBefore)) {
+        if (references.isEmpty()) {
+            if (!textBefore.isEmpty()) {
                 if (referenceBefore != null) {
                     referenceBefore.removeNode();
                 }
 
                 HTMLDOMElement span = parser.createElement("span");
                 span.setAttribute("class", CLASS_FORCE_READ_BEFORE);
-                span.setAttribute(dataBeforeOf, identifier);
+                span.setAttribute(dataOf, identifier);
                 span.appendText(textBefore);
                 insert(element, span, true);
             }
-        }
-        if (!textAfter.isEmpty()) {
-            HTMLDOMElement referenceAfter = parser.find("[" + dataAfterOf
-                    + "=\"" + identifier + "\"]").firstResult();
-
-            if (!element.equals(referenceAfter)) {
+            if (!textAfter.isEmpty()) {
                 if (referenceAfter != null) {
                     referenceAfter.removeNode();
                 }
 
                 HTMLDOMElement span = parser.createElement("span");
                 span.setAttribute("class", CLASS_FORCE_READ_AFTER);
-                span.setAttribute(dataAfterOf, identifier);
+                span.setAttribute(dataOf, identifier);
                 span.appendText(textAfter);
                 insert(element, span, false);
             }
@@ -1453,15 +1275,12 @@ public class AccessibleDisplayScreenReaderImplementation
      * @param textSuffixBefore The suffix of value to show before the element.
      * @param textPrefixAfter The prefix of value to show after the element.
      * @param textSuffixAfter The suffix of value to show after the element.
-     * @param dataBeforeOf The name of attribute that links the before content
-     * with element.
-     * @param dataAfterOf The name of attribute that links the after content
-     * with element.
+     * @param dataOf The name of attribute that links the content with element.
      */
     protected void forceRead(final HTMLDOMElement element, final String value,
             final String textPrefixBefore, final String textSuffixBefore,
             final String textPrefixAfter, final String textSuffixAfter,
-            final String dataBeforeOf, final String dataAfterOf) {
+            final String dataOf) {
         String textBefore = "";
         String textAfter = "";
         if ((!textPrefixBefore.isEmpty()) || (!textSuffixBefore.isEmpty())) {
@@ -1470,8 +1289,7 @@ public class AccessibleDisplayScreenReaderImplementation
         if ((!textPrefixAfter.isEmpty()) || (!textSuffixAfter.isEmpty())) {
             textAfter = textPrefixAfter + value + textSuffixAfter;
         }
-        forceReadSimple(element, textBefore, textAfter, dataBeforeOf,
-                dataAfterOf);
+        forceReadSimple(element, textBefore, textAfter, dataOf);
     }
 
     /**
@@ -1483,38 +1301,29 @@ public class AccessibleDisplayScreenReaderImplementation
             String attributeValue = element.getAttribute("aria-dropeffect");
             if (attributeValue.equals("copy")) {
                 forceReadSimple(element, ariaDropeffectCopyBefore,
-                        ariaDropeffectCopyAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+                        ariaDropeffectCopyAfter, DATA_ARIA_DROPEFFECT_OF);
             } else if (attributeValue.equals("move")) {
                 forceReadSimple(element, ariaDropeffectMoveBefore,
-                        ariaDropeffectMoveAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+                        ariaDropeffectMoveAfter, DATA_ARIA_DROPEFFECT_OF);
             } else if (attributeValue.equals("link")) {
                 forceReadSimple(element, ariaDropeffectLinkBefore,
-                        ariaDropeffectLinkAfter, DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+                        ariaDropeffectLinkAfter, DATA_ARIA_DROPEFFECT_OF);
             } else if (attributeValue.equals("execute")) {
                 forceReadSimple(element, ariaDropeffectExecuteBefore,
-                        ariaDropeffectExecuteAfter,
-                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+                        ariaDropeffectExecuteAfter, DATA_ARIA_DROPEFFECT_OF);
             } else if (attributeValue.equals("popup")) {
                 forceReadSimple(element, ariaDropeffectPopupBefore,
-                        ariaDropeffectPopupAfter,
-                        DATA_ARIA_DROPEFFECT_BEFORE_OF,
-                        DATA_ARIA_DROPEFFECT_AFTER_OF);
+                        ariaDropeffectPopupAfter, DATA_ARIA_DROPEFFECT_OF);
             }
         }
         if (element.hasAttribute("aria-grabbed")) {
             String attributeValue = element.getAttribute("aria-grabbed");
             if (attributeValue.equals("true")) {
                 forceReadSimple(element, ariaGrabbedTrueBefore,
-                        ariaGrabbedTrueAfter, DATA_ARIA_GRABBED_BEFORE_OF,
-                        DATA_ARIA_GRABBED_AFTER_OF);
+                        ariaGrabbedTrueAfter, DATA_ARIA_GRABBED_OF);
             } else if (attributeValue.equals("false")) {
                 forceReadSimple(element, ariaGrabbedFalseBefore,
-                        ariaGrabbedFalseAfter, DATA_ARIA_GRABBED_BEFORE_OF,
-                        DATA_ARIA_GRABBED_AFTER_OF);
+                        ariaGrabbedFalseAfter, DATA_ARIA_GRABBED_OF);
             }
         }
     }
@@ -1527,9 +1336,8 @@ public class AccessibleDisplayScreenReaderImplementation
             String description = getDescription(element);
             if (!element.hasAttribute("title")) {
                 idGenerator.generateId(element);
-                String id = element.getAttribute("id");
-                element.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF, id);
-                element.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF, id);
+                element.setAttribute(DATA_ATTRIBUTE_TITLE_OF,
+                        element.getAttribute("id"));
                 element.setAttribute("title", description);
             }
 
@@ -1548,7 +1356,6 @@ public class AccessibleDisplayScreenReaderImplementation
                         attributeAccesskeySuffixBefore,
                         attributeAccesskeyPrefixAfter,
                         attributeAccesskeySuffixAfter,
-                        DATA_ATTRIBUTE_ACCESSKEY_OF,
                         DATA_ATTRIBUTE_ACCESSKEY_OF);
 
                 HTMLDOMElement item = parser.createElement("li");
@@ -1591,8 +1398,7 @@ public class AccessibleDisplayScreenReaderImplementation
             if (roleDescription != null) {
                 forceRead(element, roleDescription, attributeRolePrefixBefore,
                         attributeRoleSuffixBefore, attributeRolePrefixAfter,
-                        attributeRoleSuffixAfter, DATA_ROLE_BEFORE_OF,
-                        DATA_ROLE_AFTER_OF);
+                        attributeRoleSuffixAfter, DATA_ROLE_OF);
             }
         }
     }
@@ -1634,9 +1440,7 @@ public class AccessibleDisplayScreenReaderImplementation
                 forceRead(tableCell, textHeader, attributeHeadersPrefixBefore,
                         attributeHeadersSuffixBefore,
                         attributeHeadersPrefixAfter,
-                        attributeHeadersSuffixAfter,
-                        DATA_ATTRIBUTE_HEADERS_BEFORE_OF,
-                        DATA_ATTRIBUTE_HEADERS_AFTER_OF);
+                        attributeHeadersSuffixAfter, DATA_ATTRIBUTE_HEADERS_OF);
             }
         }
     }
@@ -1661,143 +1465,117 @@ public class AccessibleDisplayScreenReaderImplementation
         if ((element.hasAttribute("aria-busy"))
                 && (element.getAttribute("aria-busy").equals("true"))) {
             forceReadSimple(element, ariaBusyTrueBefore, ariaBusyTrueAfter,
-                    DATA_ARIA_BUSY_BEFORE_OF, DATA_ARIA_BUSY_AFTER_OF);
+                    DATA_ARIA_BUSY_OF);
         }
         if (element.hasAttribute("aria-checked")) {
             String attributeValue = element.getAttribute("aria-checked");
             if (attributeValue.equals("true")) {
                 forceReadSimple(element, ariaCheckedTrueBefore,
-                        ariaCheckedTrueAfter, DATA_ARIA_CHECKED_BEFORE_OF,
-                        DATA_ARIA_CHECKED_AFTER_OF);
+                        ariaCheckedTrueAfter, DATA_ARIA_CHECKED_OF);
             } else if (attributeValue.equals("false")) {
                 forceReadSimple(element, ariaCheckedFalseBefore,
-                        ariaCheckedFalseAfter, DATA_ARIA_CHECKED_BEFORE_OF,
-                        DATA_ARIA_CHECKED_AFTER_OF);
+                        ariaCheckedFalseAfter, DATA_ARIA_CHECKED_OF);
             } else if (attributeValue.equals("mixed")) {
                 forceReadSimple(element, ariaCheckedMixedBefore,
-                        ariaCheckedMixedAfter, DATA_ARIA_CHECKED_BEFORE_OF,
-                        DATA_ARIA_CHECKED_AFTER_OF);
+                        ariaCheckedMixedAfter, DATA_ARIA_CHECKED_OF);
             }
         }
         if (element.hasAttribute("aria-expanded")) {
             String attributeValue = element.getAttribute("aria-expanded");
             if (attributeValue.equals("true")) {
                 forceReadSimple(element, ariaExpandedTrueBefore,
-                        ariaExpandedTrueAfter, DATA_ARIA_EXPANDED_BEFORE_OF,
-                        DATA_ARIA_EXPANDED_AFTER_OF);
+                        ariaExpandedTrueAfter, DATA_ARIA_EXPANDED_OF);
             } else if (attributeValue.equals("false")) {
                 forceReadSimple(element, ariaExpandedFalseBefore,
-                        ariaExpandedFalseAfter, DATA_ARIA_EXPANDED_BEFORE_OF,
-                        DATA_ARIA_EXPANDED_AFTER_OF);
+                        ariaExpandedFalseAfter, DATA_ARIA_EXPANDED_OF);
             }
         }
         if ((element.hasAttribute("aria-haspopup"))
                 && (element.getAttribute("aria-haspopup").equals("true"))) {
             forceReadSimple(element, ariaHaspopupTrueBefore,
-                    ariaHaspopupTrueAfter, DATA_ARIA_HASPOPUP_BEFORE_OF,
-                    DATA_ARIA_HASPOPUP_AFTER_OF);
+                    ariaHaspopupTrueAfter, DATA_ARIA_HASPOPUP_OF);
         }
         if (element.hasAttribute("aria-level")) {
             forceRead(element, element.getAttribute("aria-level"),
                     ariaLevelPrefixBefore, ariaLevelSuffixBefore,
                     ariaLevelPrefixAfter, ariaLevelSuffixAfter,
-                    DATA_ARIA_LEVEL_BEFORE_OF, DATA_ARIA_LEVEL_AFTER_OF);
+                    DATA_ARIA_LEVEL_OF);
         }
         if (element.hasAttribute("aria-orientation")) {
             String attributeValue = element.getAttribute("aria-orientation");
             if (attributeValue.equals("vertical")) {
                 forceReadSimple(element, ariaOrientationVerticalBefore,
-                        ariaOrientationVerticalAfter,
-                        DATA_ARIA_ORIENTATION_BEFORE_OF,
-                        DATA_ARIA_ORIENTATION_AFTER_OF);
+                        ariaOrientationVerticalAfter, DATA_ARIA_ORIENTATION_OF);
             } else if (attributeValue.equals("horizontal")) {
                 forceReadSimple(element, ariaOrientationHorizontalBefore,
                         ariaOrientationHorizontalAfter,
-                        DATA_ARIA_ORIENTATION_BEFORE_OF,
-                        DATA_ARIA_ORIENTATION_AFTER_OF);
+                        DATA_ARIA_ORIENTATION_OF);
             }
         }
         if (element.hasAttribute("aria-pressed")) {
             String attributeValue = element.getAttribute("aria-pressed");
             if (attributeValue.equals("true")) {
                 forceReadSimple(element, ariaPressedTrueBefore,
-                        ariaPressedTrueAfter, DATA_ARIA_PRESSED_BEFORE_OF,
-                        DATA_ARIA_PRESSED_AFTER_OF);
+                        ariaPressedTrueAfter, DATA_ARIA_PRESSED_OF);
             } else if (attributeValue.equals("false")) {
                 forceReadSimple(element, ariaPressedFalseBefore,
-                        ariaPressedFalseAfter, DATA_ARIA_PRESSED_BEFORE_OF,
-                        DATA_ARIA_PRESSED_AFTER_OF);
+                        ariaPressedFalseAfter, DATA_ARIA_PRESSED_OF);
             } else if (attributeValue.equals("mixed")) {
                 forceReadSimple(element, ariaPressedMixedBefore,
-                        ariaPressedMixedAfter, DATA_ARIA_PRESSED_BEFORE_OF,
-                        DATA_ARIA_PRESSED_AFTER_OF);
+                        ariaPressedMixedAfter, DATA_ARIA_PRESSED_OF);
             }
         }
         if (element.hasAttribute("aria-selected")) {
             String attributeValue = element.getAttribute("aria-selected");
             if (attributeValue.equals("true")) {
                 forceReadSimple(element, ariaSelectedTrueBefore,
-                        ariaSelectedTrueAfter, DATA_ARIA_SELECTED_BEFORE_OF,
-                        DATA_ARIA_SELECTED_AFTER_OF);
+                        ariaSelectedTrueAfter, DATA_ARIA_SELECTED_OF);
             } else if (attributeValue.equals("false")) {
                 forceReadSimple(element, ariaSelectedFalseBefore,
-                        ariaSelectedFalseAfter, DATA_ARIA_SELECTED_BEFORE_OF,
-                        DATA_ARIA_SELECTED_AFTER_OF);
+                        ariaSelectedFalseAfter, DATA_ARIA_SELECTED_OF);
             }
         }
         if (element.hasAttribute("aria-sort")) {
             String attributeValue = element.getAttribute("aria-sort");
             if (attributeValue.equals("ascending")) {
                 forceReadSimple(element, ariaSortAscendingBefore,
-                        ariaSortAscendingAfter, DATA_ARIA_SORT_BEFORE_OF,
-                        DATA_ARIA_SORT_AFTER_OF);
+                        ariaSortAscendingAfter, DATA_ARIA_SORT_OF);
             } else if (attributeValue.equals("descending")) {
                 forceReadSimple(element, ariaSortDescendingBefore,
-                        ariaSortDescendingAfter, DATA_ARIA_SORT_BEFORE_OF,
-                        DATA_ARIA_SORT_AFTER_OF);
+                        ariaSortDescendingAfter, DATA_ARIA_SORT_OF);
             } else if (attributeValue.equals("other")) {
                 forceReadSimple(element, ariaSortOtherBefore,
-                        ariaSortOtherAfter, DATA_ARIA_SORT_BEFORE_OF,
-                        DATA_ARIA_SORT_AFTER_OF);
+                        ariaSortOtherAfter, DATA_ARIA_SORT_OF);
             }
         }
         if ((element.hasAttribute("aria-required"))
                 && (element.getAttribute("aria-required").equals("true"))) {
             forceReadSimple(element, ariaRequiredTrueBefore,
-                    ariaRequiredTrueAfter, DATA_ARIA_REQUIRED_BEFORE_OF,
-                    DATA_ARIA_REQUIRED_AFTER_OF);
+                    ariaRequiredTrueAfter, DATA_ARIA_REQUIRED_OF);
         }
         if (element.hasAttribute("aria-valuemin")) {
             forceRead(element, element.getAttribute("aria-valuemin"),
                     ariaValueMinimumPrefixBefore, ariaValueMinimumSuffixBefore,
                     ariaValueMinimumPrefixAfter, ariaValueMinimumSuffixAfter,
-                    DATA_ARIA_RANGE_MIN_BEFORE_OF,
-                    DATA_ARIA_RANGE_MIN_AFTER_OF);
+                    DATA_ARIA_RANGE_MIN_OF);
         }
         if (element.hasAttribute("aria-valuemax")) {
             forceRead(element, element.getAttribute("aria-valuemax"),
                     ariaValueMaximumPrefixBefore, ariaValueMaximumSuffixBefore,
                     ariaValueMaximumPrefixAfter, ariaValueMaximumSuffixAfter,
-                    DATA_ARIA_RANGE_MAX_BEFORE_OF,
-                    DATA_ARIA_RANGE_MAX_AFTER_OF);
+                    DATA_ARIA_RANGE_MAX_OF);
         }
         if (element.hasAttribute("aria-autocomplete")) {
             String attributeValue = element.getAttribute("aria-autocomplete");
             if (attributeValue.equals("both")) {
                 forceReadSimple(element, ariaAutoCompleteBothBefore,
-                        ariaAutoCompleteBothAfter,
-                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
-                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+                        ariaAutoCompleteBothAfter, DATA_ARIA_AUTOCOMPLETE_OF);
             } else if (attributeValue.equals("inline")) {
                 forceReadSimple(element, ariaAutoCompleteListBefore,
-                        ariaAutoCompleteListAfter,
-                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
-                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+                        ariaAutoCompleteListAfter, DATA_ARIA_AUTOCOMPLETE_OF);
             } else if (attributeValue.equals("list")) {
                 forceReadSimple(element, ariaAutoCompleteInlineBefore,
-                        ariaAutoCompleteInlineAfter,
-                        DATA_ARIA_AUTOCOMPLETE_BEFORE_OF,
-                        DATA_ARIA_AUTOCOMPLETE_AFTER_OF);
+                        ariaAutoCompleteInlineAfter, DATA_ARIA_AUTOCOMPLETE_OF);
             }
         }
         displayWAIARIADragandDrop(element);
@@ -1827,14 +1605,12 @@ public class AccessibleDisplayScreenReaderImplementation
     public void displayLinkAttributes(final HTMLDOMElement link) {
         if (link.hasAttribute("download")) {
             forceReadSimple(link, attributeDownloadBefore,
-                    attributeDownloadAfter, DATA_ATTRIBUTE_DOWNLOAD_BEFORE_OF,
-                    DATA_ATTRIBUTE_DOWNLOAD_AFTER_OF);
+                    attributeDownloadAfter, DATA_ATTRIBUTE_DOWNLOAD_OF);
         }
         if ((link.hasAttribute("target"))
                 && (link.getAttribute("target").equals("_blank"))) {
             forceReadSimple(link, attributeTargetBlankBefore,
-                    attributeTargetBlankAfter, DATA_ATTRIBUTE_TARGET_BEFORE_OF,
-                    DATA_ATTRIBUTE_TARGET_AFTER_OF);
+                    attributeTargetBlankAfter, DATA_ATTRIBUTE_TARGET_OF);
         }
     }
 
@@ -1862,8 +1638,7 @@ public class AccessibleDisplayScreenReaderImplementation
             forceRead(element, element.getAttribute("title"),
                     attributeTitlePrefixBefore, attributeTitleSuffixBefore,
                     attributeTitlePrefixAfter, attributeTitleSuffixAfter,
-                    DATA_ATTRIBUTE_TITLE_BEFORE_OF,
-                    DATA_ATTRIBUTE_TITLE_AFTER_OF);
+                    DATA_ATTRIBUTE_TITLE_OF);
         }
     }
 
@@ -1886,26 +1661,19 @@ public class AccessibleDisplayScreenReaderImplementation
     public void displayDragAndDrop(final HTMLDOMElement element) {
         if (element.hasAttribute("draggable")) {
             forceReadSimple(element, attributeDraggableBefore,
-                    attributeDraggableAfter, DATA_ATTRIBUTE_DRAGGABLE_BEFORE_OF,
-                    DATA_ATTRIBUTE_DRAGGABLE_AFTER_OF);
+                    attributeDraggableAfter, DATA_ATTRIBUTE_DRAGGABLE_OF);
         }
         if (element.hasAttribute("dropzone")) {
             String attributeValue = element.getAttribute("dropzone");
             if (attributeValue.equals("copy")) {
                 forceReadSimple(element, attributeDropzoneCopyBefore,
-                        attributeDropzoneCopyAfter,
-                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
-                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+                        attributeDropzoneCopyAfter, DATA_ATTRIBUTE_DROPZONE_OF);
             } else if (attributeValue.equals("move")) {
                 forceReadSimple(element, attributeDropzoneMoveBefore,
-                        attributeDropzoneMoveAfter,
-                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
-                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+                        attributeDropzoneMoveAfter, DATA_ATTRIBUTE_DROPZONE_OF);
             } else if (attributeValue.equals("link")) {
                 forceReadSimple(element, attributeDropzoneLinkBefore,
-                        attributeDropzoneLinkAfter,
-                        DATA_ATTRIBUTE_DROPZONE_BEFORE_OF,
-                        DATA_ATTRIBUTE_DROPZONE_AFTER_OF);
+                        attributeDropzoneLinkAfter, DATA_ATTRIBUTE_DROPZONE_OF);
             }
         }
         displayWAIARIADragandDrop(element);
@@ -1939,9 +1707,7 @@ public class AccessibleDisplayScreenReaderImplementation
         if (language != null) {
             forceRead(element, language, attributeLanguagePrefixBefore,
                     attributeLanguageSuffixBefore, attributeLanguagePrefixAfter,
-                    attributeLanguageSuffixAfter,
-                    DATA_ATTRIBUTE_LANGUAGE_BEFORE_OF,
-                    DATA_ATTRIBUTE_LANGUAGE_AFTER_OF);
+                    attributeLanguageSuffixAfter, DATA_ATTRIBUTE_LANGUAGE_OF);
         }
     }
 
@@ -1971,9 +1737,7 @@ public class AccessibleDisplayScreenReaderImplementation
                 image.setAttribute("alt", image.getAttribute("title"));
             }
             idGenerator.generateId(image);
-            image.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
-                    image.getAttribute("id"));
-            image.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,
+            image.setAttribute(DATA_ATTRIBUTE_TITLE_OF,
                     image.getAttribute("id"));
         } else {
             image.setAttribute("alt", "");
