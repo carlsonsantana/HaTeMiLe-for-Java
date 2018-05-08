@@ -33,14 +33,23 @@ public class AccessibleDisplayScreenReaderImplementation
         implements AccessibleDisplay {
 
     /**
-     * The id of list element that contains the description of shortcuts.
+     * The id of list element that contains the description of shortcuts, before
+     * the whole content of page.
      */
-    public static final String ID_CONTAINER_SHORTCUTS = "container-shortcuts";
+    public static final String ID_CONTAINER_SHORTCUTS_BEFORE
+            = "container-shortcuts-before";
 
     /**
-     * The id of text of description of container of shortcuts descriptions.
+     * The id of list element that contains the description of shortcuts, after
+     * the whole content of page.
      */
-    public static final String ID_TEXT_SHORTCUTS = "text-shortcuts";
+    public static final String ID_CONTAINER_SHORTCUTS_AFTER
+            = "container-shortcuts-after";
+
+    /**
+     * The HTML class of text of description of container shortcuts.
+     */
+    public static final String CLASS_TEXT_SHORTCUTS = "text-shortcuts";
 
     /**
      * The HTML class of content to force the screen reader show the current
@@ -55,18 +64,10 @@ public class AccessibleDisplayScreenReaderImplementation
     public static final String CLASS_FORCE_READ_AFTER = "force-read-after";
 
     /**
-     * The name of attribute that links the description of shortcut of element,
-     * before it.
+     * The name of attribute that links the description of shortcut of element.
      */
-    public static final String DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF =
-            "data-attributeaccesskeybeforeof";
-
-    /**
-     * The name of attribute that links the description of shortcut of element,
-     * after it.
-     */
-    public static final String DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF =
-            "data-attributeaccesskeyafterof";
+    public static final String DATA_ATTRIBUTE_ACCESSKEY_OF
+            = "data-attributeaccesskeyof";
 
     /**
      * The name of attribute that links the content of download link, before it.
@@ -915,9 +916,14 @@ public class AccessibleDisplayScreenReaderImplementation
     protected final Configure configure;
 
     /**
-     * The list element of shortcuts.
+     * The list element of shortcuts, before the whole content of page.
      */
-    protected HTMLDOMElement listShortcuts;
+    protected HTMLDOMElement listShortcutsBefore;
+
+    /**
+     * The list element of shortcuts, before the whole content of page.
+     */
+    protected HTMLDOMElement listShortcutsAfter;
 
     /**
      * The state that indicates if the list of shortcuts of page was added.
@@ -1158,7 +1164,8 @@ public class AccessibleDisplayScreenReaderImplementation
         ariaSortOtherAfter = configure.getParameter("aria-sort-other-after");
 
         listShortcutsAdded = false;
-        listShortcuts = null;
+        listShortcutsBefore = null;
+        listShortcutsAfter = null;
     }
 
     /**
@@ -1286,44 +1293,61 @@ public class AccessibleDisplayScreenReaderImplementation
 
     /**
      * Generate the list of shortcuts of page.
-     * @return The list of shortcuts of page.
      */
-    protected HTMLDOMElement generateListShortcuts() {
-        HTMLDOMElement container = parser.find("#" + ID_CONTAINER_SHORTCUTS)
-                .firstResult();
-        if (container == null) {
-            HTMLDOMElement local = parser.find("body").firstResult();
-            if (local != null) {
-                container = parser.createElement("div");
-                container.setAttribute("id", ID_CONTAINER_SHORTCUTS);
+    protected void generateListShortcuts() {
+        HTMLDOMElement local = parser.find("body").firstResult();
+        if (local != null) {
+            HTMLDOMElement containerBefore = parser
+                    .find("#" + ID_CONTAINER_SHORTCUTS_BEFORE).firstResult();
+            if ((containerBefore == null)
+                    && (!attributeAccesskeyBefore.isEmpty())) {
+                containerBefore = parser.createElement("div");
+                containerBefore.setAttribute("id",
+                        ID_CONTAINER_SHORTCUTS_BEFORE);
 
                 HTMLDOMElement textContainer = parser.createElement("span");
-                textContainer.setAttribute("id", ID_TEXT_SHORTCUTS);
+                textContainer.setAttribute("class", CLASS_TEXT_SHORTCUTS);
+                textContainer.appendText(attributeAccesskeyBefore);
 
-                container.appendElement(textContainer);
+                containerBefore.appendElement(textContainer);
+                local.prependElement(containerBefore);
+            }
 
-                if (!attributeAccesskeyBefore.isEmpty()) {
-                    textContainer.appendText(attributeAccesskeyBefore);
-                    local.prependElement(container);
-                }
-                if (!attributeAccesskeyAfter.isEmpty()) {
-                    textContainer.appendText(attributeAccesskeyAfter);
-                    local.appendElement(container);
+            if (containerBefore != null) {
+                listShortcutsBefore = parser.find(containerBefore)
+                        .findChildren("ul").firstResult();
+                if (listShortcutsBefore == null) {
+                    listShortcutsBefore = parser.createElement("ul");
+                    containerBefore.appendElement(listShortcutsBefore);
                 }
             }
-        }
 
-        HTMLDOMElement htmlList = null;
-        if (container != null) {
-            htmlList = parser.find(container).findChildren("ul").firstResult();
-            if (htmlList == null) {
-                htmlList = parser.createElement("ul");
-                container.appendElement(htmlList);
+
+            HTMLDOMElement containerAfter = parser
+                    .find("#" + ID_CONTAINER_SHORTCUTS_AFTER).firstResult();
+            if ((containerAfter == null)
+                    && (!attributeAccesskeyAfter.isEmpty())) {
+                containerAfter = parser.createElement("div");
+                containerAfter.setAttribute("id", ID_CONTAINER_SHORTCUTS_AFTER);
+
+                HTMLDOMElement textContainer = parser.createElement("span");
+                textContainer.setAttribute("class", CLASS_TEXT_SHORTCUTS);
+                textContainer.appendText(attributeAccesskeyAfter);
+
+                containerAfter.appendElement(textContainer);
+                local.appendElement(containerAfter);
+            }
+
+            if (containerAfter != null) {
+                listShortcutsAfter = parser.find(containerAfter)
+                        .findChildren("ul").firstResult();
+                if (listShortcutsAfter == null) {
+                    listShortcutsAfter = parser.createElement("ul");
+                    containerAfter.appendElement(listShortcutsAfter);
+                }
             }
         }
         listShortcutsAdded = true;
-
-        return htmlList;
     }
 
     /**
@@ -1503,43 +1527,42 @@ public class AccessibleDisplayScreenReaderImplementation
             String description = getDescription(element);
             if (!element.hasAttribute("title")) {
                 idGenerator.generateId(element);
-                element.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF,
-                        element.getAttribute("id"));
-                element.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF,
-                        element.getAttribute("id"));
+                String id = element.getAttribute("id");
+                element.setAttribute(DATA_ATTRIBUTE_TITLE_BEFORE_OF, id);
+                element.setAttribute(DATA_ATTRIBUTE_TITLE_AFTER_OF, id);
                 element.setAttribute("title", description);
             }
 
             if (!listShortcutsAdded) {
-                listShortcuts = generateListShortcuts();
+                generateListShortcuts();
             }
 
-            String[] keys = element.getAttribute("accesskey")
+            String[] keys = element.getAttribute("accesskey").toUpperCase()
                     .split("[ \n\t\r]+");
-            for (int i = 0, length = keys.length; i < length; i++) {
-                String key = keys[i].toUpperCase();
-                String attribute = "[" + DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF
-                        + "=\"" + key + "\"]";
-                if (parser.find(listShortcuts).findChildren(attribute)
-                        .firstResult() == null) {
-                    String shortcut = shortcutPrefix + " + " + key;
-                    forceRead(element, shortcut, attributeAccesskeyPrefixBefore,
-                            attributeAccesskeySuffixBefore,
-                            attributeAccesskeyPrefixAfter,
-                            attributeAccesskeySuffixAfter,
-                            DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF,
-                            DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF);
+            for (String key : keys) {
+                String selector = "[" + DATA_ATTRIBUTE_ACCESSKEY_OF + "=\""
+                        + key + "\"]";
 
-                    if (listShortcuts != null) {
-                        HTMLDOMElement item = parser.createElement("li");
-                        item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_BEFORE_OF,
-                                key);
-                        item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_AFTER_OF,
-                                key);
-                        item.appendText(shortcut + ": "
-                                + description);
-                        listShortcuts.appendElement(item);
-                    }
+                String shortcut = shortcutPrefix + " + " + key;
+                forceRead(element, shortcut, attributeAccesskeyPrefixBefore,
+                        attributeAccesskeySuffixBefore,
+                        attributeAccesskeyPrefixAfter,
+                        attributeAccesskeySuffixAfter,
+                        DATA_ATTRIBUTE_ACCESSKEY_OF,
+                        DATA_ATTRIBUTE_ACCESSKEY_OF);
+
+                HTMLDOMElement item = parser.createElement("li");
+                item.setAttribute(DATA_ATTRIBUTE_ACCESSKEY_OF, key);
+                item.appendText(shortcut + ": " + description);
+                if ((listShortcutsBefore != null) && (parser
+                        .find(listShortcutsBefore).findChildren(selector)
+                        .firstResult() == null)) {
+                    listShortcutsBefore.appendElement(item.cloneElement());
+                }
+                if ((listShortcutsAfter != null) && (parser
+                        .find(listShortcutsAfter).findChildren(selector)
+                        .firstResult() == null)) {
+                    listShortcutsAfter.appendElement(item.cloneElement());
                 }
             }
         }
