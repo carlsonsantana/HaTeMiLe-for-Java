@@ -264,7 +264,7 @@ public class AccessibleCSSImplementation implements AccessibleCSS {
         return symbol.replace("\\", "\\\\").replace(".", "\\.")
                 .replace("+", "\\+").replace("*", "\\*").replace("?", "\\?")
                 .replace("^", "\\^").replace("$", "\\$").replace("[", "\\[")
-                .replace("]", "\\[").replace("{", "\\{").replace("}", "\\}")
+                .replace("]", "\\]").replace("{", "\\{").replace("}", "\\}")
                 .replace("(", "\\(").replace(")", "\\)").replace("|", "\\|")
                 .replace("/", "\\/").replace(",", "\\,").replace("!", "\\!")
                 .replace("=", "\\=").replace(":", "\\:").replace("-", "\\-");
