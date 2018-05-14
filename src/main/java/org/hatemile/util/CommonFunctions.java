@@ -16,7 +16,7 @@ package org.hatemile.util;
 import org.hatemile.util.html.HTMLDOMElement;
 
 /**
- * The CommonFuncionts class contains the used methods by HaTeMiLe classes.
+ * The CommonFunctions class contains the used methods by HaTeMiLe classes.
  */
 public final class CommonFunctions {
 
